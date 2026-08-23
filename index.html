@@ -150,7 +150,15 @@
   <section class="section section-center" id="pricing">
     <p class="section-tag reveal">Service Subscriptions</p>
     <h2 class="section-title reveal reveal-d1">Select the perfect connection for <strong>your needs</strong></h2>
-    <p class="section-body reveal reveal-d2">Ultra-reliable, high-speed fiber broadband designed for smooth streaming, lag-free gaming, and uninterrupted productivity.</p>
+    <p class="section-body reveal reveal-d2">All prices in Australian Dollars (AUD). Truly unlimited data across all residential tiers.</p>
+
+    <!-- Global Toggle for all plans -->
+    <div class="pricing-toggle reveal reveal-d3">
+      <span class="pricing-toggle-label active" id="monthlyLabel">Monthly</span>
+      <div class="toggle-switch" id="pricingToggle" role="switch" aria-checked="false" tabindex="0"></div>
+      <span class="pricing-toggle-label" id="annualLabel">Annual</span>
+      <span class="save-badge" id="saveBadge">Save 5%</span>
+    </div>
 
     <!-- ── RESIDENTIAL PLANS ── -->
     <div class="plan-category reveal">
@@ -163,11 +171,26 @@
           <div class="pricing-tier">Basic</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">60</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">60</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$720 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">57</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$684 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">25Mbps Download | 10Mbps Upload</p>
@@ -186,11 +209,26 @@
           <div class="pricing-tier">Regular</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">85</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">85</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,020 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">80.75</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$969 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">500Mbps Download | 50Mbps Upload</p>
@@ -208,11 +246,26 @@
           <div class="pricing-tier">Ultra</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">99</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">99</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,188 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">94.05</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,128.60 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">1000Mbps Download | 100Mbps Upload</p>
@@ -230,11 +283,26 @@
           <div class="pricing-tier">Pro</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">95</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">95</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,140 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">90.25</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,083 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">250Mbps Download | 100Mbps Upload</p>
@@ -252,11 +320,26 @@
           <div class="pricing-tier">Pro +</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">115</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">115</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,380 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">109.25</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,311 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">500Mbps Download | 200Mbps Upload</p>
@@ -274,11 +357,26 @@
           <div class="pricing-tier">Ultra +</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">135</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">135</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,620 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">128.25</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,539 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">1000Mbps Download | 400Mbps Upload</p>
@@ -296,11 +394,26 @@
           <div class="pricing-tier">Thunderbolt</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">210</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">210</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$2,520 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">199.50</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$2,394 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">2000Mbps Download | 500Mbps Upload</p>
@@ -326,11 +439,26 @@
           <div class="pricing-tier">50/20 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">89</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">89</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,068 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">84.55</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,014.60 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Typical Speed: 47 Mbps Down | 17 Mbps Up</p>
@@ -349,11 +477,26 @@
           <div class="pricing-tier">100/40 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">95</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">95</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,140 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">90.25</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,083 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Typical Speed: 90 Mbps Down | 34 Mbps Up</p>
@@ -372,11 +515,26 @@
           <div class="pricing-tier">250/100 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">95</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">95</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,140 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">90.25</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,083 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Typical Speed: 232 Mbps Down | 85 Mbps Up</p>
@@ -396,11 +554,26 @@
           <div class="pricing-tier">500/50 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">90</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">90</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,080 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">85.50</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,026 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Typical Speed: 425 Mbps Down | 42 Mbps Up</p>
@@ -419,11 +592,26 @@
           <div class="pricing-tier">500/200 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">115</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">115</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,380 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">109.25</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,311 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Typical Speed: 425 Mbps Down | 170 Mbps Up</p>
@@ -442,11 +630,26 @@
           <div class="pricing-tier">1000/400 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">145</span>
-                <span class="price-period">/month</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">145</span>
+                  <span class="price-period">/month</span>
+                </div>
               </div>
+              <div class="price-yearly">A$1,740 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">137.75</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,653 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Typical Speed: 894 Mbps Down | 340 Mbps Up</p>
@@ -473,11 +676,26 @@
           <div class="pricing-tier">100/100 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">399</span>
-                <span class="price-period">/month (ex. GST)</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">399</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
               </div>
+              <div class="price-yearly">A$4,788 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">379.05</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$4,548.60 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Suitable for small offices or businesses that require a dependable connection.</p>
@@ -494,11 +712,26 @@
           <div class="pricing-tier">250/250 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">399</span>
-                <span class="price-period">/month (ex. GST)</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">399</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
               </div>
+              <div class="price-yearly">A$4,788 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">379.05</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$4,548.60 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Suitable for smaller offices with requirements for cloud file sharing and video conferencing.</p>
@@ -515,11 +748,26 @@
           <div class="pricing-tier">500/500 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">469</span>
-                <span class="price-period">/month (ex. GST)</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">469</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
               </div>
+              <div class="price-yearly">A$5,628 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">445.55</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$5,346.60 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Suitable for medium offices with requirements for cloud file sharing and video conferencing.</p>
@@ -536,11 +784,26 @@
           <div class="pricing-tier">1000/1000 Mbps</div>
           <div class="pricing-prices">
             <div class="price-option monthly active">
-              <div class="price-option-left">
-                <span class="price-currency">A$</span>
-                <span class="price-amount">699</span>
-                <span class="price-period">/month (ex. GST)</span>
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">699</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
               </div>
+              <div class="price-yearly">A$8,388 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">664.05</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$7,968.60 /yr</div>
             </div>
           </div> 
           <p class="pricing-desc">Suitable for larger offices with bandwidth intensive use cases such as very large file uploads.</p>
@@ -549,7 +812,7 @@
             <li>4 hour SLA restoration target</li>
             <li>Optional 5G or 4G backup</li>
           </ul>
-          <button onclick="handleSubscribe('ent-1000')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          <button onclick="handleSubscribe('ent-100')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
         </div>
       </div>
     </div>
