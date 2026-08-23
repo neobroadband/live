@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Admin NOC & Operations Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+
+<style>
+/* ── NOC Admin Layout & Overrides ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --base-deep: #0F1115;
+  --base-mid: #161A20;
+  --base-soft: #1C2128;
+  --slate-warm: #6B7280;
+  --slate-light: #9CA3AF;
+  --graphite: #2A2E35;
+  --ivory: #E5E7EB;
+  --ivory-muted: #C9CDD4;
+  --silver: #B0B8C4;
+  --panel-bg: rgba(22, 26, 32, 0.75);
+  --panel-border: rgba(156, 163, 175, 0.12);
+  --silk-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --accent-gold: #d4af37;
+  --accent-cyan: #38bdf8;
+  --accent-red: #ef4444;
+  --accent-green: #22c55e;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--base-deep);
+  color: var(--ivory);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background Grid Overlay with Mouse Follower */
+.page-grid-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  --mx: 50vw;
+  --my: 50vh;
+  background-image:
+    linear-gradient(to right, rgba(156, 163, 175, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(156, 163, 175, 0.12) 1px, transparent 1px);
+  background-size: 100px 100px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(circle 450px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%);
+  mask-image: radial-gradient(circle 450px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%);
+}
+
+.shell { display: grid; grid-template-columns: 290px 1fr; min-height: 100vh; position: relative; z-index: 10; }
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed; width: 290px; height: 100vh; padding: 28px 20px;
+  border-right: 1px solid var(--panel-border); background: rgba(15, 17, 21, 0.95);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  display: flex; flex-direction: column; z-index: 100;
+}
+
+.portal-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; padding: 0 8px; margin-bottom: 24px;
+}
+.portal-brand img { max-height: 48px; width: auto; object-fit: contain; }
+
+.admin-badge {
+  display: inline-block; font-size: 8px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+  background: rgba(212, 175, 55, 0.15); color: var(--accent-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3); margin-bottom: 16px; margin-left: 8px;
+}
+
+.nav-label {
+  font-size: 9px; font-weight: 600; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--slate-warm); margin: 14px 12px 6px;
+}
+
+.portal-nav { display: grid; gap: 6px; }
+.portal-nav button {
+  border: 0; background: transparent; color: var(--slate-light); text-align: left;
+  padding: 12px 16px; border-radius: 100px; cursor: pointer; transition: 0.35s var(--silk-ease);
+  display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 500; letter-spacing: 0.05em;
+}
+.portal-nav button:hover, .portal-nav button.active {
+  background: rgba(176, 184, 196, 0.08); color: var(--ivory);
+}
+.portal-nav button.active { border: 1px solid var(--panel-border); font-weight: 600; }
+.portal-nav .icon { width: 18px; text-align: center; color: var(--silver); font-size: 14px; }
+
+.sidebar-foot { margin-top: auto; border-top: 1px solid var(--panel-border); padding-top: 18px; }
+.mini-profile { display: flex; align-items: center; gap: 12px; padding: 8px; }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--graphite); border: 1px solid var(--panel-border); font-size: 12px; font-weight: 600; color: var(--accent-gold);
+}
+.mini-profile strong { font-size: 11px; color: var(--ivory); display: block; }
+.mini-profile small { display: block; color: var(--slate-warm); font-size: 9px; margin-top: 3px; }
+
+/* ── Workspace ── */
+.workspace { grid-column: 2; padding: 36px 48px 80px; max-width: 1440px; width: 100%; }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+.eyebrow { font-size: 9px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
+.topbar h1 { font-weight: 300; font-size: clamp(1.8rem, 2.3vw, 2.4rem); letter-spacing: -.04em; }
+.topbar h1 strong { font-weight: 600; }
+.top-actions { display: flex; gap: 12px; align-items: center; }
+
+.circle-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--panel-border);
+  background: var(--panel-bg); color: var(--ivory-muted); cursor: pointer; display: inline-grid;
+  place-items: center; font-size: 14px; transition: 0.3s var(--silk-ease);
+}
+.circle-btn:hover { border-color: rgba(176,184,196,0.3); transform: scale(1.05); }
+
+/* ── Content Containers ── */
+.page { display: none; animation: fadeIn .5s var(--silk-ease); }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.portal-hero {
+  position: relative; padding: 32px 36px; border: 1px solid var(--panel-border); border-radius: 28px;
+  background: linear-gradient(135deg, rgba(28,33,40,0.9), rgba(22,26,32,0.5)); overflow: hidden; margin-bottom: 24px;
+}
+.portal-hero h2 { font-size: clamp(1.5rem, 2.2vw, 2.1rem); font-weight: 300; letter-spacing: -.04em; }
+.portal-hero h2 strong { font-weight: 600; }
+.portal-hero p { color: var(--slate-light); font-size: 12.5px; font-weight: 300; line-height: 1.7; max-width: 720px; margin-top: 8px; }
+
+.status-pill {
+  display: inline-flex; gap: 8px; align-items: center;
+  padding: 5px 12px; border: 1px solid var(--panel-border); border-radius: 100px;
+  font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--slate-light);
+  background: rgba(15, 17, 21, 0.5);
+}
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #48bb78; box-shadow: 0 0 10px #48bb78; }
+.status-dot.warn { background: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold); }
+.status-dot.err { background: var(--accent-red); box-shadow: 0 0 10px var(--accent-red); }
+
+/* ── Grids & Cards ── */
+.grid { display: grid; gap: 20px; }
+.stats-4 { grid-template-columns: repeat(4, 1fr); margin-bottom: 24px; }
+.two-col { grid-template-columns: 1.3fr 1fr; }
+.three-col { grid-template-columns: repeat(3, 1fr); }
+
+.card {
+  background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 24px;
+  padding: 24px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: relative;
+}
+.card-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
+.stat-value { font-size: 2rem; font-weight: 300; letter-spacing: -.04em; color: var(--ivory); }
+.stat-value small { font-size: 0.5em; color: var(--slate-warm); margin-left: 4px; }
+.stat-meta { font-size: 11px; font-weight: 300; color: var(--slate-light); margin-top: 6px; }
+
+.card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.card-head h3 { font-size: 15px; font-weight: 500; color: var(--ivory); }
+
+/* ── Tables & Controls ── */
+.table-wrap { width: 100%; overflow-x: auto; }
+.portal-table { width: 100%; border-collapse: collapse; }
+.portal-table th { text-align: left; color: var(--slate-warm); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; font-weight: 600; padding: 14px 10px; border-bottom: 1px solid var(--panel-border); }
+.portal-table td { padding: 14px 10px; border-top: 1px solid var(--panel-border); font-size: 11px; color: var(--ivory-muted); }
+.portal-table tr:hover td { background: rgba(176,184,196,0.02); }
+
+.btn-action {
+  padding: 6px 14px; border-radius: 100px; font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer; border: 1px solid var(--panel-border);
+  background: transparent; color: var(--ivory); transition: 0.3s;
+}
+.btn-action:hover { background: rgba(176,184,196,0.1); border-color: var(--silver); }
+.btn-action.gold { color: var(--accent-gold); border-color: rgba(212,175,55,0.3); }
+.btn-action.red { color: var(--accent-red); border-color: rgba(239,68,68,0.3); }
+
+/* Form Fields */
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { margin-bottom: 12px; }
+.field label { display: block; font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--panel-border);
+  background: rgba(15, 17, 21, 0.6); color: var(--ivory); font-family: inherit; font-size: 11px; outline: none; transition: 0.3s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--silver); }
+.field.full { grid-column: 1 / -1; }
+
+/* Filter & Search Bar */
+.search-bar {
+  display: flex; gap: 12px; align-items: center; margin-bottom: 18px;
+}
+.search-bar input {
+  flex: 1; padding: 10px 16px; border-radius: 100px; border: 1px solid var(--panel-border);
+  background: rgba(15,17,21,0.5); color: var(--ivory); font-size: 11px; outline: none;
+}
+.search-bar input:focus { border-color: var(--silver); }
+
+/* Toast */
+.toast-msg {
+  position: fixed; right: 30px; bottom: 30px; background: #1a1e24; border: 1px solid var(--panel-border);
+  padding: 14px 24px; border-radius: 100px; font-size: 11px; color: var(--ivory);
+  transform: translateY(120px); opacity: 0; transition: .4s var(--silk-ease); z-index: 9999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.toast-msg.show { transform: none; opacity: 1; }
+
+/* Admin Modal */
+.admin-modal {
+  position: fixed; inset: 0; background: rgba(15, 17, 21, 0.85); backdrop-filter: blur(12px);
+  display: none; place-items: center; z-index: 1000; padding: 20px;
+}
+.admin-modal.open { display: grid; }
+.modal-content {
+  width: min(650px, 100%); background: var(--base-mid); border: 1px solid var(--panel-border);
+  border-radius: 28px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;
+}
+
+@media(max-width: 1024px) {
+  .shell { display: block; }
+  .sidebar { transform: translateX(-100%); transition: .4s var(--silk-ease); }
+  .sidebar.open { transform: none; }
+  .workspace { padding: 24px 20px; }
+  .stats-4 { grid-template-columns: repeat(2, 1fr); }
+  .two-col, .three-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="atmosphere"></div>
+<div class="page-grid-overlay" id="pageGrid"></div>
+
+<!-- ═══ ADMIN LOGIN OVERLAY ═══ -->
+<div id="adminLoginOverlay" style="position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#0a0c0f,#13161b);display:grid;place-items:center;padding:24px;">
+  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.25);border-radius:32px;background:rgba(22,26,32,0.92);backdrop-filter:blur(30px);box-shadow:0 20px 80px rgba(0,0,0,0.6);text-align:center;">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" style="max-height:55px;width:auto;margin-bottom:12px;">
+    <div class="admin-badge">Admin NOC Console</div>
+    <h2 style="font-weight:400;font-size:20px;color:var(--ivory);margin-bottom:6px;">Network Operator Authentication</h2>
+    <p style="font-size:11px;color:var(--slate-light);margin-bottom:24px;">Secure RADIUS Gateway & ISP Control Node</p>
+
+    <div class="field" style="text-align:left;">
+      <label>Staff Admin Key / Username</label>
+      <input id="adminUserInput" placeholder="admin@neobroadband.com.au or NOC-01" value="admin">
+    </div>
+    <div class="field" style="text-align:left;margin-top:12px;">
+      <label>NOC Security PIN / Password</label>
+      <input id="adminPassInput" type="password" placeholder="••••••••" value="admin2026">
+    </div>
+    <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;background:linear-gradient(135deg,#d4af37,#9CA3AF);color:#0F1115;" onclick="authenticateAdmin()">Sign In to NOC Control</button>
+
+    <div style="margin-top: 20px; padding: 12px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 10px; color: var(--slate-light); text-align: left;">
+      <strong style="color: var(--accent-gold); display: block; margin-bottom: 4px;">Default Staff NOC Credentials:</strong>
+      User: <code>admin</code> &nbsp;|&nbsp; Pass: <code>admin2026</code>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL FOR CUSTOMER EDITING ═══ -->
+<div class="admin-modal" id="customerModal">
+  <div class="modal-content">
+    <div class="card-head">
+      <h3 id="modalCustTitle">Edit Subscriber Node</h3>
+      <button class="btn-action" onclick="closeCustModal()">✕ Close</button>
+    </div>
+    <input type="hidden" id="editCustId">
+    <div class="field-grid">
+      <div class="field"><label>Subscriber Name</label><input id="editName"></div>
+      <div class="field"><label>Contact Email</label><input id="editEmail"></div>
+      <div class="field"><label>Contact Phone</label><input id="editPhone"></div>
+      <div class="field"><label>Service Plan Tier</label>
+        <select id="editPlanSelect"></select>
+      </div>
+      <div class="field"><label>Downlink Speed (Mbps)</label><input id="editDownSpeed"></div>
+      <div class="field"><label>Uplink Speed (Mbps)</label><input id="editUpSpeed"></div>
+      <div class="field"><label>Account Balance (AUD)</label><input id="editBalance"></div>
+      <div class="field"><label>Static IPv4 Address</label><input id="editIp"></div>
+      <div class="field full"><label>NTD Hardware Identifier</label><input id="editNtd"></div>
+      <div class="field full"><label>Service Address</label><input id="editAddress"></div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end;">
+      <button class="btn-action red" onclick="deleteSubscriber()">Delete Subscriber</button>
+      <button class="btn-primary" onclick="saveSubscriberChanges()">Save & Deploy to Cloud</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+  <!-- ═══ ADMIN SIDEBAR ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="portal-brand">
+      <img src="images/psd 1.png" alt="Neo Broadband Logo">
+    </a>
+    <div class="admin-badge">Admin NOC Console</div>
+
+    <div class="nav-label">ISP Control Center</div>
+    <nav class="portal-nav">
+      <button class="active" data-page="adminOverview"><span class="icon">⌂</span>NOC Dashboard</button>
+      <button data-page="adminSubscribers"><span class="icon">👥</span>Subscribers Database</button>
+      <button data-page="adminBilling"><span class="icon">A$</span>Billing & Invoices</button>
+      <button data-page="adminPlans"><span class="icon">📦</span>Plan Matrix Catalog</button>
+      <button data-page="adminNodes"><span class="icon">⚙</span>POP Nodes & Telemetry</button>
+      <button data-page="adminTickets"><span class="icon">🎫</span>NOC Support Tickets</button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="mini-profile">
+        <div class="avatar">NOC</div>
+        <div>
+          <strong id="adminStaffName">NOC Engineer 01</strong>
+          <small>Sydney Core Transit POP</small>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <a href="customer-portal.html" class="btn-secondary" style="padding:8px 12px;font-size:9px;flex:1;text-align:center;">Client Portal</a>
+        <button class="btn-secondary" style="padding:8px 12px;font-size:9px;" onclick="adminLogout()">Logout</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN WORKSPACE ═══ -->
+  <main class="workspace">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">Neo Broadband Network Operations Center · NOC Admin v3.4</div>
+        <h1 id="pageTitle">Network Overview & <strong>Subscribers Cloud</strong></h1>
+      </div>
+      <div class="top-actions">
+        <button class="circle-btn" onclick="syncAdminData(true)" title="Fetch Live Telemetry">↻</button>
+        <button class="circle-btn" onclick="toast('NOC Status: 100% Core BGP Transit Operational')">◌</button>
+      </div>
+    </header>
+
+    <!-- ── 1. NOC DASHBOARD OVERVIEW ── -->
+    <section class="page active" id="adminOverview">
+      <div class="portal-hero">
+        <div class="status-pill"><span class="status-dot"></span> Core Backbone Online · 400 Gbps Link</div>
+        <h2>ISP Network Command & <strong>Subscriber Telemetry</strong></h2>
+        <p>Real-time control over provisioned bandwidth, fiber nodes, subscriber billing ledgers, and priority ticket routing.</p>
+      </div>
+
+      <div class="grid stats-4">
+        <div class="card">
+          <div class="card-label">Active Subscribers</div>
+          <div class="stat-value" id="statTotalUsers">0</div>
+          <div class="stat-meta">Cloud RADIUS provisioned</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Total Monthly Recurring</div>
+          <div class="stat-value" id="statTotalMRR">A$0.00</div>
+          <div class="stat-meta">AUD Billing Portfolio</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Aggregate Bandwidth</div>
+          <div class="stat-value" id="statAggregateUsage">0.0 <small>TB</small></div>
+          <div class="stat-meta">Cycle volumetric total</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Open NOC Tickets</div>
+          <div class="stat-value" id="statOpenTickets" style="color:var(--accent-gold);">0</div>
+          <div class="stat-meta">Priority customer queue</div>
+        </div>
+      </div>
+
+      <div class="grid two-col">
+        <div class="card">
+          <div class="card-head">
+            <h3>Recent Subscriber Activity</h3>
+            <button class="btn-action" onclick="document.querySelector('[data-page=adminSubscribers]').click()">View All</button>
+          </div>
+          <div class="table-wrap">
+            <table class="portal-table" id="recentUsersTable">
+              <thead>
+                <tr><th>ID</th><th>Subscriber</th><th>Plan</th><th>IP Node</th><th>Status</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>NOC Quick Operations</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn-primary" onclick="openNewCustomerModal()">+ Provision New Subscriber</button>
+            <button class="btn-secondary" onclick="triggerNodeSync()">Execute RADIUS Cloud Resync</button>
+            <button class="btn-secondary" onclick="generateBulkCycleInvoices()">Generate Monthly Billing Cycle</button>
+            <button class="btn-secondary" onclick="resetDatabaseToDefault()">Reset Demo DB to Factory Defaults</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. SUBSCRIBERS DATABASE ── -->
+    <section class="page" id="adminSubscribers">
+      <div class="portal-hero">
+        <div class="eyebrow">Cloud RADIUS Directory</div>
+        <h2>Subscriber Database & <strong>Line Provisioning</strong></h2>
+        <p>Manage, inspect, configure speed tiers, static IP routes, and NTD parameters for all connected customers.</p>
+      </div>
+
+      <div class="card">
+        <div class="search-bar">
+          <input type="text" id="custSearchInput" placeholder="Search by Customer ID, Name, Email, or IP..." onkeyup="filterSubscribersTable()">
+          <button class="btn-primary" onclick="openNewCustomerModal()">+ New Subscriber</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="portal-table" id="subscribersTable">
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Subscriber Name</th>
+                <th>Email / Contact</th>
+                <th>Plan Tier</th>
+                <th>Speed (Down/Up)</th>
+                <th>Current Usage</th>
+                <th>Balance</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. BILLING & INVOICES MANAGEMENT ── -->
+    <section class="page" id="adminBilling">
+      <div class="portal-hero">
+        <div class="eyebrow">Financial Accounts & AUD Invoices</div>
+        <h2>Automated Tax Invoicing & <strong>Ledger Control</strong></h2>
+        <p>Oversee client invoices, audit paid and pending subscriptions, and issue new billing receipts.</p>
+      </div>
+
+      <div class="grid two-col" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="card-head"><h3>Generate Manual Invoice</h3></div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Select Subscriber</label>
+              <select id="invSubSelect"></select>
+            </div>
+            <div class="field">
+              <label>Billing Cycle / Title</label>
+              <input id="invCycleInput" placeholder="e.g. September 2026">
+            </div>
+            <div class="field">
+              <label>Amount (AUD)</label>
+              <input id="invAmountInput" placeholder="85.00">
+            </div>
+            <div class="field">
+              <label>Payment Status</label>
+              <select id="invStatusSelect">
+                <option value="Unpaid">Unpaid</option>
+                <option value="Paid">Paid</option>
+              </select>
+            </div>
+            <div class="field full">
+              <button class="btn-primary" style="width:100%;" onclick="issueManualInvoice()">Issue & Commit Invoice</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Global Billing Summary</h3></div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div class="card-label">Total Outstanding Balance</div>
+              <div class="stat-value" id="totalOutstandingVal" style="color:var(--accent-gold);">A$0.00</div>
+            </div>
+            <div>
+              <div class="card-label">Invoices in System</div>
+              <div class="stat-value" id="totalInvoicesCount">0</div>
+            </div>
+            <button class="btn-secondary" onclick="markAllInvoicesPaid()">Mark All Open Invoices Paid</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>All Subscriber Invoices</h3></div>
+        <div class="table-wrap">
+          <table class="portal-table" id="allInvoicesTable">
+            <thead>
+              <tr>
+                <th>Invoice Ref</th>
+                <th>Customer ID</th>
+                <th>Subscriber Name</th>
+                <th>Billing Cycle</th>
+                <th>Plan Coverage</th>
+                <th>Amount (AUD)</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. PLAN MATRIX INVENTORY ── -->
+    <section class="page" id="adminPlans">
+      <div class="portal-hero">
+        <div class="eyebrow">Product & Provisioning Catalog</div>
+        <h2>Speed Tier Inventory & <strong>Pricing Matrix</strong></h2>
+        <p>Live inventory of residential, business, and enterprise Ethernet fiber plans configured for portal subscription.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Active Network Plans</h3>
+          <button class="btn-action" onclick="toast('Plan catalog synced with index.html matrix')">Catalog Active</button>
+        </div>
+        <div class="table-wrap">
+          <table class="portal-table" id="planInventoryTable">
+            <thead>
+              <tr>
+                <th>Plan Key</th>
+                <th>Display Name</th>
+                <th>Category</th>
+                <th>Downlink (Mbps)</th>
+                <th>Uplink (Mbps)</th>
+                <th>Monthly Price</th>
+                <th>Provisioned Users</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. POP NODES & NETWORK TELEMETRY ── -->
+    <section class="page" id="adminNodes">
+      <div class="portal-hero">
+        <div class="eyebrow">Australian Infrastructure POPs</div>
+        <h2>Edge Nodes & <strong>Fiber Loop Diagnostics</strong></h2>
+      </div>
+
+      <div class="grid three-col">
+        <div class="card">
+          <div class="card-label">SYD-01 (Sydney Central)</div>
+          <div class="stat-value" style="font-size:1.6rem;color:#48bb78;">99.998%</div>
+          <div class="stat-meta">Transit: Equinix SY4 · 1.2ms Avg Latency</div>
+          <button class="btn-action" style="margin-top:16px;width:100%;" onclick="toast('Optical loop SYD-01: Health OK')">Test Loop</button>
+        </div>
+
+        <div class="card">
+          <div class="card-label">MEL-02 (Melbourne Core)</div>
+          <div class="stat-value" style="font-size:1.6rem;color:#48bb78;">100.0%</div>
+          <div class="stat-meta">Transit: NextDC M1 · 1.8ms Avg Latency</div>
+          <button class="btn-action" style="margin-top:16px;width:100%;" onclick="toast('Optical loop MEL-02: Health OK')">Test Loop</button>
+        </div>
+
+        <div class="card">
+          <div class="card-label">BNE-01 (Brisbane Edge)</div>
+          <div class="stat-value" style="font-size:1.6rem;color:#48bb78;">99.995%</div>
+          <div class="stat-meta">Transit: NextDC B2 · 3.1ms Avg Latency</div>
+          <button class="btn-action" style="margin-top:16px;width:100%;" onclick="toast('Optical loop BNE-01: Health OK')">Test Loop</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-head"><h3>Live Core Gateway Packet Flow</h3></div>
+        <div style="font-family:monospace;font-size:11px;color:var(--slate-light);line-height:1.8;background:rgba(15,17,21,0.7);padding:20px;border-radius:12px;border:1px solid var(--panel-border);">
+          [SYD-CORE-01] BGP Peer 13335 (Cloudflare): ESTABLISHED (Prefixes: 924,102)<br>
+          [SYD-CORE-01] BGP Peer 15169 (Google Edge): ESTABLISHED (Prefixes: 812,400)<br>
+          [MEL-CORE-01] nbn® NNI Aggregation Ring 04: Optimal Optical Power (-18.2 dBm)<br>
+          [NOC-RADIUS] Cloud AAA Database synced across 5 Australian Edge Clusters.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. NOC PRIORITY SUPPORT TICKETS ── -->
+    <section class="page" id="adminTickets">
+      <div class="portal-hero">
+        <div class="eyebrow">Priority Engineering Desk</div>
+        <h2>Active NOC Support Queue & <strong>Escalations</strong></h2>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Subscriber Help Desk Queue</h3></div>
+        <div class="table-wrap">
+          <table class="portal-table" id="adminTicketsTable">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Subscriber ID</th>
+                <th>Subscriber Name</th>
+                <th>Subject / Query</th>
+                <th>Created</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast-msg" id="toast"></div>
+
+<!-- ═══ ADMIN BACKEND ORCHESTRATOR & SYNC SCRIPT ═══ -->
+<script>
+/**
+ * NEO BROADBAND NOC ADMIN ENGINE
+ * Syncs bi-directionally with localStorage['neo_subscriber_db']
+ */
+
+const defaultStore = {
+  "NEO-98210": {
+    name: "Johnathan Smith",
+    email: "john.smith@sydneytech.com.au",
+    pass: "broadband123",
+    phone: "+61 412 890 123",
+    address: "Level 14, 201 Sussex St, Sydney NSW 2000, Australia",
+    planName: "Regular Plan",
+    planSpeed: "500 Mbps",
+    upSpeed: "50 Mbps",
+    downSpeed: "500 Mbps",
+    balance: "A$85.00",
+    dueDate: "15 September 2026",
+    ipAddress: "103.24.18.92",
+    ntdId: "NTD-AU-889104-X",
+    currentUsageGB: 428,
+    trafficWeekly: [45, 62, 58, 80, 95, 110, 88],
+    monthlyTrend: [380, 410, 460, 510, 480, 530, 428, 0, 0, 0, 0, 0],
+    invoices: [
+      { id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Unpaid" },
+      { id: "INV-NEO-2026-07", cycle: "July 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" }
+    ],
+    tickets: [{ id: "TKT-8841", title: "Static IP Routing Configuration", status: "Resolved", date: "02 Aug 2026" }]
+  },
+  "NEO-11223": {
+    name: "Sarah Connor",
+    email: "sarah@example.com",
+    pass: "demo2026",
+    phone: "+61 400 111 222",
+    address: "10 Main St, Melbourne VIC 3000",
+    planName: "Ultra Plan",
+    planSpeed: "1000 Mbps",
+    upSpeed: "100 Mbps",
+    downSpeed: "1000 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.19.105",
+    ntdId: "NTD-AU-112233-X",
+    currentUsageGB: 850,
+    trafficWeekly: [120, 150, 90, 110, 140, 180, 160],
+    monthlyTrend: [800, 820, 790, 850, 910, 880, 850, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Ultra", amount: "A$99.00", status: "Paid" }],
+    tickets: []
+  },
+  "NEO-33445": {
+    name: "Acme Corp",
+    email: "it@acmecorp.com.au",
+    pass: "demo2026",
+    phone: "+61 2 9876 5432",
+    address: "50 George St, Sydney NSW 2000",
+    planName: "Business 1000/400 Plan",
+    planSpeed: "1000 Mbps",
+    upSpeed: "400 Mbps",
+    downSpeed: "1000 Mbps",
+    balance: "A$145.00",
+    dueDate: "20 September 2026",
+    ipAddress: "103.24.20.10",
+    ntdId: "NTD-AU-445566-X",
+    currentUsageGB: 2100,
+    trafficWeekly: [400, 450, 420, 480, 500, 100, 80],
+    monthlyTrend: [1800, 1950, 2050, 2200, 2150, 2300, 2100, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Business 1000/400", amount: "A$145.00", status: "Unpaid" }],
+    tickets: [{ id: "TKT-9922", title: "BGP Routing Query", status: "In NOC Queue", date: "21 Aug 2026" }]
+  },
+  "NEO-55667": {
+    name: "David Miller",
+    email: "david.m@example.com",
+    pass: "demo2026",
+    phone: "+61 455 666 777",
+    address: "22 King St, Brisbane QLD 4000",
+    planName: "Basic Plan",
+    planSpeed: "25 Mbps",
+    upSpeed: "10 Mbps",
+    downSpeed: "25 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.21.55",
+    ntdId: "NTD-AU-778899-X",
+    currentUsageGB: 45,
+    trafficWeekly: [5, 8, 6, 4, 7, 10, 5],
+    monthlyTrend: [40, 45, 38, 50, 42, 48, 45, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Basic", amount: "A$60.00", status: "Paid" }],
+    tickets: []
+  },
+  "NEO-77889": {
+    name: "Global Tech",
+    email: "admin@globaltech.com.au",
+    pass: "demo2026",
+    phone: "+61 3 8888 9999",
+    address: "100 Collins St, Melbourne VIC 3000",
+    planName: "Enterprise 500/500",
+    planSpeed: "500 Mbps",
+    upSpeed: "500 Mbps",
+    downSpeed: "500 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.22.1",
+    ntdId: "NTD-AU-990011-X",
+    currentUsageGB: 3500,
+    trafficWeekly: [600, 650, 620, 680, 700, 200, 150],
+    monthlyTrend: [3100, 3200, 3400, 3350, 3600, 3550, 3500, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Enterprise 500", amount: "A$469.00", status: "Paid" }],
+    tickets: []
+  }
+};
+
+const planMatrix = {
+  'basic': { name: 'Basic', cat: 'Residential', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00' },
+  'regular': { name: 'Regular', cat: 'Residential', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00' },
+  'ultra': { name: 'Ultra', cat: 'Residential', down: '1000 Mbps', up: '100 Mbps', price: 'A$99.00' },
+  'pro': { name: 'Pro', cat: 'Residential', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00' },
+  'pro-plus': { name: 'Pro +', cat: 'Residential', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00' },
+  'ultra-plus': { name: 'Ultra +', cat: 'Residential', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00' },
+  'thunderbolt': { name: 'Thunderbolt', cat: 'Residential', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00' },
+  'biz-50': { name: 'Business 50/20', cat: 'Business', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00' },
+  'biz-100': { name: 'Business 100/40', cat: 'Business', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00' },
+  'biz-250': { name: 'Business 250/100', cat: 'Business', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00' },
+  'biz-500-50': { name: 'Business 500/50', cat: 'Business', down: '500 Mbps', up: '50 Mbps', price: 'A$90.00' },
+  'biz-500-200': { name: 'Business 500/200', cat: 'Business', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00' },
+  'biz-1000': { name: 'Business 1000/400', cat: 'Business', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00' },
+  'ent-100': { name: 'Enterprise 100/100', cat: 'Enterprise', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00' },
+  'ent-250': { name: 'Enterprise 250/250', cat: 'Enterprise', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00' },
+  'ent-500': { name: 'Enterprise 500/500', cat: 'Enterprise', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00' }
+};
+
+let subscriberStore = getStoredData();
+
+function getStoredData() {
+  const saved = localStorage.getItem('neo_subscriber_db');
+  return saved ? JSON.parse(saved) : defaultStore;
+}
+
+function persistStore() {
+  localStorage.setItem('neo_subscriber_db', JSON.stringify(subscriberStore));
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Admin Authentication ──
+function authenticateAdmin() {
+  const u = document.getElementById('adminUserInput').value.trim();
+  const p = document.getElementById('adminPassInput').value.trim();
+
+  if ((u === 'admin' || u === 'admin@neobroadband.com.au') && (p === 'admin2026' || p === 'admin')) {
+    sessionStorage.setItem('neo_admin_session', 'authenticated');
+    document.getElementById('adminLoginOverlay').style.display = 'none';
+    toast('Authenticated as NOC Lead Engineer');
+    syncAdminData();
+  } else {
+    toast('Authentication Error: Invalid NOC credentials.');
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem('neo_admin_session');
+  window.location.reload();
+}
+
+// Page Navigation
+const pageTitles = {
+  adminOverview: 'Network Overview & <strong>Subscribers Cloud</strong>',
+  adminSubscribers: 'Subscriber Database & <strong>Line Provisioning</strong>',
+  adminBilling: 'Automated Tax Invoicing & <strong>Ledger Control</strong>',
+  adminPlans: 'Speed Tier Inventory & <strong>Pricing Matrix</strong>',
+  adminNodes: 'Australian Core POPs & <strong>Node Diagnostics</strong>',
+  adminTickets: 'Priority Engineering Desk & <strong>NOC Queue</strong>'
+};
+
+document.querySelectorAll('.portal-nav button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.portal-nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(btn.dataset.page).classList.add('active');
+    document.getElementById('pageTitle').innerHTML = pageTitles[btn.dataset.page];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+});
+
+// ── Main Data Synchronization ──
+function syncAdminData(showToast = false) {
+  subscriberStore = getStoredData();
+  if (showToast) toast('Syncing with Cloud RADIUS & POP Nodes...');
+
+  const userKeys = Object.keys(subscriberStore);
+  let totalMRR = 0;
+  let totalUsageGB = 0;
+  let openTicketsCount = 0;
+  let allInvoices = [];
+  let allTickets = [];
+
+  userKeys.forEach(k => {
+    const u = subscriberStore[k];
+    const priceNum = parseFloat((u.balance || '0').replace(/[^0-9.]/g, '')) || 0;
+    totalMRR += priceNum;
+    totalUsageGB += (u.currentUsageGB || 0);
+
+    if (u.invoices) {
+      u.invoices.forEach(inv => {
+        allInvoices.push({ ...inv, custId: k, custName: u.name });
+      });
+    }
+
+    if (u.tickets) {
+      u.tickets.forEach(tkt => {
+        allTickets.push({ ...tkt, custId: k, custName: u.name });
+        if (tkt.status !== 'Resolved') openTicketsCount++;
+      });
+    }
+  });
+
+  // Overview Stats
+  document.getElementById('statTotalUsers').textContent = userKeys.length;
+  document.getElementById('statTotalMRR').textContent = `A$${totalMRR.toFixed(2)}`;
+  document.getElementById('statAggregateUsage').innerHTML = `${(totalUsageGB / 1000).toFixed(2)} <small>TB</small>`;
+  document.getElementById('statOpenTickets').textContent = openTicketsCount;
+
+  // Recent Users Table (Dashboard)
+  const recentTbody = document.querySelector('#recentUsersTable tbody');
+  recentTbody.innerHTML = userKeys.slice(0, 5).map(k => {
+    const u = subscriberStore[k];
+    return `
+      <tr>
+        <td><strong>${k}</strong></td>
+        <td>${u.name}</td>
+        <td>${u.planName}</td>
+        <td><code>${u.ipAddress}</code></td>
+        <td><span class="status-pill" style="margin:0;"><span class="status-dot"></span> Online</span></td>
+      </tr>
+    `;
+  }).join('');
+
+  // Full Subscribers Table
+  renderSubscribersTable();
+
+  // Invoices Table & Dropdowns
+  renderInvoicesTable(allInvoices);
+  populateInvoiceCustomerDropdown();
+
+  // Plan Inventory
+  renderPlanInventory();
+
+  // Tickets Table
+  renderAdminTickets(allTickets);
+}
+
+// ── Subscribers Operations ──
+function renderSubscribersTable(filterText = '') {
+  const tbody = document.querySelector('#subscribersTable tbody');
+  const keys = Object.keys(subscriberStore);
+
+  const filteredKeys = keys.filter(k => {
+    const u = subscriberStore[k];
+    const term = filterText.toLowerCase();
+    return k.toLowerCase().includes(term) ||
+           u.name.toLowerCase().includes(term) ||
+           u.email.toLowerCase().includes(term) ||
+           (u.ipAddress && u.ipAddress.includes(term));
+  });
+
+  if (filteredKeys.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--slate-warm);padding:24px;">No subscribers found matching filter.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filteredKeys.map(k => {
+    const u = subscriberStore[k];
+    return `
+      <tr>
+        <td><strong>${k}</strong></td>
+        <td>${u.name}</td>
+        <td>${u.email}<br><small style="color:var(--slate-warm);">${u.phone}</small></td>
+        <td>${u.planName}</td>
+        <td>↓ ${u.downSpeed || u.planSpeed} / ↑ ${u.upSpeed || 'N/A'}</td>
+        <td>${u.currentUsageGB || 0} GB</td>
+        <td><strong>${u.balance || 'A$0.00'}</strong></td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-action" onclick="openEditCustomerModal('${k}')">Edit / Provision</button>
+            <button class="btn-action gold" onclick="resetNodePulse('${k}')">Reset Port</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function filterSubscribersTable() {
+  const val = document.getElementById('custSearchInput').value;
+  renderSubscribersTable(val);
+}
+
+// ── Modal Form Handling ──
+function openEditCustomerModal(custId) {
+  const u = subscriberStore[custId];
+  if (!u) return;
+
+  document.getElementById('modalCustTitle').textContent = `Edit Subscriber (${custId})`;
+  document.getElementById('editCustId').value = custId;
+  document.getElementById('editName').value = u.name;
+  document.getElementById('editEmail').value = u.email;
+  document.getElementById('editPhone').value = u.phone;
+  document.getElementById('editDownSpeed').value = u.downSpeed || u.planSpeed;
+  document.getElementById('editUpSpeed').value = u.upSpeed || '50 Mbps';
+  document.getElementById('editBalance').value = u.balance;
+  document.getElementById('editIp').value = u.ipAddress;
+  document.getElementById('editNtd').value = u.ntdId;
+  document.getElementById('editAddress').value = u.address;
+
+  // Populate Plan selector
+  const planSelect = document.getElementById('editPlanSelect');
+  planSelect.innerHTML = Object.keys(planMatrix).map(pk => {
+    const p = planMatrix[pk];
+    const isSelected = u.planName.includes(p.name);
+    return `<option value="${pk}" ${isSelected ? 'selected' : ''}>${p.name} (${p.down}/${p.up}) - ${p.price}</option>`;
+  }).join('');
+
+  document.getElementById('customerModal').classList.add('open');
+}
+
+function openNewCustomerModal() {
+  const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
+  document.getElementById('modalCustTitle').textContent = `Provision New Subscriber (${newId})`;
+  document.getElementById('editCustId').value = newId;
+  document.getElementById('editName').value = "";
+  document.getElementById('editEmail').value = "";
+  document.getElementById('editPhone').value = "+61 400 000 000";
+  document.getElementById('editDownSpeed').value = "500 Mbps";
+  document.getElementById('editUpSpeed').value = "50 Mbps";
+  document.getElementById('editBalance').value = "A$85.00";
+  document.getElementById('editIp').value = "103.24.18." + Math.floor(10 + Math.random() * 200);
+  document.getElementById('editNtd').value = "NTD-AU-" + Math.floor(100000 + Math.random() * 900000) + "-X";
+  document.getElementById('editAddress').value = "Sydney NSW 2000";
+
+  const planSelect = document.getElementById('editPlanSelect');
+  planSelect.innerHTML = Object.keys(planMatrix).map(pk => {
+    const p = planMatrix[pk];
+    return `<option value="${pk}">${p.name} (${p.down}/${p.up}) - ${p.price}</option>`;
+  }).join('');
+
+  document.getElementById('customerModal').classList.add('open');
+}
+
+function closeCustModal() {
+  document.getElementById('customerModal').classList.remove('open');
+}
+
+function saveSubscriberChanges() {
+  const custId = document.getElementById('editCustId').value;
+  const name = document.getElementById('editName').value.trim();
+  const email = document.getElementById('editEmail').value.trim();
+
+  if (!name || !email) {
+    toast('Please provide a name and email.');
+    return;
+  }
+
+  const selectedPlanKey = document.getElementById('editPlanSelect').value;
+  const planInfo = planMatrix[selectedPlanKey];
+
+  if (!subscriberStore[custId]) {
+    // Creating brand new customer
+    subscriberStore[custId] = {
+      name: name,
+      email: email,
+      pass: "broadband123",
+      phone: document.getElementById('editPhone').value,
+      address: document.getElementById('editAddress').value,
+      planName: planInfo ? planInfo.name + " Plan" : "Custom Plan",
+      planSpeed: document.getElementById('editDownSpeed').value,
+      downSpeed: document.getElementById('editDownSpeed').value,
+      upSpeed: document.getElementById('editUpSpeed').value,
+      balance: document.getElementById('editBalance').value,
+      dueDate: "Active",
+      ipAddress: document.getElementById('editIp').value,
+      ntdId: document.getElementById('editNtd').value,
+      currentUsageGB: 0,
+      trafficWeekly: [0, 0, 0, 0, 0, 0, 0],
+      monthlyTrend: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      invoices: [{ id: `INV-${custId}-01`, cycle: "Initial Provisioning", plan: planInfo.name, amount: document.getElementById('editBalance').value, status: "Paid" }],
+      tickets: []
+    };
+  } else {
+    // Updating existing
+    const u = subscriberStore[custId];
+    u.name = name;
+    u.email = email;
+    u.phone = document.getElementById('editPhone').value;
+    u.address = document.getElementById('editAddress').value;
+    u.planName = planInfo ? planInfo.name + " Plan" : u.planName;
+    u.downSpeed = document.getElementById('editDownSpeed').value;
+    u.upSpeed = document.getElementById('editUpSpeed').value;
+    u.balance = document.getElementById('editBalance').value;
+    u.ipAddress = document.getElementById('editIp').value;
+    u.ntdId = document.getElementById('editNtd').value;
+  }
+
+  persistStore();
+  closeCustModal();
+  syncAdminData();
+  toast(`Subscriber ${custId} updated successfully.`);
+}
+
+function deleteSubscriber() {
+  const custId = document.getElementById('editCustId').value;
+  if (confirm(`Are you sure you want to permanently decommission subscriber ${custId}?`)) {
+    delete subscriberStore[custId];
+    persistStore();
+    closeCustModal();
+    syncAdminData();
+    toast(`Decommissioned subscriber ${custId}`);
+  }
+}
+
+function resetNodePulse(custId) {
+  toast(`Triggering remote NTD optical reset pulse for ${custId}...`);
+}
+
+// ── Invoicing Operations ──
+function renderInvoicesTable(allInvoices) {
+  const tbody = document.querySelector('#allInvoicesTable tbody');
+  let totalOutstanding = 0;
+
+  if (allInvoices.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--slate-warm);padding:20px;">No invoices generated.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = allInvoices.map(inv => {
+    const isPaid = inv.status === 'Paid';
+    if (!isPaid) {
+      const p = parseFloat((inv.amount || '0').replace(/[^0-9.]/g, '')) || 0;
+      totalOutstanding += p;
+    }
+    return `
+      <tr>
+        <td><strong>${inv.id}</strong></td>
+        <td>${inv.custId}</td>
+        <td>${inv.custName}</td>
+        <td>${inv.cycle}</td>
+        <td>${inv.plan}</td>
+        <td><strong>${inv.amount}</strong></td>
+        <td>
+          <span class="status-pill" style="margin:0;color:${isPaid ? '#48bb78' : 'var(--accent-gold)'};">
+            ${inv.status}
+          </span>
+        </td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-action" onclick="toggleInvoiceStatus('${inv.custId}', '${inv.id}')">
+              Mark ${isPaid ? 'Unpaid' : 'Paid'}
+            </button>
+            <a href="invoice.html?inv=${inv.id}" class="btn-action" style="text-decoration:none;">View</a>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  document.getElementById('totalOutstandingVal').textContent = `A$${totalOutstanding.toFixed(2)}`;
+  document.getElementById('totalInvoicesCount').textContent = allInvoices.length;
+}
+
+function populateInvoiceCustomerDropdown() {
+  const select = document.getElementById('invSubSelect');
+  select.innerHTML = Object.keys(subscriberStore).map(k => {
+    return `<option value="${k}">${k} — ${subscriberStore[k].name}</option>`;
+  }).join('');
+}
+
+function issueManualInvoice() {
+  const custId = document.getElementById('invSubSelect').value;
+  const cycle = document.getElementById('invCycleInput').value.trim() || 'Ad-Hoc Billing';
+  const amount = document.getElementById('invAmountInput').value.trim() || '85.00';
+  const status = document.getElementById('invStatusSelect').value;
+
+  const u = subscriberStore[custId];
+  if (!u) return;
+
+  const invId = `INV-${custId}-${Math.floor(1000 + Math.random() * 9000)}`;
+  if (!u.invoices) u.invoices = [];
+
+  u.invoices.unshift({
+    id: invId,
+    cycle: cycle,
+    plan: u.planName,
+    amount: `A$${amount}`,
+    status: status
+  });
+
+  if (status === 'Unpaid') {
+    u.balance = `A$${amount}`;
+  }
+
+  persistStore();
+  syncAdminData();
+  toast(`Invoice ${invId} dispatched to subscriber.`);
+}
+
+function toggleInvoiceStatus(custId, invId) {
+  const u = subscriberStore[custId];
+  if (!u || !u.invoices) return;
+
+  const inv = u.invoices.find(i => i.id === invId);
+  if (inv) {
+    inv.status = inv.status === 'Paid' ? 'Unpaid' : 'Paid';
+    if (inv.status === 'Paid') u.balance = 'A$0.00';
+    persistStore();
+    syncAdminData();
+    toast(`Invoice ${invId} status updated to ${inv.status}`);
+  }
+}
+
+function markAllInvoicesPaid() {
+  Object.keys(subscriberStore).forEach(k => {
+    const u = subscriberStore[k];
+    if (u.invoices) {
+      u.invoices.forEach(i => i.status = 'Paid');
+    }
+    u.balance = 'A$0.00';
+  });
+  persistStore();
+  syncAdminData();
+  toast('All active invoices updated to PAID');
+}
+
+// ── Plans Inventory Rendering ──
+function renderPlanInventory() {
+  const tbody = document.querySelector('#planInventoryTable tbody');
+  const userCounts = {};
+
+  Object.values(subscriberStore).forEach(u => {
+    const name = u.planName || '';
+    userCounts[name] = (userCounts[name] || 0) + 1;
+  });
+
+  tbody.innerHTML = Object.keys(planMatrix).map(k => {
+    const p = planMatrix[k];
+    const assignedCount = Object.keys(userCounts).filter(un => un.toLowerCase().includes(p.name.toLowerCase())).reduce((acc, curr) => acc + userCounts[curr], 0);
+
+    return `
+      <tr>
+        <td><code>${k}</code></td>
+        <td><strong>${p.name}</strong></td>
+        <td><span class="status-pill" style="margin:0;">${p.cat}</span></td>
+        <td>${p.down}</td>
+        <td>${p.up}</td>
+        <td><strong>${p.price}</strong> /mo</td>
+        <td>${assignedCount} Active Users</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ── Support Tickets ──
+function renderAdminTickets(allTickets) {
+  const tbody = document.querySelector('#adminTicketsTable tbody');
+  if (allTickets.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--slate-warm);padding:24px;">No active support tickets. NOC queue is clean.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = allTickets.map(t => {
+    return `
+      <tr>
+        <td><strong>${t.id}</strong></td>
+        <td>${t.custId}</td>
+        <td>${t.custName}</td>
+        <td>${t.title}</td>
+        <td>${t.date}</td>
+        <td><span class="status-pill" style="margin:0;color:${t.status === 'Resolved' ? '#48bb78' : 'var(--accent-gold)'};">${t.status}</span></td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-action" onclick="updateTicketStatus('${t.custId}', '${t.id}', 'Investigating')">Investigating</button>
+            <button class="btn-action gold" onclick="updateTicketStatus('${t.custId}', '${t.id}', 'Resolved')">Resolve</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function updateTicketStatus(custId, tktId, newStatus) {
+  const u = subscriberStore[custId];
+  if (!u || !u.tickets) return;
+
+  const tkt = u.tickets.find(t => t.id === tktId);
+  if (tkt) {
+    tkt.status = newStatus;
+    persistStore();
+    syncAdminData();
+    toast(`Ticket ${tktId} updated to ${newStatus}`);
+  }
+}
+
+// ── NOC Batch Operations ──
+function generateBulkCycleInvoices() {
+  Object.keys(subscriberStore).forEach(k => {
+    const u = subscriberStore[k];
+    const invId = `INV-${k}-${new Date().getMonth() + 1}-2026`;
+    if (!u.invoices) u.invoices = [];
+    u.invoices.unshift({
+      id: invId,
+      cycle: "September 2026",
+      plan: u.planName,
+      amount: u.balance || "A$85.00",
+      status: "Unpaid"
+    });
+  });
+  persistStore();
+  syncAdminData();
+  toast('Automated monthly billing batch generated for all subscribers.');
+}
+
+function triggerNodeSync() {
+  toast('RADIUS BGP routing tables synced across Sydney & Melbourne NOCs.');
+}
+
+function resetDatabaseToDefault() {
+  if (confirm("Reset subscriber store to default sample accounts?")) {
+    subscriberStore = JSON.parse(JSON.stringify(defaultStore));
+    persistStore();
+    syncAdminData();
+    toast('Cloud database reset to default demo dataset.');
+  }
+}
+
+// Mouse Follower
+(function() {
+  const pageGrid = document.getElementById('pageGrid');
+  if (!pageGrid) return;
+  let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2, currentX = targetX, currentY = targetY;
+  window.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; });
+  function renderGridLight() {
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
+    pageGrid.style.setProperty('--mx', `${currentX}px`);
+    pageGrid.style.setProperty('--my', `${currentY}px`);
+    requestAnimationFrame(renderGridLight);
+  }
+  renderGridLight();
+})();
+
+// Bootstrap
+window.onload = () => {
+  const isAuthed = sessionStorage.getItem('neo_admin_session');
+  if (isAuthed === 'authenticated') {
+    document.getElementById('adminLoginOverlay').style.display = 'none';
+    syncAdminData();
+  }
+};
+</script>
+</body>
+</html>
