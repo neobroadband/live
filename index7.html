@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Broadband Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<style>
+  /* Navigation Logo Styling */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .nav-logo {
+    max-height: 100px; /* Adjust this value to change the logo size */
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Responsive grid adjustment for catalog layout */
+  .pricing-grid-7, .pricing-grid-6, .pricing-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+  
+  /* Plan Category Section Styling */
+  .plan-category {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--panel-border);
+  }
+  .plan-category:first-of-type {
+    margin-top: 40px;
+    border-top: none;
+  }
+  .category-title {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--ivory);
+    margin-bottom: 8px;
+  }
+  .category-desc {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--slate-light);
+    margin-bottom: 30px;
+  }
+  .coming-soon-box {
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    text-align: center;
+    background: var(--panel-bg);
+    border: 1px dashed rgba(176,184,196,0.2);
+    border-radius: 28px;
+    color: var(--slate-warm);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="atmosphere"></div>
+
+<!-- Nav -->
+<nav class="top-nav" id="topNav">
+  <a href="#" class="nav-brand">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="customer-portal.html">Customer Portal</a></li>
+    <li><a href="admin-portal.html">Admin Portal</a></li>
+    <li><a href="#pricing">Broadband Plans</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#contact">Contact Us</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="toggle-bar"></span><span class="toggle-bar"></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-links">
+      <a href="#" class="mobile-menu-link" data-index="01">Home</a>
+      <a href="#pricing" class="mobile-menu-link" data-index="02">Broadband Plans</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="03">Customer Portal</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Portal</a>
+      <a href="#faq" class="mobile-menu-link" data-index="05">FAQ</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Connecting Lives, Powering Futures</span>
+    </div>
+    <h1>High-Speed Australian Fiber &</h1><br><em><h2>Broadband Solutions</h2></em>
+    <p class="hero-sub">
+      Experience lightning-fast speeds, zero throttling, and reliable unlimited fiber connectivity across Australia for your home and business.
+    </p>
+    <div class="hero-ctas">
+      <a href="#pricing" class="btn-primary">Explore Pricing Matrix</a>
+      <a href="customer-portal.html" class="btn-secondary">Customer Portal</a>
+    </div>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ MASTER PRICING SECTION ═══ -->
+  <section class="section section-center" id="pricing">
+    <p class="section-tag reveal">Service Subscriptions</p>
+    <h2 class="section-title reveal reveal-d1">Select the perfect connection for <strong>your needs</strong></h2>
+    <p class="section-body reveal reveal-d2">All prices in Australian Dollars (AUD). Truly unlimited data across all residential tiers.</p>
+
+    <!-- Global Toggle for all plans -->
+    <div class="pricing-toggle reveal reveal-d3">
+      <span class="pricing-toggle-label active" id="monthlyLabel">Monthly</span>
+      <div class="toggle-switch" id="pricingToggle" role="switch" aria-checked="false" tabindex="0"></div>
+      <span class="pricing-toggle-label" id="annualLabel">Annual</span>
+      <span class="save-badge" id="saveBadge">Save 20%</span>
+    </div>
+
+    <!-- ── RESIDENTIAL PLANS ── -->
+    <div class="plan-category reveal">
+      <h3 class="category-title">Residential Plans</h3>
+      <p class="category-desc">Optimized for households, ultra-HD streaming, gaming, and remote work.</p>
+      
+      <div class="pricing-grid-7">
+        <!-- Plan 1: Basic -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Basic</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">60</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$720 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">48</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$576 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">25Mbps Download | 10Mbps Upload</p>
+          <ul class="pricing-features">
+            <li>Typical evening speed: 25/8 Mbps</li>
+            <li>Great for 2 devices at the same time</li>
+            <li>Light internet use (Light HD streaming)</li>
+            <li>Unlimited Data</li>
+          </ul>
+          <a href="payment.html?plan=basic" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Plan 2: Regular -->
+        <div class="pricing-card">
+          <div class="pricing-badge">Recommended</div>
+          <div class="pricing-tier">Regular</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">85</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,020 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">68</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$816 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">500Mbps Download | 50Mbps Upload</p>
+          <ul class="pricing-features">
+            <li>Typical evening speed: 500/42 Mbps</li>
+            <li>Great for 6+ devices at the same time</li>
+            <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+            <li>Unlimited Data</li>
+          </ul>
+          <a href="payment.html?plan=regular" class="btn-primary">Subscribe Now</a>
+        </div>
+
+        <!-- Plan 3: Ultra -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Ultra</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">99</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,188 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">79</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$948 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">1000Mbps Download | 100Mbps Upload</p>
+          <ul class="pricing-features">
+            <li>Typical evening speed: 880/84 Mbps</li>
+            <li>Great for 6+ devices at the same time</li>
+            <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+            <li>Unlimited Data</li>
+          </ul>
+          <a href="payment.html?plan=ultra" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Plan 4: Pro -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Pro</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">95</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,140 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">76</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$912 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">250Mbps Download | 100Mbps Upload</p>
+          <ul class="pricing-features">
+            <li><strong>High Upload Speed</strong></li>
+            <li>Typical evening speed: 250/84 Mbps</li>
+            <li>Great for 4+ devices at the same time</li>
+            <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+          </ul>
+          <a href="payment.html?plan=pro" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Plan 5: Pro + -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Pro +</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">115</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,380 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">92</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,104 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">500Mbps Download | 200Mbps Upload</p>
+          <ul class="pricing-features">
+            <li><strong>High Upload Speed</strong></li>
+            <li>Typical evening speed: 500/170 Mbps</li>
+            <li>Great for 6+ devices at the same time</li>
+            <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+          </ul>
+          <a href="payment.html?plan=pro-plus" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Plan 6: Ultra + -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Ultra +</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">135</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,620 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">108</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,296 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">1000Mbps Download | 400Mbps Upload</p>
+          <ul class="pricing-features">
+            <li><strong>High Upload Speed</strong></li>
+            <li>Typical evening speed: 880/336 Mbps</li>
+            <li>Great for 6+ devices at the same time</li>
+            <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+          </ul>
+          <a href="payment.html?plan=ultra-plus" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Plan 7: Thunderbolt -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Thunderbolt</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">210</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$2,520 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">168</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$2,016 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">2000Mbps Download | 500Mbps Upload</p>
+          <ul class="pricing-features">
+            <li><strong>High Upload Speed</strong></li>
+            <li>Typical evening speed: 1700/425 Mbps</li>
+            <li>Great for 6+ devices at the same time</li>
+            <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+          </ul>
+          <a href="payment.html?plan=thunderbolt" class="btn-secondary">Subscribe Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BUSINESS PLANS ── -->
+    <div class="plan-category reveal">
+      <h3 class="category-title">Business nbn® Internet Plans</h3>
+      <p class="category-desc">High-reliability connectivity with priority routing, static IP addresses, and business-grade SLAs.</p>
+      
+      <div class="pricing-grid-6">
+        
+        <!-- Business Plan 1 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">50/20 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">89</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,068 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">71</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$852 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Typical Speed: 47 Mbps Down | 17 Mbps Up</p>
+          <ul class="pricing-features">
+            <li>Small businesses with 1-5 staff</li>
+            <li>Static IP included</li>
+            <li>Unlimited data</li>
+            <li>No lock-in contract</li>
+            <li>24/7 support</li>
+          </ul>
+          <a href="payment.html?plan=biz-50" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Business Plan 2 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">100/40 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">95</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,140 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">76</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$912 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Typical Speed: 90 Mbps Down | 34 Mbps Up</p>
+          <ul class="pricing-features">
+            <li>Small offices with 5-10 employees</li>
+            <li>Static IP included</li>
+            <li>Unlimited data</li>
+            <li>No lock-in contract</li>
+            <li>24/7 support</li>
+          </ul>
+          <a href="payment.html?plan=biz-100" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Business Plan 3 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">250/100 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">95</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,140 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">76</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$912 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Typical Speed: 232 Mbps Down | 85 Mbps Up</p>
+          <ul class="pricing-features">
+            <li>Small to medium offices (<20 staff)</li>
+            <li>Static IP included</li>
+            <li>Unlimited data</li>
+            <li>No lock-in contract</li>
+            <li>24/7 support</li>
+          </ul>
+          <a href="payment.html?plan=biz-250" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Business Plan 4 -->
+        <div class="pricing-card">
+          <div class="pricing-badge">Recommended</div>
+          <div class="pricing-tier">500/50 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">90</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,080 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">72</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$864 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Typical Speed: 425 Mbps Down | 42 Mbps Up</p>
+          <ul class="pricing-features">
+            <li>Medium offices with 20-35 staff</li>
+            <li>Static IP included</li>
+            <li>Unlimited data</li>
+            <li>No lock-in contract</li>
+            <li>24/7 support</li>
+          </ul>
+          <a href="payment.html?plan=biz-500-50" class="btn-primary">Subscribe Now</a>
+        </div>
+
+        <!-- Business Plan 5 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">500/200 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">115</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,380 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">92</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,104 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Typical Speed: 425 Mbps Down | 170 Mbps Up</p>
+          <ul class="pricing-features">
+            <li>Medium offices with 20-35 staff</li>
+            <li>Static IP included</li>
+            <li>Unlimited data</li>
+            <li>No lock-in contract</li>
+            <li>24/7 support</li>
+          </ul>
+          <a href="payment.html?plan=biz-500-200" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Business Plan 6 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">1000/400 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">145</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,740 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">116</span>
+                  <span class="price-period">/month</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$1,392 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Typical Speed: 894 Mbps Down | 340 Mbps Up</p>
+          <ul class="pricing-features">
+            <li>Larger offices up to 50 staff</li>
+            <li>Static IP included</li>
+            <li>Unlimited data</li>
+            <li>No lock-in contract</li>
+            <li>24/7 support</li>
+          </ul>
+          <a href="payment.html?plan=biz-1000" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── ENTERPRISE SOLUTIONS ── -->
+    <div class="plan-category reveal">
+      <h3 class="category-title">nbn® Enterprise Ethernet</h3>
+      <p class="category-desc">Dedicated fiber links, multi-site SD-WAN architectures, and bespoke bandwidth provisioning.</p>
+      
+      <div class="pricing-grid-4">
+        
+        <!-- Enterprise Plan 1 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">100/100 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">399</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$4,788 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">319</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$3,828 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Suitable for small offices or businesses that require a dependable connection.</p>
+          <ul class="pricing-features">
+            <li>Symmetric, dedicated bandwidth</li>
+            <li>12 hour SLA restoration target</li>
+            <li>Optional 5G or 4G backup</li>
+          </ul>
+          <a href="payment.html?plan=ent-100" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Enterprise Plan 2 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">250/250 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">399</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$4,788 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">319</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$3,828 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Suitable for smaller offices with requirements for cloud file sharing and video conferencing.</p>
+          <ul class="pricing-features">
+            <li>Symmetric, dedicated bandwidth</li>
+            <li>12 hour SLA restoration target</li>
+            <li>Optional 5G or 4G backup</li>
+          </ul>
+          <a href="payment.html?plan=ent-250" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Enterprise Plan 3 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">500/500 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">469</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$5,628 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">375</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$4,500 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Suitable for medium offices with requirements for cloud file sharing and video conferencing.</p>
+          <ul class="pricing-features">
+            <li>Symmetric, dedicated bandwidth</li>
+            <li>4 hour SLA restoration target</li>
+            <li>Optional 5G or 4G backup</li>
+          </ul>
+          <a href="payment.html?plan=ent-500" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+        <!-- Enterprise Plan 4 -->
+        <div class="pricing-card">
+          <div class="pricing-tier">1000/1000 Mbps</div>
+          <div class="pricing-prices">
+            <div class="price-option monthly active">
+              <div>
+                <div class="price-label">Monthly</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">699</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$8,388 /yr</div>
+            </div>
+            <div class="price-option annual">
+              <div>
+                <div class="price-label">Annual</div>
+                <div class="price-option-left">
+                  <span class="price-currency">A$</span>
+                  <span class="price-amount">559</span>
+                  <span class="price-period">/month (ex. GST)</span>
+                </div>
+              </div>
+              <div class="price-yearly">A$6,708 /yr</div>
+            </div>
+          </div> 
+          <p class="pricing-desc">Suitable for larger offices with bandwidth intensive use cases such as very large file uploads.</p>
+          <ul class="pricing-features">
+            <li>Symmetric, dedicated bandwidth</li>
+            <li>4 hour SLA restoration target</li>
+            <li>Optional 5G or 4G backup</li>
+          </ul>
+          <a href="payment.html?plan=ent-1000" class="btn-secondary">Subscribe Now</a>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ FOOTER CTA ═══ -->
+  <section class="footer-cta" id="cta">
+    <p class="section-tag reveal">Ready to Connect?</p>
+    <h2 class="section-title reveal reveal-d1">Experience faster broadband<br><strong>starting today</strong></h2>
+    <div class="footer-ctas reveal reveal-d3">
+      <a href="#pricing" class="btn-primary">Choose Your Plan</a>
+      <a href="customer-portal.html" class="btn-secondary">Customer Portal</a>
+    </div>
+
+    <div class="footer-bar reveal reveal-d4" style="margin-top: 80px;">
+      <div class="footer-brand">Neo Broadband &mdash; Australia</div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Service Terms</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="templatemo-621-luminary-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Secure Payment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<style>
+  /* Base page styles to match index.html */
+  .page-grid-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    --mx: 50vw;
+    --my: 50vh;
+    background-image:
+      linear-gradient(to right, rgba(156, 163, 175, 0.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(156, 163, 175, 0.18) 1px, transparent 1px);
+    background-size: 100px 100px;
+    background-position: center center;
+    -webkit-mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  /* Form Container & Custom Styling */
+  .payment-section {
+    padding: 160px 0 100px;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .checkout-panel {
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 36px;
+    padding: 50px 40px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12px 60px rgba(0,0,0,0.15);
+  }
+
+  .checkout-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .selected-plan-box {
+    background: rgba(156, 163, 175, 0.05);
+    border: 1px dashed var(--panel-border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .plan-label {
+    font-size: 10px; 
+    font-weight: 600; 
+    letter-spacing: 0.2em; 
+    text-transform: uppercase;
+    color: var(--slate-warm); 
+    margin-bottom: 8px;
+  }
+
+  .plan-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ivory);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate-light);
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    width: 100%;
+    background: rgba(15, 17, 21, 0.6);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: var(--ivory);
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.4s var(--silk-ease), box-shadow 0.4s var(--silk-ease);
+  }
+
+  .form-control:focus {
+    border-color: var(--silver);
+    box-shadow: 0 0 12px rgba(176,184,196,0.1);
+  }
+
+  .form-control::placeholder {
+    color: var(--slate-warm);
+    opacity: 0.5;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--panel-border);
+    margin: 36px 0;
+  }
+
+  .btn-submit {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Responsive fixes for mobile form */
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .checkout-panel {
+      padding: 40px 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="atmosphere"></div>
+
+<!-- Background Grid with Cursor Following -->
+<div class="page-grid-overlay" id="pageGrid"></div>
+
+<!-- Nav -->
+<nav class="top-nav" id="topNav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo" style="max-height: 100px; width: auto; object-fit: contain;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#pricing">Broadband Plans</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="customer-portal.html">Customer Portal</a></li>
+    <li><a href="admin-portal.html">Admin Portal</a></li>
+    <li><a href="index.html#contact">Contact Us</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="toggle-bar"></span><span class="toggle-bar"></span>
+  </button>
+</nav>
+
+<main class="main">
+  <section class="payment-section">
+    <div class="checkout-panel reveal">
+      
+      <div class="checkout-header">
+        <p class="section-tag">Secure Checkout</p>
+        <h2 class="section-title" style="font-size: 2rem;">Complete Your <strong>Subscription</strong></h2>
+      </div>
+
+      <!-- Plan details injected dynamically -->
+      <div class="selected-plan-box">
+        <div class="plan-label">Selected Plan</div>
+        <div class="plan-name" id="displayPlanName">Loading Plan...</div>
+      </div>
+
+      <form id="paymentForm" onsubmit="event.preventDefault(); alert('Payment processing simulated successfully!');">
+        <!-- Customer Details -->
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" placeholder="John Doe" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" placeholder="+61 400 000 000" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Service Address</label>
+          <input type="text" class="form-control" placeholder="123 Broadband St, Sydney, NSW 2000" required>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Payment Details -->
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <input type="text" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input type="text" class="form-control" placeholder="MM/YY" maxlength="5" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="password" class="form-control" placeholder="123" maxlength="4" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary btn-submit">Pay Now</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<script src="templatemo-621-luminary-script.js"></script>
+<script>
+  // Script to read URL parameters (e.g., ?plan=thunderbolt) and display the name
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    let plan = urlParams.get('plan');
+    const displayElement = document.getElementById('displayPlanName');
+    
+    if (plan) {
+      // Clean up the plan name string to look nice (e.g., biz-500-50 -> Biz 500 50)
+      plan = plan.replace(/-/g, ' ').toUpperCase();
+      displayElement.innerText = `${plan} PLAN`;
+    } else {
+      displayElement.innerText = "Custom Plan Selection";
+    }
+  });
+
+  // Full-page mouse movement tracker for background grid spotlight (matches index page)
+  (function() {
+    const pageGrid = document.getElementById('pageGrid');
+    if (!pageGrid) return;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    });
+
+    function renderGridLight() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      pageGrid.style.setProperty('--mx', `${currentX}px`);
+      pageGrid.style.setProperty('--my', `${currentY}px`);
+      requestAnimationFrame(renderGridLight);
+    }
+    renderGridLight();
+  })();
+</script>
+</body>
+</html>

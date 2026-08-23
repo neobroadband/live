@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Dynamic Invoice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<style>
+  body { background: var(--base-deep); color: var(--ivory); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+  .invoice-wrapper { width: 100%; max-width: 850px; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 24px; padding: 60px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 20px 80px rgba(0,0,0,0.4); position: relative; z-index: 10; }
+  .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 60px; border-bottom: 1px solid var(--panel-border); padding-bottom: 30px; }
+  .brand-logo { max-height: 70px; width: auto; object-fit: contain; }
+  .invoice-title { text-align: right; }
+  .invoice-title h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 0.1em; color: var(--ivory); text-transform: uppercase; }
+  .invoice-title p { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; color: var(--slate-warm); text-transform: uppercase; margin-top: 8px; }
+  .billing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+  .billing-section h3 { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; color: var(--slate-warm); text-transform: uppercase; margin-bottom: 12px; }
+  .billing-section p { font-size: 13px; font-weight: 300; line-height: 1.6; color: var(--slate-light); }
+  .billing-section strong { color: var(--ivory); font-weight: 500; }
+  .invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+  .invoice-table th { text-align: left; padding: 16px 12px; font-size: 9px; font-weight: 600; letter-spacing: 0.15em; color: var(--slate-warm); text-transform: uppercase; border-bottom: 1px solid var(--panel-border); }
+  .invoice-table td { padding: 20px 12px; font-size: 13px; font-weight: 300; color: var(--ivory-muted); border-bottom: 1px solid rgba(156,163,175,0.05); }
+  .invoice-table td.amount { text-align: right; font-variant-numeric: tabular-nums; }
+  .invoice-totals { width: 300px; margin-left: auto; }
+  .total-row { display: flex; justify-content: space-between; padding: 12px 0; font-size: 13px; font-weight: 300; color: var(--slate-light); }
+  .total-row.grand-total { border-top: 1px solid var(--panel-border); padding-top: 16px; margin-top: 8px; font-size: 1.5rem; font-weight: 400; color: var(--ivory); }
+  .action-buttons { display: flex; justify-content: center; gap: 16px; margin-top: 60px; }
+  @media print { body { background: #0F1115; padding: 0; } .invoice-wrapper { box-shadow: none; border: none; padding: 0; } .action-buttons, .atmosphere, .page-grid-overlay, .grain { display: none !important; } }
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%" style="position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.028;mix-blend-mode:overlay;"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+<div class="atmosphere" style="position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg, #0F1115 0%, #161A20 35%, #1C2128 70%, #0D0F13 100%);"></div>
+
+<div class="invoice-wrapper reveal">
+  <header class="invoice-header">
+    <img src="images/psd 1.png" alt="Neo Broadband" class="brand-logo">
+    <div class="invoice-title">
+      <h1>Statement</h1>
+      <p id="invNumber">INV-NEO-LOADING...</p>
+    </div>
+  </header>
+
+  <div class="billing-grid">
+    <div class="billing-section">
+      <h3>Billed To</h3>
+      <p>
+        <strong id="custName">Loading...</strong><br>
+        Email: <span id="custEmail">...</span><br>
+        Customer ID: <span id="custId">...</span>
+      </p>
+    </div>
+    <div class="billing-section" style="text-align: right;">
+      <h3>Billing Summary</h3>
+      <p>
+        Issue Date: <strong id="dateIssue">--</strong><br>
+        Due Date: <strong id="dateDue" style="color: #e2cfa2;">--</strong><br>
+        Billing Cycle: <strong>Monthly</strong>
+      </p>
+    </div>
+  </div>
+
+  <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Period</th>
+        <th style="text-align: right;">Amount (AUD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong style="color: var(--ivory);" id="planTitle">Loading Plan...</strong><br>
+          <span style="font-size: 11px; color: var(--slate-warm);" id="planDesc">Unlimited Data Fiber Routing</span>
+        </td>
+        <td id="billingPeriod">Aug 01 - Aug 31, 2026</td>
+        <td class="amount" id="planCost">A$0.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="invoice-totals">
+    <div class="total-row">
+      <span>Subtotal</span>
+      <span id="subTotal">A$0.00</span>
+    </div>
+    <div class="total-row">
+      <span>Tax (To be updated)</span>
+      <span>A$0.00</span>
+    </div>
+    <div class="total-row grand-total">
+      <span>Total Due</span>
+      <span id="grandTotal">A$0.00</span>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <a href="customer-portal.html" class="btn-secondary" style="padding: 14px 28px; font-size: 9px;">Return to Portal</a>
+    <button class="btn-secondary" style="padding: 14px 28px; font-size: 9px;" onclick="window.print()">Download PDF</button>
+    <a href="payment.html" class="btn-primary" style="padding: 14px 28px; font-size: 9px;">Pay Securely</a>
+  </div>
+</div>
+
+<script>
+  // Cloud Database Integration for Invoice Generation
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Fetch active session
+    const activeUserToken = sessionStorage.getItem('neo_active_user') || 'NEO-98210'; // Fallback for testing
+    
+    // 2. Fetch specific invoice ID from URL if clicked from portal
+    const urlParams = new URLSearchParams(window.location.search);
+    const invoiceId = urlParams.get('inv') || `INV-${activeUserToken}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // 3. Simulated user data lookup (mirrors your portal DB)
+    const subscriberStore = {
+      "NEO-98210": { name: "Johnathan Smith", email: "john.smith@sydneytech.com.au", planName: "Regular Plan", planDesc: "500 Mbps Down / 50 Mbps Up", balance: "A$85.00" },
+      "NEO-44109": { name: "Sarah Jenkins", email: "sarah.j@melbournedigital.io", planName: "Thunderbolt Plan", planDesc: "2000 Mbps Down / 500 Mbps Up", balance: "A$210.00" },
+      "NEO-11980": { name: "Nexus Enterprise Systems", email: "admin@nexussystems.com.au", planName: "Enterprise Ethernet", planDesc: "1000 Mbps Symmetrical", balance: "A$699.00" }
+    };
+
+    // New customer template generator
+    let profile = subscriberStore[activeUserToken];
+    if (!profile) {
+      profile = { name: "New Subscriber", email: "customer@neobroadband.com.au", planName: "Fiber Access", planDesc: "Standard Provisioning", balance: "A$0.00" };
+    }
+
+    // 4. Inject Dynamic Data into Template
+    document.getElementById('invNumber').innerText = invoiceId;
+    document.getElementById('custName').innerText = profile.name;
+    document.getElementById('custEmail').innerText = profile.email;
+    document.getElementById('custId').innerText = activeUserToken;
+    
+    const today = new Date();
+    document.getElementById('dateIssue').innerText = today.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+    
+    const due = new Date();
+    due.setDate(today.getDate() + 14); // Due in 14 days
+    document.getElementById('dateDue').innerText = due.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+
+    document.getElementById('planTitle').innerText = profile.planName;
+    document.getElementById('planDesc').innerText = profile.planDesc;
+    document.getElementById('planCost').innerText = profile.balance;
+    document.getElementById('subTotal').innerText = profile.balance;
+    document.getElementById('grandTotal').innerText = profile.balance;
+  });
+</script>
+</body>
+</html>
