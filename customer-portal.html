@@ -25,6 +25,8 @@
   --panel-bg: rgba(22, 26, 32, 0.65);
   --panel-border: rgba(156, 163, 175, 0.08);
   --silk-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --accent-gold: #d4af37;
+  --accent-green: #48bb78;
 }
 
 body {
@@ -168,7 +170,7 @@ body {
 .bar-fill:hover::after { opacity: 1; }
 .chart-labels { display: flex; justify-content: space-between; color: var(--slate-warm); font-size: 9px; margin-top: 12px; }
 
-/* ── Interactive Speedtest Box ── */
+/* ── Speedtest Box ── */
 .speed-test-gauge {
   text-align: center; padding: 40px 20px;
   background: rgba(15, 17, 21, 0.4); border-radius: 20px; border: 1px dashed var(--panel-border);
@@ -199,6 +201,17 @@ body {
 }
 .toast-msg.show { transform: none; opacity: 1; }
 
+/* Direct Payment Modal */
+.checkout-modal {
+  position: fixed; inset: 0; background: rgba(15, 17, 21, 0.88); backdrop-filter: blur(20px);
+  display: none; place-items: center; z-index: 1000; padding: 20px;
+}
+.checkout-modal.open { display: grid; }
+.checkout-modal-content {
+  width: min(520px, 100%); background: var(--base-mid); border: 1px solid var(--panel-border);
+  border-radius: 32px; padding: 36px; box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+}
+
 /* Auth Tabs */
 .auth-tabs { display: flex; gap: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--panel-border); padding-bottom: 10px; }
 .auth-tab { background: none; border: none; color: var(--slate-warm); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; padding: 4px 8px; transition: color 0.3s; }
@@ -223,7 +236,7 @@ body {
 <div class="atmosphere"></div>
 <div class="page-grid-overlay" id="pageGrid"></div>
 
-<!-- ═══ CLOUD AUTHENTICATION OVERLAY ═══ -->
+<!-- ═══ CLOUD RADIUS AUTHENTICATION OVERLAY ═══ -->
 <div id="loginOverlay" style="position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#0f1115,#161a20);display:grid;place-items:center;padding:24px;">
   <div style="width:min(450px,100%);padding:40px;border:1px solid rgba(156,163,175,.12);border-radius:32px;background:rgba(28,33,40,.85);backdrop-filter:blur(30px);box-shadow:0 20px 80px rgba(0,0,0,0.5);">
     <div style="text-align:center;margin-bottom:18px;">
@@ -242,28 +255,28 @@ body {
     <div id="loginForm">
       <div class="field">
         <label>Customer Account ID or Email</label>
-        <input id="authInputUser" placeholder="e.g. NEO-98210 or user@example.com">
+        <input id="authInputUser" placeholder="e.g. NEO-98210 or user@example.com" value="NEO-98210">
       </div>
       <div class="field" style="margin-top:12px;">
         <label>Password</label>
-        <input id="authInputPass" type="password" placeholder="••••••••">
+        <input id="authInputPass" type="password" placeholder="••••••••" value="broadband123">
       </div>
       <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="executeCloudAuthentication()">Authenticate with ISP Cloud</button>
       
-      <!-- Demo Users List -->
+      <!-- Live Demo Users List -->
       <div id="demoUsersList" style="margin-top: 24px; padding: 16px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 11px; color: var(--slate-light); text-align: left;">
         <strong style="color: var(--ivory); display: block; margin-bottom: 12px; font-size: 12px;">Live Demo Accounts:</strong>
-        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
-          <li><strong>ID:</strong> NEO-98210 &nbsp;|&nbsp; <strong>Pass:</strong> broadband123 <span style="float:right; color:var(--slate-warm)">(Regular Tier)</span></li>
-          <li><strong>ID:</strong> NEO-11223 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ultra Tier)</span></li>
-          <li><strong>ID:</strong> NEO-33445 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Biz 1000)</span></li>
-          <li><strong>ID:</strong> NEO-55667 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Basic Tier)</span></li>
-          <li><strong>ID:</strong> NEO-77889 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ent 500)</span></li>
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 8px;">
+          <li><strong>ID:</strong> NEO-98210 &nbsp;|&nbsp; <strong>Pass:</strong> broadband123 <span style="float:right; color:var(--slate-warm)">(Regular 500M)</span></li>
+          <li><strong>ID:</strong> NEO-11223 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ultra 1000M)</span></li>
+          <li><strong>ID:</strong> NEO-33445 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Biz 1000M)</span></li>
+          <li><strong>ID:</strong> NEO-55667 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Basic 25M)</span></li>
+          <li><strong>ID:</strong> NEO-77889 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ent 500M)</span></li>
         </ul>
       </div>
     </div>
 
-    <!-- Register Form -->
+    <!-- Register Form (Cleaned without Plan Dropdown) -->
     <div id="registerForm" style="display:none;">
       <div class="field-grid">
         <div class="field">
@@ -305,12 +318,49 @@ body {
       </div>
 
       <div class="field">
-        <label>Password</label>
+        <label>Set Account Password</label>
         <input id="regPass" type="password" placeholder="••••••••">
       </div>
-      <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="registerNewCustomer()">Create Account</button>
+      <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="registerNewCustomer()">Create & Provision Account</button>
     </div>
 
+  </div>
+</div>
+
+<!-- ═══ DIRECT PAYMENT GATEWAY MODAL ═══ -->
+<div class="checkout-modal" id="paymentModal">
+  <div class="checkout-modal-content">
+    <div class="card-head">
+      <h3>Secure ISP Payment Gateway</h3>
+      <button class="btn-secondary" style="padding:4px 12px;font-size:9px;" onclick="closePaymentModal()">✕</button>
+    </div>
+    <div style="background:rgba(15,17,21,0.5);border:1px solid var(--panel-border);border-radius:16px;padding:16px;margin-bottom:20px;">
+      <div style="font-size:9px;color:var(--slate-warm);text-transform:uppercase;letter-spacing:0.15em;">Invoice Reference</div>
+      <strong style="font-size:16px;color:var(--ivory);" id="payModalInvId">INV-NEO-0000</strong>
+      <div style="font-size:13px;color:var(--accent-gold);margin-top:4px;" id="payModalAmount">A$0.00 AUD</div>
+    </div>
+
+    <form id="gatewayForm" onsubmit="event.preventDefault(); submitGatewayPayment();">
+      <div class="field">
+        <label>Cardholder Name</label>
+        <input id="gatewayName" placeholder="Johnathan Smith" required>
+      </div>
+      <div class="field">
+        <label>Credit / Debit Card Number</label>
+        <input id="gatewayCard" placeholder="•••• •••• •••• ••••" maxlength="19" required>
+      </div>
+      <div class="field-grid">
+        <div class="field">
+          <label>Expiry (MM/YY)</label>
+          <input id="gatewayExp" placeholder="12/28" maxlength="5" required>
+        </div>
+        <div class="field">
+          <label>Security CVV</label>
+          <input id="gatewayCvv" placeholder="•••" maxlength="4" type="password" required>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;margin-top:16px;" id="gatewayPayBtn">Authorize Payment (AUD)</button>
+    </form>
   </div>
 </div>
 
@@ -340,9 +390,10 @@ body {
           <small id="sidebarCustId">ID: NEO-00000</small>
         </div>
       </div>
-      <div style="display:flex;gap:10px;margin-top:16px;">
-        <a href="index.html" class="btn-secondary" style="padding:8px 16px;font-size:9px;flex:1;text-align:center;">Home</a>
-        <button class="btn-secondary" style="padding:8px 16px;font-size:9px;" onclick="portalLogout()">Logout</button>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <a href="index.html" class="btn-secondary" style="padding:8px 12px;font-size:9px;flex:1;text-align:center;">Home</a>
+        <a href="admin-portal.html" class="btn-secondary" style="padding:8px 12px;font-size:9px;text-align:center;">NOC Admin</a>
+        <button class="btn-secondary" style="padding:8px 12px;font-size:9px;" onclick="portalLogout()">Logout</button>
       </div>
     </div>
   </aside>
@@ -356,7 +407,7 @@ body {
       </div>
       <div class="top-actions">
         <button class="circle-btn" onclick="syncCloudTelemetry(true)" title="Fetch Live Telemetry">↻</button>
-        <button class="circle-btn" onclick="toast('Network operations status: ALL SYDNEY/MELBOURNE POPs ONLINE')">◌</button>
+        <button class="circle-btn" onclick="toast('Network status: ALL CORE POPs ONLINE')">◌</button>
       </div>
     </header>
 
@@ -409,8 +460,8 @@ body {
           </div>
           <div style="display:flex;flex-direction:column;gap:12px;">
             <button class="btn-primary" onclick="document.querySelector('[data-page=billing]').click()">View & Pay Current Bill</button>
-            <button class="btn-secondary" onclick="runSpeedtest()">Run Speed Diagnostic</button>
-            <a href="index.html#pricing" class="btn-secondary" style="text-align:center;">View Matrix Pricing</a>
+            <button class="btn-secondary" onclick="document.querySelector('[data-page=diagnostics]').click(); runSpeedtest();">Run Speed Diagnostic</button>
+            <button class="btn-secondary" onclick="document.querySelector('[data-page=plans]').click()">Upgrade Fiber Speed</button>
           </div>
         </div>
       </div>
@@ -434,7 +485,7 @@ body {
       <div class="card">
         <div class="card-head">
           <h3>Monthly Historical Volumetric Consumption (GB)</h3>
-          <button class="btn-secondary" style="padding:6px 14px;font-size:9px;" onclick="toast('Exporting CSV logs from cloud...')">Export Data Log</button>
+          <button class="btn-secondary" style="padding:6px 14px;font-size:9px;" onclick="exportDataLogs()">Export Data Log</button>
         </div>
         <div class="chart-wrap" id="monthlyUsageChart"></div>
         <div class="chart-labels">
@@ -467,7 +518,7 @@ body {
           <div class="field"><label>NBN NTD Serial Identifier</label><input id="diagNtd" value="NTD-AU-889104-X" disabled></div>
           <div class="field"><label>WAN MAC Address</label><input id="diagMac" value="4C:76:25:B1:99:A2" disabled></div>
           <div class="field"><label>Optical Signal Attenuation</label><input value="-18.4 dBm (Optimal)" disabled></div>
-          <button class="btn-secondary" style="width:100%;margin-top:10px;" onclick="toast('Sending reset pulse to optical node...')">Send Remote Port Reset Signal</button>
+          <button class="btn-secondary" style="width:100%;margin-top:10px;" onclick="executeRemotePortReset()">Send Remote Port Reset Signal</button>
         </div>
       </div>
     </section>
@@ -485,14 +536,14 @@ body {
           <div class="stat-value" id="billTotalAmount">A$0.00</div>
           <div class="stat-meta" id="billInvRef">Account in good standing</div>
           <br>
-          <a href="payment.html" class="btn-primary">Pay Invoice Now</a>
+          <button class="btn-primary" onclick="openDirectPayment()">Pay Invoice Now</button>
         </div>
         <div class="card">
           <div class="card-label">AutoPay Direct Debit</div>
           <div class="stat-value" style="color:#48bb78;">Active</div>
           <div class="stat-meta">Digital Billing Configured</div>
           <br>
-          <button class="btn-secondary" onclick="toast('Opening payment method update dialog')">Change Card</button>
+          <button class="btn-secondary" onclick="toast('Direct debit token is synchronized with gateway.')">Payment Method Active</button>
         </div>
       </div>
 
@@ -503,9 +554,7 @@ body {
             <thead>
               <tr><th>Invoice Reference</th><th>Billing Cycle</th><th>Plan Coverage</th><th>Amount (AUD)</th><th>Actions</th></tr>
             </thead>
-            <tbody>
-              <!-- Dynamic population -->
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
@@ -518,30 +567,8 @@ body {
         <h2>Scale your speed. <strong>Zero downtime transitions.</strong></h2>
       </div>
 
-      <div class="grid three-col">
-        <div class="card">
-          <div class="card-label">Residential</div>
-          <h3 style="font-size:18px;margin-bottom:8px;">Ultra Plan</h3>
-          <div class="stat-value" style="font-size:1.8rem;">A$99 <small>/mo</small></div>
-          <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">1000 Mbps Down / 100 Mbps Up</p>
-          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Ultra', 99)">Switch to Ultra</button>
-        </div>
-
-        <div class="card">
-          <div class="card-label">Power User</div>
-          <h3 style="font-size:18px;margin-bottom:8px;">Ultra + Plan</h3>
-          <div class="stat-value" style="font-size:1.8rem;">A$135 <small>/mo</small></div>
-          <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">1000 Mbps Down / 400 Mbps Up</p>
-          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Ultra +', 135)">Switch to Ultra +</button>
-        </div>
-
-        <div class="card">
-          <div class="card-label">Extreme Performance</div>
-          <h3 style="font-size:18px;margin-bottom:8px;">Thunderbolt Plan</h3>
-          <div class="stat-value" style="font-size:1.8rem;">A$210 <small>/mo</small></div>
-          <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">2000 Mbps Down / 500 Mbps Up</p>
-          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Thunderbolt', 210)">Switch to Thunderbolt</button>
-        </div>
+      <div class="grid three-col" id="plansUpgradeGrid">
+        <!-- Dynamically rendered plans -->
       </div>
     </section>
 
@@ -562,9 +589,7 @@ body {
 
         <div class="card">
           <div class="card-head"><h3>Active Support Change Requests</h3></div>
-          <div id="ticketsLogContainer">
-            <!-- Dynamic Tickets -->
-          </div>
+          <div id="ticketsLogContainer"></div>
         </div>
       </div>
     </section>
@@ -594,33 +619,48 @@ body {
 
 <div class="toast-msg" id="toast"></div>
 
-<!-- ═══ BACKEND CLOUD & ISP API ORCHESTRATOR ═══ -->
+<!-- ═══ BACKEND CLOUD, ISP REST API & GATEWAY INTEGRATION LAYER ═══ -->
 <script>
 /**
- * CLOUD & ISP INTEGRATION ARCHITECTURE LAYER
+ * ARCHITECTURE INTEGRATION LAYER:
+ * 1. ISP RADIUS / Node REST API Connector
+ * 2. Payment Gateway Webhook / Tokenizer Adapter
+ * 3. Shared Database (localStorage['neo_subscriber_db'])
  */
 
-// Plan Matrix mapping to index.html subscription buttons
-const planMatrix = {
-  'basic': { name: 'Basic', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00' },
-  'regular': { name: 'Regular', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00' },
-  'ultra': { name: 'Ultra', down: '1000 Mbps', up: '100 Mbps', price: 'A$99.00' },
-  'pro': { name: 'Pro', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00' },
-  'pro-plus': { name: 'Pro +', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00' },
-  'ultra-plus': { name: 'Ultra +', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00' },
-  'thunderbolt': { name: 'Thunderbolt', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00' },
-  'biz-50': { name: 'Business 50/20', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00' },
-  'biz-100': { name: 'Business 100/40', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00' },
-  'biz-250': { name: 'Business 250/100', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00' },
-  'biz-500-50': { name: 'Business 500/50', down: '500 Mbps', up: '50 Mbps', price: 'A$90.00' },
-  'biz-500-200': { name: 'Business 500/200', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00' },
-  'biz-1000': { name: 'Business 1000/400', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00' },
-  'ent-100': { name: 'Enterprise 100/100', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00' },
-  'ent-250': { name: 'Enterprise 250/250', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00' },
-  'ent-500': { name: 'Enterprise 500/500', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00' }
+const ISP_CONFIG = {
+  API_BASE_URL: 'https://api.neobroadband.com.au/v1',
+  AUTH_REALM: 'radius.sydney.neobroadband.internal',
+  SIMULATION_MODE: true
 };
 
-// Persistent Cloud Subscriber Database with 5 Demo Users
+const GATEWAY_CONFIG = {
+  MERCHANT_ID: 'NEO_MERCHANT_AU_8892',
+  CURRENCY: 'AUD',
+  GATEWAY_PROVIDER: 'Stripe / eWay Direct API'
+};
+
+// Plan matrix synchronized across index.html, customer-portal.html, and admin-portal.html
+const planMatrix = {
+  'basic': { name: 'Basic', cat: 'Residential', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00', priceNum: 60 },
+  'regular': { name: 'Regular', cat: 'Residential', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00', priceNum: 85 },
+  'ultra': { name: 'Ultra', cat: 'Residential', down: '1000 Mbps', up: '100 Mbps', price: 'A$99.00', priceNum: 99 },
+  'pro': { name: 'Pro', cat: 'Residential', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
+  'pro-plus': { name: 'Pro +', cat: 'Residential', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
+  'ultra-plus': { name: 'Ultra +', cat: 'Residential', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00', priceNum: 135 },
+  'thunderbolt': { name: 'Thunderbolt', cat: 'Residential', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00', priceNum: 210 },
+  'biz-50': { name: 'Business 50/20', cat: 'Business', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00', priceNum: 89 },
+  'biz-100': { name: 'Business 100/40', cat: 'Business', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00', priceNum: 95 },
+  'biz-250': { name: 'Business 250/100', cat: 'Business', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
+  'biz-500-50': { name: 'Business 500/50', cat: 'Business', down: '500 Mbps', up: '50 Mbps', price: 'A$90.00', priceNum: 90 },
+  'biz-500-200': { name: 'Business 500/200', cat: 'Business', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
+  'biz-1000': { name: 'Business 1000/400', cat: 'Business', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00', priceNum: 145 },
+  'ent-100': { name: 'Enterprise 100/100', cat: 'Enterprise', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00', priceNum: 399 },
+  'ent-250': { name: 'Enterprise 250/250', cat: 'Enterprise', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00', priceNum: 399 },
+  'ent-500': { name: 'Enterprise 500/500', cat: 'Enterprise', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00', priceNum: 469 }
+};
+
+// Seed dataset matching Admin Portal
 const defaultStore = {
   "NEO-98210": {
     name: "Johnathan Smith",
@@ -727,9 +767,13 @@ const defaultStore = {
   }
 };
 
-// Initialize subscriber store from localStorage or fallback
-const savedDatabase = localStorage.getItem('neo_subscriber_db');
-let subscriberStore = savedDatabase ? JSON.parse(savedDatabase) : defaultStore;
+// Unified DB fetcher
+function getStoredDatabase() {
+  const saved = localStorage.getItem('neo_subscriber_db');
+  return saved ? JSON.parse(saved) : defaultStore;
+}
+
+let subscriberStore = getStoredDatabase();
 
 function persistStore() {
   localStorage.setItem('neo_subscriber_db', JSON.stringify(subscriberStore));
@@ -766,7 +810,7 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ── Auth Modes & Unlimited New Customer Registration ──
+// ── Auth Mode Switcher ──
 function switchAuthMode(mode) {
   const loginTab = document.getElementById('tabLogin');
   const regTab = document.getElementById('tabRegister');
@@ -792,10 +836,12 @@ function switchAuthMode(mode) {
   }
 }
 
+// ── Authentication Executor ──
 function executeCloudAuthentication() {
   const userInput = document.getElementById('authInputUser').value.trim();
   const passInput = document.getElementById('authInputPass').value;
 
+  subscriberStore = getStoredDatabase();
   let matchedUser = null;
   let matchedId = null;
 
@@ -818,12 +864,13 @@ function executeCloudAuthentication() {
     localStorage.setItem('neo_known_user', activeUserToken);
     document.getElementById('loginOverlay').style.display = 'none';
     syncCloudTelemetry();
-    toast(`Authenticated with Neo Cloud: ${matchedUser.name}`);
+    toast(`RADIUS Auth Verified: Welcome back, ${matchedUser.name}`);
   } else {
     toast('Authentication Error: Invalid Customer ID or Password.');
   }
 }
 
+// ── Registration Function (Cleaned without Plan Dropdown) ──
 function registerNewCustomer() {
   const fName = document.getElementById('regFirstName').value.trim();
   const lName = document.getElementById('regLastName').value.trim();
@@ -838,15 +885,11 @@ function registerNewCustomer() {
     return;
   }
 
-  // Identify selected plan from URL params or sessionStorage
-  const urlParams = new URLSearchParams(window.location.search);
-  const planId = urlParams.get('plan') || sessionStorage.getItem('pending_plan') || 'regular';
-  const selectedPlan = planMatrix[planId] || planMatrix['regular'];
-
-  // Generate unique Neo Broadband Customer ID
+  // Automatic Plan Assignment from index.html or default
+  const pendingPlanKey = sessionStorage.getItem('pending_plan') || 'regular';
+  const selectedPlan = planMatrix[pendingPlanKey] || planMatrix['regular'];
   const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
 
-  // Profile creation dynamically using mapped details
   subscriberStore[newId] = {
     name: `${fName} ${lName}`,
     email: email,
@@ -865,19 +908,19 @@ function registerNewCustomer() {
     trafficWeekly: [0, 0, 0, 0, 0, 0, 0],
     monthlyTrend: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     invoices: [
-      { id: `INV-${newId}-01`, cycle: "Initial Provisioning", plan: selectedPlan.name, amount: selectedPlan.price, status: "Paid" }
+      { id: `INV-${newId}-01`, cycle: "Initial Provisioning", plan: selectedPlan.name, amount: selectedPlan.price, status: "Unpaid" }
     ],
     tickets: []
   };
 
   persistStore();
 
-  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nYou have been provisioned with the ${selectedPlan.name} Tier.`);
+  alert(`Account successfully provisioned in ISP RADIUS Cloud!\n\nCustomer ID: ${newId}\nTier: ${selectedPlan.name} (${selectedPlan.down}/${selectedPlan.up})`);
   
   activeUserToken = newId;
   sessionStorage.setItem('neo_active_user', activeUserToken);
   localStorage.setItem('neo_known_user', activeUserToken);
-  sessionStorage.removeItem('pending_plan'); // Clear the plan storage
+  sessionStorage.removeItem('pending_plan');
   
   document.getElementById('loginOverlay').style.display = 'none';
   syncCloudTelemetry();
@@ -889,8 +932,9 @@ function portalLogout() {
   window.location.href = 'index.html';
 }
 
-// ── Cloud Synchronizer & UI Update ──
-async function syncCloudTelemetry(showToast = false) {
+// ── Cloud Telemetry & UI Sync ──
+function syncCloudTelemetry(showToast = false) {
+  subscriberStore = getStoredDatabase();
   const profile = subscriberStore[activeUserToken];
   if (!profile) return;
 
@@ -903,21 +947,22 @@ async function syncCloudTelemetry(showToast = false) {
 
   document.getElementById('dashPlanName').textContent = profile.planSpeed;
   document.getElementById('dashPlanTier').textContent = profile.planName;
-  document.getElementById('dashUsageVal').innerHTML = `${profile.currentUsageGB} <small>GB</small>`;
-  document.getElementById('dashBalance').textContent = profile.balance;
+  document.getElementById('dashUsageVal').innerHTML = `${profile.currentUsageGB || 0} <small>GB</small>`;
+  document.getElementById('dashBalance').textContent = profile.balance || 'A$0.00';
   document.getElementById('dashDueDate').textContent = profile.dueDate.startsWith('Due') ? profile.dueDate : `Status: ${profile.dueDate}`;
   document.getElementById('dashIP').textContent = profile.ipAddress;
 
-  document.getElementById('useDownSpeed').innerHTML = `${profile.downSpeed}`;
-  document.getElementById('useUpSpeed').innerHTML = `${profile.upSpeed}`;
-  document.getElementById('useTotalTransfer').innerHTML = `${(profile.currentUsageGB / 1000).toFixed(1)} <small>TB</small>`;
+  document.getElementById('useDownSpeed').innerHTML = `${profile.downSpeed || profile.planSpeed}`;
+  document.getElementById('useUpSpeed').innerHTML = `${profile.upSpeed || '50 Mbps'}`;
+  document.getElementById('useTotalTransfer').innerHTML = `${((profile.currentUsageGB || 0) / 1000).toFixed(1)} <small>TB</small>`;
 
   document.getElementById('diagNtd').value = profile.ntdId;
-  document.getElementById('billTotalAmount').textContent = profile.balance;
+  document.getElementById('billTotalAmount').textContent = profile.balance || 'A$0.00';
 
   renderChart('mainTrafficChart', profile.trafficWeekly || [0, 0, 0, 0, 0, 0, 0]);
   renderChart('monthlyUsageChart', profile.monthlyTrend || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
+  // Invoices
   const invTbody = document.querySelector('#invoicesTable tbody');
   if (profile.invoices && profile.invoices.length > 0) {
     invTbody.innerHTML = profile.invoices.map(inv => `
@@ -926,17 +971,19 @@ async function syncCloudTelemetry(showToast = false) {
         <td>${inv.cycle}</td>
         <td>${inv.plan}</td>
         <td>${inv.amount}</td>
-        <td style="display: flex; align-items: center; gap: 12px;">
-          <span class="status-pill" style="margin:0;color:${inv.status === 'Paid' ? '#48bb78' : '#e2cfa2'};">${inv.status}</span>
-          <a href="invoice.html?inv=${inv.id}" class="btn-secondary" style="padding: 6px 12px; font-size: 8px; text-decoration: none;">View Bill</a>
+        <td style="display: flex; align-items: center; gap: 8px;">
+          <span class="status-pill" style="margin:0;color:${inv.status === 'Paid' ? '#48bb78' : 'var(--accent-gold)'};">${inv.status}</span>
+          ${inv.status !== 'Paid' ? `<button class="btn-primary" style="padding:4px 10px;font-size:8px;" onclick="openDirectPayment('${inv.id}', '${inv.amount}')">Pay</button>` : ''}
+          <a href="invoice.html?inv=${inv.id}" class="btn-secondary" style="padding: 4px 8px; font-size: 8px; text-decoration: none;">View</a>
         </td>
       </tr>
     `).join('');
   } else {
-    invTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--slate-warm);padding:24px;">No invoices generated yet. Account is fully active.</td></tr>`;
+    invTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--slate-warm);padding:24px;">No invoices generated. Account is in good standing.</td></tr>`;
   }
 
   renderTickets();
+  renderPlansGrid();
 
   document.getElementById('profName').value = profile.name;
   document.getElementById('profId').value = activeUserToken;
@@ -956,40 +1003,84 @@ function renderChart(containerId, dataset) {
   `).join('');
 }
 
+// ── Speed Diagnostics ──
 function runSpeedtest() {
   const gauge = document.getElementById('gaugeResult');
   const btn = document.getElementById('startTestBtn');
   btn.disabled = true;
-  gauge.textContent = 'Testing...';
+  gauge.textContent = 'Probing...';
+
+  const profile = subscriberStore[activeUserToken];
+  let target = 500;
+  if (profile && profile.downSpeed) {
+    const parsed = parseFloat(profile.downSpeed);
+    if (!isNaN(parsed) && parsed > 0) target = parsed;
+  }
 
   let current = 0;
-  const rawTarget = parseFloat(subscriberStore[activeUserToken].downSpeed);
-  const target = isNaN(rawTarget) || rawTarget === 0 ? 500 : rawTarget; // fallback
-  const step = target / 30;
+  const step = target / 25;
 
   const interval = setInterval(() => {
-    current += step + (Math.random() * 10 - 5);
+    current += step + (Math.random() * (step * 0.2) - (step * 0.1));
     if (current >= target) {
       current = target + (Math.random() * 4 - 2);
       clearInterval(interval);
       btn.disabled = false;
-      toast('Speed diagnostic cycle complete.');
+      toast('Optical latency and loop throughput test complete.');
     }
     gauge.textContent = current.toFixed(1);
-  }, 50);
+  }, 60);
 }
 
-function requestPlanUpgrade(newPlanName, price) {
-  if (confirm(`Provision upgrade to ${newPlanName} Plan for A$${price}/month? Changes apply instantaneously.`)) {
+function executeRemotePortReset() {
+  toast('Sending remote reset pulse to Sydney Optical Line Terminal...');
+  setTimeout(() => {
+    toast('NTD Link Resynchronized. Latency: 2.1ms.');
+  }, 1200);
+}
+
+// ── Plans Grid & Instant Provisioning ──
+function renderPlansGrid() {
+  const container = document.getElementById('plansUpgradeGrid');
+  if (!container) return;
+
+  const currentPlan = subscriberStore[activeUserToken].planName || '';
+
+  container.innerHTML = Object.keys(planMatrix).map(pk => {
+    const p = planMatrix[pk];
+    const isCurrent = currentPlan.toLowerCase().includes(p.name.toLowerCase());
+    return `
+      <div class="card">
+        <div class="card-label">${p.cat}</div>
+        <h3 style="font-size:18px;margin-bottom:8px;">${p.name}</h3>
+        <div class="stat-value" style="font-size:1.8rem;">${p.price} <small>/mo</small></div>
+        <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">↓ ${p.down} / ↑ ${p.up}</p>
+        <button class="${isCurrent ? 'btn-secondary' : 'btn-primary'}" style="width:100%;" ${isCurrent ? 'disabled' : ''} onclick="requestPlanUpgrade('${pk}')">
+          ${isCurrent ? 'Current Active Tier' : 'Upgrade to ' + p.name}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function requestPlanUpgrade(planKey) {
+  const p = planMatrix[planKey];
+  if (!p) return;
+
+  if (confirm(`Provision change to ${p.name} Plan for ${p.price}/month? Line provisioning will take effect immediately.`)) {
     const profile = subscriberStore[activeUserToken];
-    profile.planName = `${newPlanName} Plan`;
-    profile.balance = `A$${price}.00`;
+    profile.planName = `${p.name} Plan`;
+    profile.downSpeed = p.down;
+    profile.upSpeed = p.up;
+    profile.planSpeed = p.down;
+    profile.balance = p.price;
     persistStore();
     syncCloudTelemetry();
-    toast(`Successfully provisioned ${newPlanName}!`);
+    toast(`Successfully provisioned ${p.name} Tier!`);
   }
 }
 
+// ── Support Tickets ──
 function createSupportTicket() {
   const cat = document.getElementById('ticketCategory').value;
   const notes = document.getElementById('ticketNotes').value.trim();
@@ -1002,13 +1093,13 @@ function createSupportTicket() {
     id: `TKT-${Math.floor(1000 + Math.random()*9000)}`,
     title: `${cat}: ${notes}`,
     status: "In NOC Queue",
-    date: "Just Now"
+    date: new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' })
   });
 
   persistStore();
   document.getElementById('ticketNotes').value = "";
   renderTickets();
-  toast('Support ticket queued for network engineers.');
+  toast('Support ticket queued for NOC engineers.');
 }
 
 function renderTickets() {
@@ -1024,9 +1115,71 @@ function renderTickets() {
         <strong style="font-size:12px;color:var(--ivory);">${t.title}</strong>
         <small style="display:block;color:var(--slate-warm);font-size:9px;margin-top:2px;">Ref: ${t.id} · ${t.date}</small>
       </div>
-      <span class="status-pill" style="margin:0;">${t.status}</span>
+      <span class="status-pill" style="margin:0;color:${t.status === 'Resolved' ? '#48bb78' : 'var(--accent-gold)'};">${t.status}</span>
     </div>
   `).join('');
+}
+
+// ── Payment Gateway Integration & Modal ──
+let pendingPaymentInvoice = null;
+
+function openDirectPayment(invId = null, amountStr = null) {
+  const profile = subscriberStore[activeUserToken];
+  const modal = document.getElementById('paymentModal');
+
+  if (!invId) {
+    const unpaid = (profile.invoices || []).find(i => i.status === 'Unpaid');
+    invId = unpaid ? unpaid.id : `INV-${activeUserToken}-CYCLE`;
+    amountStr = unpaid ? unpaid.amount : profile.balance;
+  }
+
+  pendingPaymentInvoice = invId;
+  document.getElementById('payModalInvId').textContent = invId;
+  document.getElementById('payModalAmount').textContent = amountStr || profile.balance;
+  document.getElementById('gatewayName').value = profile.name;
+  modal.classList.add('open');
+}
+
+function closePaymentModal() {
+  document.getElementById('paymentModal').classList.remove('open');
+}
+
+function submitGatewayPayment() {
+  const btn = document.getElementById('gatewayPayBtn');
+  btn.disabled = true;
+  btn.textContent = 'Contacting Banking Gateway...';
+
+  setTimeout(() => {
+    const profile = subscriberStore[activeUserToken];
+    if (profile.invoices) {
+      const inv = profile.invoices.find(i => i.id === pendingPaymentInvoice);
+      if (inv) inv.status = 'Paid';
+    }
+    profile.balance = 'A$0.00';
+    persistStore();
+    btn.disabled = false;
+    btn.textContent = 'Authorize Payment (AUD)';
+    closePaymentModal();
+    syncCloudTelemetry();
+    toast('Payment Approved: Invoice marked as Paid');
+  }, 1000);
+}
+
+function exportDataLogs() {
+  const profile = subscriberStore[activeUserToken];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let csv = "Month,Data_Consumed_GB\n";
+  (profile.monthlyTrend || []).forEach((val, idx) => {
+    csv += `${months[idx] || 'Month ' + (idx + 1)},${val}\n`;
+  });
+  const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csv);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `neo_broadband_usage_${activeUserToken}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  toast('Data consumption CSV log exported.');
 }
 
 function saveSubscriberProfile() {
@@ -1040,7 +1193,7 @@ function saveSubscriberProfile() {
   toast('Subscriber configuration saved.');
 }
 
-// Full-page mouse movement tracker for background grid spotlight
+// Background Grid Light Follower
 (function() {
   const pageGrid = document.getElementById('pageGrid');
   if (!pageGrid) return;
@@ -1056,15 +1209,20 @@ function saveSubscriberProfile() {
   renderGridLight();
 })();
 
-// Bootstrap on Load
+// Bootstrap
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const authMode = urlParams.get('auth');
+  const planParam = urlParams.get('plan');
+  if (planParam) sessionStorage.setItem('pending_plan', planParam);
+
   if (authMode === 'register') {
     switchAuthMode('register');
   }
 
   const savedUser = sessionStorage.getItem('neo_active_user');
+  subscriberStore = getStoredDatabase();
+
   if (savedUser && subscriberStore[savedUser]) {
     activeUserToken = savedUser;
     document.getElementById('loginOverlay').style.display = 'none';
