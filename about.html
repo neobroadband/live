@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Neo Broadband</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<style>
+  /* Full-page persistent grid background with cursor spotlight */
+  .page-grid-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    --mx: 50vw;
+    --my: 50vh;
+    background-image:
+      linear-gradient(to right, rgba(156, 163, 175, 0.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(156, 163, 175, 0.18) 1px, transparent 1px);
+    background-size: 100px 100px;
+    background-position: center center;
+    -webkit-mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  /* Navigation Logo Styling */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .nav-logo {
+    max-height: 100px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* ── About Hero (shorter than home hero) ── */
+  .about-hero {
+    min-height: 60vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 140px 0 40px; position: relative;
+  }
+  .about-hero p.hero-sub { margin-top: 24px; }
+
+  /* ── Story blocks (Who We Are / Why We Started) ── */
+  .story-block { max-width: 760px; margin: 0 auto 64px; text-align: center; }
+  .story-block:last-child { margin-bottom: 0; }
+  .story-block .section-tag { text-align: center; }
+  .story-block p {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.9; color: var(--slate-light);
+    margin-top: 18px;
+  }
+
+  /* ── Differentiator cards (What Sets Us Apart) ── */
+  .diff-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin-top: 56px;
+  }
+  .diff-card {
+    background: var(--panel-bg); border: 1px solid var(--panel-border);
+    border-radius: 28px; padding: 40px 32px; backdrop-filter: blur(20px);
+    transition: transform 0.8s var(--silk-ease), border-color 0.8s var(--silk-ease);
+  }
+  .diff-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--graphite); border: 1px solid var(--panel-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--silver); margin-bottom: 24px;
+  }
+  .diff-title { font-size: 1.05rem; font-weight: 500; color: var(--ivory); margin-bottom: 12px; letter-spacing: -0.01em; }
+  .diff-desc { font-size: 0.85rem; font-weight: 300; line-height: 1.8; color: var(--slate-light); }
+
+  /* ── Commitments (numbered features) ── */
+  .commitment-list { margin-top: 56px; }
+  .commitment {
+    display: grid; grid-template-columns: 80px 1fr; gap: 28px;
+    padding: 36px 0; border-top: 1px solid var(--panel-border);
+    align-items: baseline;
+  }
+  .commitment:last-child { border-bottom: 1px solid var(--panel-border); }
+  .commitment-number {
+    font-size: 2.4rem; font-weight: 200; letter-spacing: -0.04em;
+    color: rgba(176,184,196,0.15); line-height: 1; font-variant-numeric: tabular-nums;
+  }
+  .commitment-body h3 {
+    font-size: 1.15rem; font-weight: 500; color: var(--ivory); margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .commitment-body p {
+    font-size: 0.9rem; font-weight: 300; line-height: 1.8; color: var(--slate-light); max-width: 640px;
+  }
+
+  /* ── Founding badge ── */
+  .founded-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 24px; border-radius: 100px;
+    background: var(--panel-bg); border: 1px solid var(--panel-border);
+    backdrop-filter: blur(20px); margin-bottom: 24px;
+  }
+  .founded-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--silver);
+    box-shadow: 0 0 8px rgba(176,184,196,0.4);
+  }
+  .founded-badge span { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate-light); }
+
+  @media (max-width: 1024px) {
+    .diff-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .commitment { grid-template-columns: 56px 1fr; gap: 18px; }
+    .commitment-number { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="atmosphere"></div>
+
+<!-- Background Grid with Cursor Following -->
+<div class="page-grid-overlay" id="pageGrid"></div>
+
+<!-- Nav -->
+<nav class="top-nav" id="topNav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#pricing">Broadband Plans</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="customer-portal.html">Customer Portal</a></li>
+    <li><a href="admin-portal.html">Admin Portal</a></li>
+    <li><a href="about.html" class="active">About Us</a></li>
+    <li><a href="index.html#contact">Contact Us</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="toggle-bar"></span><span class="toggle-bar"></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-links">
+      <a href="index.html" class="mobile-menu-link" data-index="01">Home</a>
+      <a href="index.html#pricing" class="mobile-menu-link" data-index="02">Broadband Plans</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="03">Customer Portal</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Portal</a>
+      <a href="about.html" class="mobile-menu-link" data-index="05">About Us</a>
+      <a href="index.html#faq" class="mobile-menu-link" data-index="06">FAQ</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ═══ ABOUT HERO ═══ -->
+  <section class="about-hero" id="hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Connecting Australia to What Matters Most</span>
+    </div>
+    <h1>About <em>Neo Broadband</em></h1>
+    <p class="hero-sub">
+      Delivering next-generation internet solutions to Australian homes and workplaces — ultra-reliable, high-speed, and built for the way you actually live and work.
+    </p>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ WHO WE ARE ═══ -->
+  <section class="section section-center" id="who-we-are">
+    <div class="story-block reveal">
+      <div class="founded-badge">
+        <div class="founded-badge-dot"></div>
+        <span>Launched in 2026</span>
+      </div>
+      <h2 class="section-title reveal-d1">Who <strong>We Are</strong></h2>
+      <p>
+        Neo Broadband is an independent Australian telecommunications company built for the modern digital era. We provide ultra-reliable, high-speed internet connections tailored specifically for households and evolving workplaces.
+      </p>
+      <p>
+        Whether you're streaming 4K entertainment at home, running a busy office, or managing a remote workforce, we ensure your connection remains seamless, secure, and lightning-fast.
+      </p>
+    </div>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ WHY WE STARTED ═══ -->
+  <section class="section section-center" id="why-we-started">
+    <div class="story-block reveal">
+      <p class="section-tag">Our Origin</p>
+      <h2 class="section-title reveal-d1">Why <strong>We Started</strong></h2>
+      <p>
+        The way Australians use the internet has completely changed, but traditional providers haven't kept up. We noticed homes struggling with dropouts during peak hours and businesses losing revenue due to slow upload speeds.
+      </p>
+      <p>
+        We founded Neo Broadband to fix this. We stripped away the confusing data tiers, hidden lock-in contracts, and frustrating automated support queues. Instead, we built a network focused on pure performance and straightforward, local service.
+      </p>
+    </div>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ WHAT SETS US APART ═══ -->
+  <section class="section section-center" id="what-sets-us-apart">
+    <p class="section-tag reveal">The Neo Difference</p>
+    <h2 class="section-title reveal reveal-d1">What Sets Us <strong>Apart</strong></h2>
+    <p class="section-body reveal reveal-d2">Three commitments that shape every connection we deliver.</p>
+
+    <div class="diff-grid">
+      <div class="diff-card reveal reveal-d1">
+        <div class="diff-icon">&#9679;</div>
+        <div class="diff-title">Built for Work &amp; Play</div>
+        <div class="diff-desc">Our network dynamically manages data traffic so your Zoom calls stay crystal clear, even while someone else is gaming in the next room.</div>
+      </div>
+      <div class="diff-card reveal reveal-d2">
+        <div class="diff-icon">&#9679;</div>
+        <div class="diff-title">100% Australian-Based Support</div>
+        <div class="diff-desc">No overseas call centres or endless hold times. When you need help, you speak directly to an internet expert right here in Australia.</div>
+      </div>
+      <div class="diff-card reveal reveal-d3">
+        <div class="diff-icon">&#9679;</div>
+        <div class="diff-title">No Bill Shock, No Contracts</div>
+        <div class="diff-desc">We believe in earning your loyalty every month. Enjoy transparent pricing with zero hidden fees.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ CORE COMMITMENTS ═══ -->
+  <section class="section" id="core-commitments">
+    <p class="section-tag reveal section-center">Our Promise</p>
+    <h2 class="section-title reveal reveal-d1 section-center">Our Core <strong>Commitments</strong></h2>
+
+    <div class="commitment-list">
+      <div class="commitment reveal">
+        <div class="commitment-number">01</div>
+        <div class="commitment-body">
+          <h3>Uncompromised Reliability</h3>
+          <p>We invest heavily in premium network infrastructure to maximize uptime for your home and workplace.</p>
+        </div>
+      </div>
+      <div class="commitment reveal reveal-d1">
+        <div class="commitment-number">02</div>
+        <div class="commitment-body">
+          <h3>Radical Simplicity</h3>
+          <p>From sign-up to daily use, we keep your experience completely jargon-free.</p>
+        </div>
+      </div>
+      <div class="commitment reveal reveal-d2">
+        <div class="commitment-number">03</div>
+        <div class="commitment-body">
+          <h3>Local Community Focus</h3>
+          <p>As a proud Aussie business, we are dedicated to keeping our local communities securely connected to the global economy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ FOOTER CTA ═══ -->
+  <section class="footer-cta" id="cta">
+    <p class="section-tag reveal">Ready to Connect?</p>
+    <h2 class="section-title reveal reveal-d1">Experience the Neo<br><strong>difference today</strong></h2>
+    <div class="footer-ctas reveal reveal-d3">
+      <a href="index.html#pricing" class="btn-primary">Check Your Address Availability</a>
+      <a href="index.html#pricing" class="btn-secondary">View Business Plans</a>
+    </div>
+
+    <div class="footer-bar reveal reveal-d4" style="margin-top: 80px;">
+      <div class="footer-brand">Neo Broadband &mdash; Australia</div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Service Terms</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ── Smooth Scroll ──
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (href === '#') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => io.observe(el));
+
+  // ── Nav scroll state ──
+  const topNav = document.getElementById('topNav');
+  window.addEventListener('scroll', () => topNav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+
+  // ── Mobile menu ──
+  const toggle = document.getElementById('navToggle'), menu = document.getElementById('mobileMenu');
+  const menuLinks = menu.querySelectorAll('.mobile-menu-link');
+  let menuOpen = false;
+  function openMenu() { menuOpen=true; toggle.classList.add('active'); toggle.setAttribute('aria-expanded','true'); menu.classList.add('open'); document.body.classList.add('menu-open'); }
+  function closeMenu() { if(!menuOpen) return; menuOpen=false; toggle.classList.remove('active'); toggle.setAttribute('aria-expanded','false'); menu.classList.remove('open'); document.body.classList.remove('menu-open'); }
+  toggle.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+  menuLinks.forEach(l => l.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  window.addEventListener('resize', () => { if (innerWidth > 1024) closeMenu(); });
+
+  // Full-page mouse movement tracker for background grid spotlight
+  (function() {
+    const pageGrid = document.getElementById('pageGrid');
+    if (!pageGrid) return;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    });
+
+    function renderGridLight() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      pageGrid.style.setProperty('--mx', `${currentX}px`);
+      pageGrid.style.setProperty('--my', `${currentY}px`);
+      requestAnimationFrame(renderGridLight);
+    }
+    renderGridLight();
+  })();
+</script>
+</body>
+</html>
