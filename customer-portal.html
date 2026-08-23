@@ -249,6 +249,18 @@ body {
         <input id="authInputPass" type="password" placeholder="••••••••">
       </div>
       <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="executeCloudAuthentication()">Authenticate with ISP Cloud</button>
+      
+      <!-- Demo Users List -->
+      <div id="demoUsersList" style="margin-top: 24px; padding: 16px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 11px; color: var(--slate-light); text-align: left;">
+        <strong style="color: var(--ivory); display: block; margin-bottom: 12px; font-size: 12px;">Live Demo Accounts:</strong>
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+          <li><strong>ID:</strong> NEO-98210 &nbsp;|&nbsp; <strong>Pass:</strong> broadband123 <span style="float:right; color:var(--slate-warm)">(Regular Tier)</span></li>
+          <li><strong>ID:</strong> NEO-11223 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ultra Tier)</span></li>
+          <li><strong>ID:</strong> NEO-33445 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Biz 1000)</span></li>
+          <li><strong>ID:</strong> NEO-55667 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Basic Tier)</span></li>
+          <li><strong>ID:</strong> NEO-77889 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ent 500)</span></li>
+        </ul>
+      </div>
     </div>
 
     <!-- Register Form -->
@@ -608,7 +620,7 @@ const planMatrix = {
   'ent-500': { name: 'Enterprise 500/500', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00' }
 };
 
-// Persistent Cloud Subscriber Database
+// Persistent Cloud Subscriber Database with 5 Demo Users
 const defaultStore = {
   "NEO-98210": {
     name: "Johnathan Smith",
@@ -631,9 +643,87 @@ const defaultStore = {
       { id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Unpaid" },
       { id: "INV-NEO-2026-07", cycle: "July 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" }
     ],
-    tickets: [
-      { id: "TKT-8841", title: "Static IP Routing Configuration", status: "Resolved", date: "02 Aug 2026" }
-    ]
+    tickets: [{ id: "TKT-8841", title: "Static IP Routing Configuration", status: "Resolved", date: "02 Aug 2026" }]
+  },
+  "NEO-11223": {
+    name: "Sarah Connor",
+    email: "sarah@example.com",
+    pass: "demo2026",
+    phone: "+61 400 111 222",
+    address: "10 Main St, Melbourne VIC 3000",
+    planName: "Ultra Plan",
+    planSpeed: "1000 Mbps",
+    upSpeed: "100 Mbps",
+    downSpeed: "1000 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.19.105",
+    ntdId: "NTD-AU-112233-X",
+    currentUsageGB: 850,
+    trafficWeekly: [120, 150, 90, 110, 140, 180, 160],
+    monthlyTrend: [800, 820, 790, 850, 910, 880, 850, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Ultra", amount: "A$99.00", status: "Paid" }],
+    tickets: []
+  },
+  "NEO-33445": {
+    name: "Acme Corp",
+    email: "it@acmecorp.com.au",
+    pass: "demo2026",
+    phone: "+61 2 9876 5432",
+    address: "50 George St, Sydney NSW 2000",
+    planName: "Business 1000/400 Plan",
+    planSpeed: "1000 Mbps",
+    upSpeed: "400 Mbps",
+    downSpeed: "1000 Mbps",
+    balance: "A$145.00",
+    dueDate: "20 September 2026",
+    ipAddress: "103.24.20.10",
+    ntdId: "NTD-AU-445566-X",
+    currentUsageGB: 2100,
+    trafficWeekly: [400, 450, 420, 480, 500, 100, 80],
+    monthlyTrend: [1800, 1950, 2050, 2200, 2150, 2300, 2100, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Business 1000/400", amount: "A$145.00", status: "Unpaid" }],
+    tickets: [{ id: "TKT-9922", title: "BGP Routing Query", status: "In NOC Queue", date: "21 Aug 2026" }]
+  },
+  "NEO-55667": {
+    name: "David Miller",
+    email: "david.m@example.com",
+    pass: "demo2026",
+    phone: "+61 455 666 777",
+    address: "22 King St, Brisbane QLD 4000",
+    planName: "Basic Plan",
+    planSpeed: "25 Mbps",
+    upSpeed: "10 Mbps",
+    downSpeed: "25 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.21.55",
+    ntdId: "NTD-AU-778899-X",
+    currentUsageGB: 45,
+    trafficWeekly: [5, 8, 6, 4, 7, 10, 5],
+    monthlyTrend: [40, 45, 38, 50, 42, 48, 45, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Basic", amount: "A$60.00", status: "Paid" }],
+    tickets: []
+  },
+  "NEO-77889": {
+    name: "Global Tech",
+    email: "admin@globaltech.com.au",
+    pass: "demo2026",
+    phone: "+61 3 8888 9999",
+    address: "100 Collins St, Melbourne VIC 3000",
+    planName: "Enterprise 500/500",
+    planSpeed: "500 Mbps",
+    upSpeed: "500 Mbps",
+    downSpeed: "500 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.22.1",
+    ntdId: "NTD-AU-990011-X",
+    currentUsageGB: 3500,
+    trafficWeekly: [600, 650, 620, 680, 700, 200, 150],
+    monthlyTrend: [3100, 3200, 3400, 3350, 3600, 3550, 3500, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Enterprise 500", amount: "A$469.00", status: "Paid" }],
+    tickets: []
   }
 };
 
