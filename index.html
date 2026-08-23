@@ -1228,11 +1228,12 @@
     });
   })();
 
-  // ─── Professional Pricing Toggle Logic ───
+  // ─── Professional Pricing Toggle Logic (Synchronized with Template Classes) ───
   (function() {
     const toggleContainer = document.getElementById('pricingToggle');
     const monthlyLabel = document.getElementById('monthlyLabel');
     const annualLabel = document.getElementById('annualLabel');
+    const saveBadge = document.getElementById('saveBadge');
     const monthlyPrices = document.querySelectorAll('.price-option.monthly');
     const annualPrices = document.querySelectorAll('.price-option.annual');
 
@@ -1240,30 +1241,22 @@
 
     function setPricing(isAnnual) {
       toggleContainer.setAttribute('aria-checked', isAnnual);
+      toggleContainer.classList.toggle('annual', isAnnual);
       
       if (isAnnual) {
         monthlyLabel.classList.remove('active');
         annualLabel.classList.add('active');
+        if (saveBadge) saveBadge.classList.add('show');
       } else {
         annualLabel.classList.remove('active');
         monthlyLabel.classList.add('active');
+        if (saveBadge) saveBadge.classList.remove('show');
       }
 
-      monthlyPrices.forEach(el => {
-        if (isAnnual) el.classList.remove('active');
-        else el.classList.add('active');
-      });
-      annualPrices.forEach(el => {
-        if (isAnnual) el.classList.add('active');
-        else el.classList.remove('active');
-      });
+      monthlyPrices.forEach(el => el.classList.toggle('active', !isAnnual));
+      annualPrices.forEach(el => el.classList.toggle('active', isAnnual));
     }
 
-    toggleContainer.addEventListener('click', function(e) {
-      const isCurrentlyAnnual = this.getAttribute('aria-checked') === 'true';
-      setPricing(!isCurrentlyAnnual);
-    });
-    
     monthlyLabel.addEventListener('click', function(e) {
       e.stopPropagation();
       setPricing(false);
@@ -1272,14 +1265,6 @@
     annualLabel.addEventListener('click', function(e) {
       e.stopPropagation();
       setPricing(true);
-    });
-    
-    toggleContainer.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const isCurrentlyAnnual = this.getAttribute('aria-checked') === 'true';
-        setPricing(!isCurrentlyAnnual);
-      }
     });
   })();
 </script>
