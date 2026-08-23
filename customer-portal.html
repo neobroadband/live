@@ -359,7 +359,7 @@ body {
       <div class="grid stats-4">
         <div class="card">
           <div class="card-label">Active Plan Tier</div>
-          <div class="stat-value" id="dashPlanName">Unlimited</div>
+          <div class="stat-value" id="dashPlanName">Pending</div>
           <div class="stat-meta" id="dashPlanTier">High Capacity Fiber</div>
         </div>
         <div class="card">
@@ -413,8 +413,8 @@ body {
       </div>
 
       <div class="grid stats-4">
-        <div class="card"><div class="card-label">Download Speed Cap</div><div class="stat-value" id="useDownSpeed">Uncapped <small></small></div><div class="stat-meta">Unlimited Throughput</div></div>
-        <div class="card"><div class="card-label">Upload Speed Cap</div><div class="stat-value" id="useUpSpeed">Uncapped <small></small></div><div class="stat-meta">Full Duplex Bandwidth</div></div>
+        <div class="card"><div class="card-label">Download Speed Cap</div><div class="stat-value" id="useDownSpeed">Uncapped <small></small></div><div class="stat-meta">Provisioned Limit</div></div>
+        <div class="card"><div class="card-label">Upload Speed Cap</div><div class="stat-value" id="useUpSpeed">Uncapped <small></small></div><div class="stat-meta">Provisioned Limit</div></div>
         <div class="card"><div class="card-label">30-Day Total Transfer</div><div class="stat-value" id="useTotalTransfer">0.0 <small>TB</small></div><div class="stat-meta">Truly Unlimited</div></div>
         <div class="card"><div class="card-label">Average Latency</div><div class="stat-value">2 <small>ms</small></div><div class="stat-meta">Jitter: &lt; 0.8ms</div></div>
       </div>
@@ -512,7 +512,7 @@ body {
           <h3 style="font-size:18px;margin-bottom:8px;">Ultra Plan</h3>
           <div class="stat-value" style="font-size:1.8rem;">A$99 <small>/mo</small></div>
           <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">1000 Mbps Down / 100 Mbps Up</p>
-          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Ultra Plan', 99)">Switch to Ultra</button>
+          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Ultra', 99)">Switch to Ultra</button>
         </div>
 
         <div class="card">
@@ -520,7 +520,7 @@ body {
           <h3 style="font-size:18px;margin-bottom:8px;">Ultra + Plan</h3>
           <div class="stat-value" style="font-size:1.8rem;">A$135 <small>/mo</small></div>
           <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">1000 Mbps Down / 400 Mbps Up</p>
-          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Ultra + Plan', 135)">Switch to Ultra +</button>
+          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Ultra +', 135)">Switch to Ultra +</button>
         </div>
 
         <div class="card">
@@ -528,7 +528,7 @@ body {
           <h3 style="font-size:18px;margin-bottom:8px;">Thunderbolt Plan</h3>
           <div class="stat-value" style="font-size:1.8rem;">A$210 <small>/mo</small></div>
           <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">2000 Mbps Down / 500 Mbps Up</p>
-          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Thunderbolt Plan', 210)">Switch to Thunderbolt</button>
+          <button class="btn-primary" style="width:100%;" onclick="requestPlanUpgrade('Thunderbolt', 210)">Switch to Thunderbolt</button>
         </div>
       </div>
     </section>
@@ -588,6 +588,26 @@ body {
  * CLOUD & ISP INTEGRATION ARCHITECTURE LAYER
  */
 
+// Plan Matrix mapping to index.html subscription buttons
+const planMatrix = {
+  'basic': { name: 'Basic', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00' },
+  'regular': { name: 'Regular', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00' },
+  'ultra': { name: 'Ultra', down: '1000 Mbps', up: '100 Mbps', price: 'A$99.00' },
+  'pro': { name: 'Pro', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00' },
+  'pro-plus': { name: 'Pro +', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00' },
+  'ultra-plus': { name: 'Ultra +', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00' },
+  'thunderbolt': { name: 'Thunderbolt', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00' },
+  'biz-50': { name: 'Business 50/20', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00' },
+  'biz-100': { name: 'Business 100/40', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00' },
+  'biz-250': { name: 'Business 250/100', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00' },
+  'biz-500-50': { name: 'Business 500/50', down: '500 Mbps', up: '50 Mbps', price: 'A$90.00' },
+  'biz-500-200': { name: 'Business 500/200', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00' },
+  'biz-1000': { name: 'Business 1000/400', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00' },
+  'ent-100': { name: 'Enterprise 100/100', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00' },
+  'ent-250': { name: 'Enterprise 250/250', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00' },
+  'ent-500': { name: 'Enterprise 500/500', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00' }
+};
+
 // Persistent Cloud Subscriber Database
 const defaultStore = {
   "NEO-98210": {
@@ -609,56 +629,11 @@ const defaultStore = {
     monthlyTrend: [380, 410, 460, 510, 480, 530, 428, 0, 0, 0, 0, 0],
     invoices: [
       { id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Unpaid" },
-      { id: "INV-NEO-2026-07", cycle: "July 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" },
-      { id: "INV-NEO-2026-06", cycle: "June 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" }
+      { id: "INV-NEO-2026-07", cycle: "July 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" }
     ],
     tickets: [
       { id: "TKT-8841", title: "Static IP Routing Configuration", status: "Resolved", date: "02 Aug 2026" }
     ]
-  },
-  "NEO-44109": {
-    name: "Sarah Jenkins",
-    email: "sarah.j@melbournedigital.io",
-    pass: "broadband123",
-    phone: "+61 498 776 554",
-    address: "88 Collins Street, Melbourne VIC 3000, Australia",
-    planName: "Thunderbolt Plan",
-    planSpeed: "2000 Mbps",
-    upSpeed: "500 Mbps",
-    downSpeed: "2000 Mbps",
-    balance: "A$210.00",
-    dueDate: "20 September 2026",
-    ipAddress: "139.130.4.11",
-    ntdId: "NTD-AU-992011-T",
-    currentUsageGB: 1840,
-    trafficWeekly: [220, 260, 310, 290, 340, 410, 380],
-    monthlyTrend: [1400, 1600, 1550, 1720, 1810, 1900, 1840, 0, 0, 0, 0, 0],
-    invoices: [
-      { id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Thunderbolt (2000/500)", amount: "A$210.00", status: "Paid" }
-    ],
-    tickets: []
-  },
-  "NEO-11980": {
-    name: "Nexus Enterprise Systems",
-    email: "admin@nexussystems.com.au",
-    pass: "broadband123",
-    phone: "+61 2 9000 8888",
-    address: "Tower Two International Towers, Barangaroo NSW 2000",
-    planName: "Enterprise Ethernet",
-    planSpeed: "1000 Mbps",
-    upSpeed: "1000 Mbps",
-    downSpeed: "1000 Mbps",
-    balance: "A$699.00",
-    dueDate: "01 September 2026",
-    ipAddress: "203.2.75.14",
-    ntdId: "NTD-EE-001924-A",
-    currentUsageGB: 4620,
-    trafficWeekly: [620, 710, 680, 750, 810, 450, 400],
-    monthlyTrend: [3800, 4100, 4300, 4500, 4800, 5100, 4620, 0, 0, 0, 0, 0],
-    invoices: [
-      { id: "INV-EE-0826", cycle: "August 2026", plan: "Enterprise 1000/1000", amount: "A$699.00", status: "Paid" }
-    ],
-    tickets: []
   }
 };
 
@@ -694,7 +669,6 @@ document.querySelectorAll('.portal-nav button').forEach(btn => {
   };
 });
 
-// Toast Notifications
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -702,7 +676,7 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ── Auth Modes & New Customer Registration ──
+// ── Auth Modes & Unlimited New Customer Registration ──
 function switchAuthMode(mode) {
   const loginTab = document.getElementById('tabLogin');
   const regTab = document.getElementById('tabRegister');
@@ -735,12 +709,10 @@ function executeCloudAuthentication() {
   let matchedUser = null;
   let matchedId = null;
 
-  // Direct ID check
   if (subscriberStore[userInput]) {
     matchedUser = subscriberStore[userInput];
     matchedId = userInput;
   } else {
-    // Lookup by Email (case insensitive)
     for (let k in subscriberStore) {
       if (subscriberStore[k].email && subscriberStore[k].email.toLowerCase() === userInput.toLowerCase()) {
         matchedUser = subscriberStore[k];
@@ -776,40 +748,48 @@ function registerNewCustomer() {
     return;
   }
 
+  // Identify selected plan from URL params or sessionStorage
+  const urlParams = new URLSearchParams(window.location.search);
+  const planId = urlParams.get('plan') || sessionStorage.getItem('pending_plan') || 'regular';
+  const selectedPlan = planMatrix[planId] || planMatrix['regular'];
+
   // Generate unique Neo Broadband Customer ID
   const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
 
-  // Unlimited Access Provisioning (Zero limit profile)
+  // Profile creation dynamically using mapped details
   subscriberStore[newId] = {
     name: `${fName} ${lName}`,
     email: email,
     pass: pass,
     phone: phone,
     address: `${state}, Australia ${postcode}`,
-    planName: "Unlimited Tier Provisioned",
-    planSpeed: "Unlimited",
-    downSpeed: "2000 Mbps",
-    upSpeed: "500 Mbps",
-    balance: "A$0.00",
-    dueDate: "Current Active",
+    planName: selectedPlan.name + " Plan",
+    planSpeed: selectedPlan.down,
+    downSpeed: selectedPlan.down,
+    upSpeed: selectedPlan.up,
+    balance: selectedPlan.price,
+    dueDate: "Active (Initial Month)",
     ipAddress: "103.24.18." + Math.floor(10 + Math.random() * 200),
     ntdId: "NTD-AU-" + Math.floor(100000 + Math.random() * 900000) + "-X",
-    currentUsageGB: 120,
-    trafficWeekly: [15, 22, 18, 25, 30, 45, 35],
-    monthlyTrend: [100, 150, 180, 200, 250, 280, 120, 0, 0, 0, 0, 0],
-    invoices: [],
+    currentUsageGB: 0,
+    trafficWeekly: [0, 0, 0, 0, 0, 0, 0],
+    monthlyTrend: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    invoices: [
+      { id: `INV-${newId}-01`, cycle: "Initial Provisioning", plan: selectedPlan.name, amount: selectedPlan.price, status: "Paid" }
+    ],
     tickets: []
   };
 
   persistStore();
 
-  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nYou have been provisioned with full unlimited access.`);
+  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nYou have been provisioned with the ${selectedPlan.name} Tier.`);
   
   activeUserToken = newId;
   sessionStorage.setItem('neo_active_user', activeUserToken);
   localStorage.setItem('neo_known_user', activeUserToken);
-  document.getElementById('loginOverlay').style.display = 'none';
+  sessionStorage.removeItem('pending_plan'); // Clear the plan storage
   
+  document.getElementById('loginOverlay').style.display = 'none';
   syncCloudTelemetry();
   toast(`Welcome to Neo Broadband, ${fName}!`);
 }
@@ -848,7 +828,6 @@ async function syncCloudTelemetry(showToast = false) {
   renderChart('mainTrafficChart', profile.trafficWeekly || [0, 0, 0, 0, 0, 0, 0]);
   renderChart('monthlyUsageChart', profile.monthlyTrend || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  // Render Invoices
   const invTbody = document.querySelector('#invoicesTable tbody');
   if (profile.invoices && profile.invoices.length > 0) {
     invTbody.innerHTML = profile.invoices.map(inv => `
@@ -895,7 +874,7 @@ function runSpeedtest() {
 
   let current = 0;
   const rawTarget = parseFloat(subscriberStore[activeUserToken].downSpeed);
-  const target = isNaN(rawTarget) || rawTarget === 0 ? 980 : rawTarget;
+  const target = isNaN(rawTarget) || rawTarget === 0 ? 500 : rawTarget; // fallback
   const step = target / 30;
 
   const interval = setInterval(() => {
@@ -910,14 +889,14 @@ function runSpeedtest() {
   }, 50);
 }
 
-function requestPlanUpgrade(newPlan, price) {
-  if (confirm(`Provision upgrade to ${newPlan} for A$${price}/month? Changes apply instantaneously.`)) {
+function requestPlanUpgrade(newPlanName, price) {
+  if (confirm(`Provision upgrade to ${newPlanName} Plan for A$${price}/month? Changes apply instantaneously.`)) {
     const profile = subscriberStore[activeUserToken];
-    profile.planName = newPlan;
+    profile.planName = `${newPlanName} Plan`;
     profile.balance = `A$${price}.00`;
     persistStore();
     syncCloudTelemetry();
-    toast(`Successfully provisioned ${newPlan}!`);
+    toast(`Successfully provisioned ${newPlanName}!`);
   }
 }
 
@@ -989,7 +968,6 @@ function saveSubscriberProfile() {
 
 // Bootstrap on Load
 window.onload = () => {
-  // Support URL query switches (e.g. ?auth=register)
   const urlParams = new URLSearchParams(window.location.search);
   const authMode = urlParams.get('auth');
   if (authMode === 'register') {
