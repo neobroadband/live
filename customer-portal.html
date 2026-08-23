@@ -242,46 +242,61 @@ body {
     <div id="loginForm">
       <div class="field">
         <label>Customer Account ID or Email</label>
-        <input id="authInputUser" value="NEO-98210" placeholder="e.g. NEO-98210 or user@example.com">
+        <input id="authInputUser" placeholder="e.g. NEO-98210 or user@example.com">
       </div>
       <div class="field" style="margin-top:12px;">
         <label>Password</label>
-        <input id="authInputPass" type="password" value="broadband123" placeholder="••••••••">
+        <input id="authInputPass" type="password" placeholder="••••••••">
       </div>
       <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="executeCloudAuthentication()">Authenticate with ISP Cloud</button>
-      
-      <div style="margin-top:24px;border-top:1px solid var(--panel-border);padding-top:16px;">
-        <span style="font-size:9px;color:var(--slate-warm);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:6px;">Demo Subscriber Profiles:</span>
-        <select class="field" style="padding:8px 12px;font-size:10px;margin-bottom:0;" onchange="loadPresetSubscriber(this.value)">
-          <option value="NEO-98210">Residential: Regular Plan 500/50 Mbps (Active)</option>
-          <option value="NEO-44109">Residential: Thunderbolt Plan 2000/500 Mbps (Active)</option>
-          <option value="NEO-11980">Business: Enterprise Ethernet 1000/1000 Mbps (SLA 4hr)</option>
-        </select>
-      </div>
     </div>
 
     <!-- Register Form -->
     <div id="registerForm" style="display:none;">
-      <div class="field">
-        <label>Full Name</label>
-        <input id="regName" placeholder="e.g. John Doe">
+      <div class="field-grid">
+        <div class="field">
+          <label>First Name</label>
+          <input id="regFirstName" placeholder="John">
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input id="regLastName" placeholder="Doe">
+        </div>
       </div>
       <div class="field">
         <label>Email Address</label>
         <input id="regEmail" type="email" placeholder="john@example.com">
       </div>
       <div class="field">
+        <label>Phone Number</label>
+        <input id="regPhone" type="tel" placeholder="+61 400 000 000">
+      </div>
+      
+      <div class="field-grid">
+        <div class="field">
+          <label>State</label>
+          <select id="regState">
+            <option value="NSW">New South Wales (NSW)</option>
+            <option value="VIC">Victoria (VIC)</option>
+            <option value="QLD">Queensland (QLD)</option>
+            <option value="WA">Western Australia (WA)</option>
+            <option value="SA">South Australia (SA)</option>
+            <option value="TAS">Tasmania (TAS)</option>
+            <option value="ACT">Australian Capital Territory (ACT)</option>
+            <option value="NT">Northern Territory (NT)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Postcode</label>
+          <input id="regPostcode" type="text" placeholder="2000" maxlength="4">
+        </div>
+      </div>
+
+      <div class="field">
         <label>Password</label>
         <input id="regPass" type="password" placeholder="••••••••">
       </div>
-      <div class="field">
-        <label>Select Starting Plan</label>
-        <select id="regPlan">
-          <option value="Regular Plan|500 Mbps|50 Mbps|A$85.00">Regular Plan (500/50 Mbps) - A$85/mo</option>
-          <option value="Ultra Plan|1000 Mbps|100 Mbps|A$99.00">Ultra Plan (1000/100 Mbps) - A$99/mo</option>
-        </select>
-      </div>
-      <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="registerNewCustomer()">Create Account & Generate Bill</button>
+      <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="registerNewCustomer()">Create Account</button>
     </div>
 
   </div>
@@ -706,10 +721,6 @@ function switchAuthMode(mode) {
   }
 }
 
-function loadPresetSubscriber(id) {
-  document.getElementById('authInputUser').value = id;
-}
-
 function executeCloudAuthentication() {
   const userInput = document.getElementById('authInputUser').value.trim();
   const passInput = document.getElementById('authInputPass').value;
@@ -736,59 +747,57 @@ function executeCloudAuthentication() {
 }
 
 function registerNewCustomer() {
-  const name = document.getElementById('regName').value.trim();
+  const fName = document.getElementById('regFirstName').value.trim();
+  const lName = document.getElementById('regLastName').value.trim();
   const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const state = document.getElementById('regState').value;
+  const postcode = document.getElementById('regPostcode').value.trim();
   const pass = document.getElementById('regPass').value;
-  const planData = document.getElementById('regPlan').value.split('|'); // PlanName|Down|Up|Price
 
-  if (!name || !email || !pass) {
+  if (!fName || !lName || !email || !phone || !postcode || !pass) {
     toast('Please fill in all registration fields.');
     return;
   }
 
   // Generate unique Neo Broadband Customer ID
   const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
-  const invId = "INV-" + newId + "-01";
 
-  // Create Profile Array
+  // Create Profile Array (Default pending state since plan is selected elsewhere)
   subscriberStore[newId] = {
-    name: name,
+    name: `${fName} ${lName}`,
     email: email,
     pass: pass,
-    phone: "Pending Update",
-    address: "Pending Update",
-    planName: planData[0],
-    planSpeed: planData[1],
-    downSpeed: planData[1],
-    upSpeed: planData[2],
-    balance: planData[3],
-    dueDate: "20 September 2026",
-    ipAddress: "Dynamic IP Assigned",
+    phone: phone,
+    address: `${state}, Australia ${postcode}`,
+    planName: "Account Created - No Plan Selected",
+    planSpeed: "0 Mbps",
+    downSpeed: "0 Mbps",
+    upSpeed: "0 Mbps",
+    balance: "A$0.00",
+    dueDate: "N/A",
+    ipAddress: "Pending Assignment",
     ntdId: "NTD-AU-PENDING",
     currentUsageGB: 0,
     trafficWeekly: [0, 0, 0, 0, 0, 0, 0],
     monthlyTrend: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    invoices: [
-      { id: invId, cycle: "August 2026", plan: planData[0], amount: planData[3], status: "Unpaid" }
-    ],
+    invoices: [],
     tickets: []
   };
 
-  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nYour first bill has been generated in your account.`);
+  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nPlease subscribe to a plan from the Broadband Plans page to activate your connection.`);
   
   activeUserToken = newId;
   sessionStorage.setItem('neo_active_user', activeUserToken);
   document.getElementById('loginOverlay').style.display = 'none';
   
   syncCloudTelemetry();
-  toast(`Welcome to Neo Broadband, ${name}!`);
+  toast(`Welcome to Neo Broadband, ${fName}!`);
 }
 
 function portalLogout() {
   sessionStorage.removeItem('neo_active_user');
-  document.getElementById('loginOverlay').style.display = 'grid';
-  switchAuthMode('login'); // Reset to login tab
-  toast('Signed out securely.');
+  window.location.href = 'index.html';
 }
 
 // ── Cloud Synchronizer & UI Update ──
