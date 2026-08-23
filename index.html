@@ -67,14 +67,82 @@
     font-size: 2rem;
     font-weight: 300;
     letter-spacing: -0.02em;
-    color: var(--ivory);
+    color: var(--ivory, #ffffff);
     margin-bottom: 8px;
   }
   .category-desc {
     font-size: 1rem;
     font-weight: 300;
-    color: var(--slate-light);
+    color: var(--slate-light, #9a9fa8);
     margin-bottom: 30px;
+  }
+
+  /* ═══ Pricing Toggle Switch Styling ═══ */
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .pricing-toggle-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--slate-light, #9a9fa8);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .pricing-toggle-label.active {
+    color: var(--ivory, #ffffff);
+    font-weight: 700;
+  }
+  .toggle-switch {
+    position: relative;
+    width: 64px;
+    height: 32px;
+    background: #454b57;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .toggle-switch::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+  .toggle-switch[aria-checked="true"] {
+    background: #2b6cf6; 
+  }
+  .toggle-switch[aria-checked="true"]::before {
+    transform: translateX(32px);
+  }
+  .save-badge {
+    background: rgba(43, 108, 246, 0.15);
+    color: #2b6cf6;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  /* Price Options Visibility */
+  .price-option {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  .price-option.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* ═══ Popup Contact Form ═══ */
@@ -1147,6 +1215,60 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Message';
       });
+    });
+  })();
+
+  // ─── Pricing Toggle Logic ───
+  (function() {
+    const toggleSwitch = document.getElementById('pricingToggle');
+    const monthlyLabel = document.getElementById('monthlyLabel');
+    const annualLabel = document.getElementById('annualLabel');
+    const monthlyPrices = document.querySelectorAll('.price-option.monthly');
+    const annualPrices = document.querySelectorAll('.price-option.annual');
+
+    if (!toggleSwitch) return;
+
+    function setPricing(isAnnual) {
+      // Update switch ARIA state visually
+      toggleSwitch.setAttribute('aria-checked', isAnnual);
+      
+      // Update toggle labels
+      if (isAnnual) {
+        monthlyLabel.classList.remove('active');
+        annualLabel.classList.add('active');
+      } else {
+        annualLabel.classList.remove('active');
+        monthlyLabel.classList.add('active');
+      }
+
+      // Update price block visibilities
+      monthlyPrices.forEach(el => {
+        if (isAnnual) el.classList.remove('active');
+        else el.classList.add('active');
+      });
+      annualPrices.forEach(el => {
+        if (isAnnual) el.classList.add('active');
+        else el.classList.remove('active');
+      });
+    }
+
+    // Toggle on switch click
+    toggleSwitch.addEventListener('click', function() {
+      const isCurrentlyAnnual = this.getAttribute('aria-checked') === 'true';
+      setPricing(!isCurrentlyAnnual);
+    });
+    
+    // Toggle on label click
+    monthlyLabel.addEventListener('click', () => setPricing(false));
+    annualLabel.addEventListener('click', () => setPricing(true));
+    
+    // Accessibility: Keyboard toggling (Enter or Space)
+    toggleSwitch.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isCurrentlyAnnual = this.getAttribute('aria-checked') === 'true';
+        setPricing(!isCurrentlyAnnual);
+      }
     });
   })();
 </script>
