@@ -77,72 +77,81 @@
     margin-bottom: 30px;
   }
 
-  /* ═══ Pricing Toggle Switch Styling ═══ */
+  /* ═══ Professional Segmented Pill Pricing Toggle ═══ */
   .pricing-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
     margin-bottom: 40px;
   }
-  .pricing-toggle-label {
-    font-size: 1.1rem;
+  .pricing-switch-container {
+    position: relative;
+    display: flex;
+    background: #161A20;
+    border: 1px solid rgba(156, 163, 175, 0.15);
+    border-radius: 100px;
+    padding: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .switch-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--slate-light, #9a9fa8);
     cursor: pointer;
+    z-index: 2;
     transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  .pricing-toggle-label.active {
+  .switch-btn.active {
     color: var(--ivory, #ffffff);
-    font-weight: 700;
+    font-weight: 600;
   }
-  .toggle-switch {
-    position: relative;
-    width: 64px;
-    height: 32px;
-    background: #454b57;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  .toggle-switch::before {
-    content: '';
+  .switch-pill {
     position: absolute;
     top: 4px;
     left: 4px;
-    width: 24px;
-    height: 24px;
-    background: #ffffff;
-    border-radius: 50%;
-    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: #2b6cf6;
+    border-radius: 100px;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .toggle-switch[aria-checked="true"] {
-    background: #2b6cf6; 
+  .pricing-switch-container[aria-checked="true"] .switch-pill {
+    transform: translateX(100%);
   }
-  .toggle-switch[aria-checked="true"]::before {
-    transform: translateX(32px);
-  }
-  .save-badge {
-    background: rgba(43, 108, 246, 0.15);
-    color: #2b6cf6;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+  .save-badge-inline {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
     font-weight: 600;
-    margin-left: 8px;
   }
 
-  /* Price Options Visibility */
+  /* Price Options Visibility & Highlighting (Both always shown) */
   .price-option {
-    display: none;
-    animation: fadeIn 0.4s ease forwards;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(156, 163, 175, 0.06);
+    opacity: 0.45;
+    transform: scale(0.98);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .price-option:last-child {
+    border-bottom: none;
   }
   .price-option.active {
-    display: block;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+    opacity: 1;
+    transform: scale(1);
   }
 
   /* ═══ Popup Contact Form ═══ */
@@ -394,12 +403,13 @@
     <h2 class="section-title reveal reveal-d1">Select the perfect connection for <strong>your needs</strong></h2>
     <p class="section-body reveal reveal-d2">Experience lightning-fast broadband and reliable internet connectivity designed to power your digital life.</p>
 
-    <!-- Global Toggle for all plans -->
+    <!-- Professional Segmented Pill Toggle -->
     <div class="pricing-toggle reveal reveal-d3">
-      <span class="pricing-toggle-label active" id="monthlyLabel">Monthly</span>
-      <div class="toggle-switch" id="pricingToggle" role="switch" aria-checked="false" tabindex="0"></div>
-      <span class="pricing-toggle-label" id="annualLabel">Annual</span>
-      <span class="save-badge" id="saveBadge">Save 5%</span>
+      <div class="pricing-switch-container" id="pricingToggle" role="switch" aria-checked="false" tabindex="0">
+        <div class="switch-pill"></div>
+        <button type="button" class="switch-btn active" id="monthlyLabel">Monthly</button>
+        <button type="button" class="switch-btn" id="annualLabel">Annual <span class="save-badge-inline">Save 5%</span></button>
+      </div>
     </div>
 
     <!-- ── RESIDENTIAL PLANS ── -->
@@ -1218,21 +1228,19 @@
     });
   })();
 
-  // ─── Pricing Toggle Logic ───
+  // ─── Professional Pricing Toggle Logic ───
   (function() {
-    const toggleSwitch = document.getElementById('pricingToggle');
+    const toggleContainer = document.getElementById('pricingToggle');
     const monthlyLabel = document.getElementById('monthlyLabel');
     const annualLabel = document.getElementById('annualLabel');
     const monthlyPrices = document.querySelectorAll('.price-option.monthly');
     const annualPrices = document.querySelectorAll('.price-option.annual');
 
-    if (!toggleSwitch) return;
+    if (!toggleContainer) return;
 
     function setPricing(isAnnual) {
-      // Update switch ARIA state visually
-      toggleSwitch.setAttribute('aria-checked', isAnnual);
+      toggleContainer.setAttribute('aria-checked', isAnnual);
       
-      // Update toggle labels
       if (isAnnual) {
         monthlyLabel.classList.remove('active');
         annualLabel.classList.add('active');
@@ -1241,7 +1249,6 @@
         monthlyLabel.classList.add('active');
       }
 
-      // Update price block visibilities
       monthlyPrices.forEach(el => {
         if (isAnnual) el.classList.remove('active');
         else el.classList.add('active');
@@ -1252,18 +1259,22 @@
       });
     }
 
-    // Toggle on switch click
-    toggleSwitch.addEventListener('click', function() {
+    toggleContainer.addEventListener('click', function(e) {
       const isCurrentlyAnnual = this.getAttribute('aria-checked') === 'true';
       setPricing(!isCurrentlyAnnual);
     });
     
-    // Toggle on label click
-    monthlyLabel.addEventListener('click', () => setPricing(false));
-    annualLabel.addEventListener('click', () => setPricing(true));
+    monthlyLabel.addEventListener('click', function(e) {
+      e.stopPropagation();
+      setPricing(false);
+    });
     
-    // Accessibility: Keyboard toggling (Enter or Space)
-    toggleSwitch.addEventListener('keydown', function(e) {
+    annualLabel.addEventListener('click', function(e) {
+      e.stopPropagation();
+      setPricing(true);
+    });
+    
+    toggleContainer.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const isCurrentlyAnnual = this.getAttribute('aria-checked') === 'true';
