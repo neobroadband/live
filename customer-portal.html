@@ -359,18 +359,18 @@ body {
       <div class="grid stats-4">
         <div class="card">
           <div class="card-label">Active Plan Tier</div>
-          <div class="stat-value" id="dashPlanName">500 Mbps</div>
-          <div class="stat-meta" id="dashPlanTier">Residential Regular</div>
+          <div class="stat-value" id="dashPlanName">Unlimited</div>
+          <div class="stat-meta" id="dashPlanTier">High Capacity Fiber</div>
         </div>
         <div class="card">
           <div class="card-label">Current Cycle Usage</div>
-          <div class="stat-value" id="dashUsageVal">428 <small>GB</small></div>
+          <div class="stat-value" id="dashUsageVal">0 <small>GB</small></div>
           <div class="stat-meta positive">Unlimited Data Allocation</div>
         </div>
         <div class="card">
           <div class="card-label">Account Balance</div>
-          <div class="stat-value" id="dashBalance">A$85.00</div>
-          <div class="stat-meta" id="dashDueDate">Due on 15 Sep 2026</div>
+          <div class="stat-value" id="dashBalance">A$0.00</div>
+          <div class="stat-meta" id="dashDueDate">Current Plan Active</div>
         </div>
         <div class="card">
           <div class="card-label">Static IP & Node</div>
@@ -413,10 +413,10 @@ body {
       </div>
 
       <div class="grid stats-4">
-        <div class="card"><div class="card-label">Download Speed Cap</div><div class="stat-value" id="useDownSpeed">500 <small>Mbps</small></div><div class="stat-meta">Provisioned Profile</div></div>
-        <div class="card"><div class="card-label">Upload Speed Cap</div><div class="stat-value" id="useUpSpeed">50 <small>Mbps</small></div><div class="stat-meta">High Upload Priority</div></div>
-        <div class="card"><div class="card-label">30-Day Total Transfer</div><div class="stat-value" id="useTotalTransfer">1.4 <small>TB</small></div><div class="stat-meta">Truly Unlimited</div></div>
-        <div class="card"><div class="card-label">Average Latency</div><div class="stat-value">4 <small>ms</small></div><div class="stat-meta">Jitter: &lt; 1.2ms</div></div>
+        <div class="card"><div class="card-label">Download Speed Cap</div><div class="stat-value" id="useDownSpeed">Uncapped <small></small></div><div class="stat-meta">Unlimited Throughput</div></div>
+        <div class="card"><div class="card-label">Upload Speed Cap</div><div class="stat-value" id="useUpSpeed">Uncapped <small></small></div><div class="stat-meta">Full Duplex Bandwidth</div></div>
+        <div class="card"><div class="card-label">30-Day Total Transfer</div><div class="stat-value" id="useTotalTransfer">0.0 <small>TB</small></div><div class="stat-meta">Truly Unlimited</div></div>
+        <div class="card"><div class="card-label">Average Latency</div><div class="stat-value">2 <small>ms</small></div><div class="stat-meta">Jitter: &lt; 0.8ms</div></div>
       </div>
 
       <div class="card">
@@ -470,15 +470,15 @@ body {
       <div class="grid two-col">
         <div class="card">
           <div class="card-label">Outstanding Invoiced Balance</div>
-          <div class="stat-value" id="billTotalAmount">A$85.00</div>
-          <div class="stat-meta" id="billInvRef">Tax Invoice #INV-NEO-2026-08</div>
+          <div class="stat-value" id="billTotalAmount">A$0.00</div>
+          <div class="stat-meta" id="billInvRef">Account in good standing</div>
           <br>
           <a href="payment.html" class="btn-primary">Pay Invoice Now</a>
         </div>
         <div class="card">
           <div class="card-label">AutoPay Direct Debit</div>
           <div class="stat-value" style="color:#48bb78;">Active</div>
-          <div class="stat-meta">Visa ending in •••• 4018</div>
+          <div class="stat-meta">Digital Billing Configured</div>
           <br>
           <button class="btn-secondary" onclick="toast('Opening payment method update dialog')">Change Card</button>
         </div>
@@ -586,11 +586,10 @@ body {
 <script>
 /**
  * CLOUD & ISP INTEGRATION ARCHITECTURE LAYER
- * Simulates RESTful interactions with Cloud AAA/RADIUS and NBN Co Provisioning Endpoints
  */
 
-// In-Memory Cloud Subscriber Database
-const subscriberStore = {
+// Persistent Cloud Subscriber Database
+const defaultStore = {
   "NEO-98210": {
     name: "Johnathan Smith",
     email: "john.smith@sydneytech.com.au",
@@ -663,6 +662,14 @@ const subscriberStore = {
   }
 };
 
+// Initialize subscriber store from localStorage or fallback
+const savedDatabase = localStorage.getItem('neo_subscriber_db');
+let subscriberStore = savedDatabase ? JSON.parse(savedDatabase) : defaultStore;
+
+function persistStore() {
+  localStorage.setItem('neo_subscriber_db', JSON.stringify(subscriberStore));
+}
+
 let activeUserToken = null;
 
 // Page Navigation
@@ -725,19 +732,28 @@ function executeCloudAuthentication() {
   const userInput = document.getElementById('authInputUser').value.trim();
   const passInput = document.getElementById('authInputPass').value;
 
-  let matchedUser = subscriberStore[userInput];
-  if (!matchedUser) {
+  let matchedUser = null;
+  let matchedId = null;
+
+  // Direct ID check
+  if (subscriberStore[userInput]) {
+    matchedUser = subscriberStore[userInput];
+    matchedId = userInput;
+  } else {
+    // Lookup by Email (case insensitive)
     for (let k in subscriberStore) {
-      if (subscriberStore[k].email.toLowerCase() === userInput.toLowerCase()) {
+      if (subscriberStore[k].email && subscriberStore[k].email.toLowerCase() === userInput.toLowerCase()) {
         matchedUser = subscriberStore[k];
+        matchedId = k;
         break;
       }
     }
   }
 
   if (matchedUser && matchedUser.pass === passInput) {
-    activeUserToken = userInput.startsWith('NEO') ? userInput : "NEO-98210";
+    activeUserToken = matchedId;
     sessionStorage.setItem('neo_active_user', activeUserToken);
+    localStorage.setItem('neo_known_user', activeUserToken);
     document.getElementById('loginOverlay').style.display = 'none';
     syncCloudTelemetry();
     toast(`Authenticated with Neo Cloud: ${matchedUser.name}`);
@@ -763,32 +779,35 @@ function registerNewCustomer() {
   // Generate unique Neo Broadband Customer ID
   const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
 
-  // Create Profile Array (Default pending state since plan is selected elsewhere)
+  // Unlimited Access Provisioning (Zero limit profile)
   subscriberStore[newId] = {
     name: `${fName} ${lName}`,
     email: email,
     pass: pass,
     phone: phone,
     address: `${state}, Australia ${postcode}`,
-    planName: "Account Created - No Plan Selected",
-    planSpeed: "0 Mbps",
-    downSpeed: "0 Mbps",
-    upSpeed: "0 Mbps",
+    planName: "Unlimited Tier Provisioned",
+    planSpeed: "Unlimited",
+    downSpeed: "2000 Mbps",
+    upSpeed: "500 Mbps",
     balance: "A$0.00",
-    dueDate: "N/A",
-    ipAddress: "Pending Assignment",
-    ntdId: "NTD-AU-PENDING",
-    currentUsageGB: 0,
-    trafficWeekly: [0, 0, 0, 0, 0, 0, 0],
-    monthlyTrend: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    dueDate: "Current Active",
+    ipAddress: "103.24.18." + Math.floor(10 + Math.random() * 200),
+    ntdId: "NTD-AU-" + Math.floor(100000 + Math.random() * 900000) + "-X",
+    currentUsageGB: 120,
+    trafficWeekly: [15, 22, 18, 25, 30, 45, 35],
+    monthlyTrend: [100, 150, 180, 200, 250, 280, 120, 0, 0, 0, 0, 0],
     invoices: [],
     tickets: []
   };
 
-  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nPlease subscribe to a plan from the Broadband Plans page to activate your connection.`);
+  persistStore();
+
+  alert(`Account successfully created!\n\nYour Customer ID is: ${newId}\nYou have been provisioned with full unlimited access.`);
   
   activeUserToken = newId;
   sessionStorage.setItem('neo_active_user', activeUserToken);
+  localStorage.setItem('neo_known_user', activeUserToken);
   document.getElementById('loginOverlay').style.display = 'none';
   
   syncCloudTelemetry();
@@ -816,7 +835,7 @@ async function syncCloudTelemetry(showToast = false) {
   document.getElementById('dashPlanTier').textContent = profile.planName;
   document.getElementById('dashUsageVal').innerHTML = `${profile.currentUsageGB} <small>GB</small>`;
   document.getElementById('dashBalance').textContent = profile.balance;
-  document.getElementById('dashDueDate').textContent = `Due date: ${profile.dueDate}`;
+  document.getElementById('dashDueDate').textContent = profile.dueDate.startsWith('Due') ? profile.dueDate : `Status: ${profile.dueDate}`;
   document.getElementById('dashIP').textContent = profile.ipAddress;
 
   document.getElementById('useDownSpeed').innerHTML = `${profile.downSpeed}`;
@@ -826,23 +845,27 @@ async function syncCloudTelemetry(showToast = false) {
   document.getElementById('diagNtd').value = profile.ntdId;
   document.getElementById('billTotalAmount').textContent = profile.balance;
 
-  renderChart('mainTrafficChart', profile.trafficWeekly);
-  renderChart('monthlyUsageChart', profile.monthlyTrend);
+  renderChart('mainTrafficChart', profile.trafficWeekly || [0, 0, 0, 0, 0, 0, 0]);
+  renderChart('monthlyUsageChart', profile.monthlyTrend || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  // ── Render Invoices Table with Link to invoice.html ──
+  // Render Invoices
   const invTbody = document.querySelector('#invoicesTable tbody');
-  invTbody.innerHTML = profile.invoices.map(inv => `
-    <tr>
-      <td><strong>${inv.id}</strong></td>
-      <td>${inv.cycle}</td>
-      <td>${inv.plan}</td>
-      <td>${inv.amount}</td>
-      <td style="display: flex; align-items: center; gap: 12px;">
-        <span class="status-pill" style="margin:0;color:${inv.status === 'Paid' ? '#48bb78' : '#e2cfa2'};">${inv.status}</span>
-        <a href="invoice.html?inv=${inv.id}" class="btn-secondary" style="padding: 6px 12px; font-size: 8px; text-decoration: none;">View Bill</a>
-      </td>
-    </tr>
-  `).join('');
+  if (profile.invoices && profile.invoices.length > 0) {
+    invTbody.innerHTML = profile.invoices.map(inv => `
+      <tr>
+        <td><strong>${inv.id}</strong></td>
+        <td>${inv.cycle}</td>
+        <td>${inv.plan}</td>
+        <td>${inv.amount}</td>
+        <td style="display: flex; align-items: center; gap: 12px;">
+          <span class="status-pill" style="margin:0;color:${inv.status === 'Paid' ? '#48bb78' : '#e2cfa2'};">${inv.status}</span>
+          <a href="invoice.html?inv=${inv.id}" class="btn-secondary" style="padding: 6px 12px; font-size: 8px; text-decoration: none;">View Bill</a>
+        </td>
+      </tr>
+    `).join('');
+  } else {
+    invTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--slate-warm);padding:24px;">No invoices generated yet. Account is fully active.</td></tr>`;
+  }
 
   renderTickets();
 
@@ -871,7 +894,8 @@ function runSpeedtest() {
   gauge.textContent = 'Testing...';
 
   let current = 0;
-  const target = parseFloat(subscriberStore[activeUserToken].downSpeed);
+  const rawTarget = parseFloat(subscriberStore[activeUserToken].downSpeed);
+  const target = isNaN(rawTarget) || rawTarget === 0 ? 980 : rawTarget;
   const step = target / 30;
 
   const interval = setInterval(() => {
@@ -891,6 +915,7 @@ function requestPlanUpgrade(newPlan, price) {
     const profile = subscriberStore[activeUserToken];
     profile.planName = newPlan;
     profile.balance = `A$${price}.00`;
+    persistStore();
     syncCloudTelemetry();
     toast(`Successfully provisioned ${newPlan}!`);
   }
@@ -902,6 +927,8 @@ function createSupportTicket() {
   if (!notes) { toast('Please write a short description'); return; }
 
   const profile = subscriberStore[activeUserToken];
+  if (!profile.tickets) profile.tickets = [];
+  
   profile.tickets.unshift({
     id: `TKT-${Math.floor(1000 + Math.random()*9000)}`,
     title: `${cat}: ${notes}`,
@@ -909,6 +936,7 @@ function createSupportTicket() {
     date: "Just Now"
   });
 
+  persistStore();
   document.getElementById('ticketNotes').value = "";
   renderTickets();
   toast('Support ticket queued for network engineers.');
@@ -917,7 +945,7 @@ function createSupportTicket() {
 function renderTickets() {
   const profile = subscriberStore[activeUserToken];
   const container = document.getElementById('ticketsLogContainer');
-  if (!profile.tickets.length) {
+  if (!profile.tickets || !profile.tickets.length) {
     container.innerHTML = `<p style="color:var(--slate-warm);font-size:11px;padding:10px 0;">No active support tickets logged.</p>`;
     return;
   }
@@ -938,6 +966,7 @@ function saveSubscriberProfile() {
   profile.email = document.getElementById('profEmail').value;
   profile.phone = document.getElementById('profPhone').value;
   profile.address = document.getElementById('profAddress').value;
+  persistStore();
   syncCloudTelemetry();
   toast('Subscriber configuration saved.');
 }
@@ -958,8 +987,15 @@ function saveSubscriberProfile() {
   renderGridLight();
 })();
 
-// Bootstrap
+// Bootstrap on Load
 window.onload = () => {
+  // Support URL query switches (e.g. ?auth=register)
+  const urlParams = new URLSearchParams(window.location.search);
+  const authMode = urlParams.get('auth');
+  if (authMode === 'register') {
+    switchAuthMode('register');
+  }
+
   const savedUser = sessionStorage.getItem('neo_active_user');
   if (savedUser && subscriberStore[savedUser]) {
     activeUserToken = savedUser;
