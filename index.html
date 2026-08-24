@@ -9,6 +9,52 @@
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
+  /* ═══ Hero & Navigation Visibility Improvements ═══ */
+  
+  /* Make top navigation links pure white and bold with a shadow */
+  .nav-links > li > a {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8) !important;
+    letter-spacing: 0.15em !important;
+  }
+
+  .nav-links > li > a:hover {
+    color: #2b6cf6 !important;
+  }
+
+  /* Make hero text bright and easily readable */
+  .hero-badge span {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.15em !important;
+  }
+  
+  .hero-sub {
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem) !important;
+    font-weight: 400 !important;
+    color: #ffffff !important;
+    max-width: 650px !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+
+  /* Enhance hero button visibility */
+  .hero-ctas .btn-primary {
+    background: #ffffff !important;
+    color: #0f1115 !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  .hero-ctas .btn-secondary {
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    background: rgba(15, 17, 21, 0.6) !important; /* Dark semi-transparent background to pop text */
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+  }
+
   /* Full-page persistent grid background with cursor spotlight */
   .page-grid-overlay {
     position: fixed;
@@ -32,6 +78,18 @@
       linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
     -webkit-mask-composite: source-over;
     mask-composite: add;
+  }
+
+  /* Smooth scrolling for in-page navigation */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Offset anchored sections so the fixed nav doesn't cover the titles */
+  #residential-plans,
+  #business-plans,
+  #enterprise-ethernet {
+    scroll-margin-top: 110px;
   }
 
   /* Navigation Logo Styling */
@@ -308,19 +366,35 @@
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
   <ul class="nav-links">
-    <li><a href="index.html">Broadband Plans</a></li>
-    <li class="dropdown">
-      <a href="#services" aria-haspopup="true">Services &#9662;</a>
-        <ul class="dropdown-content">
-            <li><a href="#gas">Gas</a></li>
-            <li><a href="#electricity">Electricity</a></li>
-        </ul>
+  <!-- Moved About Us outside the dropdown -->
+  <li><a href="about.html">About Us</a></li>
+  
+  <li class="dropdown">
+    <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+    <ul class="dropdown-content">
+        <li><a href="#residential-plans" class="plan-nav-link">Residential Plans</a></li>
+        <li><a href="#business-plans" class="plan-nav-link">Business Plans</a></li>
+        <li><a href="#enterprise-ethernet" class="plan-nav-link">Enterprise Ethernet</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown">
+  <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
+  <ul class="dropdown-content services-dropdown">
+    <li class="service-item">
+      <span class="service-title">Managed Network &amp; Security</span>
+      <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
     </li>
-    <li><a href="customer-portal.html">Customer Login</a></li>
-    <li><a href="admin-portal.html">Admin Portal</a></li>
-    <li><a href="about.html">About Us</a></li>
-    <li><a href="faq.html">FAQ</a></li>
+    <li class="service-item">
+      <span class="service-title">Consulting &amp; Optimization</span>
+      <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
+    </li>
   </ul>
+</li>
+  <li><a href="contact.html">Contact Us</a></li>
+  <li><a href="customer-portal.html">Customer Login</a></li>
+  <li><a href="admin-portal.html">Admin Portal</a></li>
+</ul>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span class="toggle-bar"></span><span class="toggle-bar"></span>
   </button>
@@ -334,7 +408,8 @@
       <a href="#pricing" class="mobile-menu-link" data-index="02">Broadband Plans</a>
       <a href="customer-portal.html" class="mobile-menu-link" data-index="03">Customer Login</a>
       <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Portal</a>
-      <a href="#faq" class="mobile-menu-link" data-index="05">FAQ</a>
+      <a href="contact.html" class="mobile-menu-link" data-index="05">Contact Us</a>
+      <a href="#faq" class="mobile-menu-link" data-index="06">FAQ</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="#">Privacy</a>
@@ -351,13 +426,12 @@
       <div class="hero-badge-dot"></div>
       <span>Connecting Lives, Powering Futures</span>
     </div>
-    <h1>High-Speed Australian Fiber &</h1><em><h2>Broadband Solutions</h2></em>
     <p class="hero-sub">
       Experience lightning-fast speeds, zero throttling, and reliable unlimited fiber connectivity across Australia for your home and business.
     </p>
     <div class="hero-ctas">
       <a href="#pricing" class="btn-primary">Explore Pricing Matrix</a>
-      <a href="customer-portal.html" class="btn-secondary">Customer Portal</a>
+      <a href="customer-portal.html" class="btn-secondary">Customer Login</a>
     </div>
   </section>
 
@@ -378,7 +452,7 @@
     </div>
 
     <!-- ── RESIDENTIAL PLANS ── -->
-    <div class="plan-category reveal">
+    <div class="plan-category reveal" id="residential-plans">
       <h3 class="category-title">Residential Plans</h3>
       <p class="category-desc">Optimized for households, ultra-HD streaming, gaming, and remote work.</p>
       
@@ -646,7 +720,7 @@
     </div>
 
     <!-- ── BUSINESS PLANS ── -->
-    <div class="plan-category reveal">
+    <div class="plan-category reveal" id="business-plans">
       <h3 class="category-title">Business nbn® Internet Plans</h3>
       <p class="category-desc">High-reliability connectivity with priority routing, static IP addresses, and business-grade SLAs.</p>
       
@@ -883,7 +957,7 @@
     </div>
 
     <!-- ── ENTERPRISE SOLUTIONS ── -->
-    <div class="plan-category reveal">
+    <div class="plan-category reveal" id="enterprise-ethernet">
       <h3 class="category-title">nbn® Enterprise Ethernet</h3>
       <p class="category-desc">Dedicated fiber links, multi-site SD-WAN architectures, and bespoke bandwidth provisioning.</p>
       
@@ -1044,7 +1118,7 @@
     <h2 class="section-title reveal reveal-d1">Experience faster broadband<br><strong>starting today</strong></h2>
     <div class="footer-ctas reveal reveal-d3">
       <a href="#pricing" class="btn-primary">Choose Your Plan</a>
-      <a href="customer-portal.html" class="btn-secondary">Customer Portal</a>
+      <a href="customer-portal.html" class="btn-secondary">Customer Login</a>
     </div>
 
     <div class="footer-bar reveal reveal-d4" style="margin-top: 80px;">
