@@ -770,3 +770,146 @@ body.menu-open .top-nav { background: rgba(15,17,21,0.95); backdrop-filter: blur
   background: rgba(156, 163, 175, 0.14);
   color: var(--ivory);
 }
+
+  /* ═══ Broadband Plans / Services Dropdown (hover to open) ═══ */
+  .nav-links li.dropdown {
+    position: relative;
+  }
+  .nav-links li.dropdown > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-links li.dropdown .dropdown-content {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: #14161c;
+    border: 1px solid rgba(156, 163, 175, 0.18);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 50;
+  }
+  .nav-links li.dropdown:hover .dropdown-content,
+  .nav-links li.dropdown:focus-within .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-links li.dropdown .dropdown-content li {
+    width: 100%;
+  }
+  .nav-links li.dropdown .dropdown-content a {
+    display: block;
+    padding: 10px 18px;
+    white-space: nowrap;
+    color: var(--ivory, #ffffff);
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-links li.dropdown .dropdown-content a:hover {
+    background: rgba(43, 108, 246, 0.15);
+    color: #2b6cf6;
+  }
+  /* ═══ Services Unclickable Dropdown ═══ */
+.services-dropdown {
+  min-width: 320px !important;
+  padding: 10px !important;
+  cursor: default;
+  user-select: none;
+}
+
+.services-dropdown .service-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-bottom: 1px solid rgba(156, 163, 175, 0.08);
+  pointer-events: none; /* Prevents clicks */
+}
+
+.services-dropdown .service-item:last-child {
+  border-bottom: none;
+}
+
+.services-dropdown .service-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ivory, #ffffff);
+  letter-spacing: 0.02em;
+}
+
+.services-dropdown .service-desc {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--slate-light, #9a9fa8);
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: normal;
+}
+/* ═══ FULL-WIDTH HERO BACKGROUND (BEHIND NAV BAR) ═══ */
+.hero {
+  /* Do not use overflow: hidden here, or it will prevent the image from expanding full-width */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 0 80px;
+  position: relative;
+}
+
+/* Pseudo-element to break out of the container and fill the screen */
+.hero::before {
+  content: "";
+  position: absolute;
+  /* Starts at the very top of the screen, sliding underneath the navigation bar and logo */
+  top: 0; 
+  /* Centers the image and forces it to 100% viewport width, bypassing the .main padding */
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 100vw; 
+  /* Fills the hero section down to the silk divider before Service Subscriptions */
+  height: 100%; 
+  
+  background-image: 
+    linear-gradient(to bottom, rgba(15, 17, 21, 0.4) 0%, rgba(15, 17, 21, 0.95) 100%),
+    url('images/12.png');
+  background-size: cover;
+  background-position: center 20%;
+  background-repeat: no-repeat;
+  
+  /* Places it behind the hero text and the top navigation */
+  z-index: -1;
+  opacity: 0.85;
+  pointer-events: none;
+  
+  /* Smooth zoom animation */
+  animation: floatingBackground 20s ease-in-out infinite alternate;
+}
+
+/* Ensure all hero text/buttons sit above the background */
+.hero > * { 
+  position: relative; 
+  z-index: 2; 
+}
+
+@keyframes floatingBackground {
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    transform: translateX(-50%) scale(1.05); 
+  }
+}
