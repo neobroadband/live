@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Contact Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<link rel="icon" type="image/png" href="images/psd 1.png">
+<style>
+  /* Full-page persistent grid background with cursor spotlight */
+  .page-grid-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    --mx: 50vw;
+    --my: 50vh;
+    background-image:
+      linear-gradient(to right, rgba(156, 163, 175, 0.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(156, 163, 175, 0.18) 1px, transparent 1px);
+    background-size: 100px 100px;
+    background-position: center center;
+    -webkit-mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  /* Smooth scrolling for in-page navigation */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* ═══ Broadband Plans / Services Dropdown (hover to open) ═══ */
+  .nav-links li.dropdown {
+    position: relative;
+  }
+  .nav-links li.dropdown > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-links li.dropdown .dropdown-content {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: #14161c;
+    border: 1px solid rgba(156, 163, 175, 0.18);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 50;
+  }
+  .nav-links li.dropdown:hover .dropdown-content,
+  .nav-links li.dropdown:focus-within .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-links li.dropdown .dropdown-content li {
+    width: 100%;
+  }
+  .nav-links li.dropdown .dropdown-content a {
+    display: block;
+    padding: 10px 18px;
+    white-space: nowrap;
+    color: var(--ivory, #ffffff);
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-links li.dropdown .dropdown-content a:hover {
+    background: rgba(43, 108, 246, 0.15);
+    color: #2b6cf6;
+  }
+
+  /* Navigation Logo Styling */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .nav-logo {
+    max-height: 100px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* ═══ Contact Page Layout ═══ */
+  .contact-page-section {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px 100px;
+  }
+  .contact-page-wrap {
+    width: 100%;
+    max-width: 460px;
+  }
+
+  /* ═══ Contact Form (reused from index.html popup) ═══ */
+  .cf-modal {
+    background: #ffffff;
+    color: #1f2430;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 14px;
+    padding: 36px 32px 28px;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0 auto;
+  }
+  .cf-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #1f2430;
+  }
+  .cf-subtitle {
+    font-size: 0.9rem;
+    color: #767c88;
+    margin: 0 0 22px;
+    font-weight: 300;
+  }
+  .cf-field {
+    margin-bottom: 14px;
+  }
+  .cf-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #454b57;
+    margin-bottom: 6px;
+  }
+  .cf-field input,
+  .cf-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e0e2e7;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 0.92rem;
+    font-family: 'Montserrat', sans-serif;
+    color: #1f2430;
+    background: #fafafb;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .cf-field input:focus,
+  .cf-field textarea:focus {
+    outline: none;
+    border-color: #2b6cf6;
+    background: #ffffff;
+  }
+  .cf-field textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .cf-submit {
+    width: 100%;
+    background: #1f2430;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s ease, opacity 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .cf-submit:hover { background: #2b6cf6; }
+  .cf-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .cf-status {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    text-align: center;
+    display: none;
+  }
+  .cf-status.cf-success { color: #1a8f4c; display: block; }
+  .cf-status.cf-error { color: #d0392b; display: block; }
+  .cf-note {
+    font-size: 0.72rem;
+    color: #9a9fa8;
+    text-align: center;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="atmosphere"></div>
+
+<!-- Background Grid with Cursor Following -->
+<div class="page-grid-overlay" id="pageGrid"></div>
+
+<!-- Nav -->
+<nav class="top-nav" id="topNav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
+  </a>
+  <ul class="nav-links">
+    <li class="dropdown">
+      <li><a href="about.html">About Us</a></li>
+  
+  <li class="dropdown">
+    <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+    <ul class="dropdown-content">
+        <li><a href="#residential-plans" class="plan-nav-link">Residential Plans</a></li>
+        <li><a href="#business-plans" class="plan-nav-link">Business Plans</a></li>
+        <li><a href="#enterprise-ethernet" class="plan-nav-link">Enterprise Ethernet</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown">
+  <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
+  <ul class="dropdown-content services-dropdown">
+    <li class="service-item">
+      <span class="service-title">Managed Network &amp; Security</span>
+      <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
+    </li>
+    <li class="service-item">
+      <span class="service-title">Consulting &amp; Optimization</span>
+      <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
+    </li>
+  </ul>
+</li>
+  <li><a href="contact.html">Contact Us</a></li>
+  <li><a href="customer-portal.html">Customer Login</a></li>
+  <li><a href="admin-portal.html">Admin Portal</a></li>
+</ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="toggle-bar"></span><span class="toggle-bar"></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-links">
+      <a href="index.html" class="mobile-menu-link" data-index="01">Home</a>
+      <a href="index.html#pricing" class="mobile-menu-link" data-index="02">Broadband Plans</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="03">Customer Login</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Portal</a>
+      <a href="contact.html" class="mobile-menu-link" data-index="05">Contact Us</a>
+      <a href="faq.html" class="mobile-menu-link" data-index="06">FAQ</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ═══ CONTACT HERO ═══ -->
+  <section class="hero" id="hero" style="padding-bottom: 0;">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>We'd Love to Hear From You</span>
+    </div>
+    <h1 class="section-title reveal" style="margin-top: 10px;">Get in <strong>Touch</strong></h1>
+    <p class="hero-sub">
+      Questions about a plan, an existing service, or something else entirely? Send us a message and our team will get back to you shortly.
+    </p>
+  </section>
+
+  <!-- ═══ CONTACT FORM SECTION ═══ -->
+  <section class="section contact-page-section" id="contact">
+    <div class="contact-page-wrap">
+      <div class="cf-modal">
+        <h3 class="cf-title">Get in Touch</h3>
+        <p class="cf-subtitle">Leave your details and we'll get back to you shortly.</p>
+
+        <form id="cfForm" action="https://formsubmit.co/enquiry@neobroadband.com.au" method="POST">
+          <!-- FormSubmit settings -->
+          <input type="hidden" name="_subject" value="New Enquiry - Neo Broadband">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="Enquiry Number" id="cfEnquiryNumber" value="">
+
+          <div class="cf-field">
+            <label for="cfEnquiryDisplay">Enquiry Number</label>
+            <input type="text" id="cfEnquiryDisplay" value="" readonly style="background:#f0f1f3; color:#767c88; cursor:not-allowed;">
+          </div>
+          <div class="cf-field">
+            <label for="cfName">Name</label>
+            <input type="text" id="cfName" name="Name" required placeholder="Your full name">
+          </div>
+          <div class="cf-field">
+            <label for="cfEmail">Email ID</label>
+            <input type="email" id="cfEmail" name="Email" required placeholder="you@example.com">
+          </div>
+          <div class="cf-field">
+            <label for="cfPhone">Contact Number</label>
+            <input type="tel" id="cfPhone" name="Contact Number" required placeholder="+61 000 000 000">
+          </div>
+          <div class="cf-field">
+            <label for="cfAddress">Address</label>
+            <input type="text" id="cfAddress" name="Address" required placeholder="Your address">
+          </div>
+          <div class="cf-field">
+            <label for="cfMessage">Message</label>
+            <textarea id="cfMessage" name="Message" required placeholder="How can we help you?"></textarea>
+          </div>
+
+          <button type="submit" class="cf-submit" id="cfSubmitBtn">Send Message</button>
+          <p class="cf-status" id="cfStatus"></p>
+          <p class="cf-note">We'll never share your information with anyone else.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="templatemo-621-luminary-script.js"></script>
+<script>
+  // Full-page mouse movement tracker for background grid spotlight
+  (function() {
+    const pageGrid = document.getElementById('pageGrid');
+    if (!pageGrid) return;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    });
+
+    function renderGridLight() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      pageGrid.style.setProperty('--mx', `${currentX}px`);
+      pageGrid.style.setProperty('--my', `${currentY}px`);
+      requestAnimationFrame(renderGridLight);
+    }
+    renderGridLight();
+  })();
+
+  // ─── Contact Form logic (same behavior as the index.html popup form) ───
+  (function() {
+    const form = document.getElementById('cfForm');
+    const submitBtn = document.getElementById('cfSubmitBtn');
+    const status = document.getElementById('cfStatus');
+    const enquiryHidden = document.getElementById('cfEnquiryNumber');
+    const enquiryDisplay = document.getElementById('cfEnquiryDisplay');
+    if (!form) return;
+
+    function generateEnquiryNumber() {
+      const now = new Date();
+      const datePart = now.getFullYear().toString()
+        + String(now.getMonth() + 1).padStart(2, '0')
+        + String(now.getDate()).padStart(2, '0');
+      const randomPart = Math.floor(1000 + Math.random() * 9000);
+      return 'NBB-' + datePart + '-' + randomPart;
+    }
+
+    function assignNewEnquiryNumber() {
+      const enquiryNo = generateEnquiryNumber();
+      enquiryHidden.value = enquiryNo;
+      enquiryDisplay.value = enquiryNo;
+    }
+
+    assignNewEnquiryNumber();
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      status.className = 'cf-status';
+      status.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function(response) {
+        if (response.ok) {
+          const confirmedEnquiryNo = enquiryHidden.value;
+          status.textContent = "Thanks! Your enquiry (" + confirmedEnquiryNo + ") has been sent.";
+          status.className = 'cf-status cf-success';
+          form.reset();
+          assignNewEnquiryNumber();
+        } else {
+          throw new Error('Submission failed');
+        }
+      })
+      .catch(function() {
+        status.textContent = "Something went wrong. Please try again.";
+        status.className = 'cf-status cf-error';
+      })
+      .finally(function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      });
+    });
+  })();
+</script>
+</body>
+</html>
