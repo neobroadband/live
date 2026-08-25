@@ -19,13 +19,50 @@
     letter-spacing: 0.15em !important;
   }
 
+  /* Position portal links above the right side of the main navigation */
+  .nav-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .nav-utility {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-utility a {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    transition: color 0.3s ease;
+  }
+
+  .nav-utility a:hover {
+    color: #2b6cf6;
+  }
+
+  .nav-right .nav-links {
+    justify-content: flex-end;
+  }
+
   .nav-links > li > a:hover {
     color: #2b6cf6 !important;
   }
 
   /* Make hero text bright and easily readable */
   .hero-badge span {
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
     color: #ffffff !important;
     letter-spacing: 0.15em !important;
@@ -365,36 +402,43 @@
   <a href="#" class="nav-brand">
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
-  <ul class="nav-links">
-  <!-- Moved About Us outside the dropdown -->
-  <li><a href="about.html">About Us</a></li>
-  
-  <li class="dropdown">
-    <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
-    <ul class="dropdown-content">
-        <li><a href="#residential-plans" class="plan-nav-link">Residential Plans</a></li>
-        <li><a href="#business-plans" class="plan-nav-link">Business Plans</a></li>
-        <li><a href="#enterprise-ethernet" class="plan-nav-link">Enterprise Ethernet</a></li>
+  <div class="nav-right">
+    <ul class="nav-utility">
+      <li><a href="customer-portal.html">Customer Login</a></li>
+      <li><a href="admin-portal.html">Admin Portal</a></li>
+    </ul>
+    <ul class="nav-links">
+    <!-- Moved About Us outside the dropdown -->
+    <li><a href="about.html">About Us</a></li>
+
+    <li class="dropdown">
+      <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+      <ul class="dropdown-content">
+          <li><a href="#residential-plans" class="plan-nav-link">Residential Plans</a></li>
+          <li><a href="#business-plans" class="plan-nav-link">Business Plans</a></li>
+          <li><a href="#enterprise-ethernet" class="plan-nav-link">Enterprise Ethernet</a></li>
+      </ul>
+    </li>
+
+    <li class="dropdown">
+    <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
+    <ul class="dropdown-content services-dropdown">
+      <li class="service-item">
+        <span class="service-title">Managed Network &amp; Security</span>
+        <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
+      </li>
+      <li class="service-item">
+        <span class="service-title">Consulting &amp; Optimization</span>
+        <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
+      </li>
     </ul>
   </li>
-  
-  <li class="dropdown">
-  <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
-  <ul class="dropdown-content services-dropdown">
-    <li class="service-item">
-      <span class="service-title">Managed Network &amp; Security</span>
-      <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
-    </li>
-    <li class="service-item">
-      <span class="service-title">Consulting &amp; Optimization</span>
-      <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
-    </li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="developers.html">Developers</a></li>
+    <li><a href="rsps.html">RSP<span class="lc">s</span></a></li>
+    <li><a href="building-upgrades.html">Building Upgrades</a></li>
   </ul>
-</li>
-  <li><a href="contact.html">Contact Us</a></li>
-  <li><a href="customer-portal.html">Customer Login</a></li>
-  <li><a href="admin-portal.html">Admin Portal</a></li>
-</ul>
+  </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span class="toggle-bar"></span><span class="toggle-bar"></span>
   </button>
@@ -409,7 +453,10 @@
       <a href="customer-portal.html" class="mobile-menu-link" data-index="03">Customer Login</a>
       <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Portal</a>
       <a href="contact.html" class="mobile-menu-link" data-index="05">Contact Us</a>
-      <a href="#faq" class="mobile-menu-link" data-index="06">FAQ</a>
+      <a href="developers.html" class="mobile-menu-link" data-index="06">Developers</a>
+      <a href="rsps.html" class="mobile-menu-link" data-index="07">RSPs</a>
+      <a href="building-upgrades.html" class="mobile-menu-link" data-index="08">Building Upgrades</a>
+      <a href="#faq" class="mobile-menu-link" data-index="09">FAQ</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="#">Privacy</a>
