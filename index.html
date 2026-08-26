@@ -9,42 +9,6 @@
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
-  /* ═══ Background Image Full-Fit & Visibility Fix ═══ */
-  html, body {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-attachment: fixed !important;
-  }
-
-  /* Ensures full-screen atmospheric & hero image fitting */
-  .atmosphere {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .hero {
-    min-height: 100vh;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    position: relative;
-  }
-
   /* ═══ Hero & Navigation Visibility Improvements ═══ */
   
   /* Make top navigation links pure white and bold with a shadow */
@@ -124,7 +88,7 @@
     border: 2px solid #ffffff !important;
     color: #ffffff !important;
     font-weight: 700 !important;
-    background: rgba(15, 17, 21, 0.6) !important; /* Dark semi-transparent background to pop text */
+    background: rgba(15, 17, 21, 0.6) !important;
     text-shadow: 0 2px 5px rgba(0,0,0,0.8);
   }
 
@@ -386,7 +350,6 @@
     <p class="cf-subtitle">Leave your details and we'll get back to you shortly.</p>
 
     <form id="cfForm" action="https://formsubmit.co/enquiry@neobroadband.com.au" method="POST">
-      <!-- FormSubmit settings -->
       <input type="hidden" name="_subject" value="New Enquiry - Neo Broadband">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
@@ -444,36 +407,35 @@
       <li><a href="admin-portal.html">Admin Portal</a></li>
     </ul>
     <ul class="nav-links">
-    <!-- Moved About Us outside the dropdown -->
-    <li><a href="about.html">About Us</a></li>
+      <li><a href="about.html">About Us</a></li>
 
-    <li class="dropdown">
-      <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
-      <ul class="dropdown-content">
+      <li class="dropdown">
+        <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+        <ul class="dropdown-content">
           <li><a href="#residential-plans" class="plan-nav-link">Residential Plans</a></li>
           <li><a href="#business-plans" class="plan-nav-link">Business Plans</a></li>
           <li><a href="#enterprise-ethernet" class="plan-nav-link">Enterprise Ethernet</a></li>
-      </ul>
-    </li>
+        </ul>
+      </li>
 
-    <li class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
-    <ul class="dropdown-content services-dropdown">
-      <li class="service-item">
-        <span class="service-title">Managed Network &amp; Security</span>
-        <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
+        <ul class="dropdown-content services-dropdown">
+          <li class="service-item">
+            <span class="service-title">Managed Network &amp; Security</span>
+            <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
+          </li>
+          <li class="service-item">
+            <span class="service-title">Consulting &amp; Optimization</span>
+            <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
+          </li>
+        </ul>
       </li>
-      <li class="service-item">
-        <span class="service-title">Consulting &amp; Optimization</span>
-        <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
-      </li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="rsps.html">RSPs</a></li>
+      <li><a href="building-upgrades.html">Building Upgrades</a></li>
     </ul>
-  </li>
-    <li><a href="contact.html">Contact Us</a></li>
-    <li><a href="developers.html">Developers</a></li>
-    <li><a href="rsps.html">RSPs</a></li>
-    <li><a href="building-upgrades.html">Building Upgrades</a></li>
-  </ul>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span class="toggle-bar"></span><span class="toggle-bar"></span>
@@ -1350,7 +1312,6 @@
     const origAnnual = document.getElementById('annualLabel');
     if (!origToggle || !origMonthly || !origAnnual) return;
 
-    // Replace elements with clean clones to avoid duplicate listener collisions
     const toggle = origToggle.cloneNode(true);
     const monthlyLabel = origMonthly.cloneNode(true);
     const annualLabel = origAnnual.cloneNode(true);
@@ -1386,13 +1347,11 @@
       });
     }
 
-    // Toggle switch click
     toggle.addEventListener('click', function(e) {
       e.preventDefault();
       renderPricingState(!isAnnual);
     });
 
-    // Keyboard support (Space/Enter)
     toggle.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -1400,13 +1359,11 @@
       }
     });
 
-    // Monthly label click
     monthlyLabel.addEventListener('click', function(e) {
       e.preventDefault();
       renderPricingState(false);
     });
 
-    // Annual label click
     annualLabel.addEventListener('click', function(e) {
       e.preventDefault();
       renderPricingState(true);
