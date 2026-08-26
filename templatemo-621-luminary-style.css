@@ -252,11 +252,12 @@ body.menu-open .top-nav { background: rgba(15,17,21,0.95); backdrop-filter: blur
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 140px 20px 90px;
+  padding: 130px 20px 80px;
   position: relative;
+  overflow: visible;
 }
 
-/* Full fit for 1408x768 Australia Map */
+/* Perfect fit: Keeps all 7 city stars and borders 100% visible on screen */
 .hero::before {
   content: "";
   position: absolute;
@@ -266,11 +267,12 @@ body.menu-open .top-nav { background: rgba(15,17,21,0.95); backdrop-filter: blur
   width: 100vw;
   height: 100%;
   background-image: 
-    radial-gradient(circle at center, rgba(15, 17, 21, 0.15) 0%, rgba(15, 17, 21, 0.85) 100%),
+    radial-gradient(ellipse at center, rgba(15, 17, 21, 0.1) 0%, rgba(15, 17, 21, 0.85) 90%),
     url('images/12.png');
-  background-size: min(94vw, 1320px) auto;
-  background-position: center center;
-  background-repeat: no-repeat;
+  /* Fits the entire width inside the screen with safety padding on left and right */
+  background-size: 100% 100%, min(82vw, 1140px) auto;
+  background-position: center center, center center;
+  background-repeat: no-repeat, no-repeat;
   z-index: -1;
   opacity: 0.95;
   pointer-events: none;
