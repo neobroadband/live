@@ -9,6 +9,42 @@
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
+  /* ═══ Background Image Full-Fit & Visibility Fix ═══ */
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+  }
+
+  /* Ensures full-screen atmospheric & hero image fitting */
+  .atmosphere {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero {
+    min-height: 100vh;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    position: relative;
+  }
+
   /* ═══ Hero & Navigation Visibility Improvements ═══ */
   
   /* Make top navigation links pure white and bold with a shadow */
