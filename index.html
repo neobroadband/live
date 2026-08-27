@@ -339,38 +339,7 @@
     object-fit: contain;
   }
 
-  /* ═══ Plan Category Switcher & Visibility ═══ */
-  .category-switcher {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 30px auto 40px;
-    flex-wrap: wrap;
-  }
-
-  .cat-tab-btn {
-    padding: 12px 28px;
-    border-radius: 100px;
-    background: rgba(22, 26, 32, 0.6);
-    border: 1px solid var(--panel-border);
-    color: var(--slate-light, #9ca3af);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s ease;
-  }
-
-  .cat-tab-btn.active {
-    background: #2b6cf6;
-    color: #ffffff;
-    border-color: #2b6cf6;
-    box-shadow: 0 4px 20px rgba(43, 108, 246, 0.35);
-  }
-
-  /* Only Residential Plans shown by default; other categories hidden */
+  /* ═══ Plan Category Visibility ═══ */
   .plan-category {
     display: none;
   }
@@ -411,7 +380,7 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
-    margin-bottom: 30px;
+    margin: 36px auto 36px;
     user-select: none;
   }
   .pricing-toggle-label {
@@ -485,13 +454,13 @@
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
   <div class="nav-right">
-    <!-- Utility Links: Admin Portal 1st, Customer Login 2nd (identical 2nd line size & color) -->
+    <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
     <ul class="nav-utility">
       <li><a href="admin-portal.html">Admin Portal</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
     
-    <!-- Main Links: Broadband Plans, Services, Developers, RSPs, Building Upgrades, About Us, Contact Us -->
+    <!-- Main Links: Broadband Plans dropdown switches to the specific plan category -->
     <ul class="nav-links">
       <li class="dropdown">
         <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
@@ -502,7 +471,7 @@
         </ul>
       </li>
 
-      <!-- Updated Services Dropdown with Network & Security and Enterprise Connectivity -->
+      <!-- Services Dropdown -->
       <li class="dropdown">
         <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
         <ul class="dropdown-content services-dropdown">
@@ -617,13 +586,6 @@
     <h2 class="section-title reveal reveal-d1">Select Speed <strong>your need</strong></h2>
     <p class="section-body reveal reveal-d2">Experience lightning-fast broadband and reliable internet connectivity designed to power your digital life.</p>
 
-    <!-- Plan Category Selector Tabs -->
-    <div class="category-switcher reveal reveal-d2">
-      <button class="cat-tab-btn active" id="tab-residential" onclick="switchPlanCategory('residential')">Residential Plans</button>
-      <button class="cat-tab-btn" id="tab-business" onclick="switchPlanCategory('business')">Business Plans</button>
-      <button class="cat-tab-btn" id="tab-enterprise" onclick="switchPlanCategory('enterprise')">Enterprise Ethernet</button>
-    </div>
-
     <!-- Pricing Toggle -->
     <div class="pricing-toggle reveal reveal-d3">
       <span class="pricing-toggle-label active" id="monthlyLabel">Monthly</span>
@@ -710,7 +672,7 @@
             <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
             <li>Unlimited Data</li>
           </ul>
-          <button onclick="handleSubscribe('regular')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          <button onclick="handleSubscribe('regular')" class="btn-primary" style="width:100%; border-none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
         </div>
 
         <!-- Plan 3: Ultra -->
@@ -900,7 +862,7 @@
       </div>
     </div>
 
-    <!-- ── BUSINESS PLANS (HIDDEN ON LOAD UNTIL CLICKED) ── -->
+    <!-- ── BUSINESS PLANS (SHOWN WHEN CLICKED IN NAVIGATION) ── -->
     <div class="plan-category" id="business-plans">
       <h3 class="category-title">Business nbn® Internet Plans</h3>
       <p class="category-desc">High-reliability connectivity with priority routing, static IP addresses, and business-grade SLAs.</p>
@@ -1137,7 +1099,7 @@
       </div>
     </div>
 
-    <!-- ── ENTERPRISE SOLUTIONS (HIDDEN ON LOAD UNTIL CLICKED) ── -->
+    <!-- ── ENTERPRISE SOLUTIONS (SHOWN WHEN CLICKED IN NAVIGATION) ── -->
     <div class="plan-category" id="enterprise-ethernet">
       <h3 class="category-title">nbn® Enterprise Ethernet</h3>
       <p class="category-desc">Dedicated fiber links, multi-site SD-WAN architectures, and bespoke bandwidth provisioning.</p>
@@ -1313,33 +1275,24 @@
 
 <script src="templatemo-621-luminary-script.js"></script>
 <script>
-  // ─── Plan Category Visibility Switcher ───
+  // ─── Plan Category Visibility Switcher (Direct from Navigation) ───
   function switchPlanCategory(category) {
     const resSec = document.getElementById('residential-plans');
     const bizSec = document.getElementById('business-plans');
     const entSec = document.getElementById('enterprise-ethernet');
     
-    const tabRes = document.getElementById('tab-residential');
-    const tabBiz = document.getElementById('tab-business');
-    const tabEnt = document.getElementById('tab-enterprise');
+    if (!resSec || !bizSec || !entSec) return;
 
     resSec.classList.remove('active-category');
     bizSec.classList.remove('active-category');
     entSec.classList.remove('active-category');
 
-    tabRes.classList.remove('active');
-    tabBiz.classList.remove('active');
-    tabEnt.classList.remove('active');
-
     if (category === 'business') {
       bizSec.classList.add('active-category');
-      tabBiz.classList.add('active');
     } else if (category === 'enterprise') {
       entSec.classList.add('active-category');
-      tabEnt.classList.add('active');
     } else {
       resSec.classList.add('active-category');
-      tabRes.classList.add('active');
     }
 
     const pricingSection = document.getElementById('pricing');
@@ -1415,7 +1368,6 @@
   const searchHistoryDropdown = document.getElementById('searchHistoryDropdown');
   const heroSearchWrapper = document.getElementById('heroSearchWrapper');
 
-  // Australian States, Major Regions, and Postcode Validator
   const AU_REGIONS = [
     'nsw', 'vic', 'qld', 'wa', 'sa', 'tas', 'act', 'nt',
     'new south wales', 'victoria', 'queensland', 'western australia', 'south australia', 'tasmania', 'australian capital territory', 'northern territory',
@@ -1428,8 +1380,6 @@
 
   function isAustralianLocation(query) {
     const qLower = query.toLowerCase().trim();
-    
-    // Check known non-Australian keywords directly
     const nonAuWords = ['usa', 'us', 'uk', 'united kingdom', 'london', 'new york', 'california', 'texas', 'india', 'delhi', 'mumbai', 'tokyo', 'japan', 'france', 'paris', 'germany', 'berlin', 'canada', 'toronto', 'singapore', 'auckland', 'new zealand', 'china', 'dubai', 'uae'];
     for (let word of nonAuWords) {
       if (new RegExp('\\b' + word + '\\b', 'i').test(qLower)) {
@@ -1437,7 +1387,6 @@
       }
     }
 
-    // Check Australian Postcode Range: 0200-0999, 2000-2999, 3000-3999, 4000-4999, 5000-5999, 6000-6999, 7000-7999, 8000-9999
     const postcodeMatch = qLower.match(/\b(0[2-9]\d{2}|[1-9]\d{3})\b/);
     if (postcodeMatch) {
       const pc = parseInt(postcodeMatch[0], 10);
@@ -1446,7 +1395,6 @@
       }
     }
 
-    // Check Australian Keywords / Suburbs / States
     for (let region of AU_REGIONS) {
       if (new RegExp('\\b' + region + '\\b', 'i').test(qLower)) {
         return true;
@@ -1456,7 +1404,6 @@
     return false;
   }
 
-  // Focus & typing triggers
   regionInput.addEventListener('focus', function() {
     searchResultsBox.classList.remove('active');
     if (getSearchHistory().length > 0) {
@@ -1470,7 +1417,6 @@
     searchHistoryDropdown.classList.remove('active');
   });
 
-  // ─── Auto Disappear when mouse leaves the search dropdowns ───
   searchResultsBox.addEventListener('mouseleave', function() {
     searchResultsBox.classList.remove('active');
   });
@@ -1501,13 +1447,11 @@
     const isAU = isAustralianLocation(query);
 
     if (!isAU) {
-      // Outside Australia or Unrecognized Location
       techBadge.textContent = 'Not Available Location';
       techBadge.className = 'search-tech-badge unavailable';
       speedDetails.innerHTML = 'Our ultra-fast fiber network currently covers <strong>Australian addresses only</strong>. This location is outside our coverage area.';
       planLink.style.display = 'none';
     } else {
-      // Valid Australian Location
       techBadge.className = 'search-tech-badge';
       planLink.style.display = 'inline-block';
       const qLower = query.toLowerCase();
@@ -1521,7 +1465,6 @@
         speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 1000 Mbps</strong> &bull; Recommended Plan: <strong>Ultra+ 1000 / Ultra 1000</strong>';
         planLink.onclick = () => { switchPlanCategory('residential'); highlightPlan('plan-ultra'); };
       } else {
-        // Metro Sydney, Melbourne, Brisbane, ACT, Gold Coast, Newcastle
         techBadge.textContent = 'FTTP Hyper-Speed 2Gbps Ready';
         speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 2000 Mbps</strong> &bull; Recommended Plan: <strong>Thunderbolt 2000 / Regular 500</strong>';
         planLink.onclick = () => { switchPlanCategory('residential'); highlightPlan('plan-thunderbolt'); };
