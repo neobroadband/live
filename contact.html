@@ -39,6 +39,54 @@
     scroll-behavior: smooth;
   }
 
+  /* ═══ Top Navigation Link & Portal Styling (matches index.html) ═══ */
+  .nav-links > li > a {
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8) !important;
+    text-transform: uppercase;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .nav-utility {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-utility a {
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    transition: color 0.4s ease;
+  }
+
+  .nav-utility a:hover,
+  .nav-links > li > a:hover {
+    color: #2b6cf6 !important;
+  }
+
+  .nav-right .nav-links {
+    justify-content: flex-end;
+    gap: 28px;
+  }
+
   /* ═══ Broadband Plans / Services Dropdown (hover to open) ═══ */
   .nav-links li.dropdown {
     position: relative;
@@ -101,78 +149,161 @@
     object-fit: contain;
   }
 
-  /* ═══ Contact Page Layout ═══ */
-  .contact-page-section {
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px 100px;
-  }
-  .contact-page-wrap {
-    width: 100%;
-    max-width: 460px;
+  /* Align this page's content edge with the fixed nav's logo (nav uses 40px side padding) */
+  .main {
+    max-width: none;
+    margin: 0;
+    padding: 0 40px;
   }
 
-  /* ═══ Contact Form (reused from index.html popup) ═══ */
-  .cf-modal {
-    background: #ffffff;
-    color: #1f2430;
-    width: 100%;
-    max-width: 440px;
-    border-radius: 14px;
-    padding: 36px 32px 28px;
+  /* ═══ Contact Page Layout — single view, form left / info right ═══ */
+  .contact-page-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: calc(100vh - 168px);
+    padding: 168px 0 40px; /* 168px clears the fixed nav (≈148px tall) + breathing room */
+    box-sizing: border-box;
     position: relative;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-    font-family: 'Montserrat', sans-serif;
+    z-index: 2;
+  }
+
+  /* Full-bleed background image behind the page, same treatment as the index.html hero */
+  .contact-page-section::before {
+    content: "";
+    position: absolute;
+    top: -130px; /* extend up under the fixed nav, like the hero does */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: calc(100% + 168px);
+    background-image:
+      linear-gradient(to bottom, rgba(15, 17, 21, 0.55) 0%, rgba(15, 17, 21, 0.96) 100%),
+      url('images/12.png');
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .contact-page-wrap {
+    width: 100%;
+    max-width: none;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  /* Right column — fills remaining space and centers its content within it */
+  .contact-info-col {
+    flex: 1 1 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contact-info-inner {
+    max-width: 460px;
+    width: 100%;
+    color: var(--ivory, #ffffff);
+    text-align: center;
+  }
+  .contact-info-inner .hero-badge {
+    margin: 0 0 14px;
+  }
+  .contact-info-inner .hero-badge span {
+    font-size: 12px;
+  }
+  .contact-info-inner .section-title {
+    text-align: center;
+    margin: 10px auto 16px;
+  }
+  .contact-info-inner .hero-sub {
+    text-align: center;
     margin: 0 auto;
+    max-width: 440px;
+  }
+
+  /* Left column — Contact Form (transparent, reused from index.html popup) */
+  .cf-modal {
+    background: transparent;
+    color: var(--ivory, #ffffff);
+    width: 100%;
+    max-width: 640px;
+    flex: 0 1 640px;
+    border-radius: 14px;
+    padding: 32px 32px 28px;
+    position: relative;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 1px rgba(43, 108, 246, 0.15), 0 20px 50px rgba(0, 0, 0, 0.35);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    align-self: flex-start;
   }
   .cf-title {
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0 0 4px;
-    color: #1f2430;
+    color: var(--ivory, #ffffff);
   }
   .cf-subtitle {
     font-size: 0.9rem;
-    color: #767c88;
+    color: rgba(255, 255, 255, 0.65);
     margin: 0 0 22px;
     font-weight: 300;
   }
+  #cfForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+  }
   .cf-field {
-    margin-bottom: 14px;
+    margin-bottom: 0;
+  }
+  .cf-field-full {
+    grid-column: 1 / -1;
   }
   .cf-field label {
     display: block;
     font-size: 0.8rem;
-    font-weight: 500;
-    color: #454b57;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 6px;
   }
   .cf-field input,
   .cf-field textarea {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #e0e2e7;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
     border-radius: 8px;
     padding: 11px 13px;
     font-size: 0.92rem;
     font-family: 'Montserrat', sans-serif;
-    color: #1f2430;
-    background: #fafafb;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
     transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .cf-field input::placeholder,
+  .cf-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
   }
   .cf-field input:focus,
   .cf-field textarea:focus {
     outline: none;
     border-color: #2b6cf6;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
   }
   .cf-field textarea {
     resize: vertical;
     min-height: 80px;
   }
   .cf-submit {
+    grid-column: 1 / -1;
     width: 100%;
-    background: #1f2430;
+    background: #2b6cf6;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -184,21 +315,35 @@
     transition: background 0.2s ease, opacity 0.2s ease;
     font-family: 'Montserrat', sans-serif;
   }
-  .cf-submit:hover { background: #2b6cf6; }
+  .cf-submit:hover { background: #1f2430; }
   .cf-submit:disabled { opacity: 0.6; cursor: not-allowed; }
   .cf-status {
+    grid-column: 1 / -1;
     margin-top: 12px;
     font-size: 0.85rem;
     text-align: center;
     display: none;
   }
-  .cf-status.cf-success { color: #1a8f4c; display: block; }
-  .cf-status.cf-error { color: #d0392b; display: block; }
+  .cf-status.cf-success { color: #3fd67f; display: block; }
+  .cf-status.cf-error { color: #ff7a6e; display: block; }
   .cf-note {
+    grid-column: 1 / -1;
     font-size: 0.72rem;
-    color: #9a9fa8;
+    color: rgba(255, 255, 255, 0.45);
     text-align: center;
     margin-top: 14px;
+  }
+
+  @media (max-width: 1024px) {
+    .main { padding: 0 32px; }
+  }
+  @media (max-width: 768px) {
+    .main { padding: 0 20px; }
+    .contact-page-section { padding-top: 130px; min-height: calc(100vh - 130px); }
+  }
+  @media (max-width: 700px) {
+    .contact-page-section { min-height: auto; }
+    #cfForm { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -218,36 +363,50 @@
   <a href="index.html" class="nav-brand">
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
-  <ul class="nav-links">
-    <li class="dropdown">
-      <li><a href="about.html">About Us</a></li>
-  
-  <li class="dropdown">
-    <a href="#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
-    <ul class="dropdown-content">
-        <li><a href="#residential-plans" class="plan-nav-link">Residential Plans</a></li>
-        <li><a href="#business-plans" class="plan-nav-link">Business Plans</a></li>
-        <li><a href="#enterprise-ethernet" class="plan-nav-link">Enterprise Ethernet</a></li>
+  <div class="nav-right">
+    <!-- Utility Links: Admin Portal 1st, Customer Login 2nd (identical 2nd line size & color) -->
+    <ul class="nav-utility">
+      <li><a href="admin-portal.html">Admin Portal</a></li>
+      <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
-  </li>
-  
-  <li class="dropdown">
-  <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
-  <ul class="dropdown-content services-dropdown">
-    <li class="service-item">
-      <span class="service-title">Managed Network &amp; Security</span>
-      <span class="service-desc">SD-WAN, LAN, IoT &amp; Cloud</span>
-    </li>
-    <li class="service-item">
-      <span class="service-title">Consulting &amp; Optimization</span>
-      <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
-    </li>
-  </ul>
-</li>
-  <li><a href="contact.html">Contact Us</a></li>
-  <li><a href="customer-portal.html">Customer Login</a></li>
-  <li><a href="admin-portal.html">Admin Portal</a></li>
-</ul>
+    
+    <!-- Main Links: Broadband Plans, Services, Developers, RSPs, Building Upgrades, About Us, Contact Us -->
+    <ul class="nav-links">
+      <li class="dropdown">
+        <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+        <ul class="dropdown-content">
+          <li><a href="index.html#pricing">Residential Plans</a></li>
+          <li><a href="index.html#pricing">Business Plans</a></li>
+          <li><a href="index.html#pricing">Enterprise Ethernet</a></li>
+        </ul>
+      </li>
+
+      <!-- Updated Services Dropdown with Network & Security and Enterprise Connectivity -->
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
+        <ul class="dropdown-content services-dropdown">
+          <li class="service-item">
+            <span class="service-title">Network &amp; Security</span>
+            <span class="service-desc">SD-WAN, LAN, IoT, Cloud &amp; Cyber Security</span>
+          </li>
+          <li class="service-item">
+            <span class="service-title">Enterprise Connectivity</span>
+            <span class="service-desc">Dedicated Fiber Links, Symmetrical Bandwidth &amp; Priority SLA</span>
+          </li>
+          <li class="service-item">
+            <span class="service-title">Consulting &amp; Optimization</span>
+            <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
+          </li>
+        </ul>
+      </li>
+
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="rsps.html">RSPs</a></li>
+      <li><a href="building-upgrades.html">Building Upgrades</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span class="toggle-bar"></span><span class="toggle-bar"></span>
   </button>
@@ -273,35 +432,22 @@
 
 <main class="main">
 
-  <!-- ═══ CONTACT HERO ═══ -->
-  <section class="hero" id="hero" style="padding-bottom: 0;">
-    <div class="hero-badge">
-      <div class="hero-badge-dot"></div>
-      <span>We'd Love to Hear From You</span>
-    </div>
-    <h1 class="section-title reveal" style="margin-top: 10px;">Get in <strong>Touch</strong></h1>
-    <p class="hero-sub">
-      Questions about a plan, an existing service, or something else entirely? Send us a message and our team will get back to you shortly.
-    </p>
-  </section>
-
-  <!-- ═══ CONTACT FORM SECTION ═══ -->
+  <!-- ═══ CONTACT SECTION — form left, intro right, single view below navbar ═══ -->
   <section class="section contact-page-section" id="contact">
     <div class="contact-page-wrap">
-      <div class="cf-modal">
-        <h3 class="cf-title">Get in Touch</h3>
-        <p class="cf-subtitle">Leave your details and we'll get back to you shortly.</p>
 
-        <form id="cfForm" action="https://formsubmit.co/enquiry@neobroadband.com.au" method="POST">
+      <!-- Left: Contact Form -->
+      <div class="cf-modal">
+        <form id="cfForm" action="https://formsubmit.co/abiramkpz007@gmail.com" method="POST">
           <!-- FormSubmit settings -->
           <input type="hidden" name="_subject" value="New Enquiry - Neo Broadband">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="Enquiry Number" id="cfEnquiryNumber" value="">
 
-          <div class="cf-field">
+          <div class="cf-field cf-field-full">
             <label for="cfEnquiryDisplay">Enquiry Number</label>
-            <input type="text" id="cfEnquiryDisplay" value="" readonly style="background:#f0f1f3; color:#767c88; cursor:not-allowed;">
+            <input type="text" id="cfEnquiryDisplay" value="" readonly style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.5); cursor:not-allowed;">
           </div>
           <div class="cf-field">
             <label for="cfName">Name</label>
@@ -319,7 +465,7 @@
             <label for="cfAddress">Address</label>
             <input type="text" id="cfAddress" name="Address" required placeholder="Your address">
           </div>
-          <div class="cf-field">
+          <div class="cf-field cf-field-full">
             <label for="cfMessage">Message</label>
             <textarea id="cfMessage" name="Message" required placeholder="How can we help you?"></textarea>
           </div>
@@ -329,6 +475,21 @@
           <p class="cf-note">We'll never share your information with anyone else.</p>
         </form>
       </div>
+
+      <!-- Right: Get in Touch intro content -->
+      <div class="contact-info-col">
+        <div class="contact-info-inner">
+          <div class="hero-badge">
+            <div class="hero-badge-dot"></div>
+            <span>We'd Love to Hear From You</span>
+          </div>
+          <h1 class="section-title reveal">Get in <strong>Touch</strong></h1>
+          <p class="hero-sub">
+            Questions about a plan, an existing service, or something else entirely? Send us a message and our team will get back to you shortly.
+          </p>
+        </div>
+      </div>
+
     </div>
   </section>
 
