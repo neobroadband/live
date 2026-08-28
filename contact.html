@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,7 +177,10 @@
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
-    height: calc(100% + 168px);
+    /* Fixed to 130vh (not a % of this section's own height) so the image scales/crops
+       exactly like .hero::before does on the other pages, regardless of how tall the
+       contact form content makes this section. */
+    height: 130vh;
     background-image:
       linear-gradient(to bottom, rgba(15, 17, 21, 0.55) 0%, rgba(15, 17, 21, 0.96) 100%),
       url('images/12.png');
@@ -366,7 +370,7 @@
   <div class="nav-right">
     <!-- Utility Links: Admin Portal 1st, Customer Login 2nd (identical 2nd line size & color) -->
     <ul class="nav-utility">
-      <li><a href="admin-portal.html">Admin Portal</a></li>
+      <li><a href="admin-portal.html">Admin Login</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
     
@@ -381,30 +385,13 @@
         </ul>
       </li>
 
-      <!-- Updated Services Dropdown with Network & Security and Enterprise Connectivity -->
-      <li class="dropdown">
-        <a href="javascript:void(0)" class="dropdown-trigger" style="cursor: default;">Services &#9662;</a>
-        <ul class="dropdown-content services-dropdown">
-          <li class="service-item">
-            <span class="service-title">Network &amp; Security</span>
-            <span class="service-desc">SD-WAN, LAN, IoT, Cloud &amp; Cyber Security</span>
-          </li>
-          <li class="service-item">
-            <span class="service-title">Enterprise Connectivity</span>
-            <span class="service-desc">Dedicated Fiber Links, Symmetrical Bandwidth &amp; Priority SLA</span>
-          </li>
-          <li class="service-item">
-            <span class="service-title">Consulting &amp; Optimization</span>
-            <span class="service-desc">Optimize your existing telecommunication infrastructure</span>
-          </li>
-        </ul>
-      </li>
+      <!-- Services -->
+      <li><a href="javascript:void(0)">Services</a></li>
 
       <li><a href="developers.html">Developers</a></li>
-      <li><a href="rsps.html">RSPs</a></li>
       <li><a href="building-upgrades.html">Building Upgrades</a></li>
       <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -419,8 +406,8 @@
       <a href="index.html" class="mobile-menu-link" data-index="01">Home</a>
       <a href="index.html#pricing" class="mobile-menu-link" data-index="02">Broadband Plans</a>
       <a href="customer-portal.html" class="mobile-menu-link" data-index="03">Customer Login</a>
-      <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Portal</a>
-      <a href="contact.html" class="mobile-menu-link" data-index="05">Contact Us</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="04">Admin Login</a>
+      <a href="contact.html" class="mobile-menu-link" data-index="05">Contact</a>
       <a href="faq.html" class="mobile-menu-link" data-index="06">FAQ</a>
     </div>
     <div class="mobile-menu-footer">
