@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -417,7 +418,7 @@ body {
       <div class="portal-hero">
         <div class="status-pill"><span class="status-dot"></span> Fiber Node Online · Low Latency</div>
         <h2>Welcome back, <strong id="heroUserName">Subscriber</strong>. <strong>Your link is running at peak capacity.</strong></h2>
-        <p>Monitor your high-speed nbn® fiber connection, inspect current bandwidth usage, manage direct payments, or upgrade network provisioning instantly.</p>
+        <p>Monitor your high-speed nbn® fiber connection, inspect active bandwidth usage, manage direct payments, or upgrade network provisioning instantly.</p>
       </div>
 
       <div class="grid stats-4">
@@ -427,14 +428,14 @@ body {
           <div class="stat-meta" id="dashPlanTier">High Capacity Fiber</div>
         </div>
         <div class="card">
-          <div class="card-label">Current Cycle Usage</div>
+          <div class="card-label">Your Usage</div>
           <div class="stat-value" id="dashUsageVal">0 <small>GB</small></div>
           <div class="stat-meta positive">Unlimited Data Allocation</div>
         </div>
         <div class="card">
           <div class="card-label">Account Balance</div>
           <div class="stat-value" id="dashBalance">A$0.00</div>
-          <div class="stat-meta" id="dashDueDate">Current Plan Active</div>
+          <div class="stat-meta" id="dashDueDate">Active Plan</div>
         </div>
         <div class="card">
           <div class="card-label">Static IP & Node</div>
@@ -460,7 +461,7 @@ body {
             <h3>Quick Actions</h3>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <button class="btn-primary" onclick="document.querySelector('[data-page=billing]').click()">View & Pay Current Bill</button>
+            <button class="btn-primary" onclick="document.querySelector('[data-page=billing]').click()">View & Pay Bill</button>
             <button class="btn-secondary" onclick="document.querySelector('[data-page=diagnostics]').click(); runSpeedtest();">Run Speed Diagnostic</button>
             <button class="btn-secondary" onclick="document.querySelector('[data-page=plans]').click()">Upgrade Fiber Speed</button>
           </div>
@@ -506,7 +507,7 @@ body {
         <div class="card">
           <div class="card-head"><h3>Live Speed Diagnostic Tool</h3></div>
           <div class="speed-test-gauge">
-            <div class="card-label">Current Downlink Latency Stream</div>
+            <div class="card-label">Downlink Latency Stream</div>
             <div class="gauge-val" id="gaugeResult">0.0</div>
             <div style="font-size:12px;color:var(--slate-light);margin-top:6px;">Megabits per second (Mbps)</div>
             <br>
