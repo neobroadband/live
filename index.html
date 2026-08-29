@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1638,11 +1640,30 @@
     annualLabel.addEventListener('click', () => renderPricingState(true));
   })();
 
-  // ─── Map Internal Functions to Global Scope for Inline HTML Handlers ───
+  // ─── Expose handlers used by inline onclick="" attributes ───
+  // (they were only defined inside this closure, so every Business Plans /
+  // Enterprise Ethernet / Subscribe / Clear Search link was silently failing)
   window.switchPlanCategory = switchPlanCategory;
   window.handleSubscribe = handleSubscribe;
   window.clearSearchHistory = clearSearchHistory;
-  window.handleRegionSearch = handleRegionSearch;
+
+  // ─── Deep-link support: index.html#business-plans / #enterprise-ethernet ───
+  // Lets links from other pages land directly on the right plan category
+  // instead of the hidden section it used to fall on.
+  function initPlanCategoryFromHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (hash === 'business-plans') {
+      switchPlanCategory('business');
+    } else if (hash === 'enterprise-ethernet') {
+      switchPlanCategory('enterprise');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPlanCategoryFromHash);
+  } else {
+    initPlanCategoryFromHash();
+  }
+  window.addEventListener('hashchange', initPlanCategoryFromHash);
 
 })();
 </script>
