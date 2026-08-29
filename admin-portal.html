@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -344,6 +345,39 @@ body {
   .ticket-chart-container { grid-template-columns: 1fr; }
   .chart-legend-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Floating Technical Network Backdrop ── */
+.tech-backdrop {
+  position: fixed;
+  inset: -6%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("images/bg-network-mesh.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  filter: saturate(1.05) contrast(1.15) brightness(1.25);
+  will-change: transform;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.08);
+  animation: backdropDrift 46s ease-in-out infinite alternate;
+}
+.tech-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(15,17,21,0) 0%, rgba(15,17,21,0.25) 60%, rgba(15,17,21,0.7) 100%),
+    linear-gradient(180deg, rgba(15,17,21,0.45) 0%, rgba(22,26,32,0.15) 45%, rgba(13,15,19,0.6) 100%);
+}
+@keyframes backdropDrift {
+  0%   { background-position: 46% 48%; }
+  50%  { background-position: 54% 52%; }
+  100% { background-position: 48% 45%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tech-backdrop { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -353,6 +387,7 @@ body {
   <rect width="100%" height="100%" filter="url(#n)"/>
 </svg>
 <div class="atmosphere"></div>
+<div class="tech-backdrop"></div>
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- ═══ ADMIN LOGIN OVERLAY ═══ -->
@@ -1842,6 +1877,25 @@ window.onload = () => {
     syncAdminData();
   }
 };
+</script>
+<script>
+// ── Backdrop parallax ──
+(function () {
+  const backdrop = document.querySelector('.tech-backdrop');
+  if (!backdrop) return;
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => {
+    tx = (e.clientX / window.innerWidth - 0.5) * -34;
+    ty = (e.clientY / window.innerHeight - 0.5) * -24;
+  }, { passive: true });
+  (function loop() {
+    cx += (tx - cx) * 0.045;
+    cy += (ty - cy) * 0.045;
+    backdrop.style.setProperty('--px', cx.toFixed(2) + 'px');
+    backdrop.style.setProperty('--py', cy.toFixed(2) + 'px');
+    requestAnimationFrame(loop);
+  })();
+})();
 </script>
 </body>
 </html>
