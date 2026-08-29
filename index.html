@@ -1406,7 +1406,7 @@
     return false;
   }
 
-  // ─── Free OpenStreetMap / Photon Live Autocomplete (Debounced) ───
+  // ─── Free OpenStreetMap (Nominatim) Live Autocomplete (Debounced) ───
   let searchDebounceTimer;
 
   regionInput.addEventListener('input', function() {
@@ -1431,26 +1431,38 @@
 
   async function fetchOpenStreetMapSuggestions(query) {
     try {
-      // Query OpenStreetMap geocoder bounded directly to Australia
-      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5&bbox=112.9,-43.7,159.3,-9.1`;
+      // Query OpenStreetMap Nominatim for better street-level address details directly in Australia
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=au&format=json&addressdetails=1&limit=5`;
       const response = await fetch(url);
       const data = await response.json();
 
-      if (data.features && data.features.length > 0) {
+      if (data && data.length > 0) {
         dropdownHeaderLabel.textContent = 'Suggested Locations (Australia)';
         clearHistoryBtn.style.display = 'none';
         historyItemsList.innerHTML = '';
 
-        data.features.forEach(feature => {
-          const p = feature.properties;
-          const name = p.name || '';
-          const locality = p.city || p.district || p.county || '';
+        data.forEach(item => {
+          const p = item.address || {};
+          
+          // Extract structural street address components
+          const houseNumber = p.house_number || '';
+          const road = p.road || '';
+          const suburb = p.suburb || p.city || p.town || p.village || '';
           const state = p.state || '';
           const postcode = p.postcode || '';
 
+          // Construct exact Address Line 1
+          let streetAddress = '';
+          if (road) {
+            streetAddress = houseNumber ? `${houseNumber} ${road}` : road;
+          } else {
+            streetAddress = item.name || '';
+          }
+
           // Format clean Australian address line
-          const locationParts = [name];
-          if (locality && locality !== name) locationParts.push(locality);
+          const locationParts = [];
+          if (streetAddress) locationParts.push(streetAddress);
+          if (suburb && suburb !== streetAddress) locationParts.push(suburb);
           if (state) locationParts.push(state);
           if (postcode) locationParts.push(postcode);
 
@@ -1459,7 +1471,7 @@
           const li = document.createElement('li');
           li.className = 'history-item';
           li.innerHTML = `
-            <span class="loc-text">📍 <strong>${name}</strong>${locality && locality !== name ? ', ' + locality : ''} ${state} ${postcode}</span>
+            <span class="loc-text">📍 <strong>${streetAddress || suburb}</strong>${suburb && suburb !== streetAddress ? ', ' + suburb : ''} ${state} ${postcode}</span>
             <span style="font-size:10px; color:#2b6cf6; flex-shrink:0;">Select &rarr;</span>
           `;
           
@@ -1478,7 +1490,7 @@
         searchHistoryDropdown.classList.remove('active');
       }
     } catch (err) {
-      console.warn('OpenStreetMap fetch error:', err);
+      console.warn('Map fetch error:', err);
     }
   }
 
