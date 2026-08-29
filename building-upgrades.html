@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,22 +102,39 @@
   .nav-brand { display: flex; align-items: center; text-decoration: none; }
   .nav-logo { max-height: 100px; width: auto; object-fit: contain; }
 
-  /* Responsive grid adjustment for catalog layout */
+  /* Responsive grid adjustment for catalog layout - Optimized for single rows */
   .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 30px;
+    gap: 16px;
+    margin-top: 20px;
   }
+  @media (min-width: 992px) {
+    .features-grid.single-row {
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+  }
+  @media (max-width: 991px) {
+    .features-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+  }
+
+  /* Reduced Spacing Adjustments */
   .plan-category {
-    margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--panel-border);
+    margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--panel-border);
   }
-  .plan-category:first-of-type { margin-top: 40px; border-top: none; }
+  .plan-category:first-of-type { margin-top: 25px; border-top: none; }
   .category-title {
-    font-size: 2rem; font-weight: 300; letter-spacing: -0.02em; color: var(--ivory, #ffffff); margin-bottom: 8px;
+    font-size: 1.8rem; font-weight: 300; letter-spacing: -0.02em; color: var(--ivory, #ffffff); margin-bottom: 6px;
   }
   .category-desc {
-    font-size: 1rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 30px;
+    font-size: 0.95rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 20px;
+  }
+  .section { padding: 80px 0; }
+
+  /* Adjusted pricing card padding for tighter fit */
+  .pricing-card {
+    padding: 24px 20px !important;
   }
 
   /* FAQ Accordion / Custom Styles */
@@ -126,7 +142,7 @@
     background: rgba(25, 30, 40, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
-    padding: 24px;
+    padding: 20px;
     text-align: left;
     transition: border-color 0.3s ease;
   }
@@ -134,15 +150,15 @@
     border-color: rgba(43, 108, 246, 0.4);
   }
   .faq-question {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .faq-answer {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #9a9fa8;
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
   }
 
@@ -306,7 +322,7 @@
       Elevate your multi-dwelling property with next-generation full fibre connectivity. Deliver high-speed, dependable internet to every residence through a single, professionally coordinated project.
     </p>
     
-    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Modern Apartment Building Fibre Upgrade" style="border-radius: 20px; margin-top: 60px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 2; position: relative;">
+    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Modern Apartment Building Fibre Upgrade" style="border-radius: 20px; margin-top: 40px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 2; position: relative;">
   </section>
 
   <div class="silk-divider reveal"></div>
@@ -322,25 +338,25 @@
       <h3 class="category-title">The Benefits of Full Fibre</h3>
       <p class="category-desc">Delivering tangible advantages for owners, residents, and strata managers alike.</p>
       
-      <div class="features-grid">
+      <div class="features-grid single-row">
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Boost Property Value</div>
-          <p class="pricing-desc">Up to 75% of renters indicate that a dedicated full fibre connection makes a property significantly more attractive, enhancing long-term rental yields and resale values.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Elevate Property Value</div>
+          <p class="pricing-desc">As many as 75% of renters report that properties with dedicated full fibre connectivity are significantly more appealing, supporting higher rental yields.</p>
         </div>
 
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Blazing Speeds & Reliability</div>
-          <p class="pricing-desc">Provide residents with wholesale access tiers up to 2 Gbps, effortlessly handling remote work environments, 4K streaming, and multi-device households without latency.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Ultra Fast Speeds</div>
+          <p class="pricing-desc">Offer residents wholesale speeds up to 2 Gbps, powering demanding remote work setups, ultra HD streaming, and high density device use without lag.</p>
         </div>
 
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Future-Proof Architecture</div>
-          <p class="pricing-desc">With typical household data usage expanding exponentially over past years and projected to double, full fibre provides infrastructure built to withstand future tech requirements.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Scalable Infrastructure</div>
+          <p class="pricing-desc">With typical household data usage climbing rapidly, full fibre offers a long term network foundation capable of supporting future digital needs.</p>
         </div>
 
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Reduced Strata Burden</div>
-          <p class="pricing-desc">Execute a single building-wide deployment. Once completed, NEO BROADBAND takes over complete network infrastructure management rather than leaving it to the body corporate.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Minimised Burden</div>
+          <p class="pricing-desc">Execute a single, building wide deployment. NEO BROADBAND takes full ownership of the network infrastructure reducing the body corporate’s operational burden.</p>
         </div>
       </div>
     </div>
@@ -350,63 +366,62 @@
       <h3 class="category-title">Built for Modern Usage</h3>
       <p class="category-desc">Key performance benchmarks powering high-density communities.</p>
       
-      <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: center;">
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-tier" style="font-size: 2.2rem; color: #fff; margin-bottom: 5px;">2 Gbps</div>
+      <div class="features-grid single-row" style="text-align: center;">
+        <div class="pricing-card">
+          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">2 Gbps</div>
           <p class="pricing-desc" style="font-size: 0.8rem;">Up to wholesale download speeds.</p>
         </div>
 
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-tier" style="font-size: 2.2rem; color: #fff; margin-bottom: 5px;">75%</div>
+        <div class="pricing-card">
+          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">75%</div>
           <p class="pricing-desc" style="font-size: 0.8rem;">Of renters actively prefer fibre-connected buildings.</p>
         </div>
 
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-tier" style="font-size: 2.2rem; color: #fff; margin-bottom: 5px;">10x</div>
+        <div class="pricing-card">
+          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">10x</div>
           <p class="pricing-desc" style="font-size: 0.8rem;">Surge in household data demand over the past decade.</p>
         </div>
 
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-tier" style="font-size: 2.2rem; color: #fff; margin-bottom: 5px;">XGS-PON</div>
+        <div class="pricing-card">
+          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">XGS-PON</div>
           <p class="pricing-desc" style="font-size: 0.8rem;">State-of-the-art optical network technology.</p>
         </div>
       </div>
     </div>
 
-    <!-- ── THE UPGRADE JOURNEY (5 STAGES) ── -->
+    <!-- ── THE UPGRADE JOURNEY (COMBINED INTO 4 STAGES) ── -->
     <div class="plan-category reveal">
       <h3 class="category-title">The Upgrade Journey</h3>
-      <p class="category-desc">A seamless 5-stage end-to-end framework handled entirely by our specialists.</p>
+      <p class="category-desc">A seamless 4-stage end-to-end framework handled entirely by our specialists.</p>
       
-      <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 1</div>
-          <div class="pricing-tier">Eligibility Check</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">We review your building's location, current infrastructure profile, and property layout.</p>
+      <div class="features-grid single-row">
+        <div class="pricing-card">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 1</div>
+          <div class="pricing-tier">Building Eligibility Check</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">We analyse your building’s position, installed infrastructure, and structural layout to determine the optimal deployment approach.</p>
         </div>
 
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 2</div>
+        <div class="pricing-card">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 2</div>
           <div class="pricing-tier">Quote & Agreement</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">Providing a transparent quotation and project agreement for body corporate evaluation.</p>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Providing a itemised quotation and project agreement for body corporate review.</p>
         </div>
 
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 3</div>
-          <div class="pricing-tier">Survey & Design</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">Our technical team conducts on-site mapping to formulate a custom installation blueprint.</p>
+        <div class="pricing-card">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 3</div>
+          <div class="pricing-tier">Survey & Network Design</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Our technical team performs detailed on site mapping to develop a customised installation blueprint tailored to your building.</p>
         </div>
 
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 4</div>
-          <div class="pricing-tier">Installation</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">Fibre pathways are rolled out building-wide with quick, coordinated appointments for each apartment.</p>
+        <div class="pricing-card">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 4</div>
+          <div class="pricing-tier">Deployment & Installation</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">With pre start engagement completed with the body corporate, fibre pathways are deployed across the entire building, supported by fast, well coordinated appointments for every apartment.</p>
         </div>
-
-        <div class="pricing-card" style="padding: 30px 20px;">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 5</div>
-          <div class="pricing-tier">Ready to Connect</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">Residents select their preferred participating internet service provider to switch on high-speed plans.</p>
+        <div class="pricing-card">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 4</div>
+          <div class="pricing-tier">Connection Ready</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">A notification is sent to residents, prompting them to choose their preferred participating ISP and activate high speed fibre plans.</p>
         </div>
       </div>
     </div>
@@ -416,7 +431,7 @@
       <h3 class="category-title" style="text-align: center;">Frequently Asked Questions</h3>
       <p class="category-desc" style="text-align: center;">Everything strata managers and committees need to know.</p>
       
-      <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
         <div class="faq-card">
           <div class="faq-question">Will my building qualify?</div>
           <p class="faq-answer">Most multi-dwelling properties can be assessed. We look at factors like building layout, existing conduit infrastructure, and geographical reach. The initial eligibility review is completely free.</p>
@@ -431,11 +446,6 @@
           <div class="faq-question">Who makes the decision — strata or individual owners?</div>
           <p class="faq-answer">The approval is coordinated through the body corporate or owners committee representing the community. Individual residents do not need to register separately for the backbone infrastructure rollout.</p>
         </div>
-
-        <div class="faq-card">
-          <div class="faq-question">What happens to residents' existing internet services?</div>
-          <p class="faq-answer">Current services remain completely uninterrupted until residents individually choose to migrate over to a full fibre plan via their preferred provider.</p>
-        </div>
       </div>
     </div>
 
@@ -444,15 +454,15 @@
   <div class="silk-divider reveal"></div>
 
   <!-- ═══ FOOTER CTA ═══ -->
-  <section class="footer-cta" id="cta">
+  <section class="footer-cta" id="cta" style="padding-top: 80px;">
     <p class="section-tag reveal">Get Started Today</p>
     <h2 class="section-title reveal reveal-d1">Ready to upgrade your building to<br><strong>next-generation fibre?</strong></h2>
     <div class="footer-ctas reveal reveal-d3">
       <a href="contact.html" class="btn-primary" id="openCtaModal">Request Eligibility Check</a>
     </div>
 
-    <div class="footer-bar reveal reveal-d4" style="margin-top: 80px;">
-      <div class="footer-brand">© 2026 Neo Broadband Pty Ltd. All rights reserved</div>
+    <div class="footer-bar reveal reveal-d4" style="margin-top: 60px;">
+      <div class="footer-brand">© Neo Broadband Pty Ltd. All rights reserved</div>
       <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Service Terms</a>
