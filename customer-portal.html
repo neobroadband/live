@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -219,6 +218,19 @@ body {
 .auth-tab { background: none; border: none; color: var(--slate-warm); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; padding: 4px 8px; transition: color 0.3s; }
 .auth-tab.active { color: var(--ivory); border-bottom: 2px solid var(--silver); }
 
+.category-banner {
+  background: rgba(176, 184, 196, 0.05);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  font-size: 11px;
+  color: var(--slate-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media(max-width: 1024px) {
   .shell { display: block; }
   .sidebar { transform: translateX(-100%); transition: .4s var(--silk-ease); }
@@ -240,7 +252,7 @@ body {
 
 <!-- ═══ CLOUD RADIUS AUTHENTICATION OVERLAY ═══ -->
 <div id="loginOverlay" style="position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#0f1115,#161a20);display:grid;place-items:center;padding:24px;">
-  <div style="width:min(450px,100%);padding:40px;border:1px solid rgba(156,163,175,.12);border-radius:32px;background:rgba(28,33,40,.85);backdrop-filter:blur(30px);box-shadow:0 20px 80px rgba(0,0,0,0.5);">
+  <div style="width:min(460px,100%);padding:40px;border:1px solid rgba(156,163,175,.12);border-radius:32px;background:rgba(28,33,40,.85);backdrop-filter:blur(30px);box-shadow:0 20px 80px rgba(0,0,0,0.5);">
     <div style="text-align:center;margin-bottom:18px;">
       <img src="images/psd 1.png" alt="Neo Broadband Logo" style="max-height:65px;width:auto;margin-bottom:12px;">
       <div class="eyebrow" id="authTitleLabel">Cloud RADIUS Authentication</div>
@@ -267,18 +279,22 @@ body {
       
       <!-- Live Demo Users List -->
       <div id="demoUsersList" style="margin-top: 24px; padding: 16px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 11px; color: var(--slate-light); text-align: left;">
-        <strong style="color: var(--ivory); display: block; margin-bottom: 12px; font-size: 12px;">Live Demo Accounts:</strong>
-        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 8px;">
-          <li><strong>ID:</strong> NEO-98210 &nbsp;|&nbsp; <strong>Pass:</strong> broadband123 <span style="float:right; color:var(--slate-warm)">(Regular 500M)</span></li>
-          <li><strong>ID:</strong> NEO-11223 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ultra 1000M)</span></li>
-          <li><strong>ID:</strong> NEO-33445 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Biz 1000M)</span></li>
-          <li><strong>ID:</strong> NEO-55667 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Basic 25M)</span></li>
-          <li><strong>ID:</strong> NEO-77889 &nbsp;|&nbsp; <strong>Pass:</strong> demo2026 <span style="float:right; color:var(--slate-warm)">(Ent 500M)</span></li>
-        </ul>
+        <strong style="color: var(--ivory); display: block; margin-bottom: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Demo Accounts:</strong>
+        <div style="display: grid; gap: 8px;">
+          <div style="padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; cursor: pointer;" onclick="fillDemoCredentials('NEO-98210','broadband123')">
+            <span style="color:var(--silver); font-weight: 600;">Residential:</span> NEO-98210 / broadband123 <span style="float:right; color:#48bb78;">500/50M</span>
+          </div>
+          <div style="padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; cursor: pointer;" onclick="fillDemoCredentials('NEO-33445','demo2026')">
+            <span style="color:var(--silver); font-weight: 600;">Business:</span> NEO-33445 / demo2026 <span style="float:right; color:#48bb78;">1000/400M</span>
+          </div>
+          <div style="padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; cursor: pointer;" onclick="fillDemoCredentials('NEO-77889','demo2026')">
+            <span style="color:var(--silver); font-weight: 600;">Enterprise:</span> NEO-77889 / demo2026 <span style="float:right; color:#48bb78;">500/500M</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Register Form (Cleaned without Plan Dropdown) -->
+    <!-- Register Form -->
     <div id="registerForm" style="display:none;">
       <div class="field-grid">
         <div class="field">
@@ -289,6 +305,14 @@ body {
           <label>Last Name</label>
           <input id="regLastName" placeholder="Doe">
         </div>
+      </div>
+      <div class="field">
+        <label>Account Type</label>
+        <select id="regAccountType">
+          <option value="Residential">Residential High-Speed</option>
+          <option value="Business">Business Symmetrical</option>
+          <option value="Enterprise">Enterprise Dedicated Ethernet</option>
+        </select>
       </div>
       <div class="field">
         <label>Email Address</label>
@@ -562,15 +586,20 @@ body {
       </div>
     </section>
 
-    <!-- ── 5. PLAN UPGRADE PANE ── -->
+    <!-- ── 5. PLAN UPGRADE PANE (CATEGORY FILTERED) ── -->
     <section class="page" id="plans">
       <div class="portal-hero">
         <div class="eyebrow">Plan Matrix Provisioning</div>
         <h2>Scale your speed. <strong>Zero downtime transitions.</strong></h2>
       </div>
 
+      <div class="category-banner">
+        <span>Showing authorized upgrades for: <strong id="plansCategoryTitle" style="color:var(--ivory);">Residential Tier</strong></span>
+        <span class="status-pill" style="margin:0;"><span class="status-dot"></span> Compatible Provisioning</span>
+      </div>
+
       <div class="grid three-col" id="plansUpgradeGrid">
-        <!-- Dynamically rendered plans -->
+        <!-- Filtered plans rendered dynamically based on customer's category -->
       </div>
     </section>
 
@@ -608,6 +637,7 @@ body {
         <div class="field-grid">
           <div class="field"><label>Subscriber Full Name</label><input id="profName" type="text"></div>
           <div class="field"><label>Customer Account ID</label><input id="profId" type="text" disabled></div>
+          <div class="field"><label>Account Tier Type</label><input id="profCategory" type="text" disabled></div>
           <div class="field"><label>Contact Email</label><input id="profEmail" type="email"></div>
           <div class="field"><label>Contact Phone</label><input id="profPhone" type="text"></div>
           <div class="field full"><label>Service Address</label><input id="profAddress" type="text"></div>
@@ -621,54 +651,54 @@ body {
 
 <div class="toast-msg" id="toast"></div>
 
-<!-- ═══ BACKEND CLOUD, ISP REST API & GATEWAY INTEGRATION LAYER ═══ -->
+<!-- ═══ BACKEND CLOUD & ISP REST API INTEGRATION LAYER ═══ -->
 <script>
 /**
  * ARCHITECTURE INTEGRATION LAYER:
- * 1. ISP RADIUS / Node REST API Connector
- * 2. Payment Gateway Webhook / Tokenizer Adapter
- * 3. Shared Database (localStorage['neo_subscriber_db'])
+ * 1. ISP REST API / RADIUS AAA Service connector interface (Configured for easy live API swapping)
+ * 2. Strict Category-Based Plan Provisioning Filters (Residential / Business / Enterprise)
+ * 3. Seed dataset with dedicated Residential, Business, and Enterprise profiles
  */
 
 const ISP_CONFIG = {
   API_BASE_URL: 'https://api.neobroadband.com.au/v1',
   AUTH_REALM: 'radius.sydney.neobroadband.internal',
-  SIMULATION_MODE: true
+  SIMULATION_MODE: true // Toggle to false when pointing to live ISP REST endpoints
 };
 
-const GATEWAY_CONFIG = {
-  MERCHANT_ID: 'NEO_MERCHANT_AU_8892',
-  CURRENCY: 'AUD',
-  GATEWAY_PROVIDER: 'Stripe / eWay Direct API'
-};
-
-// Plan matrix synchronized across index.html, customer-portal.html, and admin-portal.html
+// Global Plan Matrix
 const planMatrix = {
-  'basic': { name: 'Basic', cat: 'Residential', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00', priceNum: 60 },
-  'regular': { name: 'Regular', cat: 'Residential', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00', priceNum: 85 },
-  'ultra': { name: 'Ultra', cat: 'Residential', down: '1000 Mbps', up: '100 Mbps', price: 'A$99.00', priceNum: 99 },
-  'pro': { name: 'Pro', cat: 'Residential', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
-  'pro-plus': { name: 'Pro +', cat: 'Residential', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
-  'ultra-plus': { name: 'Ultra +', cat: 'Residential', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00', priceNum: 135 },
-  'thunderbolt': { name: 'Thunderbolt', cat: 'Residential', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00', priceNum: 210 },
-  'biz-50': { name: 'Business 50/20', cat: 'Business', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00', priceNum: 89 },
-  'biz-100': { name: 'Business 100/40', cat: 'Business', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00', priceNum: 95 },
-  'biz-250': { name: 'Business 250/100', cat: 'Business', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
-  'biz-500-50': { name: 'Business 500/50', cat: 'Business', down: '500 Mbps', up: '50 Mbps', price: 'A$90.00', priceNum: 90 },
-  'biz-500-200': { name: 'Business 500/200', cat: 'Business', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
-  'biz-1000': { name: 'Business 1000/400', cat: 'Business', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00', priceNum: 145 },
-  'ent-100': { name: 'Enterprise 100/100', cat: 'Enterprise', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00', priceNum: 399 },
-  'ent-250': { name: 'Enterprise 250/250', cat: 'Enterprise', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00', priceNum: 399 },
-  'ent-500': { name: 'Enterprise 500/500', cat: 'Enterprise', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00', priceNum: 469 }
+  // Residential
+  'basic': { key: 'basic', name: 'Basic', cat: 'Residential', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00', priceNum: 60 },
+  'regular': { key: 'regular', name: 'Regular', cat: 'Residential', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00', priceNum: 85 },
+  'pro': { key: 'pro', name: 'Pro', cat: 'Residential', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
+  'ultra': { key: 'ultra', name: 'Ultra', cat: 'Residential', down: '1000 Mbps', up: '100 Mbps', price: 'A$99.00', priceNum: 99 },
+  'pro-plus': { key: 'pro-plus', name: 'Pro +', cat: 'Residential', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
+  'ultra-plus': { key: 'ultra-plus', name: 'Ultra +', cat: 'Residential', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00', priceNum: 135 },
+  'thunderbolt': { key: 'thunderbolt', name: 'Thunderbolt', cat: 'Residential', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00', priceNum: 210 },
+  
+  // Business
+  'biz-50': { key: 'biz-50', name: 'Business 50/20', cat: 'Business', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00', priceNum: 89 },
+  'biz-100': { key: 'biz-100', name: 'Business 100/40', cat: 'Business', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00', priceNum: 95 },
+  'biz-250': { key: 'biz-250', name: 'Business 250/100', cat: 'Business', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
+  'biz-500-50': { key: 'biz-500-50', name: 'Business 500/50', cat: 'Business', down: '500 Mbps', up: '50 Mbps', price: 'A$90.00', priceNum: 90 },
+  'biz-500-200': { key: 'biz-500-200', name: 'Business 500/200', cat: 'Business', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
+  'biz-1000': { key: 'biz-1000', name: 'Business 1000/400', cat: 'Business', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00', priceNum: 145 },
+  
+  // Enterprise
+  'ent-100': { key: 'ent-100', name: 'Enterprise 100/100', cat: 'Enterprise', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00', priceNum: 399 },
+  'ent-250': { key: 'ent-250', name: 'Enterprise 250/250', cat: 'Enterprise', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00', priceNum: 399 },
+  'ent-500': { key: 'ent-500', name: 'Enterprise 500/500', cat: 'Enterprise', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00', priceNum: 469 }
 };
 
-// Seed dataset matching Admin Portal
+// Seed dataset
 const defaultStore = {
   "NEO-98210": {
     name: "Johnathan Smith",
     email: "john.smith@sydneytech.com.au",
     pass: "broadband123",
     phone: "+61 412 890 123",
+    category: "Residential",
     address: "Level 14, 201 Sussex St, Sydney NSW 2000, Australia",
     planName: "Regular Plan",
     planSpeed: "500 Mbps",
@@ -687,31 +717,12 @@ const defaultStore = {
     ],
     tickets: [{ id: "TKT-8841", title: "Static IP Routing Configuration", status: "Resolved", date: "02 Aug 2026" }]
   },
-  "NEO-11223": {
-    name: "Sarah Connor",
-    email: "sarah@example.com",
-    pass: "demo2026",
-    phone: "+61 400 111 222",
-    address: "10 Main St, Melbourne VIC 3000",
-    planName: "Ultra Plan",
-    planSpeed: "1000 Mbps",
-    upSpeed: "100 Mbps",
-    downSpeed: "1000 Mbps",
-    balance: "A$0.00",
-    dueDate: "Account in good standing",
-    ipAddress: "103.24.19.105",
-    ntdId: "NTD-AU-112233-X",
-    currentUsageGB: 850,
-    trafficWeekly: [120, 150, 90, 110, 140, 180, 160],
-    monthlyTrend: [800, 820, 790, 850, 910, 880, 850, 0, 0, 0, 0, 0],
-    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Ultra", amount: "A$99.00", status: "Paid" }],
-    tickets: []
-  },
   "NEO-33445": {
-    name: "Acme Corp",
+    name: "Acme Corp (IT Operations)",
     email: "it@acmecorp.com.au",
     pass: "demo2026",
     phone: "+61 2 9876 5432",
+    category: "Business",
     address: "50 George St, Sydney NSW 2000",
     planName: "Business 1000/400 Plan",
     planSpeed: "1000 Mbps",
@@ -727,31 +738,12 @@ const defaultStore = {
     invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Business 1000/400", amount: "A$145.00", status: "Unpaid" }],
     tickets: [{ id: "TKT-9922", title: "BGP Routing Query", status: "In NOC Queue", date: "21 Aug 2026" }]
   },
-  "NEO-55667": {
-    name: "David Miller",
-    email: "david.m@example.com",
-    pass: "demo2026",
-    phone: "+61 455 666 777",
-    address: "22 King St, Brisbane QLD 4000",
-    planName: "Basic Plan",
-    planSpeed: "25 Mbps",
-    upSpeed: "10 Mbps",
-    downSpeed: "25 Mbps",
-    balance: "A$0.00",
-    dueDate: "Account in good standing",
-    ipAddress: "103.24.21.55",
-    ntdId: "NTD-AU-778899-X",
-    currentUsageGB: 45,
-    trafficWeekly: [5, 8, 6, 4, 7, 10, 5],
-    monthlyTrend: [40, 45, 38, 50, 42, 48, 45, 0, 0, 0, 0, 0],
-    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Basic", amount: "A$60.00", status: "Paid" }],
-    tickets: []
-  },
   "NEO-77889": {
-    name: "Global Tech",
+    name: "Global Tech Enterprise",
     email: "admin@globaltech.com.au",
     pass: "demo2026",
     phone: "+61 3 8888 9999",
+    category: "Enterprise",
     address: "100 Collins St, Melbourne VIC 3000",
     planName: "Enterprise 500/500",
     planSpeed: "500 Mbps",
@@ -769,18 +761,53 @@ const defaultStore = {
   }
 };
 
-// Unified DB fetcher
-function getStoredDatabase() {
-  const saved = localStorage.getItem('neo_subscriber_db');
-  return saved ? JSON.parse(saved) : defaultStore;
-}
+// ── Modular ISP REST API Client ──
+const ISPClient = {
+  getStore() {
+    const saved = localStorage.getItem('neo_subscriber_db');
+    return saved ? JSON.parse(saved) : defaultStore;
+  },
+  saveStore(data) {
+    localStorage.setItem('neo_subscriber_db', JSON.stringify(data));
+  },
+  async authenticate(username, password) {
+    if (!ISP_CONFIG.SIMULATION_MODE) {
+      const resp = await fetch(`${ISP_CONFIG.API_BASE_URL}/radius/authenticate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      return await resp.json();
+    }
+    // Simulation / local DB fallback
+    const store = this.getStore();
+    let user = store[username];
+    let key = username;
+    if (!user) {
+      for (let k in store) {
+        if (store[k].email && store[k].email.toLowerCase() === username.toLowerCase()) {
+          user = store[k];
+          key = k;
+          break;
+        }
+      }
+    }
+    if (user && user.pass === password) {
+      return { success: true, userId: key, profile: user };
+    }
+    return { success: false, message: 'Invalid credentials' };
+  },
+  async fetchTelemetry(userId) {
+    if (!ISP_CONFIG.SIMULATION_MODE) {
+      const resp = await fetch(`${ISP_CONFIG.API_BASE_URL}/subscribers/${userId}/telemetry`);
+      return await resp.json();
+    }
+    const store = this.getStore();
+    return store[userId] || null;
+  }
+};
 
-let subscriberStore = getStoredDatabase();
-
-function persistStore() {
-  localStorage.setItem('neo_subscriber_db', JSON.stringify(subscriberStore));
-}
-
+let subscriberStore = ISPClient.getStore();
 let activeUserToken = null;
 
 // Page Navigation
@@ -812,6 +839,11 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
+function fillDemoCredentials(user, pass) {
+  document.getElementById('authInputUser').value = user;
+  document.getElementById('authInputPass').value = pass;
+}
+
 // ── Auth Mode Switcher ──
 function switchAuthMode(mode) {
   const loginTab = document.getElementById('tabLogin');
@@ -839,43 +871,29 @@ function switchAuthMode(mode) {
 }
 
 // ── Authentication Executor ──
-function executeCloudAuthentication() {
+async function executeCloudAuthentication() {
   const userInput = document.getElementById('authInputUser').value.trim();
   const passInput = document.getElementById('authInputPass').value;
 
-  subscriberStore = getStoredDatabase();
-  let matchedUser = null;
-  let matchedId = null;
+  const result = await ISPClient.authenticate(userInput, passInput);
 
-  if (subscriberStore[userInput]) {
-    matchedUser = subscriberStore[userInput];
-    matchedId = userInput;
-  } else {
-    for (let k in subscriberStore) {
-      if (subscriberStore[k].email && subscriberStore[k].email.toLowerCase() === userInput.toLowerCase()) {
-        matchedUser = subscriberStore[k];
-        matchedId = k;
-        break;
-      }
-    }
-  }
-
-  if (matchedUser && matchedUser.pass === passInput) {
-    activeUserToken = matchedId;
+  if (result.success) {
+    activeUserToken = result.userId;
     sessionStorage.setItem('neo_active_user', activeUserToken);
     localStorage.setItem('neo_known_user', activeUserToken);
     document.getElementById('loginOverlay').style.display = 'none';
     syncCloudTelemetry();
-    toast(`RADIUS Auth Verified: Welcome back, ${matchedUser.name}`);
+    toast(`RADIUS Auth Verified: Welcome back, ${result.profile.name}`);
   } else {
     toast('Authentication Error: Invalid Customer ID or Password.');
   }
 }
 
-// ── Registration Function (Cleaned without Plan Dropdown) ──
+// ── Registration Function ──
 function registerNewCustomer() {
   const fName = document.getElementById('regFirstName').value.trim();
   const lName = document.getElementById('regLastName').value.trim();
+  const accountType = document.getElementById('regAccountType').value;
   const email = document.getElementById('regEmail').value.trim();
   const phone = document.getElementById('regPhone').value.trim();
   const state = document.getElementById('regState').value;
@@ -887,9 +905,13 @@ function registerNewCustomer() {
     return;
   }
 
-  // Automatic Plan Assignment from index.html or default
-  const pendingPlanKey = sessionStorage.getItem('pending_plan') || 'regular';
-  const selectedPlan = planMatrix[pendingPlanKey] || planMatrix['regular'];
+  // Determine initial plan based on chosen category
+  let defaultPlanKey = 'regular';
+  if (accountType === 'Business') defaultPlanKey = 'biz-500-50';
+  if (accountType === 'Enterprise') defaultPlanKey = 'ent-500';
+
+  const pendingPlanKey = sessionStorage.getItem('pending_plan') || defaultPlanKey;
+  const selectedPlan = planMatrix[pendingPlanKey] || planMatrix[defaultPlanKey];
   const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
 
   subscriberStore[newId] = {
@@ -897,6 +919,7 @@ function registerNewCustomer() {
     email: email,
     pass: pass,
     phone: phone,
+    category: accountType,
     address: `${state}, Australia ${postcode}`,
     planName: selectedPlan.name + " Plan",
     planSpeed: selectedPlan.down,
@@ -915,9 +938,9 @@ function registerNewCustomer() {
     tickets: []
   };
 
-  persistStore();
+  ISPClient.saveStore(subscriberStore);
 
-  alert(`Account successfully provisioned in ISP RADIUS Cloud!\n\nCustomer ID: ${newId}\nTier: ${selectedPlan.name} (${selectedPlan.down}/${selectedPlan.up})`);
+  alert(`Account successfully provisioned in ISP RADIUS Cloud!\n\nCustomer ID: ${newId}\nTier: ${selectedPlan.name} (${selectedPlan.down}/${selectedPlan.up})\nCategory: ${accountType}`);
   
   activeUserToken = newId;
   sessionStorage.setItem('neo_active_user', activeUserToken);
@@ -936,7 +959,7 @@ function portalLogout() {
 
 // ── Cloud Telemetry & UI Sync ──
 function syncCloudTelemetry(showToast = false) {
-  subscriberStore = getStoredDatabase();
+  subscriberStore = ISPClient.getStore();
   const profile = subscriberStore[activeUserToken];
   if (!profile) return;
 
@@ -989,9 +1012,18 @@ function syncCloudTelemetry(showToast = false) {
 
   document.getElementById('profName').value = profile.name;
   document.getElementById('profId').value = activeUserToken;
+  document.getElementById('profCategory').value = profile.category || detectPlanCategory(profile.planName);
   document.getElementById('profEmail').value = profile.email;
   document.getElementById('profPhone').value = profile.phone;
   document.getElementById('profAddress').value = profile.address;
+}
+
+function detectPlanCategory(planName) {
+  if (!planName) return 'Residential';
+  const lower = planName.toLowerCase();
+  if (lower.includes('enterprise') || lower.includes('ent')) return 'Enterprise';
+  if (lower.includes('business') || lower.includes('biz')) return 'Business';
+  return 'Residential';
 }
 
 function renderChart(containerId, dataset) {
@@ -1041,19 +1073,31 @@ function executeRemotePortReset() {
   }, 1200);
 }
 
-// ── Plans Grid & Instant Provisioning ──
+// ── Plans Grid (STRICT CATEGORY FILTERED) ──
 function renderPlansGrid() {
   const container = document.getElementById('plansUpgradeGrid');
   if (!container) return;
 
-  const currentPlan = subscriberStore[activeUserToken].planName || '';
+  const profile = subscriberStore[activeUserToken];
+  const userCategory = profile.category || detectPlanCategory(profile.planName);
+  
+  // Set Banner Title
+  const bannerEl = document.getElementById('plansCategoryTitle');
+  if (bannerEl) bannerEl.textContent = `${userCategory} Tier`;
 
-  container.innerHTML = Object.keys(planMatrix).map(pk => {
+  const currentPlan = profile.planName || '';
+
+  // Filter plans exclusively to user's category
+  const filteredPlanKeys = Object.keys(planMatrix).filter(pk => {
+    return planMatrix[pk].cat.toLowerCase() === userCategory.toLowerCase();
+  });
+
+  container.innerHTML = filteredPlanKeys.map(pk => {
     const p = planMatrix[pk];
     const isCurrent = currentPlan.toLowerCase().includes(p.name.toLowerCase());
     return `
       <div class="card">
-        <div class="card-label">${p.cat}</div>
+        <div class="card-label">${p.cat} Tier</div>
         <h3 style="font-size:18px;margin-bottom:8px;">${p.name}</h3>
         <div class="stat-value" style="font-size:1.8rem;">${p.price} <small>/mo</small></div>
         <p style="font-size:12px;color:var(--slate-light);margin:14px 0;">↓ ${p.down} / ↑ ${p.up}</p>
@@ -1069,14 +1113,15 @@ function requestPlanUpgrade(planKey) {
   const p = planMatrix[planKey];
   if (!p) return;
 
-  if (confirm(`Provision change to ${p.name} Plan for ${p.price}/month? Line provisioning will take effect immediately.`)) {
+  if (confirm(`Provision instant change to ${p.name} (${p.down}/${p.up}) for ${p.price}/month?`)) {
     const profile = subscriberStore[activeUserToken];
     profile.planName = `${p.name} Plan`;
     profile.downSpeed = p.down;
     profile.upSpeed = p.up;
     profile.planSpeed = p.down;
     profile.balance = p.price;
-    persistStore();
+    profile.category = p.cat;
+    ISPClient.saveStore(subscriberStore);
     syncCloudTelemetry();
     toast(`Successfully provisioned ${p.name} Tier!`);
   }
@@ -1098,7 +1143,7 @@ function createSupportTicket() {
     date: new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' })
   });
 
-  persistStore();
+  ISPClient.saveStore(subscriberStore);
   document.getElementById('ticketNotes').value = "";
   renderTickets();
   toast('Support ticket queued for NOC engineers.');
@@ -1149,7 +1194,7 @@ function closePaymentModal() {
 function submitGatewayPayment() {
   const btn = document.getElementById('gatewayPayBtn');
   btn.disabled = true;
-  btn.textContent = 'Contacting Banking Gateway...';
+  btn.textContent = 'Authorizing with Gateway...';
 
   setTimeout(() => {
     const profile = subscriberStore[activeUserToken];
@@ -1158,12 +1203,12 @@ function submitGatewayPayment() {
       if (inv) inv.status = 'Paid';
     }
     profile.balance = 'A$0.00';
-    persistStore();
+    ISPClient.saveStore(subscriberStore);
     btn.disabled = false;
     btn.textContent = 'Authorize Payment (AUD)';
     closePaymentModal();
     syncCloudTelemetry();
-    toast('Payment Approved: Invoice marked as Paid');
+    toast('Payment Approved: Invoices marked as Paid');
   }, 1000);
 }
 
@@ -1190,7 +1235,7 @@ function saveSubscriberProfile() {
   profile.email = document.getElementById('profEmail').value;
   profile.phone = document.getElementById('profPhone').value;
   profile.address = document.getElementById('profAddress').value;
-  persistStore();
+  ISPClient.saveStore(subscriberStore);
   syncCloudTelemetry();
   toast('Subscriber configuration saved.');
 }
@@ -1223,7 +1268,7 @@ window.onload = () => {
   }
 
   const savedUser = sessionStorage.getItem('neo_active_user');
-  subscriberStore = getStoredDatabase();
+  subscriberStore = ISPClient.getStore();
 
   if (savedUser && subscriberStore[savedUser]) {
     activeUserToken = savedUser;
