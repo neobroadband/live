@@ -86,11 +86,16 @@ function updateNavAndPanels() {
   const maxScroll = document.documentElement.scrollHeight - innerHeight;
   const pct = Math.min(scrollY / maxScroll, 1);
 
-  // Active nav link
+  // Only update active status for hash/anchor links on the current page
   let id = '', activeIndex = 0;
   sectionEls.forEach((s, i) => { if (y >= s.offsetTop) { id = s.id; activeIndex = i; } });
-  navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
 
+  if (id) {
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+      const isCurrentSection = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('active', isCurrentSection);
+    });
+  }
   // Side panel tracks
   const trackPct = (pct * 100).toFixed(0);
   if (leftTrack) leftTrack.style.height = trackPct + '%';
@@ -175,30 +180,52 @@ function updateFaqToggleLabel() {
   allExpanded = openCount === faqItems.length;
   faqToggleAll.textContent = allExpanded ? 'Collapse All' : 'Expand All';
 }
-// ── Auto-highlight current page in navigation ──
-(function highlightCurrentNav() {
-  const path = window.location.pathname.split('/').pop() || 'index.html';
-  const current = path.toLowerCase();
+// ── Automatic Current Page Active Link Detection ──
+function highlightCurrentPage() {
+  // Get current page filename (defaulting to index.html for root '/')
+  let currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  if (currentPath === '') currentPath = 'index.html';
 
-  document.querySelectorAll('.nav-links a, .nav-utility a').forEach(link => {
+  // Check top navigation & mobile menu links
+  const allNavLinks = document.querySelectorAll('.nav-links a, .nav-utility a, .mobile-menu-link');
+
+  allNavLinks.forEach(link => {
     const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('http')) return;
+    if (!href) return;
 
-    const target = href.split('#')[0].split('/').pop().toLowerCase();
-    if (!target) return;
+    const linkPath = href.split('#')[0].split('?')[0];
 
-    if (target === current) {
+    // Check if link matches the current file
+    if (linkPath && (linkPath === currentPath || (currentPath === 'index.html' && (linkPath === '' || linkPath === '#')))) {
       link.classList.add('active');
-      // if it's inside a dropdown, also light up the parent menu item
+
+      // If link is inside a dropdown, highlight the parent dropdown menu as well
       const parentDropdown = link.closest('.dropdown');
-      if (parentDropdown && !parentDropdown.contains(link.parentElement.closest('.nav-links > li > a'))) {
-        const parentLink = parentDropdown.querySelector(':scope > a');
-        if (parentLink) parentLink.classList.add('active');
+      if (parentDropdown) {
+        parentDropdown.classList.add('active');
+        const parentTrigger = parentDropdown.querySelector(':scope > a');
+        if (parentTrigger) parentTrigger.classList.add('active');
       }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', highlightCurrentPage);
+
+
+/* ═══ Auto-highlight current page in navigation ═══ */
+(function highlightCurrentNav() {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var target = href.split('/').pop().split('#')[0];
+    if (target === path) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
     } else {
       link.classList.remove('active');
+      link.removeAttribute('aria-current');
     }
   });
 })();
-
-
