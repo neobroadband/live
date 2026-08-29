@@ -30,6 +30,7 @@
   --accent-cyan: #38bdf8;
   --accent-red: #ef4444;
   --accent-green: #22c55e;
+  --accent-purple: #a855f7;
 }
 
 body {
@@ -145,6 +146,7 @@ body {
 }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #48bb78; box-shadow: 0 0 10px #48bb78; }
 .status-dot.warn { background: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold); }
+.status-dot.cyan { background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan); }
 .status-dot.err { background: var(--accent-red); box-shadow: 0 0 10px var(--accent-red); }
 
 /* ── Grids & Cards ── */
@@ -162,14 +164,14 @@ body {
 .stat-value small { font-size: 0.5em; color: var(--slate-warm); margin-left: 4px; }
 .stat-meta { font-size: 11px; font-weight: 300; color: var(--slate-light); margin-top: 6px; }
 
-.card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
 .card-head h3 { font-size: 15px; font-weight: 500; color: var(--ivory); }
 
 /* ── Tables & Controls ── */
 .table-wrap { width: 100%; overflow-x: auto; }
 .portal-table { width: 100%; border-collapse: collapse; }
 .portal-table th { text-align: left; color: var(--slate-warm); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; font-weight: 600; padding: 14px 10px; border-bottom: 1px solid var(--panel-border); }
-.portal-table td { padding: 14px 10px; border-top: 1px solid var(--panel-border); font-size: 11px; color: var(--ivory-muted); }
+.portal-table td { padding: 14px 10px; border-top: 1px solid var(--panel-border); font-size: 11px; color: var(--ivory-muted); vertical-align: middle; }
 .portal-table tr:hover td { background: rgba(176,184,196,0.02); }
 
 .btn-action {
@@ -179,6 +181,8 @@ body {
 }
 .btn-action:hover { background: rgba(176,184,196,0.1); border-color: var(--silver); }
 .btn-action.gold { color: var(--accent-gold); border-color: rgba(212,175,55,0.3); }
+.btn-action.cyan { color: var(--accent-cyan); border-color: rgba(56,189,248,0.3); }
+.btn-action.green { color: var(--accent-green); border-color: rgba(34,197,94,0.3); }
 .btn-action.red { color: var(--accent-red); border-color: rgba(239,68,68,0.3); }
 
 /* Form Fields */
@@ -193,14 +197,122 @@ body {
 .field.full { grid-column: 1 / -1; }
 
 /* Filter & Search Bar */
-.search-bar {
-  display: flex; gap: 12px; align-items: center; margin-bottom: 18px;
-}
+.search-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
 .search-bar input {
-  flex: 1; padding: 10px 16px; border-radius: 100px; border: 1px solid var(--panel-border);
+  flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 100px; border: 1px solid var(--panel-border);
   background: rgba(15,17,21,0.5); color: var(--ivory); font-size: 11px; outline: none;
 }
 .search-bar input:focus { border-color: var(--silver); }
+
+/* ── Ticket Chart & Analytics Container ── */
+.ticket-chart-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+.chart-box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+}
+.chart-svg {
+  transform: rotate(-90deg);
+  overflow: visible;
+  filter: drop-shadow(0 0 16px rgba(0,0,0,0.5));
+}
+.chart-donut-segment {
+  fill: none;
+  stroke-width: 22;
+  transition: stroke-dasharray 1s var(--silk-ease), stroke 0.3s ease;
+  cursor: pointer;
+}
+.chart-donut-segment:hover {
+  filter: brightness(1.25);
+  stroke-width: 24;
+}
+.chart-center-text {
+  position: absolute;
+  text-align: center;
+  pointer-events: none;
+}
+.chart-center-text strong {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1;
+}
+.chart-center-text span {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--slate-warm);
+}
+
+.chart-legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.legend-card {
+  padding: 16px 18px;
+  background: rgba(15, 17, 21, 0.4);
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.legend-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.legend-card h4 {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--slate-warm);
+  margin-bottom: 2px;
+}
+.legend-val {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--ivory);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.legend-pct {
+  font-size: 11px;
+  color: var(--slate-light);
+  font-weight: 400;
+}
+
+/* Engineer Badge */
+.eng-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(42, 46, 53, 0.8);
+  border: 1px solid rgba(156, 163, 175, 0.15);
+  border-radius: 100px;
+  font-size: 10px;
+  color: var(--ivory);
+}
+.eng-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
 
 /* Toast */
 .toast-msg {
@@ -218,7 +330,7 @@ body {
 }
 .admin-modal.open { display: grid; }
 .modal-content {
-  width: min(650px, 100%); background: var(--base-mid); border: 1px solid var(--panel-border);
+  width: min(680px, 100%); background: var(--base-mid); border: 1px solid var(--panel-border);
   border-radius: 28px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;
 }
 
@@ -229,6 +341,8 @@ body {
   .workspace { padding: 24px 20px; }
   .stats-4 { grid-template-columns: repeat(2, 1fr); }
   .two-col, .three-col { grid-template-columns: 1fr; }
+  .ticket-chart-container { grid-template-columns: 1fr; }
+  .chart-legend-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -295,6 +409,46 @@ body {
   </div>
 </div>
 
+<!-- ═══ MODAL FOR TICKET DISPATCH / RESOLVE ═══ -->
+<div class="admin-modal" id="ticketModal">
+  <div class="modal-content">
+    <div class="card-head">
+      <h3 id="modalTicketTitle">Manage NOC Support Ticket</h3>
+      <button class="btn-action" onclick="closeTicketModal()">✕ Close</button>
+    </div>
+    <input type="hidden" id="tktModalCustId">
+    <input type="hidden" id="tktModalId">
+    <div class="field-grid">
+      <div class="field"><label>Subscriber Account</label><input id="tktModalSubscriber" disabled></div>
+      <div class="field"><label>Ticket Reference</label><input id="tktModalRef" disabled></div>
+      <div class="field full"><label>Subject / Problem Statement</label><input id="tktModalSubject"></div>
+      <div class="field"><label>Ticket Lifecycle Status</label>
+        <select id="tktModalStatus">
+          <option value="In NOC Queue">In NOC Queue</option>
+          <option value="Investigating">Investigating / Pending</option>
+          <option value="Resolved">Resolved & Cleared</option>
+        </select>
+      </div>
+      <div class="field"><label>Attending NOC Engineer</label>
+        <select id="tktModalEngineer">
+          <option value="NOC Engineer 01 (You)">NOC Engineer 01 (You)</option>
+          <option value="Alex Chen (Lead)">Alex Chen (Lead)</option>
+          <option value="Sarah Jenkins (Core)">Sarah Jenkins (Core)</option>
+          <option value="Priya Sharma (Optical)">Priya Sharma (Optical)</option>
+          <option value="Liam Vance (Transit)">Liam Vance (Transit)</option>
+        </select>
+      </div>
+      <div class="field full"><label>Resolution / Clearing Notes</label>
+        <textarea id="tktModalNotes" rows="3" placeholder="State findings, optical loop tests, BGP route recalculation or CPE reconfiguration..."></textarea>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end;">
+      <button class="btn-action" onclick="closeTicketModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveTicketChanges()">Commit NOC Update</button>
+    </div>
+  </div>
+</div>
+
 <div class="shell">
   <!-- ═══ ADMIN SIDEBAR ═══ -->
   <aside class="sidebar" id="sidebar">
@@ -332,7 +486,7 @@ body {
   <main class="workspace">
     <header class="topbar">
       <div>
-        <div class="eyebrow">Neo Broadband Network Operations Center · NOC Admin v3.4</div>
+        <div class="eyebrow">Neo Broadband Network Operations Center · NOC Admin v3.5</div>
         <h1 id="pageTitle">Network Overview & <strong>Subscribers Cloud</strong></h1>
       </div>
       <div class="top-actions">
@@ -584,26 +738,118 @@ body {
       </div>
     </section>
 
-    <!-- ── 6. NOC PRIORITY SUPPORT TICKETS ── -->
+    <!-- ── 6. NOC PRIORITY SUPPORT TICKETS & PIE CHART ── -->
     <section class="page" id="adminTickets">
       <div class="portal-hero">
         <div class="eyebrow">Priority Engineering Desk</div>
-        <h2>Active NOC Support Queue & <strong>Escalations</strong></h2>
+        <h2>Active NOC Support Queue & <strong>Issue Resolution Matrix</strong></h2>
+        <p>Live operational ticketing telemetry breakdown, engineer assignment logs, and optical fiber loop resolution auditing.</p>
       </div>
 
+      <!-- Live Pie / Donut Chart Card -->
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="card-head">
+          <div>
+            <div class="card-label">NOC Resolution Telemetry</div>
+            <h3>Ticket Volume & Distribution Breakdown</h3>
+          </div>
+          <button class="btn-action cyan" onclick="syncAdminData(true)">Live Refresh Telemetry</button>
+        </div>
+
+        <div class="ticket-chart-container">
+          <!-- SVG Interactive Donut Chart -->
+          <div class="chart-box">
+            <svg class="chart-svg" width="200" height="200" viewBox="0 0 200 200">
+              <!-- Background Circle Track -->
+              <circle cx="100" cy="100" r="72" stroke="rgba(156,163,175,0.08)" stroke-width="22" fill="none"></circle>
+              <!-- Dynamic Segments -->
+              <circle id="pieSegmentResolved" class="chart-donut-segment" cx="100" cy="100" r="72" stroke="#22c55e" stroke-dasharray="0 452.4" stroke-dashoffset="0"></circle>
+              <circle id="pieSegmentPending" class="chart-donut-segment" cx="100" cy="100" r="72" stroke="#38bdf8" stroke-dasharray="0 452.4" stroke-dashoffset="0"></circle>
+              <circle id="pieSegmentQueue" class="chart-donut-segment" cx="100" cy="100" r="72" stroke="#d4af37" stroke-dasharray="0 452.4" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="chart-center-text">
+              <strong id="chartTotalCount">0</strong>
+              <span>Total Issues</span>
+            </div>
+          </div>
+
+          <!-- Legend & Breakdown Metrics -->
+          <div class="chart-legend-grid">
+            <div class="legend-card" style="border-left: 3px solid #d4af37;">
+              <div class="legend-indicator" style="background:#d4af37;box-shadow: 0 0 10px rgba(212,175,55,0.4);"></div>
+              <div>
+                <h4>In NOC Queue</h4>
+                <div class="legend-val">
+                  <span id="legendQueueCount">0</span>
+                  <span class="legend-pct" id="legendQueuePct">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="legend-card" style="border-left: 3px solid #38bdf8;">
+              <div class="legend-indicator" style="background:#38bdf8;box-shadow: 0 0 10px rgba(56,189,248,0.4);"></div>
+              <div>
+                <h4>Investigating / Pending</h4>
+                <div class="legend-val">
+                  <span id="legendPendingCount">0</span>
+                  <span class="legend-pct" id="legendPendingPct">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="legend-card" style="border-left: 3px solid #22c55e;">
+              <div class="legend-indicator" style="background:#22c55e;box-shadow: 0 0 10px rgba(34,197,94,0.4);"></div>
+              <div>
+                <h4>Resolved & Cleared</h4>
+                <div class="legend-val">
+                  <span id="legendResolvedCount">0</span>
+                  <span class="legend-pct" id="legendResolvedPct">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="legend-card" style="border-left: 3px solid #a855f7;">
+              <div class="legend-indicator" style="background:#a855f7;box-shadow: 0 0 10px rgba(168,85,247,0.4);"></div>
+              <div>
+                <h4>NOC Resolution Rate</h4>
+                <div class="legend-val">
+                  <span id="legendSuccessRate">100%</span>
+                  <span class="legend-pct">Efficiency</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tickets Detailed Queue -->
       <div class="card">
-        <div class="card-head"><h3>Subscriber Help Desk Queue</h3></div>
+        <div class="card-head">
+          <h3>Subscriber Help Desk & NOC Action Log</h3>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="btn-action" onclick="filterTicketsByStatus('ALL')">Show All</button>
+            <button class="btn-action gold" onclick="filterTicketsByStatus('In NOC Queue')">Queue Only</button>
+            <button class="btn-action cyan" onclick="filterTicketsByStatus('Investigating')">Investigating</button>
+            <button class="btn-action green" onclick="filterTicketsByStatus('Resolved')">Resolved</button>
+          </div>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" id="tktSearchInput" placeholder="Filter by Ticket ID, Subscriber, Subject, or Assigned Engineer..." onkeyup="filterTicketsTable()">
+        </div>
+
         <div class="table-wrap">
           <table class="portal-table" id="adminTicketsTable">
             <thead>
               <tr>
-                <th>Ticket ID</th>
-                <th>Subscriber ID</th>
-                <th>Subscriber Name</th>
+                <th>Ticket Ref</th>
+                <th>Subscriber ID & Name</th>
                 <th>Subject / Query</th>
                 <th>Created</th>
+                <th>Attended By</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Resolved / Cleared By</th>
+                <th>NOC Dispatch Actions</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -646,7 +892,18 @@ const defaultStore = {
       { id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Unpaid" },
       { id: "INV-NEO-2026-07", cycle: "July 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" }
     ],
-    tickets: [{ id: "TKT-8841", title: "Static IP Routing Configuration", status: "Resolved", date: "02 Aug 2026" }]
+    tickets: [
+      { 
+        id: "TKT-8841", 
+        title: "Static IP Routing Configuration", 
+        status: "Resolved", 
+        date: "02 Aug 2026", 
+        attendedBy: "Alex Chen (Lead)", 
+        resolvedBy: "Alex Chen (Lead)",
+        resolvedDate: "02 Aug 2026 14:20 AEST",
+        notes: "Static IPv4 103.24.18.92 allocated and BGP route propagated to SYD-01." 
+      }
+    ]
   },
   "NEO-11223": {
     name: "Sarah Connor",
@@ -666,7 +923,18 @@ const defaultStore = {
     trafficWeekly: [120, 150, 90, 110, 140, 180, 160],
     monthlyTrend: [800, 820, 790, 850, 910, 880, 850, 0, 0, 0, 0, 0],
     invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Ultra", amount: "A$99.00", status: "Paid" }],
-    tickets: []
+    tickets: [
+      {
+        id: "TKT-7120",
+        title: "NTD Optical Power Verification",
+        status: "Resolved",
+        date: "14 Aug 2026",
+        attendedBy: "Priya Sharma (Optical)",
+        resolvedBy: "Priya Sharma (Optical)",
+        resolvedDate: "14 Aug 2026 11:05 AEST",
+        notes: "NTD optical levels validated at -17.8 dBm on Melbourne NextDC ring."
+      }
+    ]
   },
   "NEO-33445": {
     name: "Acme Corp",
@@ -686,7 +954,18 @@ const defaultStore = {
     trafficWeekly: [400, 450, 420, 480, 500, 100, 80],
     monthlyTrend: [1800, 1950, 2050, 2200, 2150, 2300, 2100, 0, 0, 0, 0, 0],
     invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Business 1000/400", amount: "A$145.00", status: "Unpaid" }],
-    tickets: [{ id: "TKT-9922", title: "BGP Routing Query", status: "In NOC Queue", date: "21 Aug 2026" }]
+    tickets: [
+      { 
+        id: "TKT-9922", 
+        title: "BGP Multi-Homing Routing Query", 
+        status: "Investigating", 
+        date: "21 Aug 2026", 
+        attendedBy: "Sarah Jenkins (Core)", 
+        resolvedBy: "— (In Progress)",
+        resolvedDate: "Pending verification",
+        notes: "Testing redundant peering transit path via Equinix SY4." 
+      }
+    ]
   },
   "NEO-55667": {
     name: "David Miller",
@@ -706,7 +985,18 @@ const defaultStore = {
     trafficWeekly: [5, 8, 6, 4, 7, 10, 5],
     monthlyTrend: [40, 45, 38, 50, 42, 48, 45, 0, 0, 0, 0, 0],
     invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Basic", amount: "A$60.00", status: "Paid" }],
-    tickets: []
+    tickets: [
+      {
+        id: "TKT-6014",
+        title: "Wi-Fi 6 CPE Beacon Diagnostic",
+        status: "In NOC Queue",
+        date: "28 Aug 2026",
+        attendedBy: "NOC Engineer 01 (You)",
+        resolvedBy: "— (In Queue)",
+        resolvedDate: "Pending Assignment",
+        notes: "Customer reported occasional 5GHz channel interference."
+      }
+    ]
   },
   "NEO-77889": {
     name: "Global Tech",
@@ -726,7 +1016,91 @@ const defaultStore = {
     trafficWeekly: [600, 650, 620, 680, 700, 200, 150],
     monthlyTrend: [3100, 3200, 3400, 3350, 3600, 3550, 3500, 0, 0, 0, 0, 0],
     invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Enterprise 500", amount: "A$469.00", status: "Paid" }],
-    tickets: []
+    tickets: [
+      {
+        id: "TKT-5510",
+        title: "VLAN Trunking Allocation (VLAN 402)",
+        status: "Resolved",
+        date: "10 Aug 2026",
+        attendedBy: "Liam Vance (Transit)",
+        resolvedBy: "Liam Vance (Transit)",
+        resolvedDate: "10 Aug 2026 16:45 AEST",
+        notes: "Committed 802.1Q tagged packet header provisioning on switch MEL-COR-02."
+      }
+    ]
+  },
+  /* ═══ EXTRA DEMO ACCOUNTS ═══ */
+  "NEO-44912": {
+    name: "Marcus Vance",
+    email: "marcus.vance@auroradynamics.com.au",
+    pass: "demo2026",
+    phone: "+61 418 333 444",
+    address: "88 Eagle St, Brisbane QLD 4000",
+    planName: "Thunderbolt Plan",
+    planSpeed: "2000 Mbps",
+    upSpeed: "500 Mbps",
+    downSpeed: "2000 Mbps",
+    balance: "A$210.00",
+    dueDate: "25 September 2026",
+    ipAddress: "103.24.25.77",
+    ntdId: "NTD-AU-449120-X",
+    currentUsageGB: 2840,
+    trafficWeekly: [320, 410, 380, 490, 520, 480, 240],
+    monthlyTrend: [2100, 2300, 2500, 2700, 2650, 2900, 2840, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Thunderbolt (2000/500)", amount: "A$210.00", status: "Unpaid" }],
+    tickets: [
+      {
+        id: "TKT-3390",
+        title: "2.5G Multi-Gig WAN Port Speed Negotiation",
+        status: "In NOC Queue",
+        date: "27 Aug 2026",
+        attendedBy: "NOC Engineer 01 (You)",
+        resolvedBy: "— (In Queue)",
+        resolvedDate: "Pending Assignment",
+        notes: "Customer requesting 2.5GBase-T link negotiation confirmation on UniFi UDM Pro."
+      },
+      {
+        id: "TKT-3120",
+        title: "Reverse DNS (rDNS) PTR Record Delegation",
+        status: "Resolved",
+        date: "05 Aug 2026",
+        attendedBy: "Alex Chen (Lead)",
+        resolvedBy: "Alex Chen (Lead)",
+        resolvedDate: "05 Aug 2026 15:30 AEST",
+        notes: "PTR record 103.24.25.77 set to gateway.auroradynamics.com.au."
+      }
+    ]
+  },
+  "NEO-66210": {
+    name: "Elena Rostova",
+    email: "elena.r@synapsearch.io",
+    pass: "demo2026",
+    phone: "+61 422 990 881",
+    address: "Level 8, 161 Collins St, Melbourne VIC 3000",
+    planName: "Pro + Plan",
+    planSpeed: "500 Mbps",
+    upSpeed: "200 Mbps",
+    downSpeed: "500 Mbps",
+    balance: "A$0.00",
+    dueDate: "Account in good standing",
+    ipAddress: "103.24.26.19",
+    ntdId: "NTD-AU-662108-X",
+    currentUsageGB: 920,
+    trafficWeekly: [110, 140, 130, 150, 160, 120, 110],
+    monthlyTrend: [750, 800, 820, 890, 940, 960, 920, 0, 0, 0, 0, 0],
+    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Pro +", amount: "A$115.00", status: "Paid" }],
+    tickets: [
+      {
+        id: "TKT-4412",
+        title: "SIP Trunk VoIP Packet Latency Optimization",
+        status: "Investigating",
+        date: "26 Aug 2026",
+        attendedBy: "Sarah Jenkins (Core)",
+        resolvedBy: "— (In Progress)",
+        resolvedDate: "Under Testing",
+        notes: "DSCP EF (Expedited Forwarding) priority tags being verified through Melbourne core router."
+      }
+    ]
   }
 };
 
@@ -750,6 +1124,7 @@ const planMatrix = {
 };
 
 let subscriberStore = getStoredData();
+let currentTicketFilter = 'ALL';
 
 function getStoredData() {
   const saved = localStorage.getItem('neo_subscriber_db');
@@ -794,7 +1169,7 @@ const pageTitles = {
   adminBilling: 'Automated Tax Invoicing & <strong>Ledger Control</strong>',
   adminPlans: 'Speed Tier Inventory & <strong>Pricing Matrix</strong>',
   adminNodes: 'Australian Core POPs & <strong>Node Diagnostics</strong>',
-  adminTickets: 'Priority Engineering Desk & <strong>NOC Queue</strong>'
+  adminTickets: 'Priority Engineering Desk & <strong>NOC Issue Matrix</strong>'
 };
 
 document.querySelectorAll('.portal-nav button').forEach(btn => {
@@ -871,7 +1246,8 @@ function syncAdminData(showToast = false) {
   // Plan Inventory
   renderPlanInventory();
 
-  // Tickets Table
+  // Tickets Table & Pie Chart
+  renderTicketAnalyticsAndChart(allTickets);
   renderAdminTickets(allTickets);
 }
 
@@ -938,7 +1314,6 @@ function openEditCustomerModal(custId) {
   document.getElementById('editNtd').value = u.ntdId;
   document.getElementById('editAddress').value = u.address;
 
-  // Populate Plan selector
   const planSelect = document.getElementById('editPlanSelect');
   planSelect.innerHTML = Object.keys(planMatrix).map(pk => {
     const p = planMatrix[pk];
@@ -990,7 +1365,6 @@ function saveSubscriberChanges() {
   const planInfo = planMatrix[selectedPlanKey];
 
   if (!subscriberStore[custId]) {
-    // Creating brand new customer
     subscriberStore[custId] = {
       name: name,
       email: email,
@@ -1012,7 +1386,6 @@ function saveSubscriberChanges() {
       tickets: []
     };
   } else {
-    // Updating existing
     const u = subscriberStore[custId];
     u.name = name;
     u.email = email;
@@ -1183,27 +1556,133 @@ function renderPlanInventory() {
   }).join('');
 }
 
-// ── Support Tickets ──
-function renderAdminTickets(allTickets) {
-  const tbody = document.querySelector('#adminTicketsTable tbody');
-  if (allTickets.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--slate-warm);padding:24px;">No active support tickets. NOC queue is clean.</td></tr>`;
+// ── NOC Ticketing & Dynamic Pie / Donut Chart ──
+function renderTicketAnalyticsAndChart(allTickets) {
+  let resolvedCount = 0;
+  let pendingCount = 0;
+  let queueCount = 0;
+
+  allTickets.forEach(t => {
+    if (t.status === 'Resolved') resolvedCount++;
+    else if (t.status === 'Investigating' || t.status === 'Pending') pendingCount++;
+    else queueCount++;
+  });
+
+  const total = allTickets.length;
+  document.getElementById('chartTotalCount').textContent = total;
+
+  const resPct = total > 0 ? (resolvedCount / total) * 100 : 0;
+  const pendPct = total > 0 ? (pendingCount / total) * 100 : 0;
+  const qPct = total > 0 ? (queueCount / total) * 100 : 0;
+
+  document.getElementById('legendResolvedCount').textContent = resolvedCount;
+  document.getElementById('legendResolvedPct').textContent = `${resPct.toFixed(0)}%`;
+
+  document.getElementById('legendPendingCount').textContent = pendingCount;
+  document.getElementById('legendPendingPct').textContent = `${pendPct.toFixed(0)}%`;
+
+  document.getElementById('legendQueueCount').textContent = queueCount;
+  document.getElementById('legendQueuePct').textContent = `${qPct.toFixed(0)}%`;
+
+  const successEfficiency = total > 0 ? ((resolvedCount / total) * 100).toFixed(1) : '100.0';
+  document.getElementById('legendSuccessRate').textContent = `${successEfficiency}%`;
+
+  // SVG Circumference = 2 * PI * 72 ≈ 452.389
+  const circumference = 2 * Math.PI * 72;
+  const segResolved = document.getElementById('pieSegmentResolved');
+  const segPending = document.getElementById('pieSegmentPending');
+  const segQueue = document.getElementById('pieSegmentQueue');
+
+  if (total === 0) {
+    segResolved.setAttribute('stroke-dasharray', `0 ${circumference}`);
+    segPending.setAttribute('stroke-dasharray', `0 ${circumference}`);
+    segQueue.setAttribute('stroke-dasharray', `0 ${circumference}`);
     return;
   }
 
-  tbody.innerHTML = allTickets.map(t => {
+  const resDash = (resolvedCount / total) * circumference;
+  const pendDash = (pendingCount / total) * circumference;
+  const qDash = (queueCount / total) * circumference;
+
+  segResolved.setAttribute('stroke-dasharray', `${resDash} ${circumference}`);
+  segResolved.setAttribute('stroke-dashoffset', `0`);
+
+  segPending.setAttribute('stroke-dasharray', `${pendDash} ${circumference}`);
+  segPending.setAttribute('stroke-dashoffset', `-${resDash}`);
+
+  segQueue.setAttribute('stroke-dasharray', `${qDash} ${circumference}`);
+  segQueue.setAttribute('stroke-dashoffset', `-${resDash + pendDash}`);
+}
+
+function renderAdminTickets(allTickets) {
+  const tbody = document.querySelector('#adminTicketsTable tbody');
+  const searchTerm = (document.getElementById('tktSearchInput') ? document.getElementById('tktSearchInput').value : '').toLowerCase();
+
+  let filtered = allTickets;
+
+  if (currentTicketFilter !== 'ALL') {
+    filtered = filtered.filter(t => {
+      if (currentTicketFilter === 'Investigating') return t.status === 'Investigating' || t.status === 'Pending';
+      return t.status === currentTicketFilter;
+    });
+  }
+
+  if (searchTerm) {
+    filtered = filtered.filter(t => 
+      t.id.toLowerCase().includes(searchTerm) ||
+      t.custId.toLowerCase().includes(searchTerm) ||
+      t.custName.toLowerCase().includes(searchTerm) ||
+      t.title.toLowerCase().includes(searchTerm) ||
+      (t.attendedBy && t.attendedBy.toLowerCase().includes(searchTerm)) ||
+      (t.resolvedBy && t.resolvedBy.toLowerCase().includes(searchTerm))
+    );
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--slate-warm);padding:28px;">No tickets found matching the selected filter/search.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(t => {
+    const isResolved = t.status === 'Resolved';
+    const isInvestigating = t.status === 'Investigating' || t.status === 'Pending';
+    const statusColor = isResolved ? '#22c55e' : (isInvestigating ? '#38bdf8' : 'var(--accent-gold)');
+    const dotClass = isResolved ? '' : (isInvestigating ? 'cyan' : 'warn');
+
     return `
       <tr>
         <td><strong>${t.id}</strong></td>
-        <td>${t.custId}</td>
-        <td>${t.custName}</td>
-        <td>${t.title}</td>
-        <td>${t.date}</td>
-        <td><span class="status-pill" style="margin:0;color:${t.status === 'Resolved' ? '#48bb78' : 'var(--accent-gold)'};">${t.status}</span></td>
         <td>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-action" onclick="updateTicketStatus('${t.custId}', '${t.id}', 'Investigating')">Investigating</button>
-            <button class="btn-action gold" onclick="updateTicketStatus('${t.custId}', '${t.id}', 'Resolved')">Resolve</button>
+          <strong>${t.custName}</strong><br>
+          <small style="color:var(--slate-warm);">${t.custId}</small>
+        </td>
+        <td>
+          <div style="font-weight:500;color:var(--ivory);">${t.title}</div>
+          <small style="color:var(--slate-warm);">${t.notes || 'No supplementary technical notes'}</small>
+        </td>
+        <td>${t.date}</td>
+        <td>
+          <div class="eng-badge">
+            <span class="eng-dot"></span>
+            ${t.attendedBy || 'NOC Unassigned'}
+          </div>
+        </td>
+        <td>
+          <span class="status-pill" style="margin:0;color:${statusColor};border-color:rgba(156,163,175,0.15);">
+            <span class="status-dot ${dotClass}"></span>
+            ${t.status}
+          </span>
+        </td>
+        <td>
+          ${isResolved 
+            ? `<div style="color:#22c55e;font-weight:600;">✓ ${t.resolvedBy || 'NOC Specialist'}</div><small style="color:var(--slate-warm);">${t.resolvedDate || 'Cleared'}</small>` 
+            : `<span style="color:var(--slate-warm);font-style:italic;">Awaiting Clearance</span>`
+          }
+        </td>
+        <td>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn-action" onclick="openTicketModal('${t.custId}', '${t.id}')">Manage / Assign</button>
+            ${!isResolved ? `<button class="btn-action green" onclick="quickResolveTicket('${t.custId}', '${t.id}')">Quick Clear</button>` : ''}
           </div>
         </td>
       </tr>
@@ -1211,17 +1690,100 @@ function renderAdminTickets(allTickets) {
   }).join('');
 }
 
-function updateTicketStatus(custId, tktId, newStatus) {
+function filterTicketsByStatus(status) {
+  currentTicketFilter = status;
+  syncAdminData();
+  toast(`Filtered tickets by: ${status}`);
+}
+
+function filterTicketsTable() {
+  const allTickets = [];
+  Object.keys(subscriberStore).forEach(k => {
+    const u = subscriberStore[k];
+    if (u.tickets) {
+      u.tickets.forEach(tkt => {
+        allTickets.push({ ...tkt, custId: k, custName: u.name });
+      });
+    }
+  });
+  renderAdminTickets(allTickets);
+}
+
+// ── Ticket Modal Actions ──
+function openTicketModal(custId, tktId) {
   const u = subscriberStore[custId];
   if (!u || !u.tickets) return;
 
   const tkt = u.tickets.find(t => t.id === tktId);
-  if (tkt) {
-    tkt.status = newStatus;
-    persistStore();
-    syncAdminData();
-    toast(`Ticket ${tktId} updated to ${newStatus}`);
+  if (!tkt) return;
+
+  document.getElementById('modalTicketTitle').textContent = `NOC Ticket Dispatch (${tkt.id})`;
+  document.getElementById('tktModalCustId').value = custId;
+  document.getElementById('tktModalId').value = tkt.id;
+  document.getElementById('tktModalSubscriber').value = `${custId} — ${u.name}`;
+  document.getElementById('tktModalRef').value = tkt.id;
+  document.getElementById('tktModalSubject').value = tkt.title;
+  document.getElementById('tktModalStatus').value = tkt.status === 'Pending' ? 'Investigating' : tkt.status;
+  document.getElementById('tktModalEngineer').value = tkt.attendedBy || 'NOC Engineer 01 (You)';
+  document.getElementById('tktModalNotes').value = tkt.notes || '';
+
+  document.getElementById('ticketModal').classList.add('open');
+}
+
+function closeTicketModal() {
+  document.getElementById('ticketModal').classList.remove('open');
+}
+
+function saveTicketChanges() {
+  const custId = document.getElementById('tktModalCustId').value;
+  const tktId = document.getElementById('tktModalId').value;
+  const u = subscriberStore[custId];
+  if (!u || !u.tickets) return;
+
+  const tkt = u.tickets.find(t => t.id === tktId);
+  if (!tkt) return;
+
+  const newStatus = document.getElementById('tktModalStatus').value;
+  const newEngineer = document.getElementById('tktModalEngineer').value;
+  const newSubject = document.getElementById('tktModalSubject').value.trim();
+  const newNotes = document.getElementById('tktModalNotes').value.trim();
+
+  tkt.title = newSubject || tkt.title;
+  tkt.status = newStatus;
+  tkt.attendedBy = newEngineer;
+  tkt.notes = newNotes;
+
+  if (newStatus === 'Resolved') {
+    tkt.resolvedBy = newEngineer;
+    tkt.resolvedDate = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' AEST';
+  } else {
+    tkt.resolvedBy = '— (In Progress)';
+    tkt.resolvedDate = 'Pending';
   }
+
+  persistStore();
+  closeTicketModal();
+  syncAdminData();
+  toast(`Ticket ${tktId} successfully updated by ${newEngineer}.`);
+}
+
+function quickResolveTicket(custId, tktId) {
+  const u = subscriberStore[custId];
+  if (!u || !u.tickets) return;
+
+  const tkt = u.tickets.find(t => t.id === tktId);
+  if (!tkt) return;
+
+  const staff = 'NOC Engineer 01 (You)';
+  tkt.status = 'Resolved';
+  tkt.attendedBy = staff;
+  tkt.resolvedBy = staff;
+  tkt.resolvedDate = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' AEST';
+  tkt.notes = (tkt.notes ? tkt.notes + ' | ' : '') + 'Cleared via rapid NOC dispatch.';
+
+  persistStore();
+  syncAdminData();
+  toast(`Ticket ${tktId} marked Resolved by ${staff}`);
 }
 
 // ── NOC Batch Operations ──
@@ -1244,11 +1806,11 @@ function generateBulkCycleInvoices() {
 }
 
 function triggerNodeSync() {
-  toast('RADIUS BGP routing tables synced across Sydney & Melbourne NOCs.');
+  toast('RADIUS BGP routing tables synced across Sydney, Melbourne & Brisbane NOCs.');
 }
 
 function resetDatabaseToDefault() {
-  if (confirm("Reset subscriber store to default sample accounts?")) {
+  if (confirm("Reset subscriber store to default sample accounts and telemetry?")) {
     subscriberStore = JSON.parse(JSON.stringify(defaultStore));
     persistStore();
     syncAdminData();
