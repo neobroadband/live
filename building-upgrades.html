@@ -112,6 +112,9 @@
     .features-grid.single-row {
       grid-template-columns: repeat(4, 1fr) !important;
     }
+    .features-grid.five-steps {
+      grid-template-columns: repeat(5, 1fr) !important;
+    }
   }
   @media (max-width: 991px) {
     .features-grid {
@@ -193,6 +196,22 @@
   }
   .cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: #2b6cf6; background: #ffffff; }
   .cf-field textarea { resize: vertical; min-height: 80px; }
+  
+  /* ═══ Phone Input styling ═══ */
+  .phone-input-group {
+    display: flex; align-items: center; border: 1px solid #e0e2e7; border-radius: 8px;
+    background: #fafafb; transition: border-color 0.2s ease, background 0.2s ease; overflow: hidden;
+  }
+  .phone-input-group:focus-within { border-color: #2b6cf6; background: #ffffff; }
+  .phone-prefix {
+    display: flex; align-items: center; gap: 6px; padding: 11px 12px; font-size: 0.92rem;
+    background: #f0f1f3; border-right: 1px solid #e0e2e7; color: #454b57; user-select: none;
+  }
+  .phone-input-group input {
+    border: none !important; background: transparent !important; border-radius: 0 !important;
+    flex: 1; outline: none; margin: 0; padding: 11px 13px;
+  }
+
   .cf-submit {
     width: 100%; background: #1f2430; color: #fff; border: none; border-radius: 8px;
     padding: 13px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 6px;
@@ -230,10 +249,16 @@
         <label for="cfEmail">Email ID</label>
         <input type="email" id="cfEmail" name="Email" required placeholder="you@example.com">
       </div>
+      
+      <!-- Updated Phone Field with Flag and Code -->
       <div class="cf-field">
         <label for="cfPhone">Contact Number</label>
-        <input type="tel" id="cfPhone" name="Contact Number" required placeholder="+61 000 000 000">
+        <div class="phone-input-group">
+          <div class="phone-prefix">🇦🇺 +61</div>
+          <input type="tel" id="cfPhone" name="Contact Number" required placeholder="400 000 000">
+        </div>
       </div>
+
       <div class="cf-field">
         <label for="cfMessage">Building / Strata Details</label>
         <textarea id="cfMessage" name="Message" required placeholder="Provide building address, number of apartments, and your role (e.g., Strata Manager)..."></textarea>
@@ -389,12 +414,12 @@
       </div>
     </div>
 
-    <!-- ── THE UPGRADE JOURNEY (COMBINED INTO 4 STAGES) ── -->
+    <!-- ── THE UPGRADE JOURNEY (COMBINED INTO 5 STAGES) ── -->
     <div class="plan-category reveal">
       <h3 class="category-title">The Upgrade Journey</h3>
-      <p class="category-desc">A seamless 4-stage end-to-end framework handled entirely by our specialists.</p>
+      <p class="category-desc">A seamless 5-stage end-to-end framework handled entirely by our specialists.</p>
       
-      <div class="features-grid single-row">
+      <div class="features-grid five-steps">
         <div class="pricing-card">
           <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 1</div>
           <div class="pricing-tier">Building Eligibility Check</div>
@@ -419,7 +444,7 @@
           <p class="pricing-desc" style="font-size: 0.75rem;">With pre start engagement completed with the body corporate, fibre pathways are deployed across the entire building, supported by fast, well coordinated appointments for every apartment.</p>
         </div>
         <div class="pricing-card">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 4</div>
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 5</div>
           <div class="pricing-tier">Connection Ready</div>
           <p class="pricing-desc" style="font-size: 0.75rem;">A notification is sent to residents, prompting them to choose their preferred participating ISP and activate high speed fibre plans.</p>
         </div>
@@ -556,7 +581,10 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
 
+      // We append the +61 code manually to the form data submission since it's outside the actual input
       const formData = new FormData(form);
+      const originalPhone = formData.get('Contact Number');
+      formData.set('Contact Number', '+61 ' + originalPhone);
 
       fetch(form.action, {
         method: 'POST',
