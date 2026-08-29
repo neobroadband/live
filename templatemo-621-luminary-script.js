@@ -175,4 +175,30 @@ function updateFaqToggleLabel() {
   allExpanded = openCount === faqItems.length;
   faqToggleAll.textContent = allExpanded ? 'Collapse All' : 'Expand All';
 }
+// ── Auto-highlight current page in navigation ──
+(function highlightCurrentNav() {
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  const current = path.toLowerCase();
+
+  document.querySelectorAll('.nav-links a, .nav-utility a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http')) return;
+
+    const target = href.split('#')[0].split('/').pop().toLowerCase();
+    if (!target) return;
+
+    if (target === current) {
+      link.classList.add('active');
+      // if it's inside a dropdown, also light up the parent menu item
+      const parentDropdown = link.closest('.dropdown');
+      if (parentDropdown && !parentDropdown.contains(link.parentElement.closest('.nav-links > li > a'))) {
+        const parentLink = parentDropdown.querySelector(':scope > a');
+        if (parentLink) parentLink.classList.add('active');
+      }
+    } else {
+      link.classList.remove('active');
+    }
+  });
+})();
+
 
