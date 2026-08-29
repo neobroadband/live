@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -301,6 +302,55 @@
     border-color: #2b6cf6;
     background: rgba(255, 255, 255, 0.1);
   }
+
+  /* Phone field — fixed Australian flag + dial code prefix */
+  .cf-phone-group {
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .cf-phone-group:focus-within {
+    border-color: #2b6cf6;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .cf-phone-prefix {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.25);
+    flex: 0 0 auto;
+    user-select: none;
+  }
+  .cf-phone-prefix img {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+    display: block;
+  }
+  .cf-phone-prefix span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .cf-phone-group input {
+    border: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .cf-phone-group input:focus {
+    background: transparent !important;
+  }
   .cf-field textarea {
     resize: vertical;
     min-height: 80px;
@@ -447,7 +497,15 @@
           </div>
           <div class="cf-field">
             <label for="cfPhone">Contact Number</label>
-            <input type="tel" id="cfPhone" name="Contact Number" required placeholder="+61 000 000 000">
+            <div class="cf-phone-group">
+              <span class="cf-phone-prefix">
+                <img src="https://flagcdn.com/w40/au.png" srcset="https://flagcdn.com/w80/au.png 2x" alt="Australia">
+                <span>+61</span>
+              </span>
+              <input type="tel" id="cfPhone" name="Contact Number Local" required placeholder="000 000 000" inputmode="numeric" pattern="[0-9\s]{6,12}">
+            </div>
+            <!-- Full E.164-style number, combined via JS, is what actually gets submitted -->
+            <input type="hidden" id="cfPhoneFull" name="Contact Number" value="">
           </div>
           <div class="cf-field">
             <label for="cfAddress">Address</label>
@@ -536,8 +594,21 @@
 
     assignNewEnquiryNumber();
 
+    // Keep the hidden "Contact Number" field (what actually gets submitted)
+    // in sync with the fixed +61 prefix + whatever the user types locally.
+    const phoneLocal = document.getElementById('cfPhone');
+    const phoneFull = document.getElementById('cfPhoneFull');
+    function syncPhoneFull() {
+      const digits = phoneLocal.value.trim();
+      phoneFull.value = digits ? ('+61 ' + digits) : '';
+    }
+    if (phoneLocal && phoneFull) {
+      phoneLocal.addEventListener('input', syncPhoneFull);
+    }
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+      syncPhoneFull();
       status.className = 'cf-status';
       status.textContent = '';
       submitBtn.disabled = true;
