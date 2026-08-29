@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,12 @@
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
+  /* Current-page highlight (beats the !important white above) */
+  .nav-links > li > a.active,
+  .mobile-menu-link.active {
+    color: #2b6cf6 !important;
+  }
+
   
   /* Full-page persistent grid background with cursor spotlight */
   .page-grid-overlay {
@@ -517,6 +524,8 @@
 </main>
 
 <script>
+;(function(){
+
   // ── Smooth Scroll ──
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
@@ -535,11 +544,11 @@
   });
 
   // ── Reveal on scroll ──
-  const reveals = document.querySelectorAll('.reveal');
+  const revealsInline = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-  reveals.forEach(el => io.observe(el));
+  revealsInline.forEach(el => io.observe(el));
 
   // ── Nav scroll state ──
   const topNav = document.getElementById('topNav');
@@ -580,6 +589,26 @@
     }
     renderGridLight();
   })();
+
+})();
+</script>
+<script src="templatemo-621-luminary-script.js"></script>
+<script>
+/* Auto-highlight current page in navigation */
+document.addEventListener('DOMContentLoaded', function () {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var target = href.split('/').pop().split('#')[0];
+    if (target && target === path) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+});
 </script>
 </body>
 </html>
