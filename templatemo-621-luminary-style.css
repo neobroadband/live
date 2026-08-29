@@ -896,23 +896,21 @@ body.menu-open .top-nav { background: rgba(15,17,21,0.95); backdrop-filter: blur
   text-transform: none;
   letter-spacing: normal;
 }
-/* ── Current page highlight ── */
+/* ═══════════════════════════════════════════════════
+   CURRENT ACTIVE PAGE HIGHLIGHTING
+   ═══════════════════════════════════════════════════ */
 .nav-links > li > a.active,
+.nav-links li.dropdown.active > a,
+.mobile-menu-link.active,
 .nav-utility a.active {
   color: #2b6cf6 !important;
-  font-weight: 700 !important;
-}
-.nav-links > li > a.active::after {
-  opacity: 0.9;
-  transform: translateX(-50%) rotate(45deg) translateY(0);
-  border-color: #2b6cf6;
-}
-.nav-links > li > a.active::before {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 2px;
-  background: #2b6cf6;
-  border-radius: 2px;
+  text-shadow: 0 0 12px rgba(43, 108, 246, 0.4) !important;
 }
 
+/* Active indicator diamond/dot below the nav item */
+.nav-links > li > a.active::after,
+.nav-links li.dropdown.active > a::after {
+  opacity: 1 !important;
+  border-color: #2b6cf6 !important;
+  transform: translateX(-50%) rotate(45deg) translateY(0) !important;
+}
