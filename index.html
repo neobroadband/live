@@ -1406,8 +1406,10 @@
     return false;
   }
 
-  // ─── Free OpenStreetMap (Nominatim) Live Autocomplete (Debounced) ───
+  // ─── Geoapify Geocoding & Address Autocomplete API ───
   let searchDebounceTimer;
+  // TODO: Insert your Geoapify API Key here. Get one at https://myprojects.geoapify.com/
+  const GEOAPIFY_API_KEY = 'c1fd8278eea44af5921cc68be13709f0';
 
   regionInput.addEventListener('input', function() {
     const val = this.value.trim();
@@ -1425,53 +1427,39 @@
 
     // Debounce network calls to keep it snappy and responsive
     searchDebounceTimer = setTimeout(() => {
-      fetchOpenStreetMapSuggestions(val);
+      fetchGeoapifySuggestions(val);
     }, 220);
   });
 
-  async function fetchOpenStreetMapSuggestions(query) {
+  async function fetchGeoapifySuggestions(query) {
     try {
-      // Query OpenStreetMap Nominatim for better street-level address details directly in Australia
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=au&format=json&addressdetails=1&limit=5`;
+      // Query Geoapify Address Autocomplete API, filtered strictly to Australia (au)
+      const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&filter=countrycode:au&format=json&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
       const response = await fetch(url);
+      
+      if (!response.ok) {
+          console.warn('Geoapify API returned an error. Did you add your API Key?');
+          return;
+      }
+      
       const data = await response.json();
 
-      if (data && data.length > 0) {
+      if (data && data.results && data.results.length > 0) {
         dropdownHeaderLabel.textContent = 'Suggested Locations (Australia)';
         clearHistoryBtn.style.display = 'none';
         historyItemsList.innerHTML = '';
 
-        data.forEach(item => {
-          const p = item.address || {};
-          
-          // Extract structural street address components
-          const houseNumber = p.house_number || '';
-          const road = p.road || '';
-          const suburb = p.suburb || p.city || p.town || p.village || '';
-          const state = p.state || '';
-          const postcode = p.postcode || '';
+        data.results.forEach(item => {
+          // Use Geoapify's beautifully pre-formatted address line features
+          const addressLine1 = item.address_line1 || item.street || item.name || '';
+          const addressLine2 = item.address_line2 || `${item.city || item.suburb || ''} ${item.state_code || item.state || ''} ${item.postcode || ''}`.trim();
 
-          // Construct exact Address Line 1
-          let streetAddress = '';
-          if (road) {
-            streetAddress = houseNumber ? `${houseNumber} ${road}` : road;
-          } else {
-            streetAddress = item.name || '';
-          }
-
-          // Format clean Australian address line
-          const locationParts = [];
-          if (streetAddress) locationParts.push(streetAddress);
-          if (suburb && suburb !== streetAddress) locationParts.push(suburb);
-          if (state) locationParts.push(state);
-          if (postcode) locationParts.push(postcode);
-
-          const fullAddress = locationParts.join(', ');
+          const fullAddress = item.formatted || `${addressLine1}, ${addressLine2}`.trim();
 
           const li = document.createElement('li');
           li.className = 'history-item';
           li.innerHTML = `
-            <span class="loc-text">📍 <strong>${streetAddress || suburb}</strong>${suburb && suburb !== streetAddress ? ', ' + suburb : ''} ${state} ${postcode}</span>
+            <span class="loc-text">📍 <strong>${addressLine1}</strong>${addressLine2 ? ', ' + addressLine2 : ''}</span>
             <span style="font-size:10px; color:#2b6cf6; flex-shrink:0;">Select &rarr;</span>
           `;
           
@@ -1485,12 +1473,16 @@
           historyItemsList.appendChild(li);
         });
 
-        searchHistoryDropdown.classList.add('active');
+        if (historyItemsList.children.length > 0) {
+            searchHistoryDropdown.classList.add('active');
+        } else {
+            searchHistoryDropdown.classList.remove('active');
+        }
       } else {
         searchHistoryDropdown.classList.remove('active');
       }
     } catch (err) {
-      console.warn('Map fetch error:', err);
+      console.warn('Geoapify Map fetch error:', err);
     }
   }
 
