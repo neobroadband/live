@@ -1,14 +1,23 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Building Upgrades — Neo Broadband</title>
+<title>Neo Broadband — For Developers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
+  /* Current-page highlight (beats the !important white above) */
+  .nav-links > li > a.active,
+  .mobile-menu-link.active {
+    color: #2b6cf6 !important;
+  }
+
   /* ═══ Hero & Navigation Visibility Improvements ═══ */
   .nav-links > li > a {
     color: #ffffff !important;
@@ -36,6 +45,7 @@
     padding: 0;
   }
 
+  /* Admin & Customer Login identical in size, font, color, and hover */
   .nav-utility a {
     color: #ffffff !important;
     font-size: 13px !important;
@@ -102,67 +112,22 @@
   .nav-brand { display: flex; align-items: center; text-decoration: none; }
   .nav-logo { max-height: 100px; width: auto; object-fit: contain; }
 
-  /* Responsive grid adjustment for catalog layout - Optimized for single rows */
+  /* Responsive grid adjustment for catalog layout */
   .features-grid {
     display: grid;
-    gap: 16px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
   }
-  @media (min-width: 992px) {
-    .features-grid.single-row {
-      grid-template-columns: repeat(4, 1fr) !important;
-    }
-    .features-grid.five-steps {
-      grid-template-columns: repeat(5, 1fr) !important;
-    }
-  }
-  @media (max-width: 991px) {
-    .features-grid {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    }
-  }
-
-  /* Reduced Spacing Adjustments */
   .plan-category {
-    margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--panel-border);
+    margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--panel-border);
   }
-  .plan-category:first-of-type { margin-top: 25px; border-top: none; }
+  .plan-category:first-of-type { margin-top: 40px; border-top: none; }
   .category-title {
-    font-size: 1.8rem; font-weight: 300; letter-spacing: -0.02em; color: var(--ivory, #ffffff); margin-bottom: 6px;
+    font-size: 2rem; font-weight: 300; letter-spacing: -0.02em; color: var(--ivory, #ffffff); margin-bottom: 8px;
   }
   .category-desc {
-    font-size: 0.95rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 20px;
-  }
-  .section { padding: 80px 0; }
-
-  /* Adjusted pricing card padding for tighter fit */
-  .pricing-card {
-    padding: 24px 20px !important;
-  }
-
-  /* FAQ Accordion / Custom Styles */
-  .faq-card {
-    background: rgba(25, 30, 40, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: left;
-    transition: border-color 0.3s ease;
-  }
-  .faq-card:hover {
-    border-color: rgba(43, 108, 246, 0.4);
-  }
-  .faq-question {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 8px;
-  }
-  .faq-answer {
-    font-size: 0.85rem;
-    color: #9a9fa8;
-    line-height: 1.5;
-    margin: 0;
+    font-size: 1rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 30px;
   }
 
   /* ═══ Popup Contact Form ═══ */
@@ -196,22 +161,6 @@
   }
   .cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: #2b6cf6; background: #ffffff; }
   .cf-field textarea { resize: vertical; min-height: 80px; }
-  
-  /* ═══ Phone Input styling ═══ */
-  .phone-input-group {
-    display: flex; align-items: center; border: 1px solid #e0e2e7; border-radius: 8px;
-    background: #fafafb; transition: border-color 0.2s ease, background 0.2s ease; overflow: hidden;
-  }
-  .phone-input-group:focus-within { border-color: #2b6cf6; background: #ffffff; }
-  .phone-prefix {
-    display: flex; align-items: center; gap: 6px; padding: 11px 12px; font-size: 0.92rem;
-    background: #f0f1f3; border-right: 1px solid #e0e2e7; color: #454b57; user-select: none;
-  }
-  .phone-input-group input {
-    border: none !important; background: transparent !important; border-radius: 0 !important;
-    flex: 1; outline: none; margin: 0; padding: 11px 13px;
-  }
-
   .cf-submit {
     width: 100%; background: #1f2430; color: #fff; border: none; border-radius: 8px;
     padding: 13px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 6px;
@@ -230,10 +179,10 @@
 <div class="cf-overlay" id="cfOverlay">
   <div class="cf-modal">
     <button class="cf-close" id="cfClose" aria-label="Close contact form">&times;</button>
-    <h3 class="cf-title">Building Upgrade Enquiry</h3>
-    <p class="cf-subtitle">Submit your apartment complex details to initiate a free eligibility check.</p>
-    <form id="cfForm" action="https://formsubmit.co/abiramkpz007@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="New Building Upgrade Enquiry - NEO BROADBAND">
+    <h3 class="cf-title">Developer Enquiry</h3>
+    <p class="cf-subtitle">Leave your details and we'll confirm feasibility for your site.</p>
+    <form id="cfForm" action="https://formsubmit.co/enquiry@neobroadband.com.au" method="POST">
+      <input type="hidden" name="_subject" value="New Developer Enquiry - Neo Broadband">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="Enquiry Number" id="cfEnquiryNumber" value="">
@@ -249,23 +198,17 @@
         <label for="cfEmail">Email ID</label>
         <input type="email" id="cfEmail" name="Email" required placeholder="you@example.com">
       </div>
-      
-      <!-- Updated Phone Field with Flag and Code -->
       <div class="cf-field">
         <label for="cfPhone">Contact Number</label>
-        <div class="phone-input-group">
-          <div class="phone-prefix">🇦🇺 +61</div>
-          <input type="tel" id="cfPhone" name="Contact Number" required placeholder="400 000 000">
-        </div>
+        <input type="tel" id="cfPhone" name="Contact Number" required placeholder="+61 000 000 000">
       </div>
-
       <div class="cf-field">
-        <label for="cfMessage">Building / Strata Details</label>
-        <textarea id="cfMessage" name="Message" required placeholder="Provide building address, number of apartments, and your role (e.g., Strata Manager)..."></textarea>
+        <label for="cfMessage">Development Details</label>
+        <textarea id="cfMessage" name="Message" required placeholder="Tell us about your upcoming project..."></textarea>
       </div>
-      <button type="submit" class="cf-submit" id="cfSubmitBtn">Request Eligibility Check</button>
+      <button type="submit" class="cf-submit" id="cfSubmitBtn">Submit Enquiry</button>
       <p class="cf-status" id="cfStatus"></p>
-      <p class="cf-note">We respect your privacy and will never share your information.</p>
+      <p class="cf-note">We'll never share your information with anyone else.</p>
     </form>
   </div>
 </div>
@@ -288,8 +231,8 @@
       <li><a href="admin-portal.html">Admin</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
-    
-    <!-- Main Links: Broadband Plans dropdown switches to the specific plan category -->
+
+    <!-- Main Links: Broadband Plans dropdown links back to the specific plan category on the homepage -->
     <ul class="nav-links">
       <li class="dropdown">
         <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
@@ -319,11 +262,15 @@
   <div class="mobile-menu-inner">
     <div class="mobile-menu-links">
       <a href="index.html" class="mobile-menu-link" data-index="01">Home</a>
-      <a href="rsps.html" class="mobile-menu-link" data-index="02">RSPs</a>
-      <a href="developers.html" class="mobile-menu-link" data-index="03">Developers</a>
-      <a href="building-upgrades.html" class="mobile-menu-link active" data-index="04">Upgrades</a>
-      <a href="about.html" class="mobile-menu-link" data-index="05">About Us</a>
-      <a href="contact.html" class="mobile-menu-link" data-index="06">Contact</a>
+      <a href="index.html#residential-plans" class="mobile-menu-link" data-index="02">Residential Plans</a>
+      <a href="index.html#business-plans" class="mobile-menu-link" data-index="03">Business Plans</a>
+      <a href="index.html#enterprise-ethernet" class="mobile-menu-link" data-index="04">Enterprise Ethernet</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="05">Admin Login</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="06">Customer Login</a>
+      <a href="developers.html" class="mobile-menu-link" data-index="07">Developers</a>
+      <a href="building-upgrades.html" class="mobile-menu-link" data-index="09">Upgrades</a>
+      <a href="about.html" class="mobile-menu-link" data-index="10">About Us</a>
+      <a href="contact.html" class="mobile-menu-link" data-index="11">Contact</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="#">Privacy</a>
@@ -336,141 +283,103 @@
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
-    <div class="hero-badge">
-      <div class="hero-badge-dot"></div>
-      <span>For Apartment Buildings</span>
-    </div>
     <h1 style="font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; letter-spacing: -0.05em; color: #fff; margin-top: 15px;">
-      Empower Every Apartment.<br><em>Upgrade to Full Fibre.</em>
+      Let's Construct with Intelligence <em>and Speed.</em>
     </h1>
     <p class="hero-sub">
-      Elevate your multi-dwelling property with next-generation full fibre connectivity. Deliver high-speed, dependable internet to every residence through a single, professionally coordinated project.
+      Neo Broadband seamlessly embeds into your development from Design to Construct, providing FTTC, FTTB &amp; FTTP connectivity solutions — or call us for turnkey solutions.
     </p>
     
-    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Modern Apartment Building Fibre Upgrade" style="border-radius: 20px; margin-top: 40px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 2; position: relative;">
+    
   </section>
 
   <div class="silk-divider reveal"></div>
 
-  <!-- ═══ MAIN CONTENT SECTION ═══ -->
+  <!-- ═══ DEVELOPER SOLUTIONS SECTION ═══ -->
   <section class="section section-center" id="solutions">
-    <p class="section-tag reveal">Value & Performance</p>
-    <h2 class="section-title reveal reveal-d1">Why upgrade your building to <strong>full fibre</strong>?</h2>
-    <p class="section-body reveal reveal-d2">Advanced infrastructure designed for modern residential demands.</p>
+    <p class="section-tag reveal">Essential Infrastructure</p>
+    <h2 class="section-title reveal reveal-d1">Solutions designed for <strong>modern developers</strong></h2>
+    <p class="section-body reveal reveal-d2">What developers actually need to ensure flawless deployments.</p>
 
-    <!-- ── FOUR REASONS TO CONSIDER FULL FIBRE ── -->
+    <!-- ── WHY CHOOSE US ── -->
     <div class="plan-category reveal">
-      <h3 class="category-title">The Benefits of Full Fibre</h3>
-      <p class="category-desc">Delivering tangible advantages for owners, residents, and strata managers alike.</p>
+      <h3 class="category-title">Why Partner With Us?</h3>
+      <p class="category-desc">Our streamlined integration ensures no disruptions to your schedule.</p>
       
-      <div class="features-grid single-row">
+      <div class="features-grid">
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Elevate Property Value</div>
-          <p class="pricing-desc">As many as 75% of renters report that properties with dedicated full fibre connectivity are significantly more appealing, supporting higher rental yields.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Integrated with Civil Works</div>
+          <p class="pricing-desc">Conduits, pits, and pipes are installed concurrently with your civil construction, not bolted on as an afterthought.</p>
         </div>
 
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Ultra Fast Speeds</div>
-          <p class="pricing-desc">Offer residents wholesale speeds up to 2 Gbps, powering demanding remote work setups, ultra HD streaming, and high density device use without lag.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Enterprise-Grade Networks</div>
+          <p class="pricing-desc">Supported by decades of large-scale infrastructure deployment expertise and highly resilient carrier-grade materials.</p>
         </div>
 
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Scalable Infrastructure</div>
-          <p class="pricing-desc">With typical household data usage climbing rapidly, full fibre offers a long term network foundation capable of supporting future digital needs.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Compliance Handled</div>
+          <p class="pricing-desc">We manage Form 1 & 2 requirements, completion documentation, and assist thoroughly with subdivision lodgement.</p>
         </div>
 
         <div class="pricing-card">
-          <div class="pricing-tier" style="color: #2b6cf6; font-size: 13px;">Minimised Burden</div>
-          <p class="pricing-desc">Execute a single, building wide deployment. NEO BROADBAND takes full ownership of the network infrastructure reducing the body corporate’s operational burden.</p>
+          <div class="pricing-tier" style="color: #2b6cf6; font-size: 14px;">Day-One Connectivity</div>
+          <p class="pricing-desc">New residents can seamlessly activate their internet services the moment they move in, when switching friction is lowest.</p>
         </div>
       </div>
     </div>
 
-    <!-- ── STATS METRICS GRID ── -->
+    <!-- ── PROCESS STAGES ── -->
     <div class="plan-category reveal">
-      <h3 class="category-title">Built for Modern Usage</h3>
-      <p class="category-desc">Key performance benchmarks powering high-density communities.</p>
+      <h3 class="category-title">Our End-to-End Process</h3>
+      <p class="category-desc">From feasibility check to a live network. Five comprehensive stages.</p>
       
-      <div class="features-grid single-row" style="text-align: center;">
-        <div class="pricing-card">
-          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">2 Gbps</div>
-          <p class="pricing-desc" style="font-size: 0.8rem;">Up to wholesale download speeds.</p>
+      <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="pricing-card" style="padding: 30px 20px;">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 1</div>
+          <div class="pricing-tier">Engagement</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Evaluating site feasibility and establishing the optimal deployment strategy.</p>
         </div>
 
-        <div class="pricing-card">
-          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">75%</div>
-          <p class="pricing-desc" style="font-size: 0.8rem;">Of renters actively prefer fibre-connected buildings.</p>
+        <div class="pricing-card" style="padding: 30px 20px;">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 2</div>
+          <div class="pricing-tier">Design</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Creating, reviewing, and approving detailed civil and fiber schematics.</p>
         </div>
 
-        <div class="pricing-card">
-          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">10x</div>
-          <p class="pricing-desc" style="font-size: 0.8rem;">Surge in household data demand over the past decade.</p>
+        <div class="pricing-card" style="padding: 30px 20px;">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 3</div>
+          <div class="pricing-tier">Build</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Installing fiber, pits, pipes, and lead-ins seamlessly alongside regular civil works.</p>
         </div>
 
-        <div class="pricing-card">
-          <div class="pricing-tier" style="font-size: 2rem; color: #fff; margin-bottom: 5px;">XGS-PON</div>
-          <p class="pricing-desc" style="font-size: 0.8rem;">State-of-the-art optical network technology.</p>
+        <div class="pricing-card" style="padding: 30px 20px;">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 4</div>
+          <div class="pricing-tier">Activation</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Configuring the optical line terminals, patching backhaul, and bringing the backbone online.</p>
+        </div>
+
+        <div class="pricing-card" style="padding: 30px 20px;">
+          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 15px; top:auto; right:auto;">Step 5</div>
+          <div class="pricing-tier">Connections</div>
+          <p class="pricing-desc" style="font-size: 0.75rem;">Enabling simple lot-by-lot service activation for new occupants.</p>
         </div>
       </div>
     </div>
 
-    <!-- ── THE UPGRADE JOURNEY (COMBINED INTO 5 STAGES) ── -->
-    <div class="plan-category reveal">
-      <h3 class="category-title">The Upgrade Journey</h3>
-      <p class="category-desc">A seamless 5-stage end-to-end framework handled entirely by our specialists.</p>
+    <!-- ── KEY CONSIDERATIONS ── -->
+    <div class="plan-category reveal" style="text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+      <h3 class="category-title" style="text-align: center;">Strategies for a Seamless Rollout</h3>
+      <p class="category-desc" style="text-align: center;">What helps your programme run smoothly.</p>
       
-      <div class="features-grid five-steps">
-        <div class="pricing-card">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 1</div>
-          <div class="pricing-tier">Building Eligibility Check</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">We analyse your building’s position, installed infrastructure, and structural layout to determine the optimal deployment approach.</p>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 2</div>
-          <div class="pricing-tier">Quote & Agreement</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">Providing a itemised quotation and project agreement for body corporate review.</p>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 3</div>
-          <div class="pricing-tier">Survey & Network Design</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">Our technical team performs detailed on site mapping to develop a customised installation blueprint tailored to your building.</p>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 4</div>
-          <div class="pricing-tier">Deployment & Installation</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">With pre start engagement completed with the body corporate, fibre pathways are deployed across the entire building, supported by fast, well coordinated appointments for every apartment.</p>
-        </div>
-        <div class="pricing-card">
-          <div class="pricing-badge" style="display:block; position:relative; width:max-content; margin: 0 auto 12px; top:auto; right:auto;">Step 5</div>
-          <div class="pricing-tier">Connection Ready</div>
-          <p class="pricing-desc" style="font-size: 0.75rem;">A notification is sent to residents, prompting them to choose their preferred participating ISP and activate high speed fibre plans.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── FAQ SECTION ── -->
-    <div class="plan-category reveal" style="text-align: left; max-width: 850px; margin-left: auto; margin-right: auto;">
-      <h3 class="category-title" style="text-align: center;">Frequently Asked Questions</h3>
-      <p class="category-desc" style="text-align: center;">Everything strata managers and committees need to know.</p>
-      
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <div class="faq-card">
-          <div class="faq-question">Will my building qualify?</div>
-          <p class="faq-answer">Most multi-dwelling properties can be assessed. We look at factors like building layout, existing conduit infrastructure, and geographical reach. The initial eligibility review is completely free.</p>
-        </div>
-
-        <div class="faq-card">
-          <div class="faq-question">How disruptive is the installation process?</div>
-          <p class="faq-answer">Common area works are efficiently managed over a few weeks based on scale, while individual apartment setups are quick, taking under an hour per residence at scheduled times.</p>
-        </div>
-
-        <div class="faq-card">
-          <div class="faq-question">Who makes the decision — strata or individual owners?</div>
-          <p class="faq-answer">The approval is coordinated through the body corporate or owners committee representing the community. Individual residents do not need to register separately for the backbone infrastructure rollout.</p>
-        </div>
+      <div class="pricing-card" style="padding: 40px;">
+        <ul class="pricing-features" style="margin-bottom: 0;">
+          <li><strong style="color: #fff; margin-right: 5px;">Engage Early:</strong> Partner with us during the initial town planning phase, preferably before submitting development applications.</li>
+          <li><strong style="color: #fff; margin-right: 5px;">Sync Contractors:</strong> Align our civil deployment teams with your head contractors right from the start.</li>
+          <li><strong style="color: #fff; margin-right: 5px;">Parallel Approvals:</strong> Process electrical approvals concurrently with civil network design, rather than consecutively.</li>
+          <li><strong style="color: #fff; margin-right: 5px;">Fast-Track Forms:</strong> Initiate Form 1 and 2 requests early—as soon as land titles fall on the critical path.</li>
+          <li><strong style="color: #fff; margin-right: 5px;">Turnkey Handover:</strong> Rely on our team to fully test and commission the network so everything is active before residents arrive.</li>
+        </ul>
       </div>
     </div>
 
@@ -479,15 +388,15 @@
   <div class="silk-divider reveal"></div>
 
   <!-- ═══ FOOTER CTA ═══ -->
-  <section class="footer-cta" id="cta" style="padding-top: 80px;">
-    <p class="section-tag reveal">Get Started Today</p>
-    <h2 class="section-title reveal reveal-d1">Ready to upgrade your building to<br><strong>next-generation fibre?</strong></h2>
+  <section class="footer-cta" id="cta">
+    <p class="section-tag reveal">Begin Your Project</p>
+    <h2 class="section-title reveal reveal-d1">Ready to bring fiber to your<br><strong>next development?</strong></h2>
     <div class="footer-ctas reveal reveal-d3">
-      <a href="contact.html" class="btn-primary" id="openCtaModal">Request Eligibility Check</a>
+      <a href="contact.html" class="btn-primary">Contact Our Team</a>
     </div>
 
-    <div class="footer-bar reveal reveal-d4" style="margin-top: 60px;">
-      <div class="footer-brand">© Neo Broadband Pty Ltd. All rights reserved</div>
+    <div class="footer-bar reveal reveal-d4" style="margin-top: 80px;">
+      <div class="footer-brand">© 2026 Neo Broadband Pty Ltd. All rights reserved</div>
       <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Service Terms</a>
@@ -499,6 +408,8 @@
 
 <script src="templatemo-621-luminary-script.js"></script>
 <script>
+;(function(){
+
   // Full-page mouse movement tracker for background grid spotlight
   (function() {
     const pageGrid = document.getElementById('pageGrid');
@@ -540,7 +451,7 @@
         + String(now.getMonth() + 1).padStart(2, '0')
         + String(now.getDate()).padStart(2, '0');
       const randomPart = Math.floor(1000 + Math.random() * 9000);
-      return 'FS-BU-' + datePart + '-' + randomPart; // FS-BU for Neo Broadband Building Upgrades
+      return 'NBD-' + datePart + '-' + randomPart; // NBD for Developer
     }
 
     function assignNewEnquiryNumber() {
@@ -565,14 +476,12 @@
       if (e.key === 'Escape') closePopup();
     });
 
-    // Trigger popup on CTA button click
-    const ctaBtn = document.getElementById('openCtaModal');
-    if (ctaBtn) {
-      ctaBtn.addEventListener('click', function(e) {
+    document.querySelectorAll('a[href="#contact"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
         e.preventDefault();
         openPopup();
       });
-    }
+    });
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -581,38 +490,38 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
 
-      // We append the +61 code manually to the form data submission since it's outside the actual input
-      const formData = new FormData(form);
-      const originalPhone = formData.get('Contact Number');
-      formData.set('Contact Number', '+61 ' + originalPhone);
-
-      fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(function(response) {
-        if (response.ok) {
-          const confirmedEnquiryNo = enquiryHidden.value;
-          status.textContent = "Thanks! Your enquiry (" + confirmedEnquiryNo + ") has been sent.";
-          status.className = 'cf-status cf-success';
-          form.reset();
-          assignNewEnquiryNumber();
-          setTimeout(closePopup, 2400);
-        } else {
-          throw new Error('Submission failed');
-        }
-      })
-      .catch(function() {
-        status.textContent = "Something went wrong. Please try again.";
-        status.className = 'cf-status cf-error';
-      })
-      .finally(function() {
+      // Simulation for FormSubmit
+      setTimeout(() => {
+        const confirmedEnquiryNo = enquiryHidden.value;
+        status.textContent = "Thanks! Your enquiry (" + confirmedEnquiryNo + ") has been sent.";
+        status.className = 'cf-status cf-success';
+        form.reset();
+        assignNewEnquiryNumber();
+        setTimeout(closePopup, 2400);
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Request Eligibility Check';
-      });
+        submitBtn.textContent = 'Submit Enquiry';
+      }, 1500);
     });
   })();
+
+})();
+</script>
+<script>
+/* Auto-highlight current page in navigation */
+document.addEventListener('DOMContentLoaded', function () {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var target = href.split('/').pop().split('#')[0];
+    if (target && target === path) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+});
 </script>
 </body>
 </html>
