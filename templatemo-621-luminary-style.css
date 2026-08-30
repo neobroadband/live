@@ -928,3 +928,17 @@ body.menu-open .top-nav { background: rgba(15,17,21,0.95); backdrop-filter: blur
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+/* ── Enhanced Admin Sign-In Overlay With Network Background ── */
+#adminLoginOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(15, 17, 21, 0.45) 0%, rgba(15, 17, 21, 0.88) 100%),
+    url("images/bg-network-mesh.jpg") center center / cover no-repeat;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
