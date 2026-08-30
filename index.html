@@ -481,9 +481,9 @@
       <li class="dropdown">
         <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
         <ul class="dropdown-content">
-          <li><a href="index.html#residential-plans">Residential Plans</a></li>
-          <li><a href="index.html#business-plans">Business Plans</a></li>
-          <li><a href="index.html#enterprise-ethernet">Enterprise Ethernet</a></li>
+          <li><a href="index.html#residential-plans" onclick="switchPlanCategory('residential')">Residential Plans</a></li>
+          <li><a href="index.html#business-plans" onclick="switchPlanCategory('business')">Business Plans</a></li>
+          <li><a href="index.html#enterprise-ethernet" onclick="switchPlanCategory('enterprise')">Enterprise Ethernet</a></li>
         </ul>
       </li>
 
@@ -1652,19 +1652,21 @@
   // Lets links from other pages land directly on the right plan category
   // instead of the hidden section it used to fall on.
   function initPlanCategoryFromHash() {
-    var hash = window.location.hash.replace('#', '');
-    if (hash === 'business-plans') {
-      switchPlanCategory('business');
-    } else if (hash === 'enterprise-ethernet') {
-      switchPlanCategory('enterprise');
-    }
+  var hash = window.location.hash.replace('#', '');
+  if (hash === 'business-plans') {
+    switchPlanCategory('business');
+  } else if (hash === 'enterprise-ethernet') {
+    switchPlanCategory('enterprise');
+  } else if (hash === 'residential-plans') {
+    switchPlanCategory('residential');
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPlanCategoryFromHash);
-  } else {
-    initPlanCategoryFromHash();
-  }
-  window.addEventListener('hashchange', initPlanCategoryFromHash);
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPlanCategoryFromHash);
+} else {
+  initPlanCategoryFromHash();
+}
+window.addEventListener('hashchange', initPlanCategoryFromHash);
 
 })();
 </script>
