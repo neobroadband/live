@@ -198,10 +198,21 @@
   .cf-field { margin-bottom: 14px; }
   .cf-field label { display: block; font-size: 0.8rem; font-weight: 500; color: #454b57; margin-bottom: 6px; }
   .cf-field input, .cf-field textarea {
-    width: 100%; box-sizing: border-box; border: 1px solid #e0e2e7; border-radius: 8px;
-    padding: 11px 13px; font-size: 0.92rem; font-family: 'Montserrat', sans-serif;
-    color: #1f2430; background: #fafafb; transition: border-color 0.2s ease, background 0.2s ease;
-  }
+  color: var(--ivory);
+  background: var(--base-soft);
+  border: 1.5px solid var(--panel-border);
+}
+
+  html[data-theme="light"] .cf-field input::placeholder,
+  html[data-theme="light"] .cf-field textarea::placeholder {
+  color: #64748b;
+}
+
+/* Fix Modal titles in portals/upgrades */
+  html[data-theme="light"] .cf-modal {
+  background: #ffffff;
+  color: #0f172a;
+}
   .cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: #2b6cf6; background: #ffffff; }
   .cf-field textarea { resize: vertical; min-height: 80px; }
   
