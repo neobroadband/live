@@ -212,17 +212,21 @@
   }
 
   .nav-links > li > a {
-    color: #ffffff !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.18em !important;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8) !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    position: relative;
-    padding: 14px 0 6px;
-    transition: color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  color: var(--nav-link-color, #ffffff) !important;
+  text-shadow: var(--nav-shadow, 0 2px 5px rgba(0, 0, 0, 0.8)) !important;
+}
+
+/* Logic: When scrolled OR in light mode, text should be dark */
+html[data-theme="light"] .top-nav,
+.top-nav.scrolled {
+  --nav-link-color: var(--ivory);
+  --nav-shadow: none;
+}
+
+html[data-theme="light"] .nav-utility a {
+  color: var(--ivory) !important;
+  text-shadow: none;
+}
 
   .dropdown {
     position: relative;
