@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Broadband — Admin NOC & Operations Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,46 +176,10 @@ body {
 .portal-table td { padding: 14px 10px; border-top: 1px solid var(--panel-border); font-size: 11px; color: var(--ivory-muted); vertical-align: middle; }
 .portal-table tr:hover td { background: rgba(176,184,196,0.02); }
 
-/* ── High-Contrast Visible Action Buttons ── */
 .btn-action {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 14px !important;
-  border-radius: 8px !important;
-  font-size: 10px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-  background: #2a2e35 !important; /* Solid graphite background */
-  color: #ffffff !important;        /* Pure white text */
-  border: 1px solid rgba(156, 163, 175, 0.35) !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.btn-action:hover {
-  background: #3d424a !important;
-  border-color: #ffffff !important;
-  transform: translateY(-1px);
-}
-
-.btn-action.green {
-  background: rgba(34, 197, 94, 0.25) !important;
-  color: #48bb78 !important;
-  border-color: #22c55e !important;
-}
-
-.btn-action.green:hover {
-  background: rgba(34, 197, 94, 0.45) !important;
-}
-
-.btn-action.gold {
-  background: rgba(212, 175, 55, 0.25) !important;
-  color: #d4af37 !important;
-  border-color: #d4af37 !important;
+  padding: 6px 14px; border-radius: 100px; font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer; border: 1px solid var(--panel-border);
+  background: transparent; color: var(--ivory); transition: 0.3s;
 }
 .btn-action:hover { background: rgba(176,184,196,0.1); border-color: var(--silver); }
 .btn-action.gold { color: var(--accent-gold); border-color: rgba(212,175,55,0.3); }
@@ -417,18 +382,6 @@ body {
 </style>
 </head>
 <body>
-  <!-- Include the Modular Ticketing Engine -->
-<script src="neo-ticketing-engine.js"></script>
-
-<!-- Only minimal synchronization code remains in your HTML -->
-<script>
-  window.subscriberStore = getStoredData();
-  window.currentTicketFilter = 'ALL';
-
-  // Inside your existing syncAdminData() function, simply call:
-  // renderTicketAnalyticsAndChart(allTickets);
-  // renderAdminTickets(allTickets);
-</script>
 
 <svg class="grain" width="100%" height="100%">
   <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -439,8 +392,8 @@ body {
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- ═══ ADMIN LOGIN OVERLAY ═══ -->
-<div id="adminLoginOverlay" style="position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#0a0c0f,#13161b);display:grid;place-items:center;padding:24px;">
-  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.25);border-radius:32px;background:rgba(22,26,32,0.92);backdrop-filter:blur(30px);box-shadow:0 20px 80px rgba(0,0,0,0.6);text-align:center;">
+<div id="adminLoginOverlay">
+  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.3);border-radius:32px;background:rgba(22,26,32,0.82);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 25px 90px rgba(0,0,0,0.65);text-align:center;">
     <img src="images/psd 1.png" alt="Neo Broadband Logo" style="max-height:55px;width:auto;margin-bottom:12px;">
     <div class="admin-badge">Admin NOC Console</div>
     <h2 style="font-weight:400;font-size:20px;color:var(--ivory);margin-bottom:6px;">Network Operator Authentication</h2>
@@ -492,7 +445,7 @@ body {
   </div>
 </div>
 
-<!-- ═══ EXPANDED MODAL FOR TICKET DISPATCH / RESOLVE ═══ -->
+<!-- ═══ MODAL FOR TICKET DISPATCH / RESOLVE ═══ -->
 <div class="admin-modal" id="ticketModal">
   <div class="modal-content">
     <div class="card-head">
@@ -501,60 +454,42 @@ body {
     </div>
     <input type="hidden" id="tktModalCustId">
     <input type="hidden" id="tktModalId">
-    
     <div class="field-grid">
-      <div class="field">
-        <label>Subscriber Account</label>
-        <input id="tktModalSubscriber" disabled>
-      </div>
-      <div class="field">
-        <label>Ticket Reference</label>
-        <input id="tktModalRef" disabled>
-      </div>
-
-      <!-- 1. Type & Priority -->
-      <div class="field">
-        <label>Ticket Type</label>
+       <div class="field"><label>Subscriber Account</label><input id="tktModalSubscriber" disabled></div>
+      <div class="field"><label>Ticket Reference</label><input id="tktModalRef" disabled></div>
+      <div class="field"><label>Created (Date &amp; Time)</label><input id="tktModalCreated" disabled></div>
+      <div class="field full"><label>Subject / Problem Statement</label><input id="tktModalSubject"></div>
+      <div class="field"><label>Ticket Type</label>
         <select id="tktModalType">
-          <option value="Incident">Incident (Unplanned Outage / Degradation)</option>
-          <option value="Request">Service Request (Configuration / Allocation)</option>
+          <option value="Incident">Incident</option>
+          <option value="Request">Request</option>
         </select>
       </div>
-      <div class="field">
-        <label>Priority (SLA Target)</label>
+      <div class="field"><label>Priority</label>
         <select id="tktModalPriority">
-          <option value="P1">P1 - Critical (4h Business SLA)</option>
-          <option value="P2">P2 - Major (8h Business SLA)</option>
-          <option value="P3" selected>P3 - Minor (24h Business SLA)</option>
-          <option value="P4">P4 - Low (48h Business SLA)</option>
+          <option value="P1">P1 — Critical</option>
+          <option value="P2">P2 — High</option>
+          <option value="P3">P3 — Medium</option>
+          <option value="P4">P4 — Low</option>
         </select>
       </div>
-
-      <!-- 2. Fault Classification -->
-      <div class="field">
-        <label>Fault Classification</label>
+      <div class="field"><label>Fault Type</label>
         <select id="tktModalFaultType">
-          <option value="No Connection">No Connection (LOS Red / Fiber Cut)</option>
-          <option value="Speed">Speed / Throughput Degradation</option>
-          <option value="Dropouts">Dropouts / Line Flapping</option>
-          <option value="Browsing">Browsing / DNS Resolution Issue</option>
-          <option value="Login">Login / RADIUS Authentication</option>
-          <option value="Hardware">Hardware / NTD Optical Interface</option>
+          <option value="Login">Login</option>
+          <option value="Browsing">Browsing</option>
+          <option value="Speed">Speed</option>
+          <option value="No Connection">No Connection</option>
+          <option value="Drop Outs">Drop Outs</option>
         </select>
       </div>
-      
-      <!-- 3. Status & Engineer -->
-      <div class="field">
-        <label>Ticket Lifecycle Status</label>
-        <select id="tktModalStatus" onchange="toggleResolutionFields()">
+      <div class="field"><label>Ticket Lifecycle Status</label>
+        <select id="tktModalStatus">
           <option value="In NOC Queue">In NOC Queue</option>
-          <option value="Investigating">Investigating / In Progress</option>
+          <option value="Investigating">Investigating / Pending</option>
           <option value="Resolved">Resolved & Cleared</option>
         </select>
       </div>
-
-      <div class="field">
-        <label>Attending NOC Engineer</label>
+      <div class="field"><label>Attending NOC Engineer</label>
         <select id="tktModalEngineer">
           <option value="NOC Engineer 01 (You)">NOC Engineer 01 (You)</option>
           <option value="Alex Chen (Lead)">Alex Chen (Lead)</option>
@@ -563,29 +498,28 @@ body {
           <option value="Liam Vance (Transit)">Liam Vance (Transit)</option>
         </select>
       </div>
-
-      <!-- 4. Resolution Root Cause (RCA) -->
-      <div class="field" id="tktModalRcaGroup">
-        <label>Resolved Reason (Root Cause RCA)</label>
-        <select id="tktModalResolvedReason">
-          <option value="No Fault Found">No Fault Found (Loop OK / CPE Power Cycle)</option>
-          <option value="NBN">NBN (Distribution Fiber / NNI Flap / Field Tech)</option>
-          <option value="Customer">Customer (Faulty LAN / Router / Wi-Fi Config)</option>
-          <option value="Vocus">Vocus / Upstream Transit (Transit BGP Latency)</option>
+      <div class="field"><label>SLA Status</label>
+        <select id="tktModalSla">
+          <option value="Pending">Pending</option>
+          <option value="Met">Met</option>
+          <option value="Missed">Missed</option>
         </select>
       </div>
-
-      <div class="field full">
-        <label>Subject / Problem Statement</label>
-        <input id="tktModalSubject">
+      <div class="field"><label>MTTR (Business Hrs)</label>
+        <input id="tktModalMttr" placeholder="e.g. 3.5 hrs, or Pending"></div>
+      <div class="field"><label>Resolved Reason</label>
+        <select id="tktModalResolvedReason">
+          <option value="—">— (Not yet resolved)</option>
+          <option value="No Fault Found">No Fault Found</option>
+          <option value="NBN">NBN</option>
+          <option value="Customer">Customer</option>
+          <option value="Vocus">Vocus</option>
+        </select>
       </div>
-
-      <div class="field full">
-        <label>Resolution & Engineering Notes</label>
-        <textarea id="tktModalNotes" rows="3" placeholder="Document diagnostic test results, optical attenuation levels, and fix actions..."></textarea>
+      <div class="field full"><label>Resolution / Clearing Notes</label>
+        <textarea id="tktModalNotes" rows="3" placeholder="State findings, optical loop tests, BGP route recalculation or CPE reconfiguration..."></textarea>
       </div>
     </div>
-
     <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end;">
       <button class="btn-action" onclick="closeTicketModal()">Cancel</button>
       <button class="btn-primary" onclick="saveTicketChanges()">Commit NOC Update</button>
@@ -611,7 +545,16 @@ body {
       <button data-page="adminTickets"><span class="icon">🎫</span>NOC Support Tickets</button>
     </nav>
 
-    <div class="sidebar-foot">
+        <div class="sidebar-foot">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <span style="font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-warm);">Theme</span>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+          <span class="theme-toggle-knob">
+            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </span>
+        </button>
+      </div>
       <div class="mini-profile">
         <div class="avatar">NOC</div>
         <div>
@@ -983,23 +926,28 @@ body {
         </div>
 
         <div class="table-wrap">
-  <table class="portal-table" id="adminTicketsTable" style="min-width: 950px;">
-    <thead>
-      <tr>
-        <th>Ticket Ref</th>
-        <th>Type &amp; Priority</th>
-        <th>Fault Type</th>
-        <th>Subscriber</th>
-        <th>Subject / Problem</th>
-        <th>Created</th>
-        <th>Status &amp; SLA</th>
-        <th>Resolution / MTTR</th>
-        <th style="min-width: 140px; text-align: center;">Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+          <table class="portal-table" id="adminTicketsTable">
+            <thead>
+              <tr>
+               <th>Ticket Ref</th>
+               <th>Subscriber ID & Name</th>
+               <th>Subject / Query</th>
+               <th>Created (Date &amp; Time)</th>
+               <th>Ticket Type</th>
+               <th>Priority</th>
+               <th>Fault Type</th>
+               <th>Attended By</th>
+               <th>Status</th>
+               <th>SLA Status</th>
+               <th>MTTR (Business Hrs)</th>
+               <th>Resolved Reason</th>
+               <th>Resolved / Cleared By</th>
+               <th>NOC Dispatch Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -1007,6 +955,30 @@ body {
 </div>
 
 <div class="toast-msg" id="toast"></div>
+
+<!-- ═══ THEME TOGGLE (Dark / Light Mode) ═══ -->
+<script>
+(function () {
+  function applyStoredTheme() {
+    let stored = null;
+    try { stored = localStorage.getItem('nb-theme'); } catch (e) {}
+    document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
+  }
+  applyStoredTheme();
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    const sync = () => btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-theme') === 'light'));
+    sync();
+    btn.addEventListener('click', function () {
+      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('nb-theme', next); } catch (e) {}
+      sync();
+    });
+  });
+})();
+</script>
 
 <!-- ═══ ADMIN BACKEND ORCHESTRATOR & SYNC SCRIPT ═══ -->
 <script>
@@ -1042,7 +1014,13 @@ const defaultStore = {
         id: "TKT-8841", 
         title: "Static IP Routing Configuration", 
         status: "Resolved", 
-        date: "02 Aug 2026", 
+        date: "02 Aug 2026, 09:10 AEST", 
+        ticketType: "Incident",
+        priority: "P2",
+        faultType: "Login",
+        slaStatus: "Met",
+        mttr: "3.2 hrs",
+        resolvedReason: "Customer",
         attendedBy: "Alex Chen (Lead)", 
         resolvedBy: "Alex Chen (Lead)",
         resolvedDate: "02 Aug 2026 14:20 AEST",
@@ -1774,26 +1752,39 @@ function renderAdminTickets(allTickets) {
 
   if (searchTerm) {
     filtered = filtered.filter(t => 
-      t.id.toLowerCase().includes(searchTerm) ||
-      t.custId.toLowerCase().includes(searchTerm) ||
-      t.custName.toLowerCase().includes(searchTerm) ||
-      t.title.toLowerCase().includes(searchTerm) ||
-      (t.attendedBy && t.attendedBy.toLowerCase().includes(searchTerm)) ||
-      (t.resolvedBy && t.resolvedBy.toLowerCase().includes(searchTerm))
+     t.id.toLowerCase().includes(searchTerm) ||
+     t.custId.toLowerCase().includes(searchTerm) ||
+     t.custName.toLowerCase().includes(searchTerm) ||
+     t.title.toLowerCase().includes(searchTerm) ||
+     (t.attendedBy && t.attendedBy.toLowerCase().includes(searchTerm)) ||
+     (t.resolvedBy && t.resolvedBy.toLowerCase().includes(searchTerm)) ||
+     (t.priority && t.priority.toLowerCase().includes(searchTerm)) ||
+     (t.faultType && t.faultType.toLowerCase().includes(searchTerm)) ||
+     (t.ticketType && t.ticketType.toLowerCase().includes(searchTerm)) ||
+     (t.resolvedReason && t.resolvedReason.toLowerCase().includes(searchTerm))
     );
   }
 
-  if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--slate-warm);padding:28px;">No tickets found matching the selected filter/search.</td></tr>`;
+   if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="14" style="text-align:center;color:var(--slate-warm);padding:28px;">No tickets found matching the selected filter/search.</td></tr>`;
     return;
   }
-
-  tbody.innerHTML = filtered.map(t => {
+ 
+   // Priority badge colors (P1 = most severe)
+    const priorityColors = { P1: '#ef4444', P2: '#d4af37', P3: '#38bdf8', P4: '#9CA3AF' };
+ 
+   tbody.innerHTML = filtered.map(t => {
     const isResolved = t.status === 'Resolved';
     const isInvestigating = t.status === 'Investigating' || t.status === 'Pending';
     const statusColor = isResolved ? '#22c55e' : (isInvestigating ? '#38bdf8' : 'var(--accent-gold)');
     const dotClass = isResolved ? '' : (isInvestigating ? 'cyan' : 'warn');
-
+ 
+    const priority = t.priority || '—';
+    const priorityColor = priorityColors[priority] || 'var(--slate-light)';
+ 
+    const sla = t.slaStatus || 'Pending';
+    const slaColor = sla === 'Met' ? '#22c55e' : (sla === 'Missed' ? '#ef4444' : 'var(--slate-warm)');
+ 
     return `
       <tr>
         <td><strong>${t.id}</strong></td>
@@ -1806,6 +1797,14 @@ function renderAdminTickets(allTickets) {
           <small style="color:var(--slate-warm);">${t.notes || 'No supplementary technical notes'}</small>
         </td>
         <td>${t.date}</td>
+        <td>${t.ticketType || '—'}</td>
+        <td>
+          <span class="status-pill" style="margin:0;color:${priorityColor};border-color:rgba(156,163,175,0.15);">
+            <span class="status-dot" style="background:${priorityColor};box-shadow:0 0 8px ${priorityColor};"></span>
+            ${priority}
+          </span>
+        </td>
+        <td>${t.faultType || '—'}</td>
         <td>
           <div class="eng-badge">
             <span class="eng-dot"></span>
@@ -1818,6 +1817,14 @@ function renderAdminTickets(allTickets) {
             ${t.status}
           </span>
         </td>
+        <td>
+          <span class="status-pill" style="margin:0;color:${slaColor};border-color:rgba(156,163,175,0.15);">
+            <span class="status-dot" style="background:${slaColor};box-shadow:0 0 8px ${slaColor};"></span>
+            ${sla}
+          </span>
+        </td>
+        <td>${t.mttr || 'Pending'}</td>
+        <td>${t.resolvedReason || '—'}</td>
         <td>
           ${isResolved 
             ? `<div style="color:#22c55e;font-weight:600;">✓ ${t.resolvedBy || 'NOC Specialist'}</div><small style="color:var(--slate-warm);">${t.resolvedDate || 'Cleared'}</small>` 
@@ -1851,7 +1858,13 @@ function filterTicketsTable() {
       });
     }
   });
-  renderAdminTickets(allTickets);
+  renderAdminTickets(allTickets);const priorityColors = { 
+    P1: '#ef4444', // Red (Emergency)
+    P2: '#f97316', // Orange (Serious)
+    P3: '#eab308', // Yellow/Gold (Normal)
+    P4: '#22c55e'  // Green (Minor)
+};
+
 }
 
 // ── Ticket Modal Actions ──
@@ -1867,9 +1880,16 @@ function openTicketModal(custId, tktId) {
   document.getElementById('tktModalId').value = tkt.id;
   document.getElementById('tktModalSubscriber').value = `${custId} — ${u.name}`;
   document.getElementById('tktModalRef').value = tkt.id;
+  document.getElementById('tktModalCreated').value = tkt.date || '—';
   document.getElementById('tktModalSubject').value = tkt.title;
+  document.getElementById('tktModalType').value = tkt.ticketType || 'Incident';
+  document.getElementById('tktModalPriority').value = tkt.priority || 'P3';
+  document.getElementById('tktModalFaultType').value = tkt.faultType || 'Browsing';
   document.getElementById('tktModalStatus').value = tkt.status === 'Pending' ? 'Investigating' : tkt.status;
   document.getElementById('tktModalEngineer').value = tkt.attendedBy || 'NOC Engineer 01 (You)';
+  document.getElementById('tktModalSla').value = tkt.slaStatus || 'Pending';
+  document.getElementById('tktModalMttr').value = tkt.mttr || 'Pending';
+  document.getElementById('tktModalResolvedReason').value = tkt.resolvedReason || '—';
   document.getElementById('tktModalNotes').value = tkt.notes || '';
 
   document.getElementById('ticketModal').classList.add('open');
@@ -1888,23 +1908,40 @@ function saveTicketChanges() {
   const tkt = u.tickets.find(t => t.id === tktId);
   if (!tkt) return;
 
-  const newStatus = document.getElementById('tktModalStatus').value;
-  const newEngineer = document.getElementById('tktModalEngineer').value;
-  const newSubject = document.getElementById('tktModalSubject').value.trim();
-  const newNotes = document.getElementById('tktModalNotes').value.trim();
-
-  tkt.title = newSubject || tkt.title;
-  tkt.status = newStatus;
-  tkt.attendedBy = newEngineer;
-  tkt.notes = newNotes;
-
+   const newStatus = document.getElementById('tktModalStatus').value;
+   const newEngineer = document.getElementById('tktModalEngineer').value;
+   const newSubject = document.getElementById('tktModalSubject').value.trim();
+   const newNotes = document.getElementById('tktModalNotes').value.trim();
+   const newType = document.getElementById('tktModalType').value;
+   const newPriority = document.getElementById('tktModalPriority').value;
+   const newFaultType = document.getElementById('tktModalFaultType').value;
+   let newSla = document.getElementById('tktModalSla').value;
+   let newMttr = document.getElementById('tktModalMttr').value.trim();
+   let newResolvedReason = document.getElementById('tktModalResolvedReason').value;
+ 
+   tkt.title = newSubject || tkt.title;
+   tkt.status = newStatus;
+   tkt.attendedBy = newEngineer;
+   tkt.notes = newNotes;
+   tkt.ticketType = newType;
+   tkt.priority = newPriority;
+   tkt.faultType = newFaultType;
+ 
   if (newStatus === 'Resolved') {
     tkt.resolvedBy = newEngineer;
     tkt.resolvedDate = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' AEST';
+    // Default SLA/MTTR/reason if the engineer left them unset while resolving
+    if (newSla === 'Pending') newSla = 'Met';
+    if (!newMttr || newMttr === 'Pending' || newMttr === 'In Progress') newMttr = 'Manually cleared — see notes';
+    if (newResolvedReason === '—') newResolvedReason = 'No Fault Found';
   } else {
     tkt.resolvedBy = '— (In Progress)';
     tkt.resolvedDate = 'Pending';
   }
+ 
+  tkt.slaStatus = newSla;
+  tkt.mttr = newMttr || 'Pending';
+  tkt.resolvedReason = newResolvedReason;
 
   persistStore();
   closeTicketModal();
@@ -1925,6 +1962,9 @@ function quickResolveTicket(custId, tktId) {
   tkt.resolvedBy = staff;
   tkt.resolvedDate = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' AEST';
   tkt.notes = (tkt.notes ? tkt.notes + ' | ' : '') + 'Cleared via rapid NOC dispatch.';
+  tkt.slaStatus = tkt.slaStatus === 'Missed' ? 'Missed' : 'Met';
+  tkt.mttr = (tkt.mttr && tkt.mttr !== 'Pending' && tkt.mttr !== 'In Progress') ? tkt.mttr : 'Quick-cleared — see notes';
+  tkt.resolvedReason = (tkt.resolvedReason && tkt.resolvedReason !== '—') ? tkt.resolvedReason : 'No Fault Found';
 
   persistStore();
   syncAdminData();
