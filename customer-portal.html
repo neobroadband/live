@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -286,8 +285,8 @@ body {
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- ═══ CLOUD RADIUS AUTHENTICATION OVERLAY ═══ -->
-<div id="loginOverlay">
-  <div style="width:min(460px,100%);padding:40px;border:1px solid rgba(156,163,175,.15);border-radius:32px;background:rgba(22,26,32,.78);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 25px 90px rgba(0,0,0,0.65);">
+<div id="loginOverlay" style="position:fixed;inset:0;z-index:999;background:transparent;display:grid;place-items:center;padding:24px;">
+  <div style="width:min(460px,100%);padding:40px;border:1px solid rgba(156,163,175,.15);border-radius:32px;background:rgba(22,26,32,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 20px 80px rgba(0,0,0,0.65);">
     <div style="text-align:center;margin-bottom:18px;">
       <img src="images/psd 1.png" alt="Neo Broadband Logo" style="max-height:65px;width:auto;margin-bottom:12px;">
       <div class="eyebrow" id="authTitleLabel">Cloud RADIUS Authentication</div>
@@ -648,33 +647,12 @@ body {
       <div class="grid two-col">
         <div class="card">
           <div class="card-head"><h3>Submit Priority Support Ticket</h3></div>
-          <div class="field">
-    <label>Issue Type (Fault Category)</label>
-<select id="ticketCategory">
-    <option value="Login">Login / Authentication</option>
-    <option value="Browsing">Browsing / Latency</option>
-    <option value="Speed">Speed Degradation</option>
-    <option value="No Connection">No Connection (Offline)</option>
-    <option value="Drop Outs">Intermittent Drop Outs</option>
-    <option value="Billing Query">Billing & Account Query</option>
-    <option value="Static IP Routing Configuration">Static IP Routing Configuration</option>
-    <option value="NTD Optical Power Verification">NTD Optical Power Verification</option>
-    <option value="BGP Multi-Homing Routing Query">BGP Multi-Homing Routing Query</option>
-    <option value="Wi-Fi 6 CPE Beacon Diagnostic">Wi-Fi 6 CPE Beacon Diagnostic</option>
-    <option value="VLAN Trunking Allocation">VLAN Trunking Allocation</option>
-    <option value="2.5G Multi-Gig WAN Port Speed Negotiation">2.5G Multi-Gig WAN Port Speed Negotiation</option>
-    <option value="Reverse DNS (rDNS) PTR Record Delegation">Reverse DNS (rDNS) PTR Record Delegation</option>
-    <option value="SIP Trunk VoIP Packet Latency Optimization">SIP Trunk VoIP Packet Latency Optimization</option>
-</select>
-</div>
-<div class="field">
-    <label>Subject / Problem Statement</label>
-        <input id="ticketNotes" placeholder="Briefly describe the issue (e.g. Fiber light is red)">
-         </div>
+          <div class="field"><label>Category</label><select id="ticketCategory"><option>Speed Optimization</option><option>Hardware & NTD Issue</option><option>Static IP Routing</option><option>Billing Query</option></select></div>
+          <div class="field"><label>Ticket Description</label><input id="ticketNotes" placeholder="Describe the behavior..."></div>
           <button class="btn-primary" style="width:100%;margin-top:10px;" onclick="createSupportTicket()">Dispatch Ticket to NOC</button>
         </div>
 
-       <div class="card">
+        <div class="card">
           <div class="card-head"><h3>Active Support Change Requests</h3></div>
           <div id="ticketsLogContainer"></div>
         </div>
@@ -709,22 +687,13 @@ body {
 
 <!-- ═══ BACKEND CLOUD & ISP REST API INTEGRATION LAYER ═══ -->
 <script>
-/**
- * ARCHITECTURE INTEGRATION LAYER:
- * 1. ISP REST API / RADIUS AAA Service connector interface (Configured for easy live API swapping)
- * 2. Strict Category-Based Plan Provisioning Filters (Residential / Business / Enterprise)
- * 3. Seed dataset with dedicated Residential, Business, and Enterprise profiles
- */
-
 const ISP_CONFIG = {
   API_BASE_URL: 'https://api.neobroadband.com.au/v1',
   AUTH_REALM: 'radius.sydney.neobroadband.internal',
-  SIMULATION_MODE: true // Toggle to false when pointing to live ISP REST endpoints
+  SIMULATION_MODE: true
 };
 
-// Global Plan Matrix
 const planMatrix = {
-  // Residential
   'basic': { key: 'basic', name: 'Basic', cat: 'Residential', down: '25 Mbps', up: '10 Mbps', price: 'A$60.00', priceNum: 60 },
   'regular': { key: 'regular', name: 'Regular', cat: 'Residential', down: '500 Mbps', up: '50 Mbps', price: 'A$85.00', priceNum: 85 },
   'pro': { key: 'pro', name: 'Pro', cat: 'Residential', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
@@ -733,7 +702,6 @@ const planMatrix = {
   'ultra-plus': { key: 'ultra-plus', name: 'Ultra +', cat: 'Residential', down: '1000 Mbps', up: '400 Mbps', price: 'A$135.00', priceNum: 135 },
   'thunderbolt': { key: 'thunderbolt', name: 'Thunderbolt', cat: 'Residential', down: '2000 Mbps', up: '500 Mbps', price: 'A$210.00', priceNum: 210 },
   
-  // Business
   'biz-50': { key: 'biz-50', name: 'Business 50/20', cat: 'Business', down: '50 Mbps', up: '20 Mbps', price: 'A$89.00', priceNum: 89 },
   'biz-100': { key: 'biz-100', name: 'Business 100/40', cat: 'Business', down: '100 Mbps', up: '40 Mbps', price: 'A$95.00', priceNum: 95 },
   'biz-250': { key: 'biz-250', name: 'Business 250/100', cat: 'Business', down: '250 Mbps', up: '100 Mbps', price: 'A$95.00', priceNum: 95 },
@@ -741,14 +709,12 @@ const planMatrix = {
   'biz-500-200': { key: 'biz-500-200', name: 'Business 500/200', cat: 'Business', down: '500 Mbps', up: '200 Mbps', price: 'A$115.00', priceNum: 115 },
   'biz-1000': { key: 'biz-1000', name: 'Business 1000/400', cat: 'Business', down: '1000 Mbps', up: '400 Mbps', price: 'A$145.00', priceNum: 145 },
   
-  // Enterprise
   'ent-100': { key: 'ent-100', name: 'Enterprise 100/100', cat: 'Enterprise', down: '100 Mbps', up: '100 Mbps', price: 'A$399.00', priceNum: 399 },
   'ent-250': { key: 'ent-250', name: 'Enterprise 250/250', cat: 'Enterprise', down: '250 Mbps', up: '250 Mbps', price: 'A$399.00', priceNum: 399 },
   'ent-500': { key: 'ent-500', name: 'Enterprise 500/500', cat: 'Enterprise', down: '500 Mbps', up: '500 Mbps', price: 'A$469.00', priceNum: 469 },
   'ent-1000': { key: 'ent-1000', name: 'Enterprise 1000/1000', cat: 'Enterprise', down: '1000 Mbps', up: '1000 Mbps', price: 'A$699.00', priceNum: 699 }
 };
 
-// Seed dataset
 const defaultStore = {
   "NEO-98210": {
     name: "Johnathan Smith",
@@ -818,7 +784,6 @@ const defaultStore = {
   }
 };
 
-// ── Modular ISP REST API Client ──
 const ISPClient = {
   getStore() {
     const saved = localStorage.getItem('neo_subscriber_db');
@@ -836,7 +801,6 @@ const ISPClient = {
       });
       return await resp.json();
     }
-    // Simulation / local DB fallback
     const store = this.getStore();
     let user = store[username];
     let key = username;
@@ -867,7 +831,6 @@ const ISPClient = {
 let subscriberStore = ISPClient.getStore();
 let activeUserToken = null;
 
-// Page Navigation
 const pageTitles = {
   dashboard: 'Your connection, <strong>in real time.</strong>',
   usage: 'Telemetry & <strong>Bandwidth Metrics.</strong>',
@@ -901,7 +864,6 @@ function fillDemoCredentials(user, pass) {
   document.getElementById('authInputPass').value = pass;
 }
 
-// ── Auth Mode Switcher ──
 function switchAuthMode(mode) {
   const loginTab = document.getElementById('tabLogin');
   const regTab = document.getElementById('tabRegister');
@@ -927,7 +889,6 @@ function switchAuthMode(mode) {
   }
 }
 
-// ── Authentication Executor ──
 async function executeCloudAuthentication() {
   const userInput = document.getElementById('authInputUser').value.trim();
   const passInput = document.getElementById('authInputPass').value;
@@ -946,7 +907,6 @@ async function executeCloudAuthentication() {
   }
 }
 
-// ── Registration Function ──
 function registerNewCustomer() {
   const fName = document.getElementById('regFirstName').value.trim();
   const lName = document.getElementById('regLastName').value.trim();
@@ -962,7 +922,6 @@ function registerNewCustomer() {
     return;
   }
 
-  // Determine initial plan based on chosen category
   let defaultPlanKey = 'regular';
   if (accountType === 'Business') defaultPlanKey = 'biz-500-50';
   if (accountType === 'Enterprise') defaultPlanKey = 'ent-500';
@@ -1014,7 +973,6 @@ function portalLogout() {
   window.location.href = 'index.html';
 }
 
-// ── Cloud Telemetry & UI Sync ──
 function syncCloudTelemetry(showToast = false) {
   subscriberStore = ISPClient.getStore();
   const profile = subscriberStore[activeUserToken];
@@ -1044,7 +1002,6 @@ function syncCloudTelemetry(showToast = false) {
   renderChart('mainTrafficChart', profile.trafficWeekly || [0, 0, 0, 0, 0, 0, 0]);
   renderChart('monthlyUsageChart', profile.monthlyTrend || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  // Invoices
   const invTbody = document.querySelector('#invoicesTable tbody');
   if (profile.invoices && profile.invoices.length > 0) {
     invTbody.innerHTML = profile.invoices.map(inv => `
@@ -1094,7 +1051,6 @@ function renderChart(containerId, dataset) {
   `).join('');
 }
 
-// ── Speed Diagnostics ──
 function runSpeedtest() {
   const gauge = document.getElementById('gaugeResult');
   const btn = document.getElementById('startTestBtn');
@@ -1130,7 +1086,6 @@ function executeRemotePortReset() {
   }, 1200);
 }
 
-// ── Plans Grid (STRICT CATEGORY FILTERED) ──
 function renderPlansGrid() {
   const container = document.getElementById('plansUpgradeGrid');
   if (!container) return;
@@ -1138,13 +1093,11 @@ function renderPlansGrid() {
   const profile = subscriberStore[activeUserToken];
   const userCategory = profile.category || detectPlanCategory(profile.planName);
   
-  // Set Banner Title
   const bannerEl = document.getElementById('plansCategoryTitle');
   if (bannerEl) bannerEl.textContent = `${userCategory} Tier`;
 
   const currentPlan = profile.planName || '';
 
-  // Filter plans exclusively to user's category
   const filteredPlanKeys = Object.keys(planMatrix).filter(pk => {
     return planMatrix[pk].cat.toLowerCase() === userCategory.toLowerCase();
   });
@@ -1184,49 +1137,25 @@ function requestPlanUpgrade(planKey) {
   }
 }
 
-// ── Support Tickets ──
 function createSupportTicket() {
-  // Get values from the UI
-  const faultTypeSelected = document.getElementById('ticketCategory').value;
-  const subjectInput = document.getElementById('ticketNotes').value.trim();
-  
-  if (!subjectInput) { 
-    toast('Please provide a subject for your ticket.'); 
-    return; 
-  }
+  const cat = document.getElementById('ticketCategory').value;
+  const notes = document.getElementById('ticketNotes').value.trim();
+  if (!notes) { toast('Please write a short description'); return; }
 
   const profile = subscriberStore[activeUserToken];
   if (!profile.tickets) profile.tickets = [];
   
-  const tktId = `TKT-${Math.floor(1000 + Math.random() * 9000)}`;
-  
-  // Construct the ticket to match Admin Portal requirements
-  const newTicket = {
-    id: tktId,
-    title: subjectInput,             // Becomes the "Subject" in Admin view
+  profile.tickets.unshift({
+    id: `TKT-${Math.floor(1000 + Math.random()*9000)}`,
+    title: `${cat}: ${notes}`,
     status: "In NOC Queue",
-    date: new Date().toLocaleDateString('en-AU', { 
-        day: '2-digit', month: 'short', year: 'numeric', 
-        hour: '2-digit', minute: '2-digit' 
-    }) + ' AEST',
-    ticketType: "Incident",          // Mapped for Admin logic
-    priority: "P3",                  // Default to Medium
-    faultType: faultTypeSelected,    // Mapped to Admin "Fault Type" column
-    attendedBy: "NOC Engineer 01",
-    notes: `Customer reported via Portal: ${subjectInput}`,
-    slaStatus: "Pending",
-    mttr: "Pending"
-  };
+    date: new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' })
+  });
 
-  profile.tickets.unshift(newTicket);
-
-  // Sync to Cloud/LocalStorage
   ISPClient.saveStore(subscriberStore);
-  
-  // Clean up UI
   document.getElementById('ticketNotes').value = "";
   renderTickets();
-  toast(`Priority ticket ${tktId} dispatched to Engineering.`);
+  toast('Support ticket queued for NOC engineers.');
 }
 
 function renderTickets() {
@@ -1247,7 +1176,6 @@ function renderTickets() {
   `).join('');
 }
 
-// ── Payment Gateway Integration & Modal ──
 let pendingPaymentInvoice = null;
 
 function openDirectPayment(invId = null, amountStr = null) {
@@ -1320,7 +1248,6 @@ function saveSubscriberProfile() {
   toast('Subscriber configuration saved.');
 }
 
-// Background Grid Light Follower
 (function() {
   const pageGrid = document.getElementById('pageGrid');
   if (!pageGrid) return;
@@ -1336,7 +1263,6 @@ function saveSubscriberProfile() {
   renderGridLight();
 })();
 
-// Bootstrap
 window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const authMode = urlParams.get('auth');
@@ -1358,7 +1284,6 @@ window.onload = () => {
 };
 </script>
 <script>
-// ── Backdrop parallax ──
 (function () {
   const backdrop = document.querySelector('.tech-backdrop');
   if (!backdrop) return;
