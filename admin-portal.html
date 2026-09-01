@@ -175,10 +175,46 @@ body {
 .portal-table td { padding: 14px 10px; border-top: 1px solid var(--panel-border); font-size: 11px; color: var(--ivory-muted); vertical-align: middle; }
 .portal-table tr:hover td { background: rgba(176,184,196,0.02); }
 
+/* ── High-Contrast Visible Action Buttons ── */
 .btn-action {
-  padding: 6px 14px; border-radius: 100px; font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; cursor: pointer; border: 1px solid var(--panel-border);
-  background: transparent; color: var(--ivory); transition: 0.3s;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px !important;
+  border-radius: 8px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: #2a2e35 !important; /* Solid graphite background */
+  color: #ffffff !important;        /* Pure white text */
+  border: 1px solid rgba(156, 163, 175, 0.35) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-action:hover {
+  background: #3d424a !important;
+  border-color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.btn-action.green {
+  background: rgba(34, 197, 94, 0.25) !important;
+  color: #48bb78 !important;
+  border-color: #22c55e !important;
+}
+
+.btn-action.green:hover {
+  background: rgba(34, 197, 94, 0.45) !important;
+}
+
+.btn-action.gold {
+  background: rgba(212, 175, 55, 0.25) !important;
+  color: #d4af37 !important;
+  border-color: #d4af37 !important;
 }
 .btn-action:hover { background: rgba(176,184,196,0.1); border-color: var(--silver); }
 .btn-action.gold { color: var(--accent-gold); border-color: rgba(212,175,55,0.3); }
@@ -381,6 +417,18 @@ body {
 </style>
 </head>
 <body>
+  <!-- Include the Modular Ticketing Engine -->
+<script src="neo-ticketing-engine.js"></script>
+
+<!-- Only minimal synchronization code remains in your HTML -->
+<script>
+  window.subscriberStore = getStoredData();
+  window.currentTicketFilter = 'ALL';
+
+  // Inside your existing syncAdminData() function, simply call:
+  // renderTicketAnalyticsAndChart(allTickets);
+  // renderAdminTickets(allTickets);
+</script>
 
 <svg class="grain" width="100%" height="100%">
   <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -391,8 +439,8 @@ body {
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- ═══ ADMIN LOGIN OVERLAY ═══ -->
-<div id="adminLoginOverlay">
-  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.3);border-radius:32px;background:rgba(22,26,32,0.82);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 25px 90px rgba(0,0,0,0.65);text-align:center;">
+<div id="adminLoginOverlay" style="position:fixed;inset:0;z-index:999;background:linear-gradient(145deg,#0a0c0f,#13161b);display:grid;place-items:center;padding:24px;">
+  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.25);border-radius:32px;background:rgba(22,26,32,0.92);backdrop-filter:blur(30px);box-shadow:0 20px 80px rgba(0,0,0,0.6);text-align:center;">
     <img src="images/psd 1.png" alt="Neo Broadband Logo" style="max-height:55px;width:auto;margin-bottom:12px;">
     <div class="admin-badge">Admin NOC Console</div>
     <h2 style="font-weight:400;font-size:20px;color:var(--ivory);margin-bottom:6px;">Network Operator Authentication</h2>
@@ -444,7 +492,7 @@ body {
   </div>
 </div>
 
-<!-- ═══ MODAL FOR TICKET DISPATCH / RESOLVE ═══ -->
+<!-- ═══ EXPANDED MODAL FOR TICKET DISPATCH / RESOLVE ═══ -->
 <div class="admin-modal" id="ticketModal">
   <div class="modal-content">
     <div class="card-head">
@@ -453,18 +501,60 @@ body {
     </div>
     <input type="hidden" id="tktModalCustId">
     <input type="hidden" id="tktModalId">
+    
     <div class="field-grid">
-      <div class="field"><label>Subscriber Account</label><input id="tktModalSubscriber" disabled></div>
-      <div class="field"><label>Ticket Reference</label><input id="tktModalRef" disabled></div>
-      <div class="field full"><label>Subject / Problem Statement</label><input id="tktModalSubject"></div>
-      <div class="field"><label>Ticket Lifecycle Status</label>
-        <select id="tktModalStatus">
+      <div class="field">
+        <label>Subscriber Account</label>
+        <input id="tktModalSubscriber" disabled>
+      </div>
+      <div class="field">
+        <label>Ticket Reference</label>
+        <input id="tktModalRef" disabled>
+      </div>
+
+      <!-- 1. Type & Priority -->
+      <div class="field">
+        <label>Ticket Type</label>
+        <select id="tktModalType">
+          <option value="Incident">Incident (Unplanned Outage / Degradation)</option>
+          <option value="Request">Service Request (Configuration / Allocation)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Priority (SLA Target)</label>
+        <select id="tktModalPriority">
+          <option value="P1">P1 - Critical (4h Business SLA)</option>
+          <option value="P2">P2 - Major (8h Business SLA)</option>
+          <option value="P3" selected>P3 - Minor (24h Business SLA)</option>
+          <option value="P4">P4 - Low (48h Business SLA)</option>
+        </select>
+      </div>
+
+      <!-- 2. Fault Classification -->
+      <div class="field">
+        <label>Fault Classification</label>
+        <select id="tktModalFaultType">
+          <option value="No Connection">No Connection (LOS Red / Fiber Cut)</option>
+          <option value="Speed">Speed / Throughput Degradation</option>
+          <option value="Dropouts">Dropouts / Line Flapping</option>
+          <option value="Browsing">Browsing / DNS Resolution Issue</option>
+          <option value="Login">Login / RADIUS Authentication</option>
+          <option value="Hardware">Hardware / NTD Optical Interface</option>
+        </select>
+      </div>
+      
+      <!-- 3. Status & Engineer -->
+      <div class="field">
+        <label>Ticket Lifecycle Status</label>
+        <select id="tktModalStatus" onchange="toggleResolutionFields()">
           <option value="In NOC Queue">In NOC Queue</option>
-          <option value="Investigating">Investigating / Pending</option>
+          <option value="Investigating">Investigating / In Progress</option>
           <option value="Resolved">Resolved & Cleared</option>
         </select>
       </div>
-      <div class="field"><label>Attending NOC Engineer</label>
+
+      <div class="field">
+        <label>Attending NOC Engineer</label>
         <select id="tktModalEngineer">
           <option value="NOC Engineer 01 (You)">NOC Engineer 01 (You)</option>
           <option value="Alex Chen (Lead)">Alex Chen (Lead)</option>
@@ -473,10 +563,29 @@ body {
           <option value="Liam Vance (Transit)">Liam Vance (Transit)</option>
         </select>
       </div>
-      <div class="field full"><label>Resolution / Clearing Notes</label>
-        <textarea id="tktModalNotes" rows="3" placeholder="State findings, optical loop tests, BGP route recalculation or CPE reconfiguration..."></textarea>
+
+      <!-- 4. Resolution Root Cause (RCA) -->
+      <div class="field" id="tktModalRcaGroup">
+        <label>Resolved Reason (Root Cause RCA)</label>
+        <select id="tktModalResolvedReason">
+          <option value="No Fault Found">No Fault Found (Loop OK / CPE Power Cycle)</option>
+          <option value="NBN">NBN (Distribution Fiber / NNI Flap / Field Tech)</option>
+          <option value="Customer">Customer (Faulty LAN / Router / Wi-Fi Config)</option>
+          <option value="Vocus">Vocus / Upstream Transit (Transit BGP Latency)</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label>Subject / Problem Statement</label>
+        <input id="tktModalSubject">
+      </div>
+
+      <div class="field full">
+        <label>Resolution & Engineering Notes</label>
+        <textarea id="tktModalNotes" rows="3" placeholder="Document diagnostic test results, optical attenuation levels, and fix actions..."></textarea>
       </div>
     </div>
+
     <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end;">
       <button class="btn-action" onclick="closeTicketModal()">Cancel</button>
       <button class="btn-primary" onclick="saveTicketChanges()">Commit NOC Update</button>
@@ -874,22 +983,23 @@ body {
         </div>
 
         <div class="table-wrap">
-          <table class="portal-table" id="adminTicketsTable">
-            <thead>
-              <tr>
-                <th>Ticket Ref</th>
-                <th>Subscriber ID & Name</th>
-                <th>Subject / Query</th>
-                <th>Created</th>
-                <th>Attended By</th>
-                <th>Status</th>
-                <th>Resolved / Cleared By</th>
-                <th>NOC Dispatch Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+  <table class="portal-table" id="adminTicketsTable" style="min-width: 950px;">
+    <thead>
+      <tr>
+        <th>Ticket Ref</th>
+        <th>Type &amp; Priority</th>
+        <th>Fault Type</th>
+        <th>Subscriber</th>
+        <th>Subject / Problem</th>
+        <th>Created</th>
+        <th>Status &amp; SLA</th>
+        <th>Resolution / MTTR</th>
+        <th style="min-width: 140px; text-align: center;">Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
       </div>
     </section>
 
