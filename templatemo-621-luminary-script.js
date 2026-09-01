@@ -3,6 +3,36 @@ TemplateMo 621 Luminary
 https://templatemo.com/tm-621-luminary
 */
 
+// ── Theme Toggle (Dark / Light Mode) ──
+// Note: the attribute is also set as early as possible by an inline
+// snippet in each page's <head> so there is no flash of the wrong theme.
+function applyStoredTheme() {
+  let stored = null;
+  try { stored = localStorage.getItem('nb-theme'); } catch (e) {}
+  document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
+}
+applyStoredTheme();
+
+function initThemeToggles() {
+  const toggles = document.querySelectorAll('.theme-toggle');
+  if (!toggles.length) return;
+  const sync = () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    toggles.forEach(btn => btn.setAttribute('aria-pressed', String(isLight)));
+  };
+  sync();
+  toggles.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const next = isLight ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('nb-theme', next); } catch (e) {}
+      sync();
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', initThemeToggles);
+
 // ── Smooth Scroll (JS-driven, overrides CSS) ──
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
