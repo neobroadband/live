@@ -914,29 +914,169 @@ body.menu-open .top-nav { background: rgba(15,17,21,0.95); backdrop-filter: blur
   border-color: #2b6cf6 !important;
   transform: translateX(-50%) rotate(45deg) translateY(0) !important;
 }
-/* ── NOC Ticketing Badges ── */
-.badge-p1 { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.4); font-weight: 700; padding: 2px 7px; border-radius: 4px; font-size: 9px; }
-.badge-p2 { background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.4); font-weight: 700; padding: 2px 7px; border-radius: 4px; font-size: 9px; }
-.badge-p3 { background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); font-weight: 600; padding: 2px 7px; border-radius: 4px; font-size: 9px; }
-.badge-p4 { background: rgba(156,163,175,0.2); color: #9ca3af; border: 1px solid rgba(156,163,175,0.3); font-weight: 500; padding: 2px 7px; border-radius: 4px; font-size: 9px; }
-
-.badge-type-inc { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 2px 6px; border-radius: 4px; font-size: 8.5px; font-weight: 700; }
-.badge-type-req { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); padding: 2px 6px; border-radius: 4px; font-size: 8.5px; font-weight: 700; }
-
-.badge-fault { background: rgba(255,255,255,0.06); color: var(--ivory); border: 1px solid var(--panel-border); padding: 2px 7px; border-radius: 4px; font-size: 9px; white-space: nowrap; }
-.badge-rca { color: var(--accent-gold); background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.3); padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 600; }
-
-.badge-sla-met { color: #22c55e; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); padding: 2px 6px; border-radius: 100px; font-size: 8.5px; font-weight: 600; }
-.badge-sla-missed { color: #ef4444; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); padding: 2px 6px; border-radius: 100px; font-size: 8.5px; font-weight: 600; }
-.badge-sla-active { color: #38bdf8; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); padding: 2px 6px; border-radius: 100px; font-size: 8.5px; font-weight: 600; }
-
-.btn-action {
-  display: inline-flex !important; align-items: center; justify-content: center;
-  padding: 5px 12px !important; border-radius: 6px !important; font-size: 9.5px !important; font-weight: 600 !important;
-  letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
-  background: #232730 !important; color: #ffffff !important;
-  border: 1px solid rgba(156, 163, 175, 0.3) !important; transition: all 0.2s ease; white-space: nowrap;
+/* ── Enhanced Sign-In Overlay With Network Background ── */
+#loginOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(15, 17, 21, 0.45) 0%, rgba(15, 17, 21, 0.88) 100%),
+    url("images/bg-network-mesh.jpg") center center / cover no-repeat;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
-.btn-action:hover { background: #323844 !important; border-color: #ffffff !important; }
-.btn-action.green { background: rgba(34, 197, 94, 0.2) !important; color: #48bb78 !important; border-color: #22c55e !important; }
-.btn-action.green:hover { background: rgba(34, 197, 94, 0.4) !important; }
+/* ── Enhanced Admin Sign-In Overlay With Network Background ── */
+#adminLoginOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(15, 17, 21, 0.45) 0%, rgba(15, 17, 21, 0.88) 100%),
+    url("images/bg-network-mesh.jpg") center center / cover no-repeat;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+/* ═══════════════════════════════════════════════════
+   LIGHT MODE THEME
+   Activated by JS setting <html data-theme="light">
+   (see templatemo-621-luminary-script.js). Default
+   (no attribute, or data-theme="dark") stays dark.
+   ═══════════════════════════════════════════════════ */
+html[data-theme="light"] {
+  --base-deep: #FAFAFA;
+  --base-mid: #F1F2F4;
+  --base-soft: #E8E9EC;
+  --slate-warm: #64748b; /* Improved contrast for secondary text */
+  --slate-light: #334155; /* Improved contrast for body text */
+  --graphite: #D1D5DB;
+  --graphite-soft: #94A3B8;
+  --ivory: #0F172A; /* Deep navy/black for headings */
+  --ivory-muted: #1E293B;
+  --silver: #475569;
+  --panel-bg: rgba(255, 255, 255, 0.85);
+  --panel-border: rgba(15, 23, 42, 0.12);
+}
+
+/* NEW: Global Logo Visibility Fix */
+html[data-theme="light"] .nav-logo, 
+html[data-theme="light"] .portal-brand img {
+  filter: invert(1) brightness(0.2); /* Turns white logo dark */
+}
+
+/* NEW: Ensure grid visibility on light background */
+html[data-theme="light"] .page-grid-overlay {
+  --grid-color: rgba(0, 0, 0, 0.07);
+  background-image:
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* Base surfaces */
+html[data-theme="light"] .atmosphere {
+  background: linear-gradient(180deg, #FAFAFA 0%, #F1F2F4 35%, #E8E9EC 70%, #F3F4F5 100%);
+}
+html[data-theme="light"] .grain { opacity: 0.02; }
+
+/* Nav: transparent (over hero imagery) keeps light text automatically since
+   the hero always has a dark photo overlay; solid nav states need dark text */
+html[data-theme="light"] .top-nav.scrolled,
+html[data-theme="light"] body.menu-open .top-nav {
+  background: rgba(255, 255, 255, 0.86);
+}
+html[data-theme="light"] .mobile-menu-inner { background: rgba(255, 255, 255, 0.97); }
+html[data-theme="light"] .top-nav.scrolled .nav-links > li > a,
+html[data-theme="light"] .top-nav.scrolled .nav-utility a,
+html[data-theme="light"] body.menu-open .nav-links > li > a,
+html[data-theme="light"] body.menu-open .nav-utility a,
+html[data-theme="light"] .mobile-menu-link {
+  color: #15171C !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] .top-nav.scrolled .nav-links > li > a:hover,
+html[data-theme="light"] .top-nav.scrolled .nav-utility a:hover,
+html[data-theme="light"] .mobile-menu-link:hover {
+  color: #2b6cf6 !important;
+}
+html[data-theme="light"] .top-nav.scrolled .nav-links > li > a.active,
+html[data-theme="light"] body.menu-open .nav-links > li > a.active,
+html[data-theme="light"] .mobile-menu-link.active {
+  color: #2b6cf6 !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] .nav-cta { color: #FAFAFA !important; }
+
+/* Dropdown menus */
+html[data-theme="light"] .dropdown-content,
+html[data-theme="light"] .nav-links li.dropdown .dropdown-content {
+  background: #FFFFFF;
+  border-color: rgba(21, 23, 28, 0.1);
+  box-shadow: 0 16px 36px rgba(21, 23, 28, 0.12);
+}
+html[data-theme="light"] .nav-links li.dropdown .dropdown-content a,
+html[data-theme="light"] .services-dropdown .service-title {
+  color: #15171C !important;
+}
+html[data-theme="light"] .services-dropdown .service-desc {
+  color: var(--slate-warm) !important;
+}
+html[data-theme="light"] .nav-links .dropdown-content a:hover {
+  background: rgba(43, 108, 246, 0.08);
+}
+
+/* Decorative low-opacity numerals/lines that assumed a dark backdrop */
+html[data-theme="light"] .feature-number { color: rgba(21, 23, 28, 0.06); }
+html[data-theme="light"] .hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(21,23,28,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(21,23,28,0.08) 1px, transparent 1px);
+}
+
+/* Portal shell (admin/customer dashboards) */
+html[data-theme="light"] .sidebar { background: rgba(255, 255, 255, 0.9); }
+html[data-theme="light"] .page-grid-overlay {
+  background-image:
+    linear-gradient(to right, rgba(21, 23, 28, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(21, 23, 28, 0.08) 1px, transparent 1px);
+}
+html[data-theme="light"] .portal-table tr:hover td { background: rgba(21,23,28,0.03); }
+
+/* ═══════════════════════════════════════════════════
+   THEME TOGGLE SWITCH
+   ═══════════════════════════════════════════════════ */
+.theme-toggle {
+  position: relative;
+  width: 50px; height: 27px;
+  border-radius: 100px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  cursor: pointer;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: background 0.5s var(--silk-ease), border-color 0.5s var(--silk-ease);
+}
+.theme-toggle-knob {
+  width: 19px; height: 19px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--silver), var(--slate-light));
+  display: flex; align-items: center; justify-content: center;
+  transform: translateX(0);
+  transition: transform 0.55s var(--silk-ease), background 0.5s var(--silk-ease);
+}
+html[data-theme="light"] .theme-toggle-knob { transform: translateX(23px); }
+.theme-toggle-knob svg {
+  width: 11px; height: 11px;
+  stroke: var(--base-deep); fill: none; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+html[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+.theme-toggle:focus-visible { outline: 2px solid var(--silver); outline-offset: 3px; }
