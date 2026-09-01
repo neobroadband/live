@@ -3,7 +3,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Broadband — Customer Portal & Workspace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -444,16 +443,7 @@ body {
       <button data-page="profile"><span class="icon">○</span>Account Settings</button>
     </nav>
 
-        <div class="sidebar-foot">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-warm);">Theme</span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
-          <span class="theme-toggle-knob">
-            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          </span>
-        </button>
-      </div>
+    <div class="sidebar-foot">
       <div class="mini-profile">
         <div class="avatar" id="sidebarAvatar">NB</div>
         <div>
@@ -658,23 +648,33 @@ body {
       <div class="grid two-col">
         <div class="card">
           <div class="card-head"><h3>Submit Priority Support Ticket</h3></div>
-             <div class="field">
-               <label>Issue Category (Fault Type)</label> 
-                <select id="ticketCategory">
-                 <option value="Login">Static IP / Login Configuration</option>
-                 <option value="No Connection">NTD Optical / No Connection</option>
-                 <option value="Browsing">BGP / Latency Routing Query</option>
-                 <option value="Drop Outs">Wi-Fi / Intermittent Drop Outs</option>
-                 <option value="Speed">Multi-Gig WAN Speed Issue</option>
-                 <option value="Browsing">rDNS / DNS Optimization</option>
-                 <option value="Login">SIP Trunk / VoIP Issue</option>
-                </select>
-             </div>
-          <div class="field"><label>Ticket Description</label><input id="ticketNotes" placeholder="Describe the behavior..."></div>
+          <div class="field">
+    <label>Issue Type (Fault Category)</label>
+<select id="ticketCategory">
+    <option value="Login">Login / Authentication</option>
+    <option value="Browsing">Browsing / Latency</option>
+    <option value="Speed">Speed Degradation</option>
+    <option value="No Connection">No Connection (Offline)</option>
+    <option value="Drop Outs">Intermittent Drop Outs</option>
+    <option value="Billing Query">Billing & Account Query</option>
+    <option value="Static IP Routing Configuration">Static IP Routing Configuration</option>
+    <option value="NTD Optical Power Verification">NTD Optical Power Verification</option>
+    <option value="BGP Multi-Homing Routing Query">BGP Multi-Homing Routing Query</option>
+    <option value="Wi-Fi 6 CPE Beacon Diagnostic">Wi-Fi 6 CPE Beacon Diagnostic</option>
+    <option value="VLAN Trunking Allocation">VLAN Trunking Allocation</option>
+    <option value="2.5G Multi-Gig WAN Port Speed Negotiation">2.5G Multi-Gig WAN Port Speed Negotiation</option>
+    <option value="Reverse DNS (rDNS) PTR Record Delegation">Reverse DNS (rDNS) PTR Record Delegation</option>
+    <option value="SIP Trunk VoIP Packet Latency Optimization">SIP Trunk VoIP Packet Latency Optimization</option>
+</select>
+</div>
+<div class="field">
+    <label>Subject / Problem Statement</label>
+        <input id="ticketNotes" placeholder="Briefly describe the issue (e.g. Fiber light is red)">
+         </div>
           <button class="btn-primary" style="width:100%;margin-top:10px;" onclick="createSupportTicket()">Dispatch Ticket to NOC</button>
         </div>
 
-        <div class="card">
+       <div class="card">
           <div class="card-head"><h3>Active Support Change Requests</h3></div>
           <div id="ticketsLogContainer"></div>
         </div>
@@ -706,30 +706,6 @@ body {
 </div>
 
 <div class="toast-msg" id="toast"></div>
-
-<!-- ═══ THEME TOGGLE (Dark / Light Mode) ═══ -->
-<script>
-(function () {
-  function applyStoredTheme() {
-    let stored = null;
-    try { stored = localStorage.getItem('nb-theme'); } catch (e) {}
-    document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
-  }
-  applyStoredTheme();
-  document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    const sync = () => btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-theme') === 'light'));
-    sync();
-    btn.addEventListener('click', function () {
-      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem('nb-theme', next); } catch (e) {}
-      sync();
-    });
-  });
-})();
-</script>
 
 <!-- ═══ BACKEND CLOUD & ISP REST API INTEGRATION LAYER ═══ -->
 <script>
@@ -1210,35 +1186,49 @@ function requestPlanUpgrade(planKey) {
 
 // ── Support Tickets ──
 function createSupportTicket() {
-  const cat = document.getElementById('ticketCategory').value;
-  const notes = document.getElementById('ticketNotes').value.trim();
-  if (!notes) { toast('Please write a short description'); return; }
-
-  // --- NEW AUTOMATIC CATEGORIZATION LOGIC ---
-  let autoPriority = "P3"; // Default
-  if (cat === "No Connection") autoPriority = "P1";
-  else if (cat === "Speed" || cat === "Drop Outs") autoPriority = "P2";
-  else if (cat === "Browsing") autoPriority = "P3";
-  else if (cat === "Login") autoPriority = "P4";
-  // ------------------------------------------
+  // Get values from the UI
+  const faultTypeSelected = document.getElementById('ticketCategory').value;
+  const subjectInput = document.getElementById('ticketNotes').value.trim();
+  
+  if (!subjectInput) { 
+    toast('Please provide a subject for your ticket.'); 
+    return; 
+  }
 
   const profile = subscriberStore[activeUserToken];
   if (!profile.tickets) profile.tickets = [];
   
-  profile.tickets.unshift({
-    id: `TKT-${Math.floor(1000 + Math.random()*9000)}`,
-    title: `${cat}: ${notes}`,
+  const tktId = `TKT-${Math.floor(1000 + Math.random() * 9000)}`;
+  
+  // Construct the ticket to match Admin Portal requirements
+  const newTicket = {
+    id: tktId,
+    title: subjectInput,             // Becomes the "Subject" in Admin view
     status: "In NOC Queue",
-    faultType: cat,          // Explicitly store fault type
-    priority: autoPriority,   // Automatically assigned priority
-    date: new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' AEST'
-  });
+    date: new Date().toLocaleDateString('en-AU', { 
+        day: '2-digit', month: 'short', year: 'numeric', 
+        hour: '2-digit', minute: '2-digit' 
+    }) + ' AEST',
+    ticketType: "Incident",          // Mapped for Admin logic
+    priority: "P3",                  // Default to Medium
+    faultType: faultTypeSelected,    // Mapped to Admin "Fault Type" column
+    attendedBy: "NOC Engineer 01",
+    notes: `Customer reported via Portal: ${subjectInput}`,
+    slaStatus: "Pending",
+    mttr: "Pending"
+  };
 
+  profile.tickets.unshift(newTicket);
+
+  // Sync to Cloud/LocalStorage
   ISPClient.saveStore(subscriberStore);
+  
+  // Clean up UI
   document.getElementById('ticketNotes').value = "";
   renderTickets();
-  toast(`Ticket dispatched as ${autoPriority} Priority.`);
+  toast(`Priority ticket ${tktId} dispatched to Engineering.`);
 }
+
 function renderTickets() {
   const profile = subscriberStore[activeUserToken];
   const container = document.getElementById('ticketsLogContainer');
