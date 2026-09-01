@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Services — Neo Broadband</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -277,9 +278,16 @@
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
       <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
-    <ul class="nav-utility">
-      <li><a href="admin-portal.html">Admin</a></li>
-     
+        <ul class="nav-utility">
+      <li><a href="admin-portal.html">Neo Login</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+          <span class="theme-toggle-knob">
+            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </span>
+        </button>
+      </li>
     </ul>
     
   </div>
