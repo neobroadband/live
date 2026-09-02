@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,9 +204,9 @@
   }
 
   html[data-theme="light"] .service-details p {
-  color: #334155; /* Darker grey for long-form reading */
-  border-top-color: #e2e8f0;
-}
+    color: #334155; 
+    border-top-color: #e2e8f0;
+  }
 
   /* Read More Button */
   .read-more-btn {
@@ -232,6 +230,45 @@
     background: rgba(156, 163, 175, 0.15);
     color: var(--ivory, #E5E7EB);
     border-color: rgba(156, 163, 175, 0.4);
+  }
+
+  /* ═══ Custom Wide Card for Single Row Item ═══ */
+  .service-card-wide {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .service-card-wide .service-img-container {
+    width: 40%;
+    height: 100%;
+    min-height: 280px;
+    margin-bottom: 0;
+  }
+
+  .service-card-wide .service-content-wrapper {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 950px) {
+    .service-card-wide {
+      flex-direction: column;
+      gap: 0;
+    }
+    .service-card-wide .service-img-container {
+      width: 100%;
+      min-height: 200px;
+      margin-bottom: 24px;
+    }
+    .service-card-wide .service-content-wrapper {
+      width: 100%;
+    }
   }
 </style>
 </head>
@@ -587,6 +624,21 @@
           <p>Artificial Intelligence for IT Operations (AIOps) revolutionizes how your engineering teams monitor and manage system health. We deploy platforms that ingest millions of telemetry data points, logs, and alerts, utilizing machine learning to separate critical signals from digital noise to forecast hardware degradation instantly and prevent unexpected system outages.</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
+      </div>
+
+      <!-- 21. Custom CRM (NEW WIDE ROW) -->
+      <div class="service-card service-card-wide reveal">
+        <div class="service-img-container">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Custom CRM Dashboard & Self-Works" loading="lazy">
+        </div>
+        <div class="service-content-wrapper">
+          <h3 class="service-title">Custom CRM</h3>
+          <p class="service-summary">Engineer bespoke customer relationship management platforms tailored to your business workflows and self-management needs.</p>
+          <div class="service-details">
+            <p>We build bespoke Customer Relationship Management (CRM) platforms designed specifically to match your unique business workflows and individual self-works. Unlike rigid off-the-shelf software, our solutions integrate seamlessly with your existing processes to centralize client data. We map out your specific sales pipelines and operational touchpoints to ensure every feature directly accelerates growth. Automated task tracking and intelligent reporting dashboards empower your team to eliminate repetitive administrative work. Our scalable architecture ensures that as your enterprise expands, your CRM seamlessly evolves to handle increased data loads. Built with intuitive user interfaces, our systems guarantee rapid adoption and minimize training downtime. Take absolute control over your customer interactions with a highly secure platform that operates exactly the way you do.</p>
+          </div>
+          <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
+        </div>
       </div>
 
     </div>
