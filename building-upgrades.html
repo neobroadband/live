@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,7 +109,7 @@
   .nav-brand { display: flex; align-items: center; text-decoration: none; }
   .nav-logo { max-height: 100px; width: auto; object-fit: contain; }
 
-  /* Responsive grid adjustment for catalog layout - Optimized for single rows */
+  /* Responsive grid adjustment for catalog layout */
   .features-grid {
     display: grid;
     gap: 16px;
@@ -142,11 +141,7 @@
     font-size: 0.95rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 20px;
   }
   .section { padding: 80px 0; }
-
-  /* Adjusted pricing card padding for tighter fit */
-  .pricing-card {
-    padding: 24px 20px !important;
-  }
+  .pricing-card { padding: 24px 20px !important; }
 
   /* FAQ Accordion / Custom Styles */
   .faq-card {
@@ -173,118 +168,154 @@
     margin: 0;
   }
 
-  /* ═══ Popup Contact Form ═══ */
+  /* ═══ Professional Popup Contact Form Upgrade ═══ */
   .cf-overlay {
     position: fixed; inset: 0; width: 100vw; height: 100vh;
-    background: rgba(20, 20, 25, 0.55); backdrop-filter: blur(4px); z-index: 9999;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; padding: 20px;
+    background: rgba(10, 12, 16, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 9999; display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; padding: 20px;
   }
   .cf-overlay.cf-open { opacity: 1; visibility: visible; }
+  
   .cf-modal {
-    background: #ffffff; color: #1f2430; width: 100%; max-width: 440px;
-    border-radius: 14px; padding: 36px 32px 28px; position: relative;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.35); transform: translateY(16px) scale(0.98);
-    transition: transform 0.35s ease; max-height: 90vh; overflow-y: auto; font-family: 'Montserrat', sans-serif;
+    background: rgba(22, 26, 32, 0.95); color: #E5E7EB; width: 100%; max-width: 550px;
+    border: 1px solid rgba(156, 163, 175, 0.15); border-radius: 20px; padding: 40px; position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(43, 108, 246, 0.1);
+    transform: translateY(20px) scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 95vh; overflow-y: auto; font-family: 'Montserrat', sans-serif;
   }
   .cf-overlay.cf-open .cf-modal { transform: translateY(0) scale(1); }
-  .cf-close {
-    position: absolute; top: 14px; right: 16px; background: none; border: none;
-    font-size: 22px; line-height: 1; color: #9a9fa8; cursor: pointer; padding: 4px;
-  }
-  .cf-close:hover { color: #1f2430; }
-  .cf-title { font-size: 1.5rem; font-weight: 600; margin: 0 0 4px; color: #1f2430; }
-  .cf-subtitle { font-size: 0.9rem; color: #767c88; margin: 0 0 22px; font-weight: 300; }
-  .cf-field { margin-bottom: 14px; }
-  .cf-field label { display: block; font-size: 0.8rem; font-weight: 500; color: #454b57; margin-bottom: 6px; }
-  .cf-field input, .cf-field textarea {
-  color: var(--ivory);
-  background: var(--base-soft);
-  border: 1.5px solid var(--panel-border);
-}
-
-  html[data-theme="light"] .cf-field input::placeholder,
-  html[data-theme="light"] .cf-field textarea::placeholder {
-  color: #64748b;
-}
-
-/* Fix Modal titles in portals/upgrades */
-  html[data-theme="light"] .cf-modal {
-  background: #ffffff;
-  color: #0f172a;
-}
-  .cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: #2b6cf6; background: #ffffff; }
-  .cf-field textarea { resize: vertical; min-height: 80px; }
   
-  /* ═══ Phone Input styling ═══ */
+  .cf-close {
+    position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.05); 
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 36px; height: 36px; 
+    display: flex; align-items: center; justify-content: center; color: #9CA3AF; 
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .cf-close:hover { background: rgba(255,255,255,0.1); color: #ffffff; transform: rotate(90deg); }
+  
+  .cf-header { text-align: center; margin-bottom: 28px; }
+  .cf-title { font-size: 1.75rem; font-weight: 700; margin: 0 0 8px; color: #ffffff; letter-spacing: -0.02em; }
+  .cf-subtitle { font-size: 0.95rem; color: #9CA3AF; margin: 0; font-weight: 300; line-height: 1.5; }
+  
+  .cf-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cf-field.full-width { grid-column: 1 / -1; }
+  .cf-field { margin-bottom: 0; }
+  .cf-field label { display: block; font-size: 0.85rem; font-weight: 500; color: #B0B8C4; margin-bottom: 8px; letter-spacing: 0.02em; }
+  
+  .cf-field input, .cf-field textarea {
+    width: 100%; color: #ffffff; background: rgba(15, 17, 21, 0.6);
+    border: 1px solid rgba(156, 163, 175, 0.2); border-radius: 10px; padding: 14px 16px;
+    font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease; box-sizing: border-box;
+  }
+  .cf-field input::placeholder, .cf-field textarea::placeholder { color: #6B7280; }
+  .cf-field input:focus, .cf-field textarea:focus {
+    outline: none; border-color: #2b6cf6; background: rgba(15, 17, 21, 0.9);
+    box-shadow: 0 0 0 3px rgba(43, 108, 246, 0.15);
+  }
+  .cf-field textarea { resize: vertical; min-height: 110px; }
+  
+  #cfEnquiryDisplay { 
+    background: rgba(255,255,255,0.03); color: #9CA3AF; cursor: not-allowed; 
+    text-align: center; font-family: monospace; font-size: 1.05rem; letter-spacing: 0.15em; border-style: dashed; 
+  }
+  
   .phone-input-group {
-    display: flex; align-items: center; border: 1px solid #e0e2e7; border-radius: 8px;
-    background: #fafafb; transition: border-color 0.2s ease, background 0.2s ease; overflow: hidden;
+    display: flex; align-items: stretch; border: 1px solid rgba(156, 163, 175, 0.2); border-radius: 10px;
+    background: rgba(15, 17, 21, 0.6); transition: all 0.3s ease; overflow: hidden;
   }
-  .phone-input-group:focus-within { border-color: #2b6cf6; background: #ffffff; }
+  .phone-input-group:focus-within { border-color: #2b6cf6; box-shadow: 0 0 0 3px rgba(43, 108, 246, 0.15); }
   .phone-prefix {
-    display: flex; align-items: center; gap: 6px; padding: 11px 12px; font-size: 0.92rem;
-    background: #f0f1f3; border-right: 1px solid #e0e2e7; color: #454b57; user-select: none;
+    display: flex; align-items: center; gap: 8px; padding: 0 16px; font-size: 0.95rem;
+    background: rgba(255,255,255,0.05); border-right: 1px solid rgba(156, 163, 175, 0.2); color: #E5E7EB; user-select: none;
   }
-  .phone-input-group input {
-    border: none !important; background: transparent !important; border-radius: 0 !important;
-    flex: 1; outline: none; margin: 0; padding: 11px 13px;
-  }
-
+  .phone-input-group input { border: none !important; background: transparent !important; box-shadow: none !important; margin: 0; }
+  
   .cf-submit {
-    width: 100%; background: #1f2430; color: #fff; border: none; border-radius: 8px;
-    padding: 13px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 6px;
-    transition: background 0.2s ease, opacity 0.2s ease; font-family: 'Montserrat', sans-serif;
+    width: 100%; background: linear-gradient(135deg, #2b6cf6 0%, #1a51c4 100%);
+    color: #fff; border: none; border-radius: 10px; padding: 16px; font-size: 1.05rem; font-weight: 600;
+    cursor: pointer; margin-top: 12px; transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(43, 108, 246, 0.3); letter-spacing: 0.02em;
   }
-  .cf-submit:hover { background: #2b6cf6; }
-  .cf-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-  .cf-status { margin-top: 12px; font-size: 0.85rem; text-align: center; display: none; }
-  .cf-status.cf-success { color: #1a8f4c; display: block; }
-  .cf-status.cf-error { color: #d0392b; display: block; }
-  .cf-note { font-size: 0.72rem; color: #9a9fa8; text-align: center; margin-top: 14px; }
+  .cf-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(43, 108, 246, 0.4); }
+  .cf-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+  
+  .cf-status { margin-top: 16px; font-size: 0.9rem; text-align: center; display: none; padding: 12px; border-radius: 8px; font-weight: 500; }
+  .cf-status.cf-success { color: #34d399; background: rgba(52, 211, 153, 0.1); display: block; border: 1px solid rgba(52, 211, 153, 0.2); }
+  .cf-status.cf-error { color: #f87171; background: rgba(248, 113, 113, 0.1); display: block; border: 1px solid rgba(248, 113, 113, 0.2); }
+  
+  .cf-note { font-size: 0.8rem; color: #6B7280; text-align: center; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .cf-note svg { width: 14px; height: 14px; fill: #6B7280; }
+
+  /* Light Theme Specific Overrides */
+  html[data-theme="light"] .cf-modal { background: #ffffff; color: #1e293b; border-color: #e2e8f0; box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+  html[data-theme="light"] .cf-title { color: #0f172a; }
+  html[data-theme="light"] .cf-subtitle, html[data-theme="light"] .cf-field label { color: #475569; }
+  html[data-theme="light"] .cf-field input, html[data-theme="light"] .cf-field textarea, html[data-theme="light"] .phone-input-group { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
+  html[data-theme="light"] .phone-prefix { background: #f1f5f9; border-color: #cbd5e1; color: #334155; }
+  html[data-theme="light"] #cfEnquiryDisplay { background: #f1f5f9; color: #64748b; }
+  html[data-theme="light"] .cf-close { background: #f1f5f9; border-color: #cbd5e1; color: #64748b; }
+  html[data-theme="light"] .cf-close:hover { background: #e2e8f0; color: #0f172a; }
+
+  @media (max-width: 600px) {
+    .cf-form-grid { grid-template-columns: 1fr; }
+    .cf-modal { padding: 30px 20px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="cf-overlay" id="cfOverlay">
   <div class="cf-modal">
-    <button class="cf-close" id="cfClose" aria-label="Close contact form">&times;</button>
-    <h3 class="cf-title">Building Upgrade Enquiry</h3>
-    <p class="cf-subtitle">Submit your apartment complex details to initiate a free eligibility check.</p>
+    <button class="cf-close" id="cfClose" aria-label="Close contact form">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="cf-header">
+      <h3 class="cf-title">Building Upgrade Enquiry</h3>
+      <p class="cf-subtitle">Submit your complex details to initiate a free fibre eligibility check.</p>
+    </div>
     <form id="cfForm" action="https://formsubmit.co/abiramkpz007@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New Building Upgrade Enquiry - NEO BROADBAND">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="Enquiry Number" id="cfEnquiryNumber" value="">
-      <div class="cf-field">
-        <label for="cfEnquiryDisplay">Enquiry Number</label>
-        <input type="text" id="cfEnquiryDisplay" value="" readonly style="background:#f0f1f3; color:#767c88; cursor:not-allowed;">
-      </div>
-      <div class="cf-field">
-        <label for="cfName">Name</label>
-        <input type="text" id="cfName" name="Name" required placeholder="Your full name">
-      </div>
-      <div class="cf-field">
-        <label for="cfEmail">Email ID</label>
-        <input type="email" id="cfEmail" name="Email" required placeholder="you@example.com">
-      </div>
       
-      <!-- Updated Phone Field with Flag and Code -->
-      <div class="cf-field">
-        <label for="cfPhone">Contact Number</label>
-        <div class="phone-input-group">
-          <div class="phone-prefix">🇦🇺 +61</div>
-          <input type="tel" id="cfPhone" name="Contact Number" required placeholder="400 000 000">
+      <div class="cf-form-grid">
+        <div class="cf-field full-width">
+          <label for="cfEnquiryDisplay">Reference Ticket</label>
+          <input type="text" id="cfEnquiryDisplay" value="" readonly>
+        </div>
+        
+        <div class="cf-field">
+          <label for="cfName">Full Name</label>
+          <input type="text" id="cfName" name="Name" required placeholder="John Doe">
+        </div>
+        
+        <div class="cf-field">
+          <label for="cfEmail">Email Address</label>
+          <input type="email" id="cfEmail" name="Email" required placeholder="john@example.com">
+        </div>
+        
+        <div class="cf-field full-width">
+          <label for="cfPhone">Contact Number</label>
+          <div class="phone-input-group">
+            <div class="phone-prefix">🇦🇺 +61</div>
+            <input type="tel" id="cfPhone" name="Contact Number" required placeholder="400 000 000">
+          </div>
+        </div>
+
+        <div class="cf-field full-width">
+          <label for="cfMessage">Building / Strata Details</label>
+          <textarea id="cfMessage" name="Message" required placeholder="Provide building address, number of apartments, and your role (e.g., Strata Manager)..."></textarea>
         </div>
       </div>
-
-      <div class="cf-field">
-        <label for="cfMessage">Building / Strata Details</label>
-        <textarea id="cfMessage" name="Message" required placeholder="Provide building address, number of apartments, and your role (e.g., Strata Manager)..."></textarea>
-      </div>
+      
       <button type="submit" class="cf-submit" id="cfSubmitBtn">Request Eligibility Check</button>
       <p class="cf-status" id="cfStatus"></p>
-      <p class="cf-note">We respect your privacy and will never share your information.</p>
+      <p class="cf-note">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" fill="rgba(107, 114, 128, 0.5)"/></svg>
+        We respect your privacy. Your information is securely encrypted.
+      </p>
     </form>
   </div>
 </div>
