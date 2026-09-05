@@ -1,8 +1,4 @@
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,14 +7,148 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Broadband — Contact Us</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
-  /* Current-page highlight (beats the !important white above) */
+  /* Current-page highlight */
   .nav-links > li > a.active,
   .mobile-menu-link.active {
     color: #2b6cf6 !important;
+  }
+
+  /* ═══ Fixed white navbar tile in light mode ═══ */
+  html[data-theme="light"] .top-nav {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    --nav-link-color: #1e293b;
+    --nav-shadow: none;
+  }
+
+  html[data-theme="light"] .top-nav .nav-links > li > a,
+  html[data-theme="light"] .top-nav .nav-utility a {
+    color: #1e293b !important;
+    text-shadow: none !important;
+  }
+
+  html[data-theme="light"] .top-nav .nav-links > li > a:hover,
+  html[data-theme="light"] .top-nav .nav-utility a:hover,
+  html[data-theme="light"] .top-nav .nav-links > li > a.active {
+    color: #2b6cf6 !important;
+  }
+
+  /* ═══ LOGO: Always BLACK in light mode (matches index.html) ═══ */
+  html[data-theme="light"] .nav-logo,
+  html[data-theme="light"] .portal-brand img {
+    filter: brightness(0) !important;
+  }
+
+  /* ═══ TRANSPARENT FORM & HIGH-CONTRAST TEXT (LIGHT & DARK MODES) ═══ */
+  .cf-modal {
+    background: rgba(15, 17, 21, 0.45) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    color: #ffffff !important;
+    width: 100%;
+    max-width: 640px;
+    flex: 0 1 640px;
+    border-radius: 16px;
+    padding: 32px 32px 28px;
+    position: relative;
+    border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 0 0 1px rgba(43, 108, 246, 0.15), 0 20px 50px rgba(0, 0, 0, 0.35) !important;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  /* Keep form transparent in light mode */
+  html[data-theme="light"] .cf-modal {
+    background: rgba(15, 17, 21, 0.45) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 1px rgba(43, 108, 246, 0.15), 0 20px 50px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  /* Form Labels and Inputs */
+  .cf-title, html[data-theme="light"] .cf-title { color: #ffffff !important; }
+  .cf-subtitle, html[data-theme="light"] .cf-subtitle { color: rgba(255, 255, 255, 0.75) !important; }
+  .cf-field label, html[data-theme="light"] .cf-field label { 
+    color: #ffffff !important; 
+    font-weight: 600 !important;
+  }
+  
+  .cf-field input,
+  .cf-field textarea,
+  html[data-theme="light"] .cf-field input,
+  html[data-theme="light"] .cf-field textarea {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+  }
+
+  .cf-field input::placeholder,
+  .cf-field textarea::placeholder,
+  html[data-theme="light"] .cf-field input::placeholder,
+  html[data-theme="light"] .cf-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .cf-phone-group,
+  html[data-theme="light"] .cf-phone-group {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+  }
+
+  .cf-phone-prefix,
+  html[data-theme="light"] .cf-phone-prefix {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-right: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  }
+
+  .cf-phone-prefix span,
+  html[data-theme="light"] .cf-phone-prefix span { 
+    color: #ffffff !important; 
+    font-weight: 600 !important;
+  }
+
+  .cf-note, html[data-theme="light"] .cf-note { 
+    color: rgba(255, 255, 255, 0.65) !important; 
+  }
+
+  #cfEnquiryDisplay, html[data-theme="light"] #cfEnquiryDisplay {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border-style: dashed !important;
+  }
+
+  /* ═══ "Get in Touch" Contrast Fixes ═══ */
+  .contact-info-inner .section-title,
+  html[data-theme="light"] .contact-info-inner .section-title { 
+    color: #ffffff !important; 
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  .contact-info-inner .hero-sub,
+  html[data-theme="light"] .contact-info-inner .hero-sub { 
+    color: #ffffff !important; 
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
+    line-height: 1.7 !important;
+  }
+
+  .contact-info-inner .hero-badge,
+  html[data-theme="light"] .contact-info-inner .hero-badge {
+    background: rgba(22, 26, 32, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .contact-info-inner .hero-badge span,
+  html[data-theme="light"] .contact-info-inner .hero-badge span {
+    color: #ffffff !important;
+    font-weight: 700 !important;
   }
 
   /* Full-page persistent grid background with cursor spotlight */
@@ -46,12 +176,10 @@
     mask-composite: add;
   }
 
-  /* Smooth scrolling for in-page navigation */
   html {
     scroll-behavior: smooth;
   }
 
-  /* ═══ Top Navigation Link & Portal Styling (matches index.html) ═══ */
   .nav-links > li > a {
     color: #ffffff !important;
     font-size: 13px !important;
@@ -99,7 +227,6 @@
     gap: 28px;
   }
 
-  /* ═══ Broadband Plans / Services Dropdown (hover to open) ═══ */
   .nav-links li.dropdown {
     position: relative;
   }
@@ -149,7 +276,6 @@
     color: #2b6cf6;
   }
 
-  /* Navigation Logo Styling */
   .nav-brand {
     display: flex;
     align-items: center;
@@ -161,36 +287,30 @@
     object-fit: contain;
   }
 
-  /* Align this page's content edge with the fixed nav's logo (nav uses 40px side padding) */
   .main {
     max-width: none;
     margin: 0;
     padding: 0 40px;
   }
 
-  /* ═══ Contact Page Layout — single view, form left / info right ═══ */
   .contact-page-section {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     min-height: calc(100vh - 168px);
-    padding: 168px 0 40px; /* 168px clears the fixed nav (≈148px tall) + breathing room */
+    padding: 168px 0 40px;
     box-sizing: border-box;
     position: relative;
     z-index: 2;
   }
 
-  /* Full-bleed background image behind the page, same treatment as the index.html hero */
   .contact-page-section::before {
     content: "";
     position: absolute;
-    top: -130px; /* extend up under the fixed nav, like the hero does */
+    top: -130px;
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
-    /* Fixed to 130vh (not a % of this section's own height) so the image scales/crops
-       exactly like .hero::before does on the other pages, regardless of how tall the
-       contact form content makes this section. */
     height: 130vh;
     background-image:
       linear-gradient(to bottom, rgba(15, 17, 21, 0.55) 0%, rgba(15, 17, 21, 0.96) 100%),
@@ -203,6 +323,16 @@
     pointer-events: none;
   }
 
+  /* Light Mode Map: Invert the background image to turn light dots into crisp black dots (matches index.html) */
+  html[data-theme="light"] .contact-page-section::before {
+    background-image:
+      linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
+      url('images/12.png') !important;
+    filter: grayscale(100%) invert(1) contrast(1.4) brightness(0.9) !important;
+    opacity: 1 !important;
+    mix-blend-mode: multiply;
+  }
+
   .contact-page-wrap {
     width: 100%;
     max-width: none;
@@ -213,7 +343,6 @@
     gap: 20px;
   }
 
-  /* Right column — fills remaining space and centers its content within it */
   .contact-info-col {
     flex: 1 1 380px;
     display: flex;
@@ -223,7 +352,7 @@
   .contact-info-inner {
     max-width: 460px;
     width: 100%;
-    color: var(--ivory, #ffffff);
+    color: #ffffff;
     text-align: center;
   }
   .contact-info-inner .hero-badge {
@@ -242,31 +371,15 @@
     max-width: 440px;
   }
 
-  /* Left column — Contact Form (transparent, reused from index.html popup) */
-  .cf-modal {
-    background: transparent;
-    color: var(--ivory, #ffffff);
-    width: 100%;
-    max-width: 640px;
-    flex: 0 1 640px;
-    border-radius: 14px;
-    padding: 32px 32px 28px;
-    position: relative;
-    border: 1.5px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 0 1px rgba(43, 108, 246, 0.15), 0 20px 50px rgba(0, 0, 0, 0.35);
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    align-self: flex-start;
-  }
   .cf-title {
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0 0 4px;
-    color: var(--ivory, #ffffff);
+    color: #ffffff;
   }
   .cf-subtitle {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.75);
     margin: 0 0 22px;
     font-weight: 300;
   }
@@ -285,53 +398,48 @@
     display: block;
     font-size: 0.8rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.95);
+    color: #ffffff;
     margin-bottom: 6px;
   }
   .cf-field input,
   .cf-field textarea {
     width: 100%;
     box-sizing: border-box;
-    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
     border-radius: 8px;
     padding: 11px 13px;
     font-size: 0.92rem;
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     transition: border-color 0.2s ease, background 0.2s ease;
-  }
-  .cf-field input::placeholder,
-  .cf-field textarea::placeholder {
-    color: rgba(255, 255, 255, 0.4);
   }
   .cf-field input:focus,
   .cf-field textarea:focus {
     outline: none;
     border-color: #2b6cf6;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.14);
   }
 
-  /* Phone field — fixed Australian flag + dial code prefix */
   .cf-phone-group {
     display: flex;
     align-items: stretch;
-    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     overflow: hidden;
     transition: border-color 0.2s ease, background 0.2s ease;
   }
   .cf-phone-group:focus-within {
     border-color: #2b6cf6;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.14);
   }
   .cf-phone-prefix {
     display: flex;
     align-items: center;
     gap: 7px;
     padding: 0 10px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.12);
     border-right: 1.5px solid rgba(255, 255, 255, 0.25);
     flex: 0 0 auto;
     user-select: none;
@@ -393,7 +501,7 @@
   .cf-note {
     grid-column: 1 / -1;
     font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.65);
     text-align: center;
     margin-top: 14px;
   }
@@ -419,7 +527,6 @@
 </svg>
 <div class="atmosphere"></div>
 
-<!-- Background Grid with Cursor Following -->
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- Nav -->
@@ -428,7 +535,6 @@
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
   <div class="nav-right">
-    <!-- Main Links: Broadband Plans, Services, Developers, RSPs, Building Upgrades, About Us, Contact Us -->
     <ul class="nav-links">
       <li class="dropdown">
         <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
@@ -448,8 +554,8 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
-     <!-- Utility Links: Admin Portal 1st, Customer Login 2nd (identical 2nd line size & color) -->
-        <ul class="nav-utility">
+    
+    <ul class="nav-utility">
       <li><a href="admin-portal.html">Neo Login</a></li>
       <li>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
@@ -460,7 +566,6 @@
         </button>
       </li>
     </ul>
-    
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span class="toggle-bar"></span><span class="toggle-bar"></span>
@@ -487,14 +592,12 @@
 
 <main class="main">
 
-  <!-- ═══ CONTACT SECTION — form left, intro right, single view below navbar ═══ -->
   <section class="section contact-page-section" id="contact">
     <div class="contact-page-wrap">
 
-      <!-- Left: Contact Form -->
+      <!-- Left: Transparent Frosted Contact Form -->
       <div class="cf-modal">
         <form id="cfForm" action="https://formsubmit.co/abiramkpz007@gmail.com" method="POST">
-          <!-- FormSubmit settings -->
           <input type="hidden" name="_subject" value="New Enquiry - Neo Broadband">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
@@ -502,7 +605,7 @@
 
           <div class="cf-field cf-field-full">
             <label for="cfEnquiryDisplay">Enquiry Number</label>
-            <input type="text" id="cfEnquiryDisplay" value="" readonly style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.5); cursor:not-allowed;">
+            <input type="text" id="cfEnquiryDisplay" value="" readonly>
           </div>
           <div class="cf-field">
             <label for="cfName">Name</label>
@@ -521,7 +624,6 @@
               </span>
               <input type="tel" id="cfPhone" name="Contact Number Local" required placeholder="000 000 000" inputmode="numeric" pattern="[0-9\s]{6,12}">
             </div>
-            <!-- Full E.164-style number, combined via JS, is what actually gets submitted -->
             <input type="hidden" id="cfPhoneFull" name="Contact Number" value="">
           </div>
           <div class="cf-field">
@@ -535,7 +637,7 @@
 
           <button type="submit" class="cf-submit" id="cfSubmitBtn">Send Message</button>
           <p class="cf-status" id="cfStatus"></p>
-          <p class="cf-note">We'll never share your information with anyone else.</p>
+          <p class="cf-note">We'll never share your information with anyone else</p>
         </form>
       </div>
 
@@ -548,7 +650,7 @@
           </div>
           <h1 class="section-title reveal">Get in <strong>Touch</strong></h1>
           <p class="hero-sub">
-            Questions about a plan, an existing service, or something else entirely? Send us a message and our team will get back to you shortly.
+            Questions about a plan, an existing service, or something else entirely? Send us a message and our team will get back to you shortly
           </p>
         </div>
       </div>
@@ -562,7 +664,6 @@
 <script>
 ;(function(){
 
-  // Full-page mouse movement tracker for background grid spotlight
   (function() {
     const pageGrid = document.getElementById('pageGrid');
     if (!pageGrid) return;
@@ -587,7 +688,6 @@
     renderGridLight();
   })();
 
-  // ─── Contact Form logic (same behavior as the index.html popup form) ───
   (function() {
     const form = document.getElementById('cfForm');
     const submitBtn = document.getElementById('cfSubmitBtn');
@@ -613,8 +713,6 @@
 
     assignNewEnquiryNumber();
 
-    // Keep the hidden "Contact Number" field (what actually gets submitted)
-    // in sync with the fixed +61 prefix + whatever the user types locally.
     const phoneLocal = document.getElementById('cfPhone');
     const phoneFull = document.getElementById('cfPhoneFull');
     function syncPhoneFull() {
@@ -643,7 +741,7 @@
       .then(function(response) {
         if (response.ok) {
           const confirmedEnquiryNo = enquiryHidden.value;
-          status.textContent = "Thanks! Your enquiry (" + confirmedEnquiryNo + ") has been sent.";
+          status.textContent = "Thanks! Your enquiry (" + confirmedEnquiryNo + ") has been sent";
           status.className = 'cf-status cf-success';
           form.reset();
           assignNewEnquiryNumber();
@@ -652,7 +750,7 @@
         }
       })
       .catch(function() {
-        status.textContent = "Something went wrong. Please try again.";
+        status.textContent = "Something went wrong. Please try again";
         status.className = 'cf-status cf-error';
       })
       .finally(function() {
@@ -665,7 +763,6 @@
 })();
 </script>
 <script>
-/* Auto-highlight current page in navigation */
 document.addEventListener('DOMContentLoaded', function () {
   var path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
