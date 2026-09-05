@@ -1,184 +1,264 @@
 /*
-  Universal Cross-Browser & Multi-Device Script
-  Handles: Viewport normalisation, iOS touch scroll-lock, universal carousels, and theme toggling
+TemplateMo 621 Luminary
+https://templatemo.com/tm-621-luminary
 */
 
-(function () {
-  'use strict';
+// ── Theme Toggle (Dark / Light Mode) ──
+// Note: the attribute is also set as early as possible by an inline
+// snippet in each page's <head> so there is no flash of the wrong theme.
+function applyStoredTheme() {
+  let stored = null;
+  try { stored = localStorage.getItem('nb-theme'); } catch (e) {}
+  document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
+}
+applyStoredTheme();
 
-  // ── 1. Dynamic Viewport Normalization (iOS Safari 100vh Fix) ──
-  function updateViewportUnits() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  window.addEventListener('resize', updateViewportUnits, { passive: true });
-  window.addEventListener('orientationchange', updateViewportUnits, { passive: true });
-  updateViewportUnits();
-
-  // ── 2. Theme State Manager ──
-  function applyStoredTheme() {
-    let stored = null;
-    try {
-      stored = localStorage.getItem('nb-theme');
-    } catch (e) {}
-
-    // Support automatic OS dark/light mode preference if no manual choice was set
-    if (!stored && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-      stored = 'light';
-    }
-
-    document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
-  }
-  applyStoredTheme();
-
-  function initThemeToggles() {
-    const toggles = document.querySelectorAll('.theme-toggle');
-    if (!toggles.length) return;
-
-    const sync = () => {
+function initThemeToggles() {
+  const toggles = document.querySelectorAll('.theme-toggle');
+  if (!toggles.length) return;
+  const sync = () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    toggles.forEach(btn => btn.setAttribute('aria-pressed', String(isLight)));
+  };
+  sync();
+  toggles.forEach(btn => {
+    btn.addEventListener('click', () => {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      toggles.forEach(btn => btn.setAttribute('aria-pressed', String(isLight)));
-    };
-    sync();
-
-    toggles.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const next = isLight ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', next);
-        try {
-          localStorage.setItem('nb-theme', next);
-        } catch (e) {}
-        sync();
-      });
+      const next = isLight ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('nb-theme', next); } catch (e) {}
+      sync();
     });
-  }
-
-  // ── 3. Smooth Anchor Scrolling with Fallback ──
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (!href || href === '#') {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-        }
-
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          const headerOffset = 80;
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-  }
-
-  // ── 4. Mobile Menu with iOS Safari Scroll-Lock ──
-  function initMobileMenu() {
-    const toggle = document.getElementById('navToggle');
-    const menu = document.getElementById('mobileMenu');
-    if (!toggle || !menu) return;
-
-    const menuLinks = menu.querySelectorAll('.mobile-menu-link, a');
-    let isOpen = false;
-
-    function lockScroll(lock) {
-      if (lock) {
-        document.body.style.overflow = 'hidden';
-        document.body.style.touchAction = 'none';
-      } else {
-        document.body.style.overflow = '';
-        document.body.style.touchAction = '';
-      }
-    }
-
-    function toggleMenu(openState) {
-      isOpen = typeof openState === 'boolean' ? openState : !isOpen;
-      toggle.classList.toggle('active', isOpen);
-      toggle.setAttribute('aria-expanded', String(isOpen));
-      menu.classList.toggle('open', isOpen);
-      document.body.classList.toggle('menu-open', isOpen);
-      lockScroll(isOpen);
-    }
-
-    toggle.addEventListener('click', () => toggleMenu());
-    menuLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && isOpen) toggleMenu(false);
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1024 && isOpen) toggleMenu(false);
-    }, { passive: true });
-  }
-
-  // ── 5. Intersection Observer Reveal Elements ──
-  function initScrollReveals() {
-    const reveals = document.querySelectorAll('.reveal');
-    if (!reveals.length) return;
-
-    if (!('IntersectionObserver' in window)) {
-      reveals.forEach(el => el.classList.add('visible'));
-      return;
-    }
-
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    reveals.forEach(el => observer.observe(el));
-  }
-
-  // ── 6. Navbar Scroll Blur Elevation ──
-  function initNavScrollElevation() {
-    const topNav = document.getElementById('topNav');
-    if (!topNav) return;
-
-    window.addEventListener('scroll', () => {
-      topNav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-  }
-
-  // ── 7. Active Navigation Link Detection ──
-  function highlightCurrentPage() {
-    const path = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-links a, .mobile-menu-link, .nav-utility a').forEach(link => {
-      const href = link.getAttribute('href');
-      if (!href) return;
-      const target = href.split('/').pop().split('#')[0];
-      if (target && target === path) {
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'page');
-      } else if (!target && path === 'index.html' && href.startsWith('#')) {
-        // Keep hash links clean
-      } else {
-        link.classList.remove('active');
-      }
-    });
-  }
-
-  // ── DOM Initialization ──
-  document.addEventListener('DOMContentLoaded', () => {
-    initThemeToggles();
-    initSmoothScroll();
-    initMobileMenu();
-    initScrollReveals();
-    initNavScrollElevation();
-    highlightCurrentPage();
   });
+}
+document.addEventListener('DOMContentLoaded', initThemeToggles);
 
+// ── Smooth Scroll (JS-driven, overrides CSS) ──
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const href = link.getAttribute('href');
+    if (href === '#') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+});
+
+// ── Reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+reveals.forEach(el => io.observe(el));
+
+// ── Counters ──
+document.querySelectorAll('.counter').forEach(el => {
+  new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    const t = parseFloat(el.dataset.target), d = parseInt(el.dataset.decimals), dur = 1800, s = performance.now();
+    const ease = x => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2;
+    (function u(n) { const p = Math.min((n-s)/dur,1); el.textContent = (t*ease(p)).toFixed(d); if(p<1) requestAnimationFrame(u); })(s);
+    e.target._counted = true;
+  }, { threshold: 0.5 }).observe(el);
+});
+
+// ── Nav scroll ──
+const topNav = document.getElementById('topNav');
+window.addEventListener('scroll', () => topNav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+
+// ── Hero grid spotlight ──
+const heroGrid = document.querySelector('.hero-grid');
+const heroEl = document.getElementById('hero');
+let gx = 0, gy = 0, tx = 0, ty = 0;
+let mouseInHero = false;
+
+document.addEventListener('mousemove', e => {
+  const heroRect = heroEl.getBoundingClientRect();
+  const gridRect = heroGrid.getBoundingClientRect();
+  const activeTop = heroRect.top + heroRect.height * 0.3;
+  // Only track in the bottom 70% of hero
+  if (e.clientY >= activeTop && e.clientY <= heroRect.bottom) {
+    mouseInHero = true;
+    tx = e.clientX - gridRect.left;
+    ty = e.clientY - gridRect.top;
+  } else {
+    mouseInHero = false;
+    tx = gridRect.width / 2;
+    ty = gridRect.height * 0.3;
+  }
+});
+
+(function lerpGrid() {
+  gx += (tx - gx) * 0.08;
+  gy += (ty - gy) * 0.08;
+  heroGrid.style.setProperty('--mx', gx + 'px');
+  heroGrid.style.setProperty('--my', gy + 'px');
+  requestAnimationFrame(lerpGrid);
+})();
+
+// ── Active nav + Side panels ──
+const navAnchors = document.querySelectorAll('.nav-links a');
+const sectionEls = document.querySelectorAll('section[id]');
+const leftDots = document.querySelectorAll('.side-panel.left .side-dot');
+const rightDots = document.querySelectorAll('.side-panel.right .side-dot');
+const leftTrack = document.getElementById('leftTrack');
+const rightTrack = document.getElementById('rightTrack');
+const scrollPctEl = document.getElementById('scrollPct');
+
+function updateNavAndPanels() {
+  const y = scrollY + innerHeight * 0.4;
+  const maxScroll = document.documentElement.scrollHeight - innerHeight;
+  const pct = Math.min(scrollY / maxScroll, 1);
+
+  // Only update active status for hash/anchor links on the current page
+  let id = '', activeIndex = 0;
+  sectionEls.forEach((s, i) => { if (y >= s.offsetTop) { id = s.id; activeIndex = i; } });
+
+  if (id) {
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+      const isCurrentSection = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('active', isCurrentSection);
+    });
+  }
+  // Side panel tracks
+  const trackPct = (pct * 100).toFixed(0);
+  if (leftTrack) leftTrack.style.height = trackPct + '%';
+  if (rightTrack) rightTrack.style.height = trackPct + '%';
+  if (scrollPctEl) scrollPctEl.textContent = String(trackPct).padStart(2, '0');
+
+  // Side panel dots
+  const leftIdx = Math.min(activeIndex, leftDots.length - 1);
+  const rightIdx = Math.min(activeIndex, rightDots.length - 1);
+  leftDots.forEach((d, i) => d.classList.toggle('active', i === leftIdx));
+  rightDots.forEach((d, i) => d.classList.toggle('active', i === rightIdx));
+}
+
+window.addEventListener('scroll', updateNavAndPanels, { passive: true });
+updateNavAndPanels();
+
+// ── Mobile menu ──
+const toggle = document.getElementById('navToggle'), menu = document.getElementById('mobileMenu');
+const menuLinks = menu.querySelectorAll('.mobile-menu-link');
+let menuOpen = false;
+function openMenu() { menuOpen=true; toggle.classList.add('active'); toggle.setAttribute('aria-expanded','true'); menu.classList.add('open'); document.body.classList.add('menu-open'); }
+function closeMenu() { if(!menuOpen) return; menuOpen=false; toggle.classList.remove('active'); toggle.setAttribute('aria-expanded','false'); menu.classList.remove('open'); document.body.classList.remove('menu-open'); }
+toggle.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+menuLinks.forEach(l => l.addEventListener('click', closeMenu));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+window.addEventListener('resize', () => { if (innerWidth > 1024) closeMenu(); });
+
+// ── Pricing toggle ──
+const pToggle = document.getElementById('pricingToggle');
+const mLabel = document.getElementById('monthlyLabel');
+const aLabel = document.getElementById('annualLabel');
+const saveBadge = document.getElementById('saveBadge');
+const monthlyOpts = document.querySelectorAll('.price-option.monthly');
+const annualOpts = document.querySelectorAll('.price-option.annual');
+let annual = false;
+
+function setPricing() {
+  annual = !annual;
+  pToggle.classList.toggle('annual', annual);
+  pToggle.setAttribute('aria-checked', annual);
+  mLabel.classList.toggle('active', !annual);
+  aLabel.classList.toggle('active', annual);
+  saveBadge.classList.toggle('show', annual);
+  monthlyOpts.forEach(el => el.classList.toggle('active', !annual));
+  annualOpts.forEach(el => el.classList.toggle('active', annual));
+}
+pToggle.addEventListener('click', setPricing);
+pToggle.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPricing(); } });
+
+// ── FAQ accordion ──
+const faqItems = document.querySelectorAll('.faq-item');
+const faqToggleAll = document.getElementById('faqToggleAll');
+let allExpanded = false;
+
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.parentElement.classList.toggle('open');
+    updateFaqToggleLabel();
+  });
+});
+
+faqToggleAll.addEventListener('click', () => {
+  allExpanded = !allExpanded;
+  if (allExpanded) {
+    // Staggered expand — slow cascade, each waits for the previous to start breathing
+    faqItems.forEach((item, i) => {
+      setTimeout(() => item.classList.add('open'), i * 220);
+    });
+  } else {
+    // Staggered collapse — reverse order
+    const total = faqItems.length;
+    faqItems.forEach((item, i) => {
+      setTimeout(() => item.classList.remove('open'), (total - 1 - i) * 60);
+    });
+  }
+  // Update label after all animations complete
+  setTimeout(updateFaqToggleLabel, faqItems.length * 220 + 100);
+});
+
+function updateFaqToggleLabel() {
+  const openCount = document.querySelectorAll('.faq-item.open').length;
+  allExpanded = openCount === faqItems.length;
+  faqToggleAll.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+}
+// ── Automatic Current Page Active Link Detection ──
+function highlightCurrentPage() {
+  // Get current page filename (defaulting to index.html for root '/')
+  let currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  if (currentPath === '') currentPath = 'index.html';
+
+  // Check top navigation & mobile menu links
+  const allNavLinks = document.querySelectorAll('.nav-links a, .nav-utility a, .mobile-menu-link');
+
+  allNavLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    const linkPath = href.split('#')[0].split('?')[0];
+    // Only bare "#", "", or "./" hrefs count as a Home link — a fragment
+    // link like "#pricing" must NOT be treated as pointing at the homepage.
+    const isBareHomeHref = href === '#' || href === '' || href === './';
+
+    // Check if link matches the current file
+    if (linkPath && (linkPath === currentPath || (currentPath === 'index.html' && isBareHomeHref))) {
+      link.classList.add('active');
+
+      // If link is inside a dropdown, highlight the parent dropdown menu as well
+      const parentDropdown = link.closest('.dropdown');
+      if (parentDropdown) {
+        parentDropdown.classList.add('active');
+        const parentTrigger = parentDropdown.querySelector(':scope > a');
+        if (parentTrigger) parentTrigger.classList.add('active');
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', highlightCurrentPage);
+
+
+/* ═══ Auto-highlight current page in navigation ═══ */
+(function highlightCurrentNav() {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var target = href.split('/').pop().split('#')[0];
+    if (target === path) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+    }
+  });
 })();
