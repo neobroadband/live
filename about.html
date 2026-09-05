@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +11,39 @@
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
-  /* Current-page highlight (beats the !important white above) */
+  /* Current-page highlight */
   .nav-links > li > a.active,
   .mobile-menu-link.active {
     color: #2b6cf6 !important;
   }
 
-  
+  /* ═══ Fixed white navbar tile in light mode ═══ */
+  html[data-theme="light"] .top-nav {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    --nav-link-color: #1e293b;
+    --nav-shadow: none;
+  }
+
+  html[data-theme="light"] .top-nav .nav-links > li > a,
+  html[data-theme="light"] .top-nav .nav-utility a {
+    color: #1e293b !important;
+    text-shadow: none !important;
+  }
+
+  html[data-theme="light"] .top-nav .nav-links > li > a:hover,
+  html[data-theme="light"] .top-nav .nav-utility a:hover,
+  html[data-theme="light"] .top-nav .nav-links > li > a.active {
+    color: #2b6cf6 !important;
+  }
+
+  /* ═══ LOGO: Always BLACK in light mode (matches index.html) ═══ */
+  html[data-theme="light"] .nav-logo,
+  html[data-theme="light"] .portal-brand img {
+    filter: brightness(0) !important;
+  }
+
   /* Full-page persistent grid background with cursor spotlight */
   .page-grid-overlay {
     position: fixed;
@@ -57,53 +81,111 @@
     object-fit: contain;
   }
 
-  /* ── About Hero (Increased top padding to push content below nav bar) ── */
+  /* ── About Hero ── */
   .about-hero {
-    min-height: 50vh;
+    min-height: 46vh;
     display: flex; 
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
     text-align: center;
-    padding: 180px 0 40px; /* Pushed down nicely from the navigation bar */
+    padding: 180px 0 30px;
     position: relative;
   }
-  .about-hero p.hero-sub { margin-top: 24px; }
 
-  /* ── Tighter section spacing for this page ── */
+  .about-hero h1 {
+    font-size: clamp(2.6rem, 5vw, 4rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: -0.04em !important;
+    color: var(--ivory) !important;
+    line-height: 1.15 !important;
+    margin-top: 12px !important;
+  }
+
+  html[data-theme="light"] .about-hero h1 {
+    color: #0f172a !important;
+  }
+
+  .about-hero h1 em {
+    font-style: italic !important;
+    font-weight: 600 !important;
+  }
+
+  /* ═══ First Paragraph Font and Colour Matching ═══ */
+  .about-hero .hero-sub {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    line-height: 1.75 !important;
+    color: var(--slate-light, #9ca3af) !important;
+    text-shadow: none !important;
+    max-width: 720px !important;
+    margin: 20px auto 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  html[data-theme="light"] .about-hero .hero-sub {
+    color: #334155 !important; /* Exact match with story paragraphs */
+    text-shadow: none !important;
+  }
+
+  /* ── Tighter section spacing ── */
   #who-we-are, #what-sets-us-apart, #core-commitments {
     padding: 64px 0;
   }
 
-  /* ── Story blocks (Who We Are / Why We Started) ── */
+  /* ── Story blocks ── */
   .story-block { max-width: 760px; margin: 0 auto 48px; text-align: center; }
   .story-block:last-child { margin-bottom: 0; }
   .story-block .section-tag { text-align: center; }
   .story-block p {
-    font-size: 0.95rem; font-weight: 300; line-height: 1.4; color: var(--slate-light);
-    margin-top: 0;
+    font-size: 0.95rem; font-weight: 400; line-height: 1.75; color: var(--slate-light);
+    margin-top: 14px;
   }
 
-  /* ── Differentiator cards (What Sets Us Apart) ── */
+  /* ── Differentiator cards (3 Sentence Holders) ── */
   .diff-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 24px;
     margin-top: 40px;
   }
-  .diff-card {
-    background: var(--panel-bg); border: 1px solid var(--panel-border);
-    border-radius: 28px; padding: 40px 32px; backdrop-filter: blur(20px);
-    transition: transform 0.8s var(--silk-ease), border-color 0.8s var(--silk-ease);
-  }
-  .diff-icon {
-    width: 44px; height: 44px; border-radius: 12px;
-    background: var(--graphite); border: 1px solid var(--panel-border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; color: var(--silver); margin-bottom: 24px;
-  }
-  .diff-title { font-size: 1.05rem; font-weight: 500; color: var(--ivory); margin-bottom: 12px; letter-spacing: -0.01em; }
-  .diff-desc { font-size: 0.85rem; font-weight: 300; line-height: 1.4; color: var(--slate-light); }
 
-  /* ── Commitments (numbered features) ── */
+  .diff-card {
+    background: var(--panel-bg); 
+    border: 1px solid var(--panel-border);
+    border-radius: 24px; 
+    padding: 36px 30px; 
+    backdrop-filter: blur(20px);
+    transition: transform 0.8s var(--silk-ease), border-color 0.8s var(--silk-ease);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left; /* Flush left alignment for clean readability */
+    height: 100%;
+  }
+
+  .diff-title { 
+    font-size: 1.15rem; 
+    font-weight: 600; 
+    color: var(--ivory); 
+    margin-bottom: 12px; 
+    letter-spacing: -0.01em; 
+    text-align: left;
+  }
+
+  .diff-desc { 
+    font-size: 0.92rem; 
+    font-weight: 400; 
+    line-height: 1.65; 
+    color: var(--slate-light); 
+    text-align: left;
+    margin: 0;
+  }
+
+  /* ── Commitments ── */
   .commitment-list { margin-top: 40px; }
   .commitment {
     display: grid; grid-template-columns: 80px 1fr; gap: 28px;
@@ -119,7 +201,25 @@
     font-size: 1.15rem; font-weight: 500; color: var(--ivory); margin-bottom: 10px; letter-spacing: -0.01em;
   }
   .commitment-body p {
-    font-size: 0.9rem; font-weight: 300; line-height: 1.4; color: var(--slate-light); max-width: 640px;
+    font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--slate-light); max-width: 640px;
+  }
+
+  /* Light mode contrast enhancements */
+  html[data-theme="light"] .diff-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  }
+  html[data-theme="light"] .diff-title,
+  html[data-theme="light"] .commitment-body h3,
+  html[data-theme="light"] .section-title {
+    color: #0f172a !important;
+  }
+  html[data-theme="light"] .story-block p,
+  html[data-theme="light"] .diff-desc,
+  html[data-theme="light"] .commitment-body p,
+  html[data-theme="light"] .section-body {
+    color: #334155 !important;
   }
 
   /* ── Founding badge ── */
@@ -144,9 +244,7 @@
     .commitment-number { font-size: 1.8rem; }
   }
 
-  /* ═══════════════════════════════════════════════════
-   TOP NAVIGATION
-   ═══════════════════════════════════════════════════ */
+  /* ═══ TOP NAVIGATION ═══ */
   .top-nav {
     position: fixed;
     top: 0;
@@ -212,21 +310,9 @@
   }
 
   .nav-links > li > a {
-  color: var(--nav-link-color, #ffffff) !important;
-  text-shadow: var(--nav-shadow, 0 2px 5px rgba(0, 0, 0, 0.8)) !important;
-}
-
-/* Logic: When scrolled OR in light mode, text should be dark */
-html[data-theme="light"] .top-nav,
-.top-nav.scrolled {
-  --nav-link-color: var(--ivory);
-  --nav-shadow: none;
-}
-
-html[data-theme="light"] .nav-utility a {
-  color: var(--ivory) !important;
-  text-shadow: none;
-}
+    color: var(--nav-link-color, #ffffff) !important;
+    text-shadow: var(--nav-shadow, 0 2px 5px rgba(0, 0, 0, 0.8)) !important;
+  }
 
   .dropdown {
     position: relative;
@@ -278,41 +364,6 @@ html[data-theme="light"] .nav-utility a {
 
   .dropdown-content a::after { display: none !important; }
 
-  .services-dropdown {
-    min-width: 320px !important;
-    padding: 10px !important;
-    cursor: default;
-    user-select: none;
-  }
-
-  .services-dropdown .service-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border-bottom: 1px solid rgba(156, 163, 175, 0.08);
-    pointer-events: none;
-  }
-
-  .services-dropdown .service-item:last-child { border-bottom: none; }
-
-  .services-dropdown .service-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--ivory, #ffffff);
-    letter-spacing: 0.02em;
-  }
-
-  .services-dropdown .service-desc {
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--slate-light, #9a9fa8);
-    line-height: 1.4;
-    text-transform: none;
-    letter-spacing: normal;
-  }
-
   .nav-toggle {
     display: none;
     background: none;
@@ -355,7 +406,6 @@ html[data-theme="light"] .nav-utility a {
 </svg>
 <div class="atmosphere"></div>
 
-<!-- Background Grid with Cursor Following -->
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- Nav -->
@@ -384,8 +434,9 @@ html[data-theme="light"] .nav-utility a {
       <li><a href="contact.html">Contact</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
-      <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
-        <ul class="nav-utility">
+
+    <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
+    <ul class="nav-utility">
       <li><a href="admin-portal.html">Neo Login</a></li>
       <li>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
@@ -426,15 +477,16 @@ html[data-theme="light"] .nav-utility a {
 
 <main class="main">
 
-  <!-- ═══ ABOUT HERO (Now with comfortable top spacing) ═══ -->
+  <!-- ═══ ABOUT HERO ═══ -->
   <section class="about-hero" id="hero">
     <div class="hero-badge">
       <div class="hero-badge-dot"></div>
       <span>Connecting Australia to What Matters Most</span>
     </div>
     <h1>About <em>Neo Broadband</em></h1>
+    <!-- First paragraph: clean font, matching color, no blur -->
     <p class="hero-sub">
-      Delivering next-generation internet solutions to Australian homes and workplaces — ultra-reliable, high-speed, and built for the way you actually live and work.
+      Delivering next-generation internet solutions to Australian homes and workplaces — ultra-reliable, high-speed, and built for the way you actually live and work
     </p>
   </section>
 
@@ -445,13 +497,13 @@ html[data-theme="light"] .nav-utility a {
     <div class="story-block reveal">
       <h2 class="section-title reveal-d1">About <strong>us</strong></h2>
       <p>
-        Neo Broadband is an independent Australian smart telco built for the digital age. We provide ultra-reliable, high-speed internet and end-to-end technology solutions for modern homes and workplaces.
+        Neo Broadband is an independent Australian smart telco built for the digital age. We provide ultra-reliable, high-speed internet and end-to-end technology solutions for modern homes and workplaces
       </p>
       <p>
-        From secure network and zero-trust architectures to cloud environments, automation, and AI-powered operations, we design, optimise, and manage the infrastructure that keeps businesses connected, protected, and ready for what's next.
+        From secure network and zero-trust architectures to cloud environments, automation, and AI-powered operations, we design, optimise, and manage the infrastructure that keeps businesses connected, protected, and ready for what's next
       </p>
       <p>
-        Whether you're streaming 4K entertainment, running a busy office, or supporting a remote team — we keep everything seamless, secure, and lightning-fast.
+        Whether you're streaming 4K entertainment, running a busy office, or supporting a remote team — we keep everything seamless, secure, and lightning-fast
       </p>
     </div>
   </section>
@@ -462,23 +514,23 @@ html[data-theme="light"] .nav-utility a {
   <section class="section section-center" id="what-sets-us-apart">
     <p class="section-tag reveal">The Neo Difference</p>
     <h2 class="section-title reveal reveal-d1">What Sets Us <strong>Apart</strong></h2>
-    <p class="section-body reveal reveal-d2">Three commitments that shape every connection we deliver.</p>
+    <p class="section-body reveal reveal-d2">Three commitments that shape every connection we deliver</p>
 
+    <!-- ── 3 Sentence Holders (Cleanly aligned without dots) ── -->
     <div class="diff-grid">
       <div class="diff-card reveal reveal-d1">
-        <div class="diff-icon">&#9679;</div>
         <div class="diff-title">Built for Work &amp; Play</div>
-        <div class="diff-desc">Our network dynamically manages data traffic so your Zoom calls stay crystal clear, even while someone else is gaming in the next room.</div>
+        <p class="diff-desc">Our network dynamically manages data traffic so your Zoom calls stay crystal clear, even while someone else is gaming in the next room</p>
       </div>
+
       <div class="diff-card reveal reveal-d2">
-        <div class="diff-icon">&#9679;</div>
         <div class="diff-title">100% Australian-Based Support</div>
-        <div class="diff-desc">No overseas call centres or endless hold times. When you need help, you speak directly to an internet expert right here in Australia.</div>
+        <p class="diff-desc">No overseas call centres or endless hold times. When you need help, you speak directly to an internet expert right here in Australia</p>
       </div>
+
       <div class="diff-card reveal reveal-d3">
-        <div class="diff-icon">&#9679;</div>
         <div class="diff-title">No Bill Shock, No Contracts</div>
-        <div class="diff-desc">We believe in earning your loyalty every month. Enjoy transparent pricing with zero hidden fees.</div>
+        <p class="diff-desc">We believe in earning your loyalty every month. Enjoy transparent pricing with zero hidden fees</p>
       </div>
     </div>
   </section>
@@ -495,21 +547,21 @@ html[data-theme="light"] .nav-utility a {
         <div class="commitment-number">01</div>
         <div class="commitment-body">
           <h3>Uncompromised Reliability</h3>
-          <p>We invest heavily in premium network infrastructure to maximize uptime for your home and workplace.</p>
+          <p>We invest heavily in premium network infrastructure to maximize uptime for your home and workplace</p>
         </div>
       </div>
       <div class="commitment reveal reveal-d1">
         <div class="commitment-number">02</div>
         <div class="commitment-body">
           <h3>Radical Simplicity</h3>
-          <p>From sign-up to daily use, we keep your experience completely jargon-free.</p>
+          <p>From sign-up to daily use, we keep your experience completely jargon-free</p>
         </div>
       </div>
       <div class="commitment reveal reveal-d2">
         <div class="commitment-number">03</div>
         <div class="commitment-body">
           <h3>Local Community Focus</h3>
-          <p>As a proud Aussie business, we are dedicated to keeping our local communities securely connected to the global economy.</p>
+          <p>As a proud Aussie business, we are dedicated to keeping our local communities securely connected to the global economy</p>
         </div>
       </div>
     </div>
@@ -538,8 +590,6 @@ html[data-theme="light"] .nav-utility a {
 
 <script>
 ;(function(){
-
-  // ── Smooth Scroll ──
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
       const href = link.getAttribute('href');
@@ -556,18 +606,15 @@ html[data-theme="light"] .nav-utility a {
     });
   });
 
-  // ── Reveal on scroll ──
   const revealsInline = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
   revealsInline.forEach(el => io.observe(el));
 
-  // ── Nav scroll state ──
   const topNav = document.getElementById('topNav');
   window.addEventListener('scroll', () => topNav.classList.toggle('scrolled', scrollY > 60), { passive: true });
 
-  // ── Mobile menu ──
   const toggle = document.getElementById('navToggle'), menu = document.getElementById('mobileMenu');
   const menuLinks = menu.querySelectorAll('.mobile-menu-link');
   let menuOpen = false;
@@ -578,7 +625,6 @@ html[data-theme="light"] .nav-utility a {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
   window.addEventListener('resize', () => { if (innerWidth > 1024) closeMenu(); });
 
-  // Full-page mouse movement tracker for background grid spotlight
   (function() {
     const pageGrid = document.getElementById('pageGrid');
     if (!pageGrid) return;
@@ -607,7 +653,6 @@ html[data-theme="light"] .nav-utility a {
 </script>
 <script src="templatemo-621-luminary-script.js"></script>
 <script>
-/* Auto-highlight current page in navigation */
 document.addEventListener('DOMContentLoaded', function () {
   var path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
