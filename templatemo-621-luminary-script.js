@@ -70,7 +70,7 @@ document.querySelectorAll('.counter').forEach(el => {
 
 // ── Nav scroll ──
 const topNav = document.getElementById('topNav');
-window.addEventListener('scroll', () => topNav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+if (topNav) window.addEventListener('scroll', () => topNav.classList.toggle('scrolled', scrollY > 60), { passive: true });
 
 // ── Hero grid spotlight ──
 const heroGrid = document.querySelector('.hero-grid');
@@ -79,6 +79,7 @@ let gx = 0, gy = 0, tx = 0, ty = 0;
 let mouseInHero = false;
 
 document.addEventListener('mousemove', e => {
+  if (!heroEl || !heroGrid) return;
   const heroRect = heroEl.getBoundingClientRect();
   const gridRect = heroGrid.getBoundingClientRect();
   const activeTop = heroRect.top + heroRect.height * 0.3;
@@ -95,6 +96,7 @@ document.addEventListener('mousemove', e => {
 });
 
 (function lerpGrid() {
+  if (!heroGrid) return;
   gx += (tx - gx) * 0.08;
   gy += (ty - gy) * 0.08;
   heroGrid.style.setProperty('--mx', gx + 'px');
