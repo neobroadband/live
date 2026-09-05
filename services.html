@@ -1,3 +1,5 @@
+
+--- START OF FILE services.html ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,26 +12,104 @@
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
-  /* Current-page highlight (beats the !important white above) */
+  /* Current-page highlight */
   .nav-links > li > a.active,
   .mobile-menu-link.active {
     color: #2b6cf6 !important;
   }
 
-  /* ═══ Wider Container specifically for Services Page ═══ */
+  /* ═══ Top Navigation Styling (BOLDER - Matched to Index) ═══ */
+  .nav-links > li > a {
+    font-weight: 700 !important;
+    color: var(--nav-link-color, #ffffff) !important;
+    text-shadow: var(--nav-shadow, 0 2px 5px rgba(0, 0, 0, 0.8)) !important;
+  }
+  
+  .nav-utility a {
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    transition: color 0.4s ease;
+  }
+
+  /* ═══ LIGHT MODE NAVIGATION FIXES (Matched to Index) ═══ */
+  
+  /* 1. Transparent navigation in light mode (at the top) */
+  html[data-theme="light"] .top-nav {
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Make text DARK immediately in light mode for visibility */
+  html[data-theme="light"] .top-nav .nav-links > li > a,
+  html[data-theme="light"] .top-nav .nav-utility a {
+    color: #0f172a !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9) !important; 
+  }
+
+  /* LOGO: Always BLACK in light mode */
+  html[data-theme="light"] .nav-logo {
+    filter: brightness(0) !important;
+  }
+
+  /* 2. Scrolled navigation in light mode (solid white) */
+  html[data-theme="light"] .top-nav.scrolled {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  /* Remove text-shadow when scrolled in light mode */
+  html[data-theme="light"] .top-nav.scrolled .nav-links > li > a,
+  html[data-theme="light"] .top-nav.scrolled .nav-utility a {
+    text-shadow: none !important;
+  }
+
+  /* Menu Hovers in light mode */
+  html[data-theme="light"] .top-nav .nav-links > li > a:hover,
+  html[data-theme="light"] .top-nav .nav-utility a:hover,
+  html[data-theme="light"] .top-nav .nav-links > li > a.active {
+    color: #2b6cf6 !important;
+  }
+
+  /* Light mode cards contrast enhancements */
+  html[data-theme="light"] .service-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  }
+  html[data-theme="light"] .service-title,
+  html[data-theme="light"] .section-title,
+  html[data-theme="light"] .section-title strong {
+    color: #0f172a !important;
+  }
+  html[data-theme="light"] .service-summary,
+  html[data-theme="light"] .service-details p,
+  html[data-theme="light"] .section-body {
+    color: #334155 !important;
+  }
+  html[data-theme="light"] .section-tag {
+    color: #64748b !important;
+  }
+  html[data-theme="light"] .read-more-btn {
+    border-color: #cbd5e1;
+    color: #2b6cf6;
+    background: #f8fafc;
+  }
+  html[data-theme="light"] .read-more-btn:hover {
+    background: #2b6cf6;
+    color: #ffffff;
+    border-color: #2b6cf6;
+  }
+
   .main {
     max-width: 1500px !important;
     padding: 0 30px !important;
-  }
-
-  /* ═══ Top Navigation Link & Portal Styling ═══ */
-  .nav-links > li > a {
-    color: #ffffff !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.18em !important;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.8) !important;
-    text-transform: uppercase;
   }
 
   .nav-right {
@@ -49,17 +129,6 @@
     padding: 0;
   }
 
-  .nav-utility a {
-    color: #ffffff !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-    transition: color 0.4s ease;
-  }
-
   .nav-utility a:hover,
   .nav-links > li > a:hover {
     color: #2b6cf6 !important;
@@ -70,7 +139,6 @@
     gap: 28px;
   }
 
-  /* Navigation Logo */
   .nav-brand {
     display: flex;
     align-items: center;
@@ -82,7 +150,7 @@
     object-fit: contain;
   }
   
-  /* ═══ Interactive Background Grid ═══ */
+  /* ═══ Page Background Grid (Matched to Index) ═══ */
   .page-grid-overlay {
     position: fixed;
     inset: 0;
@@ -107,7 +175,12 @@
     mask-composite: add;
   }
 
-  /* ═══ Services Grid Layout - 4 Columns Wide ═══ */
+  html[data-theme="light"] .page-grid-overlay {
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px) !important;
+  }
+
   .services-header {
     padding-top: 180px;
     text-align: center;
@@ -125,7 +198,6 @@
   @media (max-width: 950px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 650px) { .services-grid { grid-template-columns: 1fr; } }
 
-  /* Service Card (Glassmorphic Rectangle) */
   .service-card {
     background: var(--panel-bg, rgba(22, 26, 32, 0.55));
     border: 1px solid var(--panel-border, rgba(156, 163, 175, 0.08));
@@ -142,11 +214,10 @@
 
   .service-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(156, 163, 175, 0.2);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    border-color: #2b6cf6;
+    box-shadow: 0 12px 40px rgba(43, 108, 246, 0.15);
   }
 
-  /* Service Image Container */
   .service-img-container {
     width: 100%;
     height: 180px; 
@@ -167,7 +238,6 @@
     transform: scale(1.05);
   }
 
-  /* Service Typography */
   .service-title {
     font-size: 1.2rem;
     font-weight: 600;
@@ -189,7 +259,6 @@
     overflow: hidden;
   }
 
-  /* Read More Content */
   .service-details {
     max-height: 0;
     overflow: hidden;
@@ -203,12 +272,6 @@
     margin-bottom: 24px;
   }
 
-  html[data-theme="light"] .service-details p {
-    color: #334155; 
-    border-top-color: #e2e8f0;
-  }
-
-  /* Read More Button */
   .read-more-btn {
     margin-top: auto;
     align-self: flex-start;
@@ -232,7 +295,6 @@
     border-color: rgba(156, 163, 175, 0.4);
   }
 
-  /* ═══ Custom Wide Card for Single Row Item ═══ */
   .service-card-wide {
     grid-column: 1 / -1;
     display: flex;
@@ -274,14 +336,12 @@
 </head>
 <body>
 
-<!-- Grain Overlay -->
 <svg class="grain" width="100%" height="100%">
   <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
   <rect width="100%" height="100%" filter="url(#n)"/>
 </svg>
 <div class="atmosphere"></div>
 
-<!-- Background Grid with Cursor Following -->
 <div class="page-grid-overlay" id="pageGrid"></div>
 
 <!-- Nav -->
@@ -290,7 +350,6 @@
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
   <div class="nav-right">
-    <!-- Main Links: Broadband Plans dropdown switches to the specific plan category -->
     <ul class="nav-links">
       <li class="dropdown">
         <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
@@ -310,8 +369,7 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
-      <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
-        <ul class="nav-utility">
+    <ul class="nav-utility">
       <li><a href="admin-portal.html">Neo Login</a></li>
       <li>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
@@ -322,7 +380,6 @@
         </button>
       </li>
     </ul>
-    
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span class="toggle-bar"></span><span class="toggle-bar"></span>
@@ -352,17 +409,15 @@
 
 <main class="main">
   
-  <!-- Page Header -->
   <section class="services-header section-center">
     <div class="section-tag reveal">Explore Capabilities</div>
     <h1 class="section-title reveal reveal-d1">Our <strong>Solutions</strong></h1>
     <div class="silk-divider reveal reveal-d2"></div>
     <p class="section-body reveal reveal-d3" style="margin-top: 24px;">
-      Explore our comprehensive suite of advanced network engineering, cloud architecture, and AI-driven security solutions.
+      Explore our comprehensive suite of advanced network engineering, cloud architecture, and AI-driven security solutions
     </p>
   </section>
 
-  <!-- Services Grid -->
   <section class="section" style="padding-top: 20px;">
     <div class="services-grid">
 
@@ -372,9 +427,9 @@
           <img src="images/1.jpg" alt="Network Architecture & Design" loading="lazy">
         </div>
         <h3 class="service-title">Network Architecture & Design</h3>
-        <p class="service-summary">Future-proof your enterprise with highly scalable, resilient, and optimized network infrastructures.</p>
+        <p class="service-summary">Future-proof your enterprise with highly scalable, resilient, and optimized network infrastructures</p>
         <div class="service-details">
-          <p>Our network architecture services provide a foundational blueprint that aligns with your organization's long-term operational goals. We meticulously map out data flows, hardware requirements, and topology layouts to ensure maximum throughput with minimal latency. Every design undergoes rigorous stress testing to guarantee uninterrupted service, eliminating single points of failure across critical nodes.</p>
+          <p>Our network architecture services provide a foundational blueprint that aligns with your organization's long-term operational goals. We meticulously map out data flows, hardware requirements, and topology layouts to ensure maximum throughput with minimal latency. Every design undergoes rigorous stress testing to guarantee uninterrupted service, eliminating single points of failure across critical nodes</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -385,9 +440,9 @@
           <img src="images/2.jpg" alt="Security Architecture & Design" loading="lazy">
         </div>
         <h3 class="service-title">Security Architecture & Design</h3>
-        <p class="service-summary">Deploy defense-in-depth strategies that proactively secure your digital assets against evolving threats.</p>
+        <p class="service-summary">Deploy defense-in-depth strategies that proactively secure your digital assets against evolving threats</p>
         <div class="service-details">
-          <p>We build comprehensive digital fortresses by layering modern security protocols seamlessly into your underlying infrastructure. Our approach shifts away from traditional perimeter defense, embedding deep packet inspection and strict access controls at the core of your network. We design customized threat intelligence integrations that actively hunt vulnerabilities before they are exploited.</p>
+          <p>We build comprehensive digital fortresses by layering modern security protocols seamlessly into your underlying infrastructure. Our approach shifts away from traditional perimeter defense, embedding deep packet inspection and strict access controls at the core of your network. We design customized threat intelligence integrations that actively hunt vulnerabilities before they are exploited</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -398,9 +453,9 @@
           <img src="images/3.jpg" alt="Cloud Architecture & Design" loading="lazy">
         </div>
         <h3 class="service-title">Cloud Architecture & Design</h3>
-        <p class="service-summary">Architect scalable, highly available cloud ecosystems tailored for agile software deployments.</p>
+        <p class="service-summary">Architect scalable, highly available cloud ecosystems tailored for agile software deployments</p>
         <div class="service-details">
-          <p>Embrace the true power of the cloud through our meticulously engineered multi-tenant and hybrid architecture designs. We decouple your applications from hardware constraints, utilizing containerization and microservices to enable infinite digital elasticity. Our blueprints emphasize cost-optimization by automatically scaling compute resources dynamically in response to real-time user demand.</p>
+          <p>Embrace the true power of the cloud through our meticulously engineered multi-tenant and hybrid architecture designs. We decouple your applications from hardware constraints, utilizing containerization and microservices to enable infinite digital elasticity. Our blueprints emphasize cost-optimization by automatically scaling compute resources dynamically in response to real-time user demand</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -411,9 +466,9 @@
           <img src="images/4.jpg" alt="Cloud Migration" loading="lazy">
         </div>
         <h3 class="service-title">Cloud Migration</h3>
-        <p class="service-summary">Transition your on-premise workloads to modern cloud environments with zero operational disruption.</p>
+        <p class="service-summary">Transition your on-premise workloads to modern cloud environments with zero operational disruption</p>
         <div class="service-details">
-          <p>Our cloud migration strategy ensures a completely frictionless transition of your legacy systems into modern cloud infrastructure. We begin with a deep-dive audit to identify dependencies, categorizing workloads into precise lift-and-shift or refactor pipelines. Data transfer phases are heavily encrypted to ensure total security during transit and executed during low-impact windows.</p>
+          <p>Our cloud migration strategy ensures a completely frictionless transition of your legacy systems into modern cloud infrastructure. We begin with a deep-dive audit to identify dependencies, categorizing workloads into precise lift-and-shift or refactor pipelines. Data transfer phases are heavily encrypted to ensure total security during transit and executed during low-impact windows</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -424,9 +479,9 @@
           <img src="images/5.jpg" alt="Risk Analysis & Optimization" loading="lazy">
         </div>
         <h3 class="service-title">Risk Analysis & Optimization</h3>
-        <p class="service-summary">Identify critical vulnerabilities and optimize infrastructure to minimize enterprise liability.</p>
+        <p class="service-summary">Identify critical vulnerabilities and optimize infrastructure to minimize enterprise liability</p>
         <div class="service-details">
-          <p>We deploy advanced analytical frameworks to uncover hidden weaknesses within your existing IT topology before they are exploited. Our comprehensive risk modeling evaluates both internal configuration flaws and external threat landscapes to calculate precise exposure metrics. Once vulnerabilities are identified, we redesign paths to enforce absolute strict compliance standards.</p>
+          <p>We deploy advanced analytical frameworks to uncover hidden weaknesses within your existing IT topology before they are exploited. Our comprehensive risk modeling evaluates both internal configuration flaws and external threat landscapes to calculate precise exposure metrics. Once vulnerabilities are identified, we redesign paths to enforce absolute strict compliance standards</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -437,9 +492,9 @@
           <img src="images/6.jpg" alt="Infra Automation" loading="lazy">
         </div>
         <h3 class="service-title">Infra Automation</h3>
-        <p class="service-summary">Transform manual IT operations into highly efficient, code-driven infrastructure deployments.</p>
+        <p class="service-summary">Transform manual IT operations into highly efficient, code-driven infrastructure deployments</p>
         <div class="service-details">
-          <p>We introduce Infrastructure as Code (IaC) paradigms to eradicate the human error typically associated with manual network configurations. By scripting your environment deployments, we allow your teams to spin up complex architectures in mere seconds with total consistency. Automated testing pipelines validate every configuration change before entering production logic.</p>
+          <p>We introduce Infrastructure as Code (IaC) paradigms to eradicate the human error typically associated with manual network configurations. By scripting your environment deployments, we allow your teams to spin up complex architectures in mere seconds with total consistency. Automated testing pipelines validate every configuration change before entering production logic</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -450,9 +505,9 @@
           <img src="images/7.png" alt="ZTNA & SASE" loading="lazy">
         </div>
         <h3 class="service-title">ZTNA & SASE</h3>
-        <p class="service-summary">Implement Zero Trust Network Access and Secure Access Service Edge for global workforce security.</p>
+        <p class="service-summary">Implement Zero Trust Network Access and Secure Access Service Edge for global workforce security</p>
         <div class="service-details">
-          <p>We redefine your perimeter by assuming that no device or user is inherently trusted, regardless of their physical location. Our ZTNA solutions require continuous identity verification and device posture checks before granting highly restricted application access. By integrating this with SASE architecture, we deliver robust security controls directly to the cloud edge.</p>
+          <p>We redefine your perimeter by assuming that no device or user is inherently trusted, regardless of their physical location. Our ZTNA solutions require continuous identity verification and device posture checks before granting highly restricted application access. By integrating this with SASE architecture, we deliver robust security controls directly to the cloud edge</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -463,9 +518,9 @@
           <img src="images/8.jpg" alt="NIS2 & Regulatory Compliant Design" loading="lazy">
         </div>
         <h3 class="service-title">NIS2 & Regulatory Compliant Design</h3>
-        <p class="service-summary">Ensure strict adherence to complex international cybersecurity directives and data privacy laws.</p>
+        <p class="service-summary">Ensure strict adherence to complex international cybersecurity directives and data privacy laws</p>
         <div class="service-details">
-          <p>Navigating the complex landscape of the NIS2 directive and global privacy mandates requires precise architectural foresight. We engineer your networks to natively fulfill stringent requirements for incident reporting, supply chain security, and data handling. Our designs embed automated audit trailing for continuous verification, keeping you legally protected.</p>
+          <p>Navigating the complex landscape of the NIS2 directive and global privacy mandates requires precise architectural foresight. We engineer your networks to natively fulfill stringent requirements for incident reporting, supply chain security, and data handling. Our designs embed automated audit trailing for continuous verification, keeping you legally protected</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -476,9 +531,9 @@
           <img src="images/9.jpg" alt="Security & Vulnerability Management" loading="lazy">
         </div>
         <h3 class="service-title">Security & Vulnerability Management</h3>
-        <p class="service-summary">Continuously scan, assess, and patch network weak points before malicious actors can strike.</p>
+        <p class="service-summary">Continuously scan, assess, and patch network weak points before malicious actors can strike</p>
         <div class="service-details">
-          <p>Our management platform utilizes automated, continuous scanning to map your entire digital footprint and identify potential software flaws. We categorize and prioritize vulnerabilities based on real-time exploit intelligence and the specific criticality of the affected assets. Once identified, automated patch deployment protocols remediate threats instantly without manual intervention.</p>
+          <p>Our management platform utilizes automated, continuous scanning to map your entire digital footprint and identify potential software flaws. We categorize and prioritize vulnerabilities based on real-time exploit intelligence and the specific criticality of the affected assets. Once identified, automated patch deployment protocols remediate threats instantly without manual intervention</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -489,9 +544,9 @@
           <img src="images/10.jpg" alt="SD-WAN & SSE Integration" loading="lazy">
         </div>
         <h3 class="service-title">SD-WAN & SSE Integration</h3>
-        <p class="service-summary">Optimize wide-area networking with software-defined routing and robust Security Service Edge.</p>
+        <p class="service-summary">Optimize wide-area networking with software-defined routing and robust Security Service Edge</p>
         <div class="service-details">
-          <p>We replace rigid, expensive legacy WAN infrastructures with highly dynamic Software-Defined Wide Area Networks (SD-WAN). This technology intelligently routes traffic across multiple transport links, ensuring critical applications receive priority bandwidth and zero latency. By tightly integrating Security Service Edge, data is inspected securely entirely within the cloud.</p>
+          <p>We replace rigid, expensive legacy WAN infrastructures with highly dynamic Software-Defined Wide Area Networks (SD-WAN). This technology intelligently routes traffic across multiple transport links, ensuring critical applications receive priority bandwidth and zero latency. By tightly integrating Security Service Edge, data is inspected securely entirely within the cloud</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -502,9 +557,9 @@
           <img src="images/11.jpg" alt="Micro Segmented Architecture" loading="lazy">
         </div>
         <h3 class="service-title">Micro Segmented Architecture</h3>
-        <p class="service-summary">Isolate internal network workloads to absolutely prevent lateral movement by malicious software.</p>
+        <p class="service-summary">Isolate internal network workloads to absolutely prevent lateral movement by malicious software</p>
         <div class="service-details">
-          <p>Traditional networks operate like a castle with a strong outer wall but open internal rooms, leaving systems vulnerable. We design micro-segmented architectures that wrap individual workloads, applications, and servers in their own impenetrable security perimeters. If a bad actor breaches one segment, they are mathematically contained and completely unable to pivot.</p>
+          <p>Traditional networks operate like a castle with a strong outer wall but open internal rooms, leaving systems vulnerable. We design micro-segmented architectures that wrap individual workloads, applications, and servers in their own impenetrable security perimeters. If a bad actor breaches one segment, they are mathematically contained and completely unable to pivot</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -515,9 +570,9 @@
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80" alt="Campus, DC & Branch Design" loading="lazy">
         </div>
         <h3 class="service-title">Campus, DC & Branch Design</h3>
-        <p class="service-summary">Engineer cohesive physical network layouts that unify corporate headquarters and remote offices.</p>
+        <p class="service-summary">Engineer cohesive physical network layouts that unify corporate headquarters and remote offices</p>
         <div class="service-details">
-          <p>We provide end-to-end design solutions that bridge the physical and digital requirements of diverse geographic corporate locations. For campus environments, we deploy high-density wireless arrays and resilient core switching to handle massive concurrent connections. Data Center designs focus on ultra-low latency architectures and highly optimized thermal load management.</p>
+          <p>We provide end-to-end design solutions that bridge the physical and digital requirements of diverse geographic corporate locations. For campus environments, we deploy high-density wireless arrays and resilient core switching to handle massive concurrent connections. Data Center designs focus on ultra-low latency architectures and highly optimized thermal load management</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -528,9 +583,9 @@
           <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?auto=format&fit=crop&w=1200&q=80" alt="Firewalling & WAF" loading="lazy">
         </div>
         <h3 class="service-title">Firewalling & WAF</h3>
-        <p class="service-summary">Deploy next-generation edge protection and Web Application Firewalls to stop intrusions instantly.</p>
+        <p class="service-summary">Deploy next-generation edge protection and Web Application Firewalls to stop intrusions instantly</p>
         <div class="service-details">
-          <p>Our firewall implementations move beyond basic port blocking, utilizing deep learning algorithms to analyze the behavioral intent of incoming traffic. We deploy Next-Generation Firewalls (NGFW) that provide intrusion prevention, deep packet inspection, and encrypted traffic decryption at line speed for comprehensive data protection against automated botnet assaults.</p>
+          <p>Our firewall implementations move beyond basic port blocking, utilizing deep learning algorithms to analyze the behavioral intent of incoming traffic. We deploy Next-Generation Firewalls (NGFW) that provide intrusion prevention, deep packet inspection, and encrypted traffic decryption at line speed for comprehensive data protection against automated botnet assaults</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -541,9 +596,9 @@
           <img src="images/14.jpg" alt="Identity & Access Management (IAM)" loading="lazy">
         </div>
         <h3 class="service-title">IAM</h3>
-        <p class="service-summary">Securely manage digital identities and strictly enforce the principle of least privilege.</p>
+        <p class="service-summary">Securely manage digital identities and strictly enforce the principle of least privilege</p>
         <div class="service-details">
-          <p>We centralize your organization's authentication protocols to ensure that only verified personnel can access highly sensitive digital assets. Our IAM solutions integrate biometric verification, multi-factor authentication (MFA), and single sign-on (SSO) for a frictionless user experience while strictly enforcing role-based access based on active directory profiles.</p>
+          <p>We centralize your organization's authentication protocols to ensure that only verified personnel can access highly sensitive digital assets. Our IAM solutions integrate biometric verification, multi-factor authentication (MFA), and single sign-on (SSO) for a frictionless user experience while strictly enforcing role-based access based on active directory profiles</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -554,9 +609,9 @@
           <img src="images/15.jpg" alt="Cloud Landing Zone" loading="lazy">
         </div>
         <h3 class="service-title">Cloud Landing Zone</h3>
-        <p class="service-summary">Establish a secure, pre-configured architectural baseline for AWS, Azure, or GCP deployments.</p>
+        <p class="service-summary">Establish a secure, pre-configured architectural baseline for AWS, Azure, or GCP deployments</p>
         <div class="service-details">
-          <p>Before launching complex applications, we construct a rock-solid, multi-account Cloud Landing Zone tailored to your enterprise needs. This automated setup establishes essential guardrails for network routing, security logging, and resource tagging right from day one. We enforce strict identity federation and budget alarms so your cloud environment remains totally secure.</p>
+          <p>Before launching complex applications, we construct a rock-solid, multi-account Cloud Landing Zone tailored to your enterprise needs. This automated setup establishes essential guardrails for network routing, security logging, and resource tagging right from day one. We enforce strict identity federation and budget alarms so your cloud environment remains totally secure</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -567,9 +622,9 @@
           <img src="images/16.png" alt="On-Prem & Cloud Connectivity" loading="lazy">
         </div>
         <h3 class="service-title">On-Prem & Cloud Connectivity</h3>
-        <p class="service-summary">Bridge the gap between physical data centers and cloud services with hybrid networking solutions.</p>
+        <p class="service-summary">Bridge the gap between physical data centers and cloud services with hybrid networking solutions</p>
         <div class="service-details">
-          <p>We design seamless hybrid environments by establishing dedicated, private conduits between your local infrastructure and public cloud providers. Utilizing technologies like AWS Direct Connect or Azure ExpressRoute, we bypass the volatile public internet to guarantee consistent, ultra-low latency for all critical enterprise traffic securely transferring between physical nodes.</p>
+          <p>We design seamless hybrid environments by establishing dedicated, private conduits between your local infrastructure and public cloud providers. Utilizing technologies like AWS Direct Connect or Azure ExpressRoute, we bypass the volatile public internet to guarantee consistent, ultra-low latency for all critical enterprise traffic securely transferring between physical nodes</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -580,9 +635,9 @@
           <img src="images/17.jpg" alt="Network Source of Truth" loading="lazy">
         </div>
         <h3 class="service-title">Network Source of Truth</h3>
-        <p class="service-summary">Centralize and meticulously manage your infrastructure data for absolute operational accuracy.</p>
+        <p class="service-summary">Centralize and meticulously manage your infrastructure data for absolute operational accuracy</p>
         <div class="service-details">
-          <p>We implement robust Data Center Infrastructure Management (DCIM) and IPAM platforms to serve as your network's single Source of Truth. By digitizing your entire physical and logical topology, we eliminate the disastrous configuration errors caused by outdated spreadsheets, giving you centralized architectural visibility accessible via comprehensive API frameworks.</p>
+          <p>We implement robust Data Center Infrastructure Management (DCIM) and IPAM platforms to serve as your network's single Source of Truth. By digitizing your entire physical and logical topology, we eliminate the disastrous configuration errors caused by outdated spreadsheets, giving you centralized architectural visibility accessible via comprehensive API frameworks</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -593,9 +648,9 @@
           <img src="images/18.jpg" alt="AI Agentic Architecture" loading="lazy">
         </div>
         <h3 class="service-title">AI Agentic Architecture</h3>
-        <p class="service-summary">Deploy multi-agent AI systems designed for autonomous, intelligent infrastructure operations.</p>
+        <p class="service-summary">Deploy multi-agent AI systems designed for autonomous, intelligent infrastructure operations</p>
         <div class="service-details">
-          <p>We are pioneering the integration of Agentic AI, moving beyond passive machine learning into systems that take autonomous action. Our architecture deploys specialized AI agents capable of inter-communication, allowing them to collaboratively troubleshoot complex network anomalies in real-time without requiring human authorization, drastically improving network self-healing.</p>
+          <p>We are pioneering the integration of Agentic AI, moving beyond passive machine learning into systems that take autonomous action. Our architecture deploys specialized AI agents capable of inter-communication, allowing them to collaboratively troubleshoot complex network anomalies in real-time without requiring human authorization, drastically improving network self-healing</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -606,9 +661,9 @@
           <img src="images/19.jpg" alt="MCP Integration" loading="lazy">
         </div>
         <h3 class="service-title">MCP Integration</h3>
-        <p class="service-summary">Bridge your internal data systems seamlessly with advanced Large Language Models securely.</p>
+        <p class="service-summary">Bridge your internal data systems seamlessly with advanced Large Language Models securely</p>
         <div class="service-details">
-          <p>We specialize in integrating the Model Context Protocol (MCP) to connect your secure enterprise data directly to AI assistants. This standardizes how AI models request data, allowing them to read your internal databases and knowledge bases without exposing raw credentials, ensuring absolute data sovereignty for your business while empowering intelligent workflows.</p>
+          <p>We specialize in integrating the Model Context Protocol (MCP) to connect your secure enterprise data directly to AI assistants. This standardizes how AI models request data, allowing them to read your internal databases and knowledge bases without exposing raw credentials, ensuring absolute data sovereignty for your business while empowering intelligent workflows</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
@@ -619,23 +674,23 @@
           <img src="images/20.jpg" alt="AI-Ops" loading="lazy">
         </div>
         <h3 class="service-title">AI-Ops</h3>
-        <p class="service-summary">Leverage deep learning telemetry to predict and resolve IT incidents before they impact users.</p>
+        <p class="service-summary">Leverage deep learning telemetry to predict and resolve IT incidents before they impact users</p>
         <div class="service-details">
-          <p>Artificial Intelligence for IT Operations (AIOps) revolutionizes how your engineering teams monitor and manage system health. We deploy platforms that ingest millions of telemetry data points, logs, and alerts, utilizing machine learning to separate critical signals from digital noise to forecast hardware degradation instantly and prevent unexpected system outages.</p>
+          <p>Artificial Intelligence for IT Operations (AIOps) revolutionizes how your engineering teams monitor and manage system health. We deploy platforms that ingest millions of telemetry data points, logs, and alerts, utilizing machine learning to separate critical signals from digital noise to forecast hardware degradation instantly and prevent unexpected system outages</p>
         </div>
         <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
       </div>
 
-      <!-- 21. Custom CRM (NEW WIDE ROW) -->
+      <!-- 21. Custom CRM -->
       <div class="service-card service-card-wide reveal">
         <div class="service-img-container">
           <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Custom CRM Dashboard & Self-Works" loading="lazy">
         </div>
         <div class="service-content-wrapper">
           <h3 class="service-title">Custom CRM</h3>
-          <p class="service-summary">Engineer bespoke customer relationship management platforms tailored to your business workflows and self-management needs.</p>
+          <p class="service-summary">Engineer bespoke customer relationship management platforms tailored to your business workflows and self-management needs</p>
           <div class="service-details">
-            <p>We build bespoke Customer Relationship Management (CRM) platforms designed specifically to match your unique business workflows and individual self-works. Unlike rigid off-the-shelf software, our solutions integrate seamlessly with your existing processes to centralize client data. We map out your specific sales pipelines and operational touchpoints to ensure every feature directly accelerates growth. Automated task tracking and intelligent reporting dashboards empower your team to eliminate repetitive administrative work. Our scalable architecture ensures that as your enterprise expands, your CRM seamlessly evolves to handle increased data loads. Built with intuitive user interfaces, our systems guarantee rapid adoption and minimize training downtime. Take absolute control over your customer interactions with a highly secure platform that operates exactly the way you do.</p>
+            <p>We build bespoke Customer Relationship Management (CRM) platforms designed specifically to match your unique business workflows and individual self-works. Unlike rigid off-the-shelf software, our solutions integrate seamlessly with your existing processes to centralize client data. We map out your specific sales pipelines and operational touchpoints to ensure every feature directly accelerates growth. Automated task tracking and intelligent reporting dashboards empower your team to eliminate repetitive administrative work. Our scalable architecture ensures that as your enterprise expands, your CRM seamlessly evolves to handle increased data loads. Built with intuitive user interfaces, our systems guarantee rapid adoption and minimize training downtime. Take absolute control over your customer interactions with a highly secure platform that operates exactly the way you do</p>
           </div>
           <button class="read-more-btn" onclick="toggleReadMore(this, event)">Read More</button>
         </div>
@@ -660,7 +715,6 @@
 <script>
 ;(function(){
 
-  // Mobile menu toggle functionality
   const navToggle = document.getElementById('navToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   if(navToggle && mobileMenu) {
@@ -671,7 +725,6 @@
     });
   }
 
-  // Smooth reveal animation on scroll
   document.addEventListener("DOMContentLoaded", () => {
     const revealsInline = document.querySelectorAll('.reveal');
     
@@ -689,7 +742,6 @@
     revealOnScroll(); 
   });
 
-  // Exclusive Read More / Read Less Toggle Logic
   function toggleReadMore(button, event) {
     event.stopPropagation();
     
@@ -697,7 +749,6 @@
     const currentDetails = currentCard.querySelector('.service-details');
     const isCurrentlyExpanded = currentDetails.classList.contains('expanded');
 
-    // Close all other expanded cards to keep layout clean
     document.querySelectorAll('.service-details.expanded').forEach(details => {
       details.classList.remove('expanded');
       details.closest('.service-card').querySelector('.read-more-btn').innerText = 'Read More';
@@ -709,7 +760,6 @@
     }
   }
 
-  // Close expanded cards when clicking anywhere outside of a card
   document.addEventListener('click', (event) => {
     if (!event.target.closest('.service-card')) {
       document.querySelectorAll('.service-details.expanded').forEach(details => {
@@ -719,7 +769,6 @@
     }
   });
 
-  // Background grid cursor lighting tracker
   (function() {
     const pageGrid = document.getElementById('pageGrid');
     if (!pageGrid) return;
@@ -743,12 +792,11 @@
     renderGridLight();
   })();
 
-window.toggleReadMore = toggleReadMore;
+  window.toggleReadMore = toggleReadMore;
 
 })();
 </script>
 <script>
-/* Auto-highlight current page in navigation */
 document.addEventListener('DOMContentLoaded', function () {
   var path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
