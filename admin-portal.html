@@ -7,12 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Broadband — Admin NOC & Operations Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 
 <style>
-/* ── NOC Admin Layout & Overrides ── */
+/* ── NOC Admin Layout & Theme Overrides ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -33,6 +33,7 @@
   --accent-red: #ef4444;
   --accent-green: #22c55e;
   --accent-purple: #a855f7;
+  --header-height: 78px;
 }
 
 body {
@@ -44,7 +45,91 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Background Grid Overlay with Mouse Follower */
+/* ── Top Navigation Blended from index.html ── */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background: rgba(15, 17, 21, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--panel-border);
+  transition: background 0.4s var(--silk-ease), border-color 0.4s var(--silk-ease);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.nav-logo {
+  max-height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links > li > a {
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-links > li > a:hover,
+.nav-links > li > a.active {
+  color: #2b6cf6 !important;
+}
+
+.nav-utility {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-utility a {
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-utility a:hover,
+.nav-utility a.active {
+  color: #2b6cf6 !important;
+}
+
+/* Page Background Grid */
 .page-grid-overlay {
   position: fixed;
   inset: 0;
@@ -59,91 +144,168 @@ body {
     linear-gradient(to bottom, rgba(156, 163, 175, 0.12) 1px, transparent 1px);
   background-size: 100px 100px;
   background-position: center center;
-  -webkit-mask-image: radial-gradient(circle 450px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%);
-  mask-image: radial-gradient(circle 450px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle 420px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%);
+  mask-image: radial-gradient(circle 420px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%);
 }
 
-.shell { display: grid; grid-template-columns: 290px 1fr; min-height: 100vh; position: relative; z-index: 10; }
+/* Layout Framework */
+.shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: calc(100vh - var(--header-height));
+  margin-top: var(--header-height);
+  position: relative;
+  z-index: 10;
+}
 
 /* ── Sidebar ── */
 .sidebar {
-  position: fixed; width: 290px; height: 100vh; padding: 28px 20px;
-  border-right: 1px solid var(--panel-border); background: rgba(15, 17, 21, 0.95);
-  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-  display: flex; flex-direction: column; z-index: 100;
+  position: fixed;
+  top: var(--header-height);
+  width: 280px;
+  height: calc(100vh - var(--header-height));
+  padding: 24px 18px 28px;
+  border-right: 1px solid var(--panel-border);
+  background: rgba(15, 17, 21, 0.94);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
 }
-
-.portal-brand {
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none; padding: 0 8px; margin-bottom: 24px;
-}
-.portal-brand img { max-height: 48px; width: auto; object-fit: contain; }
 
 .admin-badge {
-  display: inline-block; font-size: 8px; font-weight: 700; letter-spacing: .2em;
-  text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
-  background: rgba(212, 175, 55, 0.15); color: var(--accent-gold);
-  border: 1px solid rgba(212, 175, 55, 0.3); margin-bottom: 16px; margin-left: 8px;
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--accent-gold);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  margin-bottom: 16px;
+  align-self: flex-start;
 }
 
 .nav-label {
-  font-size: 9px; font-weight: 600; letter-spacing: .25em;
-  text-transform: uppercase; color: var(--slate-warm); margin: 14px 12px 6px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--slate-warm);
+  margin: 12px 10px 6px;
 }
 
 .portal-nav { display: grid; gap: 6px; }
 .portal-nav button {
-  border: 0; background: transparent; color: var(--slate-light); text-align: left;
-  padding: 12px 16px; border-radius: 100px; cursor: pointer; transition: 0.35s var(--silk-ease);
-  display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 500; letter-spacing: 0.05em;
+  border: 0;
+  background: transparent;
+  color: var(--slate-light);
+  text-align: left;
+  padding: 11px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.3s var(--silk-ease);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
 }
-.portal-nav button:hover, .portal-nav button.active {
-  background: rgba(176, 184, 196, 0.08); color: var(--ivory);
+.portal-nav button:hover,
+.portal-nav button.active {
+  background: rgba(176, 184, 196, 0.08);
+  color: var(--ivory);
 }
-.portal-nav button.active { border: 1px solid var(--panel-border); font-weight: 600; }
-.portal-nav .icon { width: 18px; text-align: center; color: var(--silver); font-size: 14px; }
+.portal-nav button.active {
+  border: 1px solid var(--panel-border);
+  font-weight: 600;
+}
+.portal-nav .icon { width: 18px; text-align: center; color: var(--silver); font-size: 13px; }
 
-.sidebar-foot { margin-top: auto; border-top: 1px solid var(--panel-border); padding-top: 18px; }
-.mini-profile { display: flex; align-items: center; gap: 12px; padding: 8px; }
+.sidebar-foot {
+  margin-top: auto;
+  border-top: 1px solid var(--panel-border);
+  padding-top: 18px;
+}
+.mini-profile { display: flex; align-items: center; gap: 12px; padding: 6px 8px; }
 .avatar {
-  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
-  background: var(--graphite); border: 1px solid var(--panel-border); font-size: 12px; font-weight: 600; color: var(--accent-gold);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--graphite);
+  border: 1px solid var(--panel-border);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-gold);
 }
 .mini-profile strong { font-size: 11px; color: var(--ivory); display: block; }
 .mini-profile small { display: block; color: var(--slate-warm); font-size: 9px; margin-top: 3px; }
 
 /* ── Workspace ── */
-.workspace { grid-column: 2; padding: 36px 48px 80px; max-width: 1440px; width: 100%; }
-.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+.workspace {
+  grid-column: 2;
+  padding: 36px 44px 80px;
+  max-width: 1440px;
+  width: 100%;
+}
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
 .eyebrow { font-size: 9px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
-.topbar h1 { font-weight: 300; font-size: clamp(1.8rem, 2.3vw, 2.4rem); letter-spacing: -.04em; }
+.topbar h1 { font-weight: 300; font-size: clamp(1.7rem, 2.2vw, 2.3rem); letter-spacing: -.04em; }
 .topbar h1 strong { font-weight: 600; }
-.top-actions { display: flex; gap: 12px; align-items: center; }
+.top-actions { display: flex; gap: 10px; align-items: center; }
 
 .circle-btn {
-  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--panel-border);
-  background: var(--panel-bg); color: var(--ivory-muted); cursor: pointer; display: inline-grid;
-  place-items: center; font-size: 14px; transition: 0.3s var(--silk-ease);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  color: var(--ivory-muted);
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  font-size: 13px;
+  transition: 0.3s var(--silk-ease);
 }
-.circle-btn:hover { border-color: rgba(176,184,196,0.3); transform: scale(1.05); }
+.circle-btn:hover { border-color: rgba(176,184,196,0.35); transform: scale(1.05); }
 
 /* ── Content Containers ── */
-.page { display: none; animation: fadeIn .5s var(--silk-ease); }
+.page { display: none; animation: fadeIn .45s var(--silk-ease); }
 .page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 .portal-hero {
-  position: relative; padding: 32px 36px; border: 1px solid var(--panel-border); border-radius: 28px;
-  background: linear-gradient(135deg, rgba(28,33,40,0.9), rgba(22,26,32,0.5)); overflow: hidden; margin-bottom: 24px;
+  position: relative;
+  padding: 32px 36px;
+  border: 1px solid var(--panel-border);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(28,33,40,0.92), rgba(22,26,32,0.6));
+  overflow: hidden;
+  margin-bottom: 24px;
 }
-.portal-hero h2 { font-size: clamp(1.5rem, 2.2vw, 2.1rem); font-weight: 300; letter-spacing: -.04em; }
+.portal-hero h2 { font-size: clamp(1.4rem, 2.1vw, 2rem); font-weight: 300; letter-spacing: -.04em; }
 .portal-hero h2 strong { font-weight: 600; }
 .portal-hero p { color: var(--slate-light); font-size: 12.5px; font-weight: 300; line-height: 1.7; max-width: 720px; margin-top: 8px; }
 
 .status-pill {
-  display: inline-flex; gap: 8px; align-items: center;
-  padding: 5px 12px; border: 1px solid var(--panel-border); border-radius: 100px;
-  font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--slate-light);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 5px 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--slate-light);
   background: rgba(15, 17, 21, 0.5);
 }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #48bb78; box-shadow: 0 0 10px #48bb78; }
@@ -158,8 +320,13 @@ body {
 .three-col { grid-template-columns: repeat(3, 1fr); }
 
 .card {
-  background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 24px;
-  padding: 24px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: relative;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  padding: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
 }
 .card-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
 .stat-value { font-size: 2rem; font-weight: 300; letter-spacing: -.04em; color: var(--ivory); }
@@ -177,9 +344,17 @@ body {
 .portal-table tr:hover td { background: rgba(176,184,196,0.02); }
 
 .btn-action {
-  padding: 6px 14px; border-radius: 100px; font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; cursor: pointer; border: 1px solid var(--panel-border);
-  background: transparent; color: var(--ivory); transition: 0.3s;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--ivory);
+  transition: 0.3s;
 }
 .btn-action:hover { background: rgba(176,184,196,0.1); border-color: var(--silver); }
 .btn-action.gold { color: var(--accent-gold); border-color: rgba(212,175,55,0.3); }
@@ -192,24 +367,38 @@ body {
 .field { margin-bottom: 12px; }
 .field label { display: block; font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
 .field input, .field select, .field textarea {
-  width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--panel-border);
-  background: rgba(15, 17, 21, 0.6); color: var(--ivory); font-family: inherit; font-size: 11px; outline: none; transition: 0.3s;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(15, 17, 21, 0.6);
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: 11px;
+  outline: none;
+  transition: 0.3s;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--silver); }
 .field.full { grid-column: 1 / -1; }
 
-/* Filter & Search Bar */
 .search-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
 .search-bar input {
-  flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 100px; border: 1px solid var(--panel-border);
-  background: rgba(15,17,21,0.5); color: var(--ivory); font-size: 11px; outline: none;
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--panel-border);
+  background: rgba(15,17,21,0.5);
+  color: var(--ivory);
+  font-size: 11px;
+  outline: none;
 }
 .search-bar input:focus { border-color: var(--silver); }
 
-/* ── Ticket Chart & Analytics Container ── */
+/* Ticket Chart */
 .ticket-chart-container {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 32px;
   align-items: center;
 }
@@ -218,12 +407,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 240px;
+  height: 220px;
 }
 .chart-svg {
   transform: rotate(-90deg);
   overflow: visible;
-  filter: drop-shadow(0 0 16px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 0 16px rgba(0,0,0,0.4));
 }
 .chart-donut-segment {
   fill: none;
@@ -242,7 +431,7 @@ body {
 }
 .chart-center-text strong {
   display: block;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 300;
   color: var(--ivory);
   line-height: 1;
@@ -284,7 +473,7 @@ body {
   margin-bottom: 2px;
 }
 .legend-val {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 300;
   color: var(--ivory);
   display: flex;
@@ -297,7 +486,6 @@ body {
   font-weight: 400;
 }
 
-/* Engineer Badge */
 .eng-badge {
   display: inline-flex;
   align-items: center;
@@ -309,14 +497,9 @@ body {
   font-size: 10px;
   color: var(--ivory);
 }
-.eng-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-}
+.eng-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-cyan); }
 
-/* Toast */
+/* Toast & Modals */
 .toast-msg {
   position: fixed; right: 30px; bottom: 30px; background: #1a1e24; border: 1px solid var(--panel-border);
   padding: 14px 24px; border-radius: 100px; font-size: 11px; color: var(--ivory);
@@ -325,7 +508,6 @@ body {
 }
 .toast-msg.show { transform: none; opacity: 1; }
 
-/* Admin Modal */
 .admin-modal {
   position: fixed; inset: 0; background: rgba(15, 17, 21, 0.85); backdrop-filter: blur(12px);
   display: none; place-items: center; z-index: 1000; padding: 20px;
@@ -334,6 +516,201 @@ body {
 .modal-content {
   width: min(680px, 100%); background: var(--base-mid); border: 1px solid var(--panel-border);
   border-radius: 28px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;
+}
+
+/* ═══════════════════════════════════════════════════
+   ADMIN LOGIN OVERLAY & AUSTRALIA 12.PNG BACKGROUND
+   Matches index.html's map treatment:
+   Dark Mode  = plain map image, no color tint
+   Light Mode = crisp black map (grayscale + invert)
+   ═══════════════════════════════════════════════════ */
+#adminLoginOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.88) 0%, rgba(15, 17, 21, 0.98) 100%);
+  overflow: hidden;
+}
+
+#adminLoginOverlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('images/12.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  /* Dark Mode: plain map image, no color tint */
+  opacity: 0.85;
+  animation: mapDrift 20s ease-in-out infinite alternate;
+}
+
+#adminLoginOverlay > div {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes mapDrift {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.04); }
+}
+
+/* ── LIGHT MODE OVERRIDES ── */
+html[data-theme="light"] {
+  --base-deep: #FAFAFA;
+  --base-mid: #F1F2F4;
+  --base-soft: #E8E9EC;
+  --slate-warm: #64748b;
+  --slate-light: #334155;
+  --graphite: #D1D5DB;
+  --graphite-soft: #94A3B8;
+  --ivory: #0F172A;
+  --ivory-muted: #1E293B;
+  --silver: #475569;
+  --panel-bg: rgba(255, 255, 255, 0.88);
+  --panel-border: rgba(15, 23, 42, 0.1);
+}
+
+/* Light Mode: Australia 12.png becomes Crisp Black */
+html[data-theme="light"] #adminLoginOverlay {
+  background: radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 0.9) 0%, rgba(250, 250, 250, 0.98) 100%) !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay::before {
+  /* Crisp black Australian map — same filter as index.html's light mode */
+  filter: grayscale(100%) invert(1) contrast(1.4) brightness(0.9) !important;
+  opacity: 0.28 !important;
+  mix-blend-mode: multiply;
+}
+
+html[data-theme="light"] #adminLoginOverlay > div {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(212, 175, 55, 0.45) !important;
+  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay h2 {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay p {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay .field label {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay .field input {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .admin-demo-box {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+html[data-theme="light"] .top-nav {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="light"] .nav-logo {
+  filter: brightness(0) !important;
+}
+
+html[data-theme="light"] .auth-logo {
+  filter: brightness(0) !important;
+}
+
+html[data-theme="light"] .top-nav .nav-links > li > a,
+html[data-theme="light"] .top-nav .nav-utility a {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="light"] .top-nav .nav-links > li > a:hover,
+html[data-theme="light"] .top-nav .nav-utility a:hover,
+html[data-theme="light"] .top-nav .nav-links > li > a.active {
+  color: #2b6cf6 !important;
+}
+
+html[data-theme="light"] .sidebar {
+  background: rgba(255, 255, 255, 0.95);
+  border-right-color: rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .portal-hero {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(241, 242, 244, 0.7));
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+html[data-theme="light"] .card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+html[data-theme="light"] .portal-table th {
+  color: #64748b;
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+html[data-theme="light"] .portal-table td {
+  color: #1e293b;
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+html[data-theme="light"] .portal-table tr:hover td {
+  background: rgba(43, 108, 246, 0.04);
+}
+
+html[data-theme="light"] .field input,
+html[data-theme="light"] .field select,
+html[data-theme="light"] .field textarea,
+html[data-theme="light"] .search-bar input {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html[data-theme="light"] .btn-action {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+html[data-theme="light"] .btn-action:hover {
+  background: #f1f5f9;
+}
+
+html[data-theme="light"] .modal-content {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html[data-theme="light"] .legend-card {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+html[data-theme="light"] .eng-badge {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html[data-theme="light"] .page-grid-overlay {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
 }
 
 @media(max-width: 1024px) {
@@ -346,39 +723,6 @@ body {
   .ticket-chart-container { grid-template-columns: 1fr; }
   .chart-legend-grid { grid-template-columns: 1fr; }
 }
-
-/* ── Floating Technical Network Backdrop ── */
-.tech-backdrop {
-  position: fixed;
-  inset: -6%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("images/bg-network-mesh.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  opacity: 0.9;
-  filter: saturate(1.05) contrast(1.15) brightness(1.25);
-  will-change: transform;
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.08);
-  animation: backdropDrift 46s ease-in-out infinite alternate;
-}
-.tech-backdrop::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 45%, rgba(15,17,21,0) 0%, rgba(15,17,21,0.25) 60%, rgba(15,17,21,0.7) 100%),
-    linear-gradient(180deg, rgba(15,17,21,0.45) 0%, rgba(22,26,32,0.15) 45%, rgba(13,15,19,0.6) 100%);
-}
-@keyframes backdropDrift {
-  0%   { background-position: 46% 48%; }
-  50%  { background-position: 54% 52%; }
-  100% { background-position: 48% 45%; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .tech-backdrop { animation: none; }
-}
 </style>
 </head>
 <body>
@@ -388,13 +732,72 @@ body {
   <rect width="100%" height="100%" filter="url(#n)"/>
 </svg>
 <div class="atmosphere"></div>
-<div class="tech-backdrop"></div>
 <div class="page-grid-overlay" id="pageGrid"></div>
 
-<!-- ═══ ADMIN LOGIN OVERLAY ═══ -->
+<!-- ═══ TOP NAVIGATION BLENDED FROM INDEX.HTML ═══ -->
+<nav class="top-nav" id="topNav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
+  </a>
+
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li class="dropdown">
+        <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+        <ul class="dropdown-content">
+          <li><a href="index.html#residential-plans">Residential Plans</a></li>
+          <li><a href="index.html#business-plans">Business Plans</a></li>
+          <li><a href="index.html#enterprise-ethernet">Enterprise Ethernet</a></li>
+        </ul>
+      </li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="building-upgrades.html">Upgrades</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="customer-portal.html">Customer Login</a></li>
+    </ul>
+
+    <ul class="nav-utility">
+      <li><a href="admin-portal.html" class="active">Neo Login</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+          <span class="theme-toggle-knob">
+            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="toggle-bar"></span><span class="toggle-bar"></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu Drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-links">
+      <a href="index.html" class="mobile-menu-link" data-index="01">Home</a>
+      <a href="index.html#residential-plans" class="mobile-menu-link" data-index="02">Residential Plans</a>
+      <a href="index.html#business-plans" class="mobile-menu-link" data-index="03">Business Plans</a>
+      <a href="index.html#enterprise-ethernet" class="mobile-menu-link" data-index="04">Enterprise Ethernet</a>
+      <a href="admin-portal.html" class="mobile-menu-link active" data-index="05">Admin Login</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="06">Customer Login</a>
+      <a href="developers.html" class="mobile-menu-link" data-index="07">Developers</a>
+      <a href="building-upgrades.html" class="mobile-menu-link" data-index="08">Upgrades</a>
+      <a href="about.html" class="mobile-menu-link" data-index="09">About Us</a>
+      <a href="contact.html" class="mobile-menu-link" data-index="10">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN LOGIN OVERLAY WITH AUSTRALIAN MAP 12.PNG ═══ -->
 <div id="adminLoginOverlay">
-  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.3);border-radius:32px;background:rgba(22,26,32,0.82);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 25px 90px rgba(0,0,0,0.65);text-align:center;">
-    <img src="images/psd 1.png" alt="Neo Broadband Logo" style="max-height:55px;width:auto;margin-bottom:12px;">
+  <div style="width:min(440px,100%);padding:40px;border:1px solid rgba(212,175,55,0.35);border-radius:32px;background:rgba(22,26,32,0.92);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 25px 90px rgba(0,0,0,0.65);text-align:center;">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="auth-logo" style="max-height:55px;width:auto;margin-bottom:12px;">
     <div class="admin-badge">Admin NOC Console</div>
     <h2 style="font-weight:400;font-size:20px;color:var(--ivory);margin-bottom:6px;">Network Operator Authentication</h2>
     <p style="font-size:11px;color:var(--slate-light);margin-bottom:24px;">Secure RADIUS Gateway & ISP Control Node</p>
@@ -409,7 +812,7 @@ body {
     </div>
     <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;background:linear-gradient(135deg,#d4af37,#9CA3AF);color:#0F1115;" onclick="authenticateAdmin()">Sign In to NOC Control</button>
 
-    <div style="margin-top: 20px; padding: 12px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 10px; color: var(--slate-light); text-align: left;">
+    <div class="admin-demo-box" style="margin-top: 20px; padding: 12px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 10px; color: var(--slate-light); text-align: left;">
       <strong style="color: var(--accent-gold); display: block; margin-bottom: 4px;">Default Staff NOC Credentials:</strong>
       User: <code>admin</code> &nbsp;|&nbsp; Pass: <code>admin2026</code>
     </div>
@@ -455,7 +858,7 @@ body {
     <input type="hidden" id="tktModalCustId">
     <input type="hidden" id="tktModalId">
     <div class="field-grid">
-       <div class="field"><label>Subscriber Account</label><input id="tktModalSubscriber" disabled></div>
+      <div class="field"><label>Subscriber Account</label><input id="tktModalSubscriber" disabled></div>
       <div class="field"><label>Ticket Reference</label><input id="tktModalRef" disabled></div>
       <div class="field"><label>Created (Date &amp; Time)</label><input id="tktModalCreated" disabled></div>
       <div class="field full"><label>Subject / Problem Statement</label><input id="tktModalSubject"></div>
@@ -529,9 +932,6 @@ body {
 <div class="shell">
   <!-- ═══ ADMIN SIDEBAR ═══ -->
   <aside class="sidebar" id="sidebar">
-    <a href="index.html" class="portal-brand">
-      <img src="images/psd 1.png" alt="Neo Broadband Logo">
-    </a>
     <div class="admin-badge">Admin NOC Console</div>
 
     <div class="nav-label">ISP Control Center</div>
@@ -544,16 +944,7 @@ body {
       <button data-page="adminTickets"><span class="icon">🎫</span>NOC Support Tickets</button>
     </nav>
 
-        <div class="sidebar-foot">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <span style="font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-warm);">Theme</span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
-          <span class="theme-toggle-knob">
-            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          </span>
-        </button>
-      </div>
+    <div class="sidebar-foot">
       <div class="mini-profile">
         <div class="avatar">NOC</div>
         <div>
@@ -561,9 +952,9 @@ body {
           <small>Sydney Core Transit POP</small>
         </div>
       </div>
-      <div style="display:flex;gap:10px;margin-top:16px;">
-        <a href="customer-portal.html" class="btn-secondary" style="padding:8px 12px;font-size:9px;flex:1;text-align:center;">Client Portal</a>
-        <button class="btn-secondary" style="padding:8px 12px;font-size:9px;" onclick="adminLogout()">Logout</button>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <a href="customer-portal.html" class="btn-secondary" style="padding:8px 10px;font-size:9px;flex:1;text-align:center;">Client Portal</a>
+        <button class="btn-secondary" style="padding:8px 10px;font-size:9px;" onclick="adminLogout()">Logout</button>
       </div>
     </div>
   </aside>
@@ -832,7 +1223,6 @@ body {
         <p>Live operational ticketing telemetry breakdown, engineer assignment logs, and optical fiber loop resolution auditing.</p>
       </div>
 
-      <!-- Live Pie / Donut Chart Card -->
       <div class="card" style="margin-bottom: 24px;">
         <div class="card-head">
           <div>
@@ -843,12 +1233,9 @@ body {
         </div>
 
         <div class="ticket-chart-container">
-          <!-- SVG Interactive Donut Chart -->
           <div class="chart-box">
             <svg class="chart-svg" width="200" height="200" viewBox="0 0 200 200">
-              <!-- Background Circle Track -->
               <circle cx="100" cy="100" r="72" stroke="rgba(156,163,175,0.08)" stroke-width="22" fill="none"></circle>
-              <!-- Dynamic Segments -->
               <circle id="pieSegmentResolved" class="chart-donut-segment" cx="100" cy="100" r="72" stroke="#22c55e" stroke-dasharray="0 452.4" stroke-dashoffset="0"></circle>
               <circle id="pieSegmentPending" class="chart-donut-segment" cx="100" cy="100" r="72" stroke="#38bdf8" stroke-dasharray="0 452.4" stroke-dashoffset="0"></circle>
               <circle id="pieSegmentQueue" class="chart-donut-segment" cx="100" cy="100" r="72" stroke="#d4af37" stroke-dasharray="0 452.4" stroke-dashoffset="0"></circle>
@@ -859,7 +1246,6 @@ body {
             </div>
           </div>
 
-          <!-- Legend & Breakdown Metrics -->
           <div class="chart-legend-grid">
             <div class="legend-card" style="border-left: 3px solid #d4af37;">
               <div class="legend-indicator" style="background:#d4af37;box-shadow: 0 0 10px rgba(212,175,55,0.4);"></div>
@@ -908,7 +1294,6 @@ body {
         </div>
       </div>
 
-      <!-- Tickets Detailed Queue -->
       <div class="card">
         <div class="card-head">
           <h3>Subscriber Help Desk & NOC Action Log</h3>
@@ -955,7 +1340,7 @@ body {
 
 <div class="toast-msg" id="toast"></div>
 
-<!-- ═══ THEME TOGGLE (Dark / Light Mode) ═══ -->
+<!-- ═══ THEME CONTROLLER & SCRIPT ═══ -->
 <script>
 (function () {
   function applyStoredTheme() {
@@ -975,17 +1360,21 @@ body {
       try { localStorage.setItem('nb-theme', next); } catch (e) {}
       sync();
     });
+
+    // Mobile drawer toggle
+    const toggle = document.getElementById('navToggle');
+    const menu = document.getElementById('mobileMenu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('open');
+        toggle.classList.toggle('active', isOpen);
+      });
+    }
   });
 })();
 </script>
 
-<!-- ═══ ADMIN BACKEND ORCHESTRATOR & SYNC SCRIPT ═══ -->
 <script>
-/**
- * NEO BROADBAND NOC ADMIN ENGINE
- * Syncs bi-directionally with localStorage['neo_subscriber_db']
- */
-
 const defaultStore = {
   "NEO-98210": {
     name: "Johnathan Smith",
@@ -1088,141 +1477,6 @@ const defaultStore = {
         notes: "Testing redundant peering transit path via Equinix SY4." 
       }
     ]
-  },
-  "NEO-55667": {
-    name: "David Miller",
-    email: "david.m@example.com",
-    pass: "demo2026",
-    phone: "+61 455 666 777",
-    address: "22 King St, Brisbane QLD 4000",
-    planName: "Basic Plan",
-    planSpeed: "25 Mbps",
-    upSpeed: "10 Mbps",
-    downSpeed: "25 Mbps",
-    balance: "A$0.00",
-    dueDate: "Account in good standing",
-    ipAddress: "103.24.21.55",
-    ntdId: "NTD-AU-778899-X",
-    currentUsageGB: 45,
-    trafficWeekly: [5, 8, 6, 4, 7, 10, 5],
-    monthlyTrend: [40, 45, 38, 50, 42, 48, 45, 0, 0, 0, 0, 0],
-    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Basic", amount: "A$60.00", status: "Paid" }],
-    tickets: [
-      {
-        id: "TKT-6014",
-        title: "Wi-Fi 6 CPE Beacon Diagnostic",
-        status: "In NOC Queue",
-        date: "28 Aug 2026",
-        attendedBy: "NOC Engineer 01 (You)",
-        resolvedBy: "— (In Queue)",
-        resolvedDate: "Pending Assignment",
-        notes: "Customer reported occasional 5GHz channel interference."
-      }
-    ]
-  },
-  "NEO-77889": {
-    name: "Global Tech",
-    email: "admin@globaltech.com.au",
-    pass: "demo2026",
-    phone: "+61 3 8888 9999",
-    address: "100 Collins St, Melbourne VIC 3000",
-    planName: "Enterprise 500/500",
-    planSpeed: "500 Mbps",
-    upSpeed: "500 Mbps",
-    downSpeed: "500 Mbps",
-    balance: "A$0.00",
-    dueDate: "Account in good standing",
-    ipAddress: "103.24.22.1",
-    ntdId: "NTD-AU-990011-X",
-    currentUsageGB: 3500,
-    trafficWeekly: [600, 650, 620, 680, 700, 200, 150],
-    monthlyTrend: [3100, 3200, 3400, 3350, 3600, 3550, 3500, 0, 0, 0, 0, 0],
-    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Enterprise 500", amount: "A$469.00", status: "Paid" }],
-    tickets: [
-      {
-        id: "TKT-5510",
-        title: "VLAN Trunking Allocation (VLAN 402)",
-        status: "Resolved",
-        date: "10 Aug 2026",
-        attendedBy: "Liam Vance (Transit)",
-        resolvedBy: "Liam Vance (Transit)",
-        resolvedDate: "10 Aug 2026 16:45 AEST",
-        notes: "Committed 802.1Q tagged packet header provisioning on switch MEL-COR-02."
-      }
-    ]
-  },
-  /* ═══ EXTRA DEMO ACCOUNTS ═══ */
-  "NEO-44912": {
-    name: "Marcus Vance",
-    email: "marcus.vance@auroradynamics.com.au",
-    pass: "demo2026",
-    phone: "+61 418 333 444",
-    address: "88 Eagle St, Brisbane QLD 4000",
-    planName: "Thunderbolt Plan",
-    planSpeed: "2000 Mbps",
-    upSpeed: "500 Mbps",
-    downSpeed: "2000 Mbps",
-    balance: "A$210.00",
-    dueDate: "25 September 2026",
-    ipAddress: "103.24.25.77",
-    ntdId: "NTD-AU-449120-X",
-    currentUsageGB: 2840,
-    trafficWeekly: [320, 410, 380, 490, 520, 480, 240],
-    monthlyTrend: [2100, 2300, 2500, 2700, 2650, 2900, 2840, 0, 0, 0, 0, 0],
-    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Thunderbolt (2000/500)", amount: "A$210.00", status: "Unpaid" }],
-    tickets: [
-      {
-        id: "TKT-3390",
-        title: "2.5G Multi-Gig WAN Port Speed Negotiation",
-        status: "In NOC Queue",
-        date: "27 Aug 2026",
-        attendedBy: "NOC Engineer 01 (You)",
-        resolvedBy: "— (In Queue)",
-        resolvedDate: "Pending Assignment",
-        notes: "Customer requesting 2.5GBase-T link negotiation confirmation on UniFi UDM Pro."
-      },
-      {
-        id: "TKT-3120",
-        title: "Reverse DNS (rDNS) PTR Record Delegation",
-        status: "Resolved",
-        date: "05 Aug 2026",
-        attendedBy: "Alex Chen (Lead)",
-        resolvedBy: "Alex Chen (Lead)",
-        resolvedDate: "05 Aug 2026 15:30 AEST",
-        notes: "PTR record 103.24.25.77 set to gateway.auroradynamics.com.au."
-      }
-    ]
-  },
-  "NEO-66210": {
-    name: "Elena Rostova",
-    email: "elena.r@synapsearch.io",
-    pass: "demo2026",
-    phone: "+61 422 990 881",
-    address: "Level 8, 161 Collins St, Melbourne VIC 3000",
-    planName: "Pro + Plan",
-    planSpeed: "500 Mbps",
-    upSpeed: "200 Mbps",
-    downSpeed: "500 Mbps",
-    balance: "A$0.00",
-    dueDate: "Account in good standing",
-    ipAddress: "103.24.26.19",
-    ntdId: "NTD-AU-662108-X",
-    currentUsageGB: 920,
-    trafficWeekly: [110, 140, 130, 150, 160, 120, 110],
-    monthlyTrend: [750, 800, 820, 890, 940, 960, 920, 0, 0, 0, 0, 0],
-    invoices: [{ id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Pro +", amount: "A$115.00", status: "Paid" }],
-    tickets: [
-      {
-        id: "TKT-4412",
-        title: "SIP Trunk VoIP Packet Latency Optimization",
-        status: "Investigating",
-        date: "26 Aug 2026",
-        attendedBy: "Sarah Jenkins (Core)",
-        resolvedBy: "— (In Progress)",
-        resolvedDate: "Under Testing",
-        notes: "DSCP EF (Expedited Forwarding) priority tags being verified through Melbourne core router."
-      }
-    ]
   }
 };
 
@@ -1264,7 +1518,6 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ── Admin Authentication ──
 function authenticateAdmin() {
   const u = document.getElementById('adminUserInput').value.trim();
   const p = document.getElementById('adminPassInput').value.trim();
@@ -1284,7 +1537,6 @@ function adminLogout() {
   window.location.reload();
 }
 
-// Page Navigation
 const pageTitles = {
   adminOverview: 'Network Overview & <strong>Subscribers Cloud</strong>',
   adminSubscribers: 'Subscriber Database & <strong>Line Provisioning</strong>',
@@ -1305,7 +1557,6 @@ document.querySelectorAll('.portal-nav button').forEach(btn => {
   };
 });
 
-// ── Main Data Synchronization ──
 function syncAdminData(showToast = false) {
   subscriberStore = getStoredData();
   if (showToast) toast('Syncing with Cloud RADIUS & POP Nodes...');
@@ -1337,13 +1588,11 @@ function syncAdminData(showToast = false) {
     }
   });
 
-  // Overview Stats
   document.getElementById('statTotalUsers').textContent = userKeys.length;
   document.getElementById('statTotalMRR').textContent = `A$${totalMRR.toFixed(2)}`;
   document.getElementById('statAggregateUsage').innerHTML = `${(totalUsageGB / 1000).toFixed(2)} <small>TB</small>`;
   document.getElementById('statOpenTickets').textContent = openTicketsCount;
 
-  // Recent Users Table (Dashboard)
   const recentTbody = document.querySelector('#recentUsersTable tbody');
   recentTbody.innerHTML = userKeys.slice(0, 5).map(k => {
     const u = subscriberStore[k];
@@ -1358,22 +1607,14 @@ function syncAdminData(showToast = false) {
     `;
   }).join('');
 
-  // Full Subscribers Table
   renderSubscribersTable();
-
-  // Invoices Table & Dropdowns
   renderInvoicesTable(allInvoices);
   populateInvoiceCustomerDropdown();
-
-  // Plan Inventory
   renderPlanInventory();
-
-  // Tickets Table & Pie Chart
   renderTicketAnalyticsAndChart(allTickets);
   renderAdminTickets(allTickets);
 }
 
-// ── Subscribers Operations ──
 function renderSubscribersTable(filterText = '') {
   const tbody = document.querySelector('#subscribersTable tbody');
   const keys = Object.keys(subscriberStore);
@@ -1419,7 +1660,6 @@ function filterSubscribersTable() {
   renderSubscribersTable(val);
 }
 
-// ── Modal Form Handling ──
 function openEditCustomerModal(custId) {
   const u = subscriberStore[custId];
   if (!u) return;
@@ -1542,7 +1782,6 @@ function resetNodePulse(custId) {
   toast(`Triggering remote NTD optical reset pulse for ${custId}...`);
 }
 
-// ── Invoicing Operations ──
 function renderInvoicesTable(allInvoices) {
   const tbody = document.querySelector('#allInvoicesTable tbody');
   let totalOutstanding = 0;
@@ -1572,11 +1811,12 @@ function renderInvoicesTable(allInvoices) {
           </span>
         </td>
         <td>
-          <div style="display:flex;gap:6px;">
+          <div style="display:flex;gap:6px;flex-wrap:nowrap;">
             <button class="btn-action" onclick="toggleInvoiceStatus('${inv.custId}', '${inv.id}')">
               Mark ${isPaid ? 'Unpaid' : 'Paid'}
             </button>
             <a href="invoice.html?inv=${inv.id}" class="btn-action" style="text-decoration:none;">View</a>
+            <button class="btn-action cyan" onclick="dispatchCustomerEmail('${inv.custId}', '${inv.id}')">✉ Email</button>
           </div>
         </td>
       </tr>
@@ -1585,6 +1825,16 @@ function renderInvoicesTable(allInvoices) {
 
   document.getElementById('totalOutstandingVal').textContent = `A$${totalOutstanding.toFixed(2)}`;
   document.getElementById('totalInvoicesCount').textContent = allInvoices.length;
+}
+
+function dispatchCustomerEmail(custId, invId) {
+  const u = subscriberStore[custId];
+  if (!u) return;
+  const email = u.email || 'customer@example.com.au';
+  toast(`Sending email bill statement to ${email}...`);
+  setTimeout(() => {
+    toast(`Email bill for ${invId} successfully sent to ${email}`);
+  }, 1200);
 }
 
 function populateInvoiceCustomerDropdown() {
@@ -1620,7 +1870,7 @@ function issueManualInvoice() {
 
   persistStore();
   syncAdminData();
-  toast(`Invoice ${invId} dispatched to subscriber.`);
+  toast(`Invoice ${invId} issued. Ready to dispatch email.`);
 }
 
 function toggleInvoiceStatus(custId, invId) {
@@ -1650,7 +1900,6 @@ function markAllInvoicesPaid() {
   toast('All active invoices updated to PAID');
 }
 
-// ── Plans Inventory Rendering ──
 function renderPlanInventory() {
   const tbody = document.querySelector('#planInventoryTable tbody');
   const userCounts = {};
@@ -1678,7 +1927,6 @@ function renderPlanInventory() {
   }).join('');
 }
 
-// ── NOC Ticketing & Dynamic Pie / Donut Chart ──
 function renderTicketAnalyticsAndChart(allTickets) {
   let resolvedCount = 0;
   let pendingCount = 0;
@@ -1709,7 +1957,6 @@ function renderTicketAnalyticsAndChart(allTickets) {
   const successEfficiency = total > 0 ? ((resolvedCount / total) * 100).toFixed(1) : '100.0';
   document.getElementById('legendSuccessRate').textContent = `${successEfficiency}%`;
 
-  // SVG Circumference = 2 * PI * 72 ≈ 452.389
   const circumference = 2 * Math.PI * 72;
   const segResolved = document.getElementById('pieSegmentResolved');
   const segPending = document.getElementById('pieSegmentPending');
@@ -1764,26 +2011,25 @@ function renderAdminTickets(allTickets) {
     );
   }
 
-   if (filtered.length === 0) {
+  if (filtered.length === 0) {
     tbody.innerHTML = `<tr><td colspan="14" style="text-align:center;color:var(--slate-warm);padding:28px;">No tickets found matching the selected filter/search.</td></tr>`;
     return;
   }
- 
-   // Priority badge colors (P1 = most severe)
-    const priorityColors = { P1: '#ef4444', P2: '#d4af37', P3: '#38bdf8', P4: '#9CA3AF' };
- 
-   tbody.innerHTML = filtered.map(t => {
+
+  const priorityColors = { P1: '#ef4444', P2: '#d4af37', P3: '#38bdf8', P4: '#9CA3AF' };
+
+  tbody.innerHTML = filtered.map(t => {
     const isResolved = t.status === 'Resolved';
     const isInvestigating = t.status === 'Investigating' || t.status === 'Pending';
     const statusColor = isResolved ? '#22c55e' : (isInvestigating ? '#38bdf8' : 'var(--accent-gold)');
     const dotClass = isResolved ? '' : (isInvestigating ? 'cyan' : 'warn');
- 
+
     const priority = t.priority || '—';
     const priorityColor = priorityColors[priority] || 'var(--slate-light)';
- 
+
     const sla = t.slaStatus || 'Pending';
     const slaColor = sla === 'Met' ? '#22c55e' : (sla === 'Missed' ? '#ef4444' : 'var(--slate-warm)');
- 
+
     return `
       <tr>
         <td><strong>${t.id}</strong></td>
@@ -1857,16 +2103,9 @@ function filterTicketsTable() {
       });
     }
   });
-  renderAdminTickets(allTickets);const priorityColors = { 
-    P1: '#ef4444', // Red (Emergency)
-    P2: '#f97316', // Orange (Serious)
-    P3: '#eab308', // Yellow/Gold (Normal)
-    P4: '#22c55e'  // Green (Minor)
-};
-
+  renderAdminTickets(allTickets);
 }
 
-// ── Ticket Modal Actions ──
 function openTicketModal(custId, tktId) {
   const u = subscriberStore[custId];
   if (!u || !u.tickets) return;
@@ -1907,29 +2146,28 @@ function saveTicketChanges() {
   const tkt = u.tickets.find(t => t.id === tktId);
   if (!tkt) return;
 
-   const newStatus = document.getElementById('tktModalStatus').value;
-   const newEngineer = document.getElementById('tktModalEngineer').value;
-   const newSubject = document.getElementById('tktModalSubject').value.trim();
-   const newNotes = document.getElementById('tktModalNotes').value.trim();
-   const newType = document.getElementById('tktModalType').value;
-   const newPriority = document.getElementById('tktModalPriority').value;
-   const newFaultType = document.getElementById('tktModalFaultType').value;
-   let newSla = document.getElementById('tktModalSla').value;
-   let newMttr = document.getElementById('tktModalMttr').value.trim();
-   let newResolvedReason = document.getElementById('tktModalResolvedReason').value;
- 
-   tkt.title = newSubject || tkt.title;
-   tkt.status = newStatus;
-   tkt.attendedBy = newEngineer;
-   tkt.notes = newNotes;
-   tkt.ticketType = newType;
-   tkt.priority = newPriority;
-   tkt.faultType = newFaultType;
- 
+  const newStatus = document.getElementById('tktModalStatus').value;
+  const newEngineer = document.getElementById('tktModalEngineer').value;
+  const newSubject = document.getElementById('tktModalSubject').value.trim();
+  const newNotes = document.getElementById('tktModalNotes').value.trim();
+  const newType = document.getElementById('tktModalType').value;
+  const newPriority = document.getElementById('tktModalPriority').value;
+  const newFaultType = document.getElementById('tktModalFaultType').value;
+  let newSla = document.getElementById('tktModalSla').value;
+  let newMttr = document.getElementById('tktModalMttr').value.trim();
+  let newResolvedReason = document.getElementById('tktModalResolvedReason').value;
+
+  tkt.title = newSubject || tkt.title;
+  tkt.status = newStatus;
+  tkt.attendedBy = newEngineer;
+  tkt.notes = newNotes;
+  tkt.ticketType = newType;
+  tkt.priority = newPriority;
+  tkt.faultType = newFaultType;
+
   if (newStatus === 'Resolved') {
     tkt.resolvedBy = newEngineer;
     tkt.resolvedDate = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' AEST';
-    // Default SLA/MTTR/reason if the engineer left them unset while resolving
     if (newSla === 'Pending') newSla = 'Met';
     if (!newMttr || newMttr === 'Pending' || newMttr === 'In Progress') newMttr = 'Manually cleared — see notes';
     if (newResolvedReason === '—') newResolvedReason = 'No Fault Found';
@@ -1937,7 +2175,7 @@ function saveTicketChanges() {
     tkt.resolvedBy = '— (In Progress)';
     tkt.resolvedDate = 'Pending';
   }
- 
+
   tkt.slaStatus = newSla;
   tkt.mttr = newMttr || 'Pending';
   tkt.resolvedReason = newResolvedReason;
@@ -1970,7 +2208,6 @@ function quickResolveTicket(custId, tktId) {
   toast(`Ticket ${tktId} marked Resolved by ${staff}`);
 }
 
-// ── NOC Batch Operations ──
 function generateBulkCycleInvoices() {
   Object.keys(subscriberStore).forEach(k => {
     const u = subscriberStore[k];
@@ -2002,7 +2239,6 @@ function resetDatabaseToDefault() {
   }
 }
 
-// Mouse Follower
 (function() {
   const pageGrid = document.getElementById('pageGrid');
   if (!pageGrid) return;
@@ -2018,7 +2254,6 @@ function resetDatabaseToDefault() {
   renderGridLight();
 })();
 
-// Bootstrap
 window.onload = () => {
   const isAuthed = sessionStorage.getItem('neo_admin_session');
   if (isAuthed === 'authenticated') {
@@ -2026,25 +2261,6 @@ window.onload = () => {
     syncAdminData();
   }
 };
-</script>
-<script>
-// ── Backdrop parallax ──
-(function () {
-  const backdrop = document.querySelector('.tech-backdrop');
-  if (!backdrop) return;
-  let tx = 0, ty = 0, cx = 0, cy = 0;
-  document.addEventListener('mousemove', e => {
-    tx = (e.clientX / window.innerWidth - 0.5) * -34;
-    ty = (e.clientY / window.innerHeight - 0.5) * -24;
-  }, { passive: true });
-  (function loop() {
-    cx += (tx - cx) * 0.045;
-    cy += (ty - cy) * 0.045;
-    backdrop.style.setProperty('--px', cx.toFixed(2) + 'px');
-    backdrop.style.setProperty('--py', cy.toFixed(2) + 'px');
-    requestAnimationFrame(loop);
-  })();
-})();
 </script>
 </body>
 </html>
