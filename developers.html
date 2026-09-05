@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,21 +19,36 @@
     color: #2b6cf6 !important;
   }
 
-  /* ═══ Fixed white navbar tile in light mode ═══ */
+  /* ═══ LIGHT MODE NAVIGATION FIXES (Matched to Index) ═══ */
+
+  /* 1. Transparent navigation in light mode (at the top) */
   html[data-theme="light"] .top-nav {
-    background: #ffffff !important;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    --nav-link-color: #1e293b;
-    --nav-shadow: none;
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
   }
 
+  /* Make text DARK immediately in light mode for visibility */
   html[data-theme="light"] .top-nav .nav-links > li > a,
   html[data-theme="light"] .top-nav .nav-utility a {
-    color: #1e293b !important;
+    color: #0f172a !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9) !important;
+  }
+
+  /* 2. Scrolled navigation in light mode (solid white) */
+  html[data-theme="light"] .top-nav.scrolled {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  /* Remove text-shadow when scrolled in light mode */
+  html[data-theme="light"] .top-nav.scrolled .nav-links > li > a,
+  html[data-theme="light"] .top-nav.scrolled .nav-utility a {
     text-shadow: none !important;
   }
 
+  /* Menu Hovers in light mode */
   html[data-theme="light"] .top-nav .nav-links > li > a:hover,
   html[data-theme="light"] .top-nav .nav-utility a:hover,
   html[data-theme="light"] .top-nav .nav-links > li > a.active {
