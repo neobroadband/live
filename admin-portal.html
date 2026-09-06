@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1804,15 +1805,20 @@ input, select, textarea {
   }
   applyStoredTheme();
   document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    const sync = () => btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-theme') === 'light'));
+    const btns = document.querySelectorAll('.theme-toggle');
+    if (!btns.length) return;
+    const sync = () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      btns.forEach(b => b.setAttribute('aria-pressed', String(isLight)));
+    };
     sync();
-    btn.addEventListener('click', function () {
-      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem('nb-theme', next); } catch (e) {}
-      sync();
+    btns.forEach(btn => {
+      btn.addEventListener('click', function () {
+        const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('nb-theme', next); } catch (e) {}
+        sync();
+      });
     });
 
     // Mobile drawer toggle
