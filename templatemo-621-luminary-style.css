@@ -1798,3 +1798,107 @@ body.menu-open {
   /* Never let a page scroll sideways on a phone */
   html, body { max-width: 100%; overflow-x: hidden; }
 }
+/* ══════════════════════════════════════════════════════════════
+   PORTAL SIDEBAR — MOBILE FIX (append to templatemo-621-luminary-style.css)
+   Makes the admin / customer portal sidebar usable on phones:
+   hidden off-canvas by default, slides in when the hamburger is tapped.
+   Pairs with the updated mobile-nav.js (sidebar gets class "open").
+   ══════════════════════════════════════════════════════════════ */
+
+/* Dim layer behind the open sidebar (created by mobile-nav.js) */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 630;
+  background: rgba(10, 12, 16, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s var(--silk-ease), visibility 0.45s var(--silk-ease);
+}
+.sidebar-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 1100px) {
+  /* Sidebar becomes an off-canvas drawer over the content */
+  .sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(320px, 84vw);
+    height: 100vh;
+    height: 100dvh;
+    z-index: 640;
+    transform: translateX(-105%);
+    transition: transform 0.5s var(--silk-ease), visibility 0.5s var(--silk-ease);
+    visibility: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    background: var(--base-mid);
+    padding-top: calc(84px + env(safe-area-inset-top));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    box-shadow: 24px 0 60px rgba(0, 0, 0, 0.45);
+  }
+  html[data-theme="light"] .sidebar {
+    background: #ffffff;
+    box-shadow: 24px 0 60px rgba(21, 23, 28, 0.18);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  /* The page content takes the full width once the sidebar is off-canvas */
+  .portal-main,
+  .portal-content,
+  .main-content,
+  .content {
+    margin-left: 0 !important;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Hamburger stays visible and above the drawer */
+  .portal-nav { z-index: 700 !important; }
+  .portal-nav .nav-toggle { display: flex !important; }
+
+  /* Sub-menus inside the sidebar: collapsed until expanded by tap */
+  .sidebar .has-submenu .submenu,
+  .sidebar .has-submenu .sub-menu,
+  .sidebar .has-submenu > ul {
+    display: none;
+  }
+  .sidebar .has-submenu.expanded .submenu,
+  .sidebar .has-submenu.expanded .sub-menu,
+  .sidebar .has-submenu.expanded > ul {
+    display: block;
+  }
+
+  /* Little chevron on submenu parents */
+  .sidebar .has-submenu > a::after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: auto;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.4s var(--silk-ease);
+    opacity: 0.6;
+  }
+  .sidebar .has-submenu.expanded > a::after {
+    transform: rotate(225deg);
+  }
+}
+
+@media (min-width: 1101px) {
+  /* Never show the dim layer on desktop */
+  .sidebar-backdrop { display: none; }
+}
