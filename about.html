@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -210,8 +211,12 @@
   }
   .commitment:last-child { border-bottom: 1px solid var(--panel-border); }
   .commitment-number {
-    font-size: 2.4rem; font-weight: 200; letter-spacing: -0.04em;
-    color: rgba(176,184,196,0.15); line-height: 1; font-variant-numeric: tabular-nums;
+    font-size: 2.4rem; font-weight: 700; letter-spacing: -0.04em;
+    color: var(--ivory); line-height: 1; font-variant-numeric: tabular-nums;
+  }
+
+  html[data-theme="light"] .commitment-number {
+    color: #0f172a !important;
   }
   .commitment-body h3 {
     font-size: 1.15rem; font-weight: 500; color: var(--ivory); margin-bottom: 10px; letter-spacing: -0.01em;
