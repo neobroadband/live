@@ -542,10 +542,58 @@ html[data-theme="light"] #loginOverlay {
 }
 
 html[data-theme="light"] #loginOverlay::before {
-  /* Crisp black Australian map — same filter as index.html's light mode */
+  /* Crisp black Australian map — identical treatment to index.html's light-mode hero map */
+  background-image:
+    linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
+    url('images/12.png') !important;
   filter: grayscale(100%) invert(1) contrast(1.4) brightness(0.9) !important;
-  opacity: 0.28 !important;
+  opacity: 1 !important;
   mix-blend-mode: multiply;
+}
+
+/* ═══════════════════════════════════════════════════
+   CUSTOMER LOGIN FORM — LIGHT MODE COLORS
+   Brings the sign-in/register card up to the same
+   treatment as admin-portal.html's #adminLoginOverlay.
+   ═══════════════════════════════════════════════════ */
+html[data-theme="light"] #loginOverlay > div {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="light"] #loginOverlay h2,
+html[data-theme="light"] #loginOverlay .eyebrow {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] #loginOverlay .field label {
+  color: #475569 !important;
+}
+
+html[data-theme="light"] #loginOverlay .field input,
+html[data-theme="light"] #loginOverlay .field select {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] #loginOverlay .auth-tabs {
+  border-bottom-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+html[data-theme="light"] #loginOverlay #demoUsersList {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+html[data-theme="light"] #loginOverlay #demoUsersList strong {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] #loginOverlay #demoUsersList > div > div {
+  background: rgba(15, 23, 42, 0.04) !important;
 }
 </style>
 <style id="neo-responsive-overrides">
