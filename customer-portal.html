@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -947,6 +948,40 @@ input, select, textarea {
 }
 
 </style>
+<style id="neo-sidebar-mobile-toggle">
+/* ── Mobile sidebar toggle (opens the left navigation drawer on phones/tablets) ── */
+.sidebar-toggle {
+  display: none;
+  position: relative;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(176, 184, 196, 0.06);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.sidebar-toggle span {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: var(--ivory);
+  border-radius: 2px;
+  transition: transform 0.3s var(--silk-ease), opacity 0.3s var(--silk-ease), top 0.3s var(--silk-ease);
+}
+.sidebar-toggle span:nth-child(1) { top: 11px; }
+.sidebar-toggle span:nth-child(2) { top: 16px; }
+.sidebar-toggle span:nth-child(3) { top: 21px; }
+.sidebar-toggle.active span:nth-child(1) { top: 16px; transform: rotate(45deg); }
+.sidebar-toggle.active span:nth-child(2) { opacity: 0; }
+.sidebar-toggle.active span:nth-child(3) { top: 16px; transform: rotate(-45deg); }
+
+@media (max-width: 1024px) {
+  .sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
 </head>
 <body>
 
@@ -1159,6 +1194,7 @@ input, select, textarea {
 </div>
 
 <div class="shell">
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
   <!-- ═══ SIDEBAR NAVIGATION ═══ -->
   <aside class="sidebar" id="sidebar">
     <div class="nav-label">Subscriber Workspace</div>
@@ -1190,9 +1226,14 @@ input, select, textarea {
   <!-- ═══ WORKSPACE CONTENT ═══ -->
   <main class="workspace">
     <header class="topbar">
-      <div>
-        <div class="eyebrow">Neo Broadband · Australian Network Operations Center</div>
-        <h1 id="pageTitle">Your connection, <strong>in real time.</strong></h1>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <div>
+          <div class="eyebrow">Neo Broadband · Australian Network Operations Center</div>
+          <h1 id="pageTitle">Your connection, <strong>in real time.</strong></h1>
+        </div>
       </div>
       <div class="top-actions">
         <button class="circle-btn" onclick="syncCloudTelemetry(true)" title="Fetch Live Telemetry">↻</button>
@@ -1454,6 +1495,43 @@ input, select, textarea {
         toggle.classList.toggle('active', isOpen);
       });
     }
+  });
+})();
+</script>
+
+<script>
+// ── Mobile sidebar drawer (left navigation) for the logged-in subscriber workspace ──
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('sidebar');
+    const sideToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    if (!sidebar || !sideToggle || !backdrop) return;
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      backdrop.classList.add('show');
+      sideToggle.classList.add('active');
+      sideToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      backdrop.classList.remove('show');
+      sideToggle.classList.remove('active');
+      sideToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    sideToggle.addEventListener('click', function () {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSidebar(); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 1024) closeSidebar(); });
+
+    // Close the drawer once a section is chosen on mobile
+    document.querySelectorAll('.portal-nav button').forEach(function (btn) {
+      btn.addEventListener('click', closeSidebar);
+    });
   });
 })();
 </script>
