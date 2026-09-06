@@ -102,3 +102,55 @@
   /* Never show the dim layer on desktop */
   .sidebar-backdrop { display: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   TOP-NAV MOBILE COLLAPSE — index.html already collapses to just
+   the logo + hamburger + pill toggle on phones via its own inline
+   style; every other page is missing that rule, so the desktop
+   .nav-utility (with the OLD theme toggle) is left on screen and
+   the new pill toggle never gets a clean slot next to the
+   hamburger. Sharing the same rule here fixes every page at once.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .top-nav .nav-right,
+  .top-nav .nav-links,
+  .top-nav .nav-utility,
+  .top-nav .nav-cta {
+    display: none !important;
+  }
+
+  .top-nav .nav-toggle {
+    display: block !important;
+    flex: 0 0 auto;
+    z-index: 701;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOP-NAV MOBILE DRAWER (#mobileMenu) — phone-only cleanup.
+   Same 11-link markup is shared by every page (index, about,
+   services, developers, building-upgrades, contact, admin-portal,
+   customer-portal), so one rule set here fixes all of them.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  /* The "01, 02, 03…" labels were a desktop-style flourish that
+     reads as clutter on a phone screen — hide them on mobile only. */
+  .mobile-menu-link::before {
+    content: none;
+  }
+
+  /* Admin Login (6th link) and Customer Login (7th link) move to the
+     very end of the drawer, right above Privacy / Terms — everything
+     else keeps its natural order. Uses flex `order` so the shared
+     HTML markup doesn't need to change on any page. */
+  .mobile-menu-link:nth-child(6) { order: 10; } /* Admin Login */
+  .mobile-menu-link:nth-child(7) { order: 11; } /* Customer Login */
+
+  /* Re-sync the staggered open animation with the new visual order */
+  .mobile-menu.open .mobile-menu-link:nth-child(6)  { transition-delay: 0.60s; }
+  .mobile-menu.open .mobile-menu-link:nth-child(7)  { transition-delay: 0.66s; }
+  .mobile-menu.open .mobile-menu-link:nth-child(8)  { transition-delay: 0.36s; }
+  .mobile-menu.open .mobile-menu-link:nth-child(9)  { transition-delay: 0.42s; }
+  .mobile-menu.open .mobile-menu-link:nth-child(10) { transition-delay: 0.48s; }
+  .mobile-menu.open .mobile-menu-link:nth-child(11) { transition-delay: 0.54s; }
+}
