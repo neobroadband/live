@@ -1,5 +1,9 @@
-/* Mobile navigation enhancements: visible theme toggle + reliable drawer */
+/* Mobile navigation: visible theme toggle + reliable, iOS-safe drawer.
+   Safe to include on every page. It will not double-bind if a page already
+   wires up its own #navToggle handler. */
 (function () {
+  var scrollY = 0;
+
   function applyTheme(next) {
     document.documentElement.setAttribute('data-theme', next);
     try { localStorage.setItem('nb-theme', next); } catch (e) {}
@@ -26,27 +30,87 @@
     return btn;
   }
 
+  function lockScroll() {
+    scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.style.top = -scrollY + 'px';
+    document.body.classList.add('menu-open');
+  }
+
+  function unlockScroll() {
+    document.body.classList.remove('menu-open');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollY);
+  }
+
   function init() {
-    var nav = document.querySelector('.top-nav');
+    var nav = document.querySelector('.top-nav, .portal-nav');
     var hamburger = nav && nav.querySelector('.nav-toggle');
-    if (!nav || !hamburger || nav.querySelector('.nav-mobile-actions')) return;
+    var menu = document.getElementById('mobileMenu');
+    if (!nav || !hamburger) return;
 
-    var actions = document.createElement('div');
-    actions.className = 'nav-mobile-actions';
-    hamburger.parentNode.insertBefore(actions, hamburger);
-    actions.appendChild(buildToggle());
-    actions.appendChild(hamburger);
+    // Put the theme switch next to the hamburger (once).
+    if (!nav.querySelector('.nav-mobile-actions')) {
+      var actions = document.createElement('div');
+      actions.className = 'nav-mobile-actions';
+      hamburger.parentNode.insertBefore(actions, hamburger);
+      actions.appendChild(buildToggle());
+      actions.appendChild(hamburger);
+    }
 
-    // Keep the drawer state consistent when rotating / resizing.
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 1100) {
-        document.body.classList.remove('menu-open');
-        var menu = document.getElementById('mobileMenu');
-        if (menu) menu.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
+    if (!menu) return;
+
+    function isOpen() { return menu.classList.contains('open'); }
+
+    function openMenu() {
+      menu.classList.add('open');
+      hamburger.classList.add('active');
+      hamburger.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+      lockScroll();
+    }
+
+    function closeMenu() {
+      if (!isOpen()) return;
+      menu.classList.remove('open');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      unlockScroll();
+    }
+
+    // Single source of truth for the drawer: replace any page-level handler
+    // by cloning the button, then bind ours. Prevents double-toggling.
+    var fresh = hamburger.cloneNode(true);
+    hamburger.parentNode.replaceChild(fresh, hamburger);
+    hamburger = fresh;
+
+    hamburger.addEventListener('click', function (e) {
+      e.preventDefault();
+      isOpen() ? closeMenu() : openMenu();
     });
+
+    menu.querySelectorAll('.mobile-menu-link, .mobile-menu-footer a').forEach(function (l) {
+      l.addEventListener('click', closeMenu);
+    });
+
+    // Tap on empty drawer space closes it.
+    menu.addEventListener('click', function (e) {
+      if (e.target === menu || e.target.classList.contains('mobile-menu-inner')) closeMenu();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (window.innerWidth > 1100) closeMenu();
+      }, 120);
+    });
+
+    menu.setAttribute('aria-hidden', String(!isOpen()));
   }
 
   if (document.readyState === 'loading') {
