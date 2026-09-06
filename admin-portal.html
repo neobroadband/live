@@ -584,9 +584,12 @@ html[data-theme="light"] #adminLoginOverlay {
 }
 
 html[data-theme="light"] #adminLoginOverlay::before {
-  /* Crisp black Australian map — same filter as index.html's light mode */
+  /* Crisp black Australian map — identical treatment to index.html's light-mode hero map */
+  background-image:
+    linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
+    url('images/12.png') !important;
   filter: grayscale(100%) invert(1) contrast(1.4) brightness(0.9) !important;
-  opacity: 0.28 !important;
+  opacity: 1 !important;
   mix-blend-mode: multiply;
 }
 
