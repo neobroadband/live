@@ -1684,3 +1684,117 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
   outline: 2px solid var(--silver); 
   outline-offset: 3px;
 }
+
+/* ══════════════════════════════════
+   MOBILE NAV: visible theme toggle + smoother drawer
+   ══════════════════════════════════ */
+.nav-mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-theme-toggle { display: none !important; }
+
+@media (max-width: 1100px) {
+  .top-nav { z-index: 700 !important; }
+  .nav-mobile-actions {
+    z-index: 701;
+    position: relative;
+  }
+  .nav-theme-toggle {
+    display: inline-flex !important;
+    width: 46px;
+    height: 26px;
+  }
+  .top-nav .nav-toggle,
+  .portal-nav .nav-toggle { display: block !important; }
+
+  /* Drawer slides in and the links stagger up */
+  .mobile-menu-inner {
+    transform: translateY(-12px);
+    opacity: 0;
+    transition: transform 0.5s var(--silk-ease), opacity 0.4s var(--silk-ease);
+  }
+  .mobile-menu.open .mobile-menu-inner {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .mobile-menu-link {
+    transform: translateY(24px);
+  }
+  .mobile-menu-links { justify-content: flex-start; gap: 2px; }
+}
+
+html[data-theme="light"] .nav-theme-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu-inner,
+  .mobile-menu-link,
+  .toggle-bar { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+}
+
+/* ══════════════════════════════════
+   MOBILE FIXES (drawer reliability on real phones)
+   ══════════════════════════════════ */
+
+/* Full height that survives the iOS address bar showing/hiding */
+.mobile-menu,
+.mobile-menu-inner {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Solid panel so page content never bleeds through, lighter blur for perf */
+.mobile-menu-inner {
+  background: #0f1115;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+html[data-theme="light"] .mobile-menu-inner { background: #ffffff; }
+
+/* Scroll lock that also works on iOS Safari */
+body.menu-open {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  /* Comfortable 44px tap target without changing the icon size */
+  .top-nav .nav-toggle,
+  .portal-nav .nav-toggle {
+    width: 44px;
+    height: 44px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .top-nav .nav-toggle .toggle-bar,
+  .portal-nav .nav-toggle .toggle-bar { width: 26px; left: 9px; }
+  .top-nav .nav-toggle .toggle-bar:nth-child(1) { top: 16px; }
+  .top-nav .nav-toggle .toggle-bar:nth-child(2) { top: 26px; }
+  .top-nav .nav-toggle.active .toggle-bar:nth-child(1) { top: 21px; transform: rotate(45deg); }
+  .top-nav .nav-toggle.active .toggle-bar:nth-child(2) { top: 21px; transform: rotate(-45deg); }
+
+  /* Menu links get finger-friendly rows */
+  .mobile-menu-link { min-height: 48px; display: flex; align-items: center; }
+
+  /* Drawer must sit above the sticky header contents but below the button */
+  .mobile-menu { z-index: 650; }
+  .mobile-menu-inner { padding-top: calc(80px + env(safe-area-inset-top)); }
+
+  /* Never let a page scroll sideways on a phone */
+  html, body { max-width: 100%; overflow-x: hidden; }
+}
