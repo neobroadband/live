@@ -523,8 +523,9 @@ html[data-theme="light"] .page-grid-overlay {
   background-repeat: no-repeat;
   pointer-events: none;
   z-index: 0;
-  /* Dark Mode: plain map image, no color tint */
-  opacity: 0.85;
+  /* Dark Mode: plain map image, dulled down (softens the city marker dots too) */
+  opacity: 0.55;
+  filter: brightness(0.75) saturate(0.7);
   animation: mapDrift 20s ease-in-out infinite alternate;
 }
 
@@ -543,12 +544,12 @@ html[data-theme="light"] #loginOverlay {
 }
 
 html[data-theme="light"] #loginOverlay::before {
-  /* Crisp black Australian map — identical treatment to index.html's light-mode hero map */
+  /* Crisp black Australian map, dulled down — identical treatment to index.html's light-mode hero map */
   background-image:
     linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
     url('images/12.png') !important;
-  filter: grayscale(100%) invert(1) contrast(1.4) brightness(0.9) !important;
-  opacity: 1 !important;
+  filter: grayscale(100%) invert(1) contrast(1.2) brightness(0.75) !important;
+  opacity: 0.7 !important;
   mix-blend-mode: multiply;
 }
 
@@ -1104,8 +1105,8 @@ input, select, textarea {
       <a href="building-upgrades.html" class="mobile-menu-link" data-index="09">Upgrades</a>
       <a href="about.html" class="mobile-menu-link" data-index="10">About Us</a>
       <a href="contact.html" class="mobile-menu-link" data-index="11">Contact</a>
-      <a href="customer-portal.html" class="mobile-menu-link" data-index="07">Customer Login</a>
-      <a href="admin-portal.html" class="mobile-menu-link" data-index="06">Neo Login</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="06">Admin Login</a>
+      <a href="customer-portal.html" class="mobile-menu-link active" data-index="07">Customer Login</a>
     </div>
   </div>
 </div>
