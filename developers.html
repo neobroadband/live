@@ -755,9 +755,17 @@ input, select, textarea {
       </li>
     </ul>
   </div>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-    <span class="toggle-bar"></span><span class="toggle-bar"></span>
-  </button>
+  <div class="nav-mobile-actions">
+    <button class="theme-toggle nav-theme-toggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </span>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="toggle-bar"></span><span class="toggle-bar"></span>
+    </button>
+  </div>
 </nav>
 
 <!-- Mobile Menu -->
@@ -769,12 +777,12 @@ input, select, textarea {
       <a href="index.html#business-plans" class="mobile-menu-link" data-index="03">Business Plans</a>
       <a href="index.html#enterprise-ethernet" class="mobile-menu-link" data-index="04">Enterprise Ethernet</a>
       <a href="services.html" class="mobile-menu-link" data-index="05">Services</a>
-      <a href="admin-portal.html" class="mobile-menu-link" data-index="06">Admin Login</a>
-      <a href="customer-portal.html" class="mobile-menu-link" data-index="07">Customer Login</a>
       <a href="developers.html" class="mobile-menu-link active" data-index="08">Developers</a>
       <a href="building-upgrades.html" class="mobile-menu-link" data-index="09">Upgrades</a>
       <a href="about.html" class="mobile-menu-link" data-index="10">About Us</a>
       <a href="contact.html" class="mobile-menu-link" data-index="11">Contact</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="06">Admin Login</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="07">Customer Login</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="#">Privacy</a>
