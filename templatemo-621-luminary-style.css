@@ -1725,6 +1725,14 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
     transform: translateY(24px);
   }
   .mobile-menu-links { justify-content: flex-start; gap: 2px; }
+
+  /* Numbers → dots in the mobile drawer */
+  .mobile-menu-link::before {
+    content: "•";
+    min-width: 24px;
+    text-align: center;
+    font-size: 1rem;
+  }
 }
 
 html[data-theme="light"] .nav-theme-toggle {
