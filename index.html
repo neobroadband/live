@@ -982,6 +982,174 @@
       text-align: center;
     }
   }
+  /* ═══ MODE SLIDER: modern sliding toggle with moon/sun + Dark/Light Mode label ═══ */
+  .mode-slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 68px;
+    height: 32px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 999px;
+    background: #10121a;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: background 0.35s ease;
+  }
+
+  html[data-theme="light"] .mode-slider {
+    background: #e2e7ee;
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  }
+
+  .mode-slider-icon {
+    position: relative;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    stroke: #64748b;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.35s ease, opacity 0.35s ease;
+  }
+
+  .mode-slider-icon.icon-moon { fill: #64748b; stroke: none; opacity: 1; }
+  .mode-slider-icon.icon-sun { opacity: 0.55; }
+
+  html[data-theme="light"] .mode-slider-icon.icon-moon { opacity: 0.45; fill: #94a3b8; }
+  html[data-theme="light"] .mode-slider-icon.icon-sun { stroke: #2b6cf6; opacity: 1; }
+
+  .mode-slider-fill {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 34px;
+    height: 26px;
+    border-radius: 999px;
+    background: #2b6cf6;
+    box-shadow: 0 2px 8px rgba(43, 108, 246, 0.5);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+  }
+
+  html[data-theme="light"] .mode-slider-fill {
+    transform: translateX(31px);
+  }
+
+  .mode-slider-knob {
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    transform: translate(0, -50%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+  }
+
+  html[data-theme="light"] .mode-slider-knob {
+    transform: translate(31px, -50%);
+    background: #2b6cf6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .mode-slider:focus-visible {
+    outline: 2px solid #2b6cf6;
+    outline-offset: 3px;
+  }
+
+  .mode-slider-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    min-width: 76px;
+  }
+
+  html[data-theme="light"] .mode-slider-label {
+    color: #0f172a;
+    text-shadow: none;
+  }
+
+  @media (max-width: 640px) {
+    .mode-slider-label { display: none; }
+  }
+
+  /* ═══ DESKTOP THEME TOGGLE — segmented "Dark / Light" pill, sits with the main nav ═══ */
+  /* Two classes = higher specificity than the base .mode-slider rules above,   */
+  /* so this reliably overrides them. Scoped to .theme-toggle-btn only, which   */
+  /* is NOT applied to the mobile toggle (.mode-slider-mobile) — mobile is      */
+  /* completely untouched by this block.                                       */
+  .mode-slider.theme-toggle-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    height: 40px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #171a26;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 4px 14px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .mode-slider.theme-toggle-btn:focus-visible {
+    outline: 2px solid #2b6cf6;
+    outline-offset: 3px;
+  }
+
+  html[data-theme="light"] .mode-slider.theme-toggle-btn {
+    background: #e7ebf2;
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08), 0 4px 14px rgba(15, 23, 42, 0.08);
+  }
+
+  .theme-toggle-highlight {
+    position: absolute;
+    z-index: 1;
+    top: 4px;
+    left: 4px;
+    width: 62px;
+    height: calc(100% - 8px);
+    border-radius: 999px;
+    background: #05060b;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
+  }
+
+  html[data-theme="light"] .theme-toggle-highlight {
+    transform: translateX(62px);
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+  }
+
+  .theme-toggle-seg {
+    position: relative;
+    z-index: 2;
+    width: 62px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #7a8194;
+    white-space: nowrap;
+    transition: color 0.35s ease;
+  }
+
+  .theme-toggle-seg-dark { color: #ffffff; }
+  .theme-toggle-seg-light { color: #7a8194; }
+
+  html[data-theme="light"] .theme-toggle-seg-dark { color: #94a3b8; }
+  html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
+
 </style>
 <style id="neo-responsive-overrides">
 
@@ -1423,15 +1591,14 @@ input, select, textarea {
     </ul>
     <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
     <ul class="nav-utility">
-      <li><a href="admin-portal.html">Neo Login</a></li>
       <li>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
-          <span class="theme-toggle-knob">
-            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          </span>
+        <button class="mode-slider theme-toggle-btn" id="modeSlider" type="button" role="switch" aria-checked="false" aria-label="Switch to light mode">
+          <span class="theme-toggle-highlight"></span>
+          <span class="theme-toggle-seg theme-toggle-seg-dark">Dark</span>
+          <span class="theme-toggle-seg theme-toggle-seg-light">Light</span>
         </button>
       </li>
+      <li><a href="admin-portal.html">Neo Login</a></li>
     </ul>
   </div>
   <div class="nav-mobile-actions">
@@ -2255,6 +2422,34 @@ input, select, textarea {
 </main>
 
 <script src="templatemo-621-luminary-script.js"></script>
+<script>
+  // Modern mode slider (desktop nav): switches data-theme, persists the
+  // choice, and keeps aria-checked/aria-label in sync. Matches about.html.
+  (function () {
+    const sliders = document.querySelectorAll('.mode-slider');
+    const label = document.getElementById('modeSliderLabel');
+
+    function applyState(isLight) {
+      document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+      sliders.forEach(function (btn) {
+        btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
+        btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+      });
+      if (label) label.textContent = isLight ? 'Light Mode' : 'Dark Mode';
+      try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
+    }
+
+    // Reflect whatever theme was already applied (by the head script) on load.
+    applyState(document.documentElement.getAttribute('data-theme') === 'light');
+
+    sliders.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        applyState(!isLight);
+      });
+    });
+  })();
+</script>
 <script>
 ;(function(){
 
