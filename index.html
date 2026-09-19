@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — High-Speed Broadband Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<link rel="icon" type="image/png" href="images/psd 1.png">
+<style>
+  /* Current-page highlight */
+  .nav-links > li > a.active,
+  .mobile-menu-link.active {
+    color: #2b6cf6 !important;
+  }
+
+  /* ═══ Top Navigation Link & Portal Styling ═══ */
+  .nav-links > li > a {
+    font-weight: 700 !important;
+    color: var(--nav-link-color, #ffffff) !important;
+    text-shadow: var(--nav-shadow, 0 2px 5px rgba(0, 0, 0, 0.8)) !important;
+  }
+  
+  .nav-utility a {
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    transition: color 0.4s ease;
+  }
+
+  /* ═══ LIGHT MODE NAVIGATION FIXES ═══ */
+  html[data-theme="light"] .top-nav {
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+
+  html[data-theme="light"] .top-nav .nav-links > li > a,
+  html[data-theme="light"] .top-nav .nav-utility a {
+    color: #0f172a !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9) !important; 
+  }
+
+  html[data-theme="light"] .nav-logo {
+    filter: brightness(0) !important;
+  }
+
+  html[data-theme="light"] .top-nav.scrolled {
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  html[data-theme="light"] .top-nav.scrolled .nav-links > li > a,
+  html[data-theme="light"] .top-nav.scrolled .nav-utility a {
+    text-shadow: none !important;
+  }
+
+  html[data-theme="light"] .top-nav .nav-links > li > a:hover,
+  html[data-theme="light"] .top-nav .nav-utility a:hover,
+  html[data-theme="light"] .top-nav .nav-links > li > a.active {
+    color: #2b6cf6 !important;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .nav-utility {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-utility a:hover,
+  .nav-links > li > a:hover {
+    color: #2b6cf6 !important;
+  }
+
+  .nav-right .nav-links {
+    justify-content: flex-end;
+    gap: 28px;
+  }
+
+  /* Hero Typography */
+  .hero-badge span {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.15em !important;
+  }
+  
+  .hero-sub {
+    font-size: clamp(1.15rem, 1.7vw, 1.35rem) !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    max-width: 720px !important;
+    line-height: 1.6 !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.85) !important;
+    margin-bottom: 28px;
+  }
+
+  html[data-theme="light"] .hero-sub {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.95), 0 1px 5px rgba(0, 0, 0, 0.95) !important;
+  }
+
+  html[data-theme="light"] .hero-badge {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  html[data-theme="light"] .hero-badge span {
+    color: #0f172a !important;
+  }
+
+  html[data-theme="light"] .hero h1,
+  html[data-theme="light"] .hero h1 em {
+    color: #0f172a !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 10px rgba(255, 255, 255, 1) !important;
+    -webkit-text-fill-color: #0f172a !important;
+  }
+
+  /* ═══ HERO BACKGROUND IMAGE SETTINGS ═══ */
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 100vw; 
+    height: 100%; 
+    background-image: 
+      linear-gradient(to bottom, rgba(15, 17, 21, 0.2) 0%, rgba(15, 17, 21, 0.7) 100%),
+      url('images/12.png');
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 1; 
+    pointer-events: none;
+    animation: floatingBackground 20s ease-in-out infinite alternate;
+  }
+
+  html[data-theme="light"] .hero::before {
+    background-image: 
+      linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
+      url('images/12.png') !important;
+    filter: grayscale(100%) invert(1) contrast(1.2) brightness(0.75) !important;
+    opacity: 0.7 !important;
+    mix-blend-mode: multiply;
+  }
+
+  /* ═══ Page Background Grid ═══ */
+  .page-grid-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    --mx: 50vw;
+    --my: 50vh;
+    background-image:
+      linear-gradient(to right, rgba(156, 163, 175, 0.18) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(156, 163, 175, 0.18) 1px, transparent 1px);
+    background-size: 100px 100px;
+    background-position: center center;
+    -webkit-mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    mask-image:
+      radial-gradient(circle 380px at var(--mx) var(--my), rgba(0,0,0,1) 0%, transparent 75%),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 100%);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  html[data-theme="light"] .page-grid-overlay {
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px) !important;
+  }
+
+  /* ═══ Australian Region Broadband Search Bar ═══ */
+  .hero-search-wrapper {
+    width: 100%;
+    max-width: 680px;
+    margin: 10px auto 20px;
+    position: relative;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  }
+
+  .hero-search-box {
+    display: flex;
+    align-items: center;
+    background: rgba(22, 26, 32, 0.88);
+    border: 1px solid rgba(156, 163, 175, 0.25);
+    border-radius: 100px;
+    padding: 6px 8px 6px 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  html[data-theme="light"] .hero-search-box {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .hero-search-box:focus-within {
+    border-color: #2b6cf6;
+    background: rgba(22, 26, 32, 0.94);
+    box-shadow: 0 20px 50px rgba(43, 108, 246, 0.25);
+  }
+
+  html[data-theme="light"] .hero-search-box:focus-within {
+    background: #ffffff !important;
+    border-color: #2b6cf6 !important;
+    box-shadow: 0 16px 40px rgba(43, 108, 246, 0.18) !important;
+  }
+
+  .hero-search-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    opacity: 0.7;
+    fill: #ffffff;
+    flex-shrink: 0;
+  }
+
+  html[data-theme="light"] .hero-search-icon {
+    fill: #64748b !important;
+    opacity: 0.9 !important;
+  }
+
+  .hero-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+  }
+
+  html[data-theme="light"] .hero-search-input {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+  }
+
+  .hero-search-input::placeholder {
+    color: rgba(229, 231, 235, 0.65);
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  html[data-theme="light"] .hero-search-input::placeholder {
+    color: #64748b !important;
+    font-weight: 500 !important;
+  }
+
+  .hero-search-btn {
+    background: linear-gradient(135deg, #2b6cf6, #1c52c7);
+    color: #ffffff;
+    border: none;
+    border-radius: 100px;
+    padding: 12px 28px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .hero-search-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(43, 108, 246, 0.45);
+  }
+
+  /* Suggestions Dropdown */
+  .search-history-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(15, 17, 21, 0.96);
+    border: 1px solid rgba(156, 163, 175, 0.22);
+    border-radius: 16px;
+    padding: 12px 16px;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    display: none;
+    text-align: left;
+    z-index: 120;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  html[data-theme="light"] .search-history-dropdown {
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+  }
+
+  .search-history-dropdown.active { display: block; }
+
+  .history-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate-warm, #6b7280);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .history-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--ivory, #e5e7eb);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  html[data-theme="light"] .history-item { color: #1e293b; }
+  .history-item:hover { background: rgba(43, 108, 246, 0.2); color: #ffffff; }
+  html[data-theme="light"] .history-item:hover { background: rgba(43, 108, 246, 0.1); color: #2b6cf6; }
+
+  .hero-search-results {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: rgba(15, 17, 21, 0.98);
+    border: 1px solid rgba(156, 163, 175, 0.25);
+    border-radius: 18px;
+    padding: 18px 22px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    display: none;
+    text-align: left;
+    z-index: 110;
+  }
+
+  html[data-theme="light"] .hero-search-results {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+  }
+
+  .hero-search-results.active { display: block; }
+
+  .search-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(156, 163, 175, 0.12);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+
+  .search-result-location { font-size: 0.95rem; font-weight: 700; color: #ffffff; }
+  html[data-theme="light"] .search-result-location { color: #0f172a; }
+
+  .search-tech-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(43, 108, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    text-transform: uppercase;
+  }
+
+  .search-tech-badge.unavailable {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.35);
+  }
+
+  .search-result-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .search-speed-text { font-size: 0.86rem; color: var(--slate-light, #9ca3af); line-height: 1.5; }
+  html[data-theme="light"] .search-speed-text { color: #475569; }
+
+  .search-action-link {
+    font-size: 10px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #2b6cf6;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 100px;
+    transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  /* Navigation Logo */
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo { max-height: 100px; width: auto; object-fit: contain; }
+
+  /* Plan Category Carousel */
+  .plan-category { display: none; position: relative; }
+  .plan-category.active-category { display: block; animation: fadeInCat 0.5s ease; }
+
+  @keyframes fadeInCat {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .category-header-wrap { text-align: center; margin-bottom: 24px; }
+  .category-title { font-size: 2rem; font-weight: 300; letter-spacing: -0.02em; color: var(--ivory, #ffffff); margin-bottom: 8px; }
+  .category-desc { font-size: 1rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 0; }
+
+  .plans-carousel-wrapper { position: relative; width: 100%; margin-top: 10px; }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(15, 17, 21, 0.88);
+    border: 1px solid rgba(156, 163, 175, 0.22);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    user-select: none;
+  }
+
+  .carousel-arrow-left { left: -24px; }
+  .carousel-arrow-right { right: -24px; }
+
+  .carousel-arrow svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .carousel-arrow:hover {
+    background: #2b6cf6;
+    border-color: #2b6cf6;
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .carousel-arrow.disabled { opacity: 0.18; pointer-events: none; cursor: default; }
+
+  html[data-theme="light"] .carousel-arrow {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(15, 23, 42, 0.12);
+    color: #0f172a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Slider Track */
+  .pricing-grid-7, .pricing-grid-6, .pricing-grid-4, .plans-slider-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 24px 8px 36px;
+    scrollbar-width: none;
+  }
+
+  .pricing-grid-7::-webkit-scrollbar,
+  .pricing-grid-6::-webkit-scrollbar,
+  .pricing-grid-4::-webkit-scrollbar,
+  .plans-slider-track::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+  .plans-slider-track > .pricing-card {
+    flex: 0 0 340px;
+    max-width: 340px;
+    scroll-snap-align: start;
+    text-align: left;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .plans-slider-track > .pricing-card:hover {
+    transform: translateY(-8px) scale(1.025);
+    border-color: #2b6cf6 !important;
+    box-shadow: 0 22px 55px rgba(43, 108, 246, 0.32) !important;
+    z-index: 10;
+  }
+
+  /* Pricing Toggle */
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 36px auto 36px;
+    user-select: none;
+  }
+  .pricing-toggle-label { cursor: pointer; }
+  .toggle-switch.annual { background-color: #2b6cf6 !important; border-color: #2b6cf6 !important; }
+
+  .price-option {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(156, 163, 175, 0.06);
+    opacity: 0.45;
+    transform: scale(0.98);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .price-option:last-child { border-bottom: none; }
+  .price-option.active { opacity: 1; transform: scale(1); }
+
+  /* Mode Slider Switch */
+  .mode-slider.theme-toggle-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    height: 40px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #171a26;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 4px 14px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+  }
+
+  html[data-theme="light"] .mode-slider.theme-toggle-btn {
+    background: #e7ebf2;
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08), 0 4px 14px rgba(15, 23, 42, 0.08);
+  }
+
+  .theme-toggle-highlight {
+    position: absolute;
+    z-index: 1;
+    top: 4px;
+    left: 4px;
+    width: 62px;
+    height: calc(100% - 8px);
+    border-radius: 999px;
+    background: #05060b;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html[data-theme="light"] .theme-toggle-highlight {
+    transform: translateX(62px);
+    background: #ffffff;
+  }
+
+  .theme-toggle-seg {
+    position: relative;
+    z-index: 2;
+    width: 62px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #7a8194;
+  }
+
+  .theme-toggle-seg-dark { color: #ffffff; }
+  html[data-theme="light"] .theme-toggle-seg-dark { color: #94a3b8; }
+  html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
+
+  @media (max-width: 768px) {
+    .pricing-grid-7 > .pricing-card,
+    .pricing-grid-6 > .pricing-card,
+    .pricing-grid-4 > .pricing-card,
+    .plans-slider-track > .pricing-card {
+      flex: 0 0 290px;
+      max-width: 290px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="atmosphere"></div>
+<div class="page-grid-overlay" id="pageGrid"></div>
+
+<!-- ═══ TOP NAV ═══ -->
+<nav class="top-nav" id="topNav">
+  <a href="index.html" class="nav-brand">
+    <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li class="dropdown">
+        <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
+        <ul class="dropdown-content">
+          <li><a href="index.html#residential-plans" onclick="switchPlanCategory('residential')">Residential Plans</a></li>
+          <li><a href="index.html#business-plans" onclick="switchPlanCategory('business')">Business Plans</a></li>
+          <li><a href="index.html#enterprise-ethernet" onclick="switchPlanCategory('enterprise')">Enterprise Ethernet</a></li>
+        </ul>
+      </li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="developers.html">Developers</a></li>
+      <li><a href="building-upgrades.html">Upgrades</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="customer-portal.html">Customer Login</a></li>
+    </ul>
+
+    <ul class="nav-utility">
+      <li>
+        <button class="mode-slider theme-toggle-btn" id="modeSlider" type="button" role="switch" aria-checked="false" aria-label="Switch to light mode">
+          <span class="theme-toggle-highlight"></span>
+          <span class="theme-toggle-seg theme-toggle-seg-dark">Dark</span>
+          <span class="theme-toggle-seg theme-toggle-seg-light">Light</span>
+        </button>
+      </li>
+      <li><a href="admin-portal.html">Neo Login</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-mobile-actions">
+    <button class="theme-toggle nav-theme-toggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </span>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="toggle-bar"></span><span class="toggle-bar"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-links">
+      <a href="#" class="mobile-menu-link active" data-index="01">Home</a>
+      <a href="#pricing" class="mobile-menu-link" data-index="02" onclick="switchPlanCategory('residential')">Residential Plans</a>
+      <a href="#pricing" class="mobile-menu-link" data-index="03" onclick="switchPlanCategory('business')">Business Plans</a>
+      <a href="#pricing" class="mobile-menu-link" data-index="04" onclick="switchPlanCategory('enterprise')">Enterprise Ethernet</a>
+      <a href="services.html" class="mobile-menu-link" data-index="05">Services</a>
+      <a href="developers.html" class="mobile-menu-link" data-index="08">Developers</a>
+      <a href="building-upgrades.html" class="mobile-menu-link" data-index="09">Upgrades</a>
+      <a href="about.html" class="mobile-menu-link" data-index="10">About Us</a>
+      <a href="contact.html" class="mobile-menu-link" data-index="11">Contact</a>
+      <a href="customer-portal.html" class="mobile-menu-link" data-index="07">Customer Login</a>
+      <a href="admin-portal.html" class="mobile-menu-link" data-index="06">Neo Login</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Connecting Australia to What Matters Most</span>
+    </div>
+    <p class="hero-sub">
+      Experience lightning-fast speeds and reliable connectivity across Australia for your home and business
+    </p>
+
+    <!-- Transparent Australian Region Broadband Search Bar -->
+    <div class="hero-search-wrapper" id="heroSearchWrapper">
+      <form class="hero-search-box" id="regionSearchForm" onsubmit="handleRegionSearch(event)">
+        <svg class="hero-search-icon" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input 
+          type="text" 
+          id="regionInput"
+          class="hero-search-input" 
+          placeholder="Enter Australian Suburb, State or Postcode (e.g. Sydney NSW 2000)..." 
+          autocomplete="off"
+          required
+        >
+        <button type="submit" class="hero-search-btn">Check Speed & Plans</button>
+      </form>
+
+      <!-- Autocomplete & Recent Searches Dropdown -->
+      <div class="search-history-dropdown" id="searchHistoryDropdown">
+        <div class="history-title" id="historyTitle">
+          <span id="dropdownHeaderLabel">Recent Searches</span>
+          <span id="clearHistoryBtn" style="cursor:pointer; opacity:0.6;" onclick="clearSearchHistory()">Clear</span>
+        </div>
+        <ul class="history-items" id="historyItemsList"></ul>
+      </div>
+
+      <!-- Instant Region Speed Check Dropdown -->
+      <div class="hero-search-results" id="searchResultsBox">
+        <div class="search-result-header">
+          <div class="search-result-location" id="searchLocationLabel">Sydney NSW 2000</div>
+          <span class="search-tech-badge" id="searchTechBadge">FTTP Ultra-Fast Ready</span>
+        </div>
+        <div class="search-result-details">
+          <div class="search-speed-text" id="searchSpeedDetails">
+            Max Available Speed: <strong>Up to 2000 Mbps</strong> &bull; Recommended: <strong>Thunderbolt 2000 / Regular 500</strong>
+          </div>
+          <a href="#pricing" id="searchPlanLink" class="search-action-link" onclick="switchPlanCategory('residential')">View Plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ MASTER PRICING SECTION ═══ -->
+  <section class="section section-center" id="pricing">
+    <h2 class="section-title reveal reveal-d1">Select Speed <strong>your need</strong></h2>
+    <p class="section-body reveal reveal-d2">Experience lightning-fast broadband and reliable internet connectivity designed to power your digital life</p>
+
+    <!-- Pricing Toggle -->
+    <div class="pricing-toggle reveal reveal-d3">
+      <span class="pricing-toggle-label active" id="monthlyLabel">Monthly</span>
+      <div class="toggle-switch" id="pricingToggle" role="switch" aria-checked="false" tabindex="0"></div>
+      <span class="pricing-toggle-label" id="annualLabel">Annual</span>
+      <span class="save-badge" id="saveBadge">Save 5%</span>
+    </div>
+
+    <!-- ── RESIDENTIAL PLANS ── -->
+    <div class="plan-category active-category reveal" id="residential-plans">
+      <div class="category-header-wrap">
+        <h3 class="category-title">Residential Plans</h3>
+        <p class="category-desc">Optimized for households, ultra-HD streaming, gaming, and remote work</p>
+      </div>
+      
+      <div class="plans-carousel-wrapper">
+        <button type="button" class="carousel-arrow carousel-arrow-left" onclick="scrollPlans('residential-plans', -1)" aria-label="Previous residential plans">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
+        <div class="plans-slider-track pricing-grid-7">
+          <!-- Plan 1: Basic -->
+          <div class="pricing-card" id="plan-basic">
+            <div class="pricing-tier">Basic</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">60</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$720 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">57</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$684 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">25Mbps Download | 10Mbps Upload</p>
+            <ul class="pricing-features">
+              <li>Typical evening speed: 25/8 Mbps</li>
+              <li>Great for 2 devices at the same time</li>
+              <li>Light internet use (Light HD streaming)</li>
+              <li>Unlimited Data</li>
+            </ul>
+            <button onclick="handleSubscribe('basic')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Plan 2: Regular -->
+          <div class="pricing-card" id="plan-regular">
+            <div class="pricing-badge">Recommended</div>
+            <div class="pricing-tier">Regular</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">85</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,020 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">80.75</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$969 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">500Mbps Download | 50Mbps Upload</p>
+            <ul class="pricing-features">
+              <li>Typical evening speed: 500/42 Mbps</li>
+              <li>Great for 6+ devices at the same time</li>
+              <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+              <li>Unlimited Data</li>
+            </ul>
+            <button onclick="handleSubscribe('regular')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Plan 3: Ultra -->
+          <div class="pricing-card" id="plan-ultra">
+            <div class="pricing-tier">Ultra</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">99</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,188 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">94.05</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,128.60 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">1000Mbps Download | 100Mbps Upload</p>
+            <ul class="pricing-features">
+              <li>Typical evening speed: 880/84 Mbps</li>
+              <li>Great for 6+ devices at the same time</li>
+              <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+              <li>Unlimited Data</li>
+            </ul>
+            <button onclick="handleSubscribe('ultra')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Plan 4: Pro -->
+          <div class="pricing-card" id="plan-pro">
+            <div class="pricing-tier">Pro</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">95</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,140 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">90.25</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,083 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">250Mbps Download | 100Mbps Upload</p>
+            <ul class="pricing-features">
+              <li><strong>High Upload Speed</strong></li>
+              <li>Typical evening speed: 250/84 Mbps</li>
+              <li>Great for 4+ devices at the same time</li>
+              <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+            </ul>
+            <button onclick="handleSubscribe('pro')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Plan 5: Pro + -->
+          <div class="pricing-card" id="plan-pro-plus">
+            <div class="pricing-tier">Pro +</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">115</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,380 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">109.25</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,311 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">500Mbps Download | 200Mbps Upload</p>
+            <ul class="pricing-features">
+              <li><strong>High Upload Speed</strong></li>
+              <li>Typical evening speed: 500/170 Mbps</li>
+              <li>Great for 6+ devices at the same time</li>
+              <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+            </ul>
+            <button onclick="handleSubscribe('pro-plus')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Plan 6: Ultra + -->
+          <div class="pricing-card" id="plan-ultra-plus">
+            <div class="pricing-tier">Ultra +</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">135</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,620 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">128.25</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,539 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">1000Mbps Download | 400Mbps Upload</p>
+            <ul class="pricing-features">
+              <li><strong>High Upload Speed</strong></li>
+              <li>Typical evening speed: 880/336 Mbps</li>
+              <li>Great for 6+ devices at the same time</li>
+              <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+            </ul>
+            <button onclick="handleSubscribe('ultra-plus')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Plan 7: Thunderbolt -->
+          <div class="pricing-card" id="plan-thunderbolt">
+            <div class="pricing-tier">Thunderbolt</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">210</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$2,520 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">199.50</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$2,394 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">2000Mbps Download | 500Mbps Upload</p>
+            <ul class="pricing-features">
+              <li><strong>High Upload Speed</strong></li>
+              <li>Typical evening speed: 1700/425 Mbps</li>
+              <li>Great for 6+ devices at the same time</li>
+              <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
+            </ul>
+            <button onclick="handleSubscribe('thunderbolt')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+        </div>
+
+        <button type="button" class="carousel-arrow carousel-arrow-right" onclick="scrollPlans('residential-plans', 1)" aria-label="Next residential plans">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── BUSINESS PLANS ── -->
+    <div class="plan-category" id="business-plans">
+      <div class="category-header-wrap">
+        <h3 class="category-title">Business nbn® Internet Plans</h3>
+        <p class="category-desc">High-reliability connectivity with priority routing, static IP addresses, and business-grade SLAs</p>
+      </div>
+      
+      <div class="plans-carousel-wrapper">
+        <button type="button" class="carousel-arrow carousel-arrow-left" onclick="scrollPlans('business-plans', -1)" aria-label="Previous business plans">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
+        <div class="plans-slider-track pricing-grid-6">
+          <!-- Business Plan 1 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">50/20 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">89</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,068 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">84.55</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,014.60 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Typical Speed: 47 Mbps Down | 17 Mbps Up</p>
+            <ul class="pricing-features">
+              <li>Small businesses with 1-5 staff</li>
+              <li>Static IP included</li>
+              <li>Unlimited data</li>
+              <li>No lock-in contract</li>
+              <li>24/7 support</li>
+            </ul>
+            <button onclick="handleSubscribe('biz-50')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Business Plan 2 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">100/40 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">95</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,140 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">90.25</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,083 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Typical Speed: 90 Mbps Down | 34 Mbps Up</p>
+            <ul class="pricing-features">
+              <li>Small offices with 5-10 employees</li>
+              <li>Static IP included</li>
+              <li>Unlimited data</li>
+              <li>No lock-in contract</li>
+              <li>24/7 support</li>
+            </ul>
+            <button onclick="handleSubscribe('biz-100')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Business Plan 3 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">250/100 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">95</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,140 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">90.25</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,083 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Typical Speed: 232 Mbps Down | 85 Mbps Up</p>
+            <ul class="pricing-features">
+              <li>Small to medium offices (&lt;20 staff)</li>
+              <li>Static IP included</li>
+              <li>Unlimited data</li>
+              <li>No lock-in contract</li>
+              <li>24/7 support</li>
+            </ul>
+            <button onclick="handleSubscribe('biz-250')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Business Plan 4 -->
+          <div class="pricing-card">
+            <div class="pricing-badge">Recommended</div>
+            <div class="pricing-tier">500/50 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">90</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,080 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">85.50</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,026 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Typical Speed: 425 Mbps Down | 42 Mbps Up</p>
+            <ul class="pricing-features">
+              <li>Medium offices with 20-35 staff</li>
+              <li>Static IP included</li>
+              <li>Unlimited data</li>
+              <li>No lock-in contract</li>
+              <li>24/7 support</li>
+            </ul>
+            <button onclick="handleSubscribe('biz-500-50')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Business Plan 5 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">500/200 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">115</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,380 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">109.25</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,311 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Typical Speed: 425 Mbps Down | 170 Mbps Up</p>
+            <ul class="pricing-features">
+              <li>Medium offices with 20-35 staff</li>
+              <li>Static IP included</li>
+              <li>Unlimited data</li>
+              <li>No lock-in contract</li>
+              <li>24/7 support</li>
+            </ul>
+            <button onclick="handleSubscribe('biz-500-200')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Business Plan 6 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">1000/400 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">145</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,740 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">137.75</span>
+                    <span class="price-period">/month</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$1,653 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Typical Speed: 894 Mbps Down | 340 Mbps Up</p>
+            <ul class="pricing-features">
+              <li>Larger offices up to 50 staff</li>
+              <li>Static IP included</li>
+              <li>Unlimited data</li>
+              <li>No lock-in contract</li>
+              <li>24/7 support</li>
+            </ul>
+            <button onclick="handleSubscribe('biz-1000')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+        </div>
+
+        <button type="button" class="carousel-arrow carousel-arrow-right" onclick="scrollPlans('business-plans', 1)" aria-label="Next business plans">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── ENTERPRISE SOLUTIONS ── -->
+    <div class="plan-category" id="enterprise-ethernet">
+      <div class="category-header-wrap">
+        <h3 class="category-title">nbn® Enterprise Ethernet</h3>
+        <p class="category-desc">Dedicated fiber links, multi-site SD-WAN architectures, and bespoke bandwidth provisioning</p>
+      </div>
+      
+      <div class="plans-carousel-wrapper">
+        <button type="button" class="carousel-arrow carousel-arrow-left" onclick="scrollPlans('enterprise-ethernet', -1)" aria-label="Previous enterprise plans">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
+        <div class="plans-slider-track pricing-grid-4">
+          <!-- Enterprise Plan 1 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">100/100 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">399</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$4,788 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">379.05</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$4,548.60 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Suitable for small offices or businesses that require a dependable connection</p>
+            <ul class="pricing-features">
+              <li>Symmetric, dedicated bandwidth</li>
+              <li>12 hour SLA restoration target</li>
+              <li>Optional 5G or 4G backup</li>
+            </ul>
+            <button onclick="handleSubscribe('ent-100')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Enterprise Plan 2 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">250/250 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">399</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$4,788 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">379.05</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$4,548.60 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Suitable for smaller offices with cloud file sharing and video conferencing</p>
+            <ul class="pricing-features">
+              <li>Symmetric, dedicated bandwidth</li>
+              <li>12 hour SLA restoration target</li>
+              <li>Optional 5G or 4G backup</li>
+            </ul>
+            <button onclick="handleSubscribe('ent-250')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Enterprise Plan 3 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">500/500 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">469</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$5,628 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">445.55</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$5,346.60 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Suitable for medium offices with cloud file sharing and video conferencing</p>
+            <ul class="pricing-features">
+              <li>Symmetric, dedicated bandwidth</li>
+              <li>4 hour SLA restoration target</li>
+              <li>Optional 5G or 4G backup</li>
+            </ul>
+            <button onclick="handleSubscribe('ent-500')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+
+          <!-- Enterprise Plan 4 -->
+          <div class="pricing-card">
+            <div class="pricing-tier">1000/1000 Mbps</div>
+            <div class="pricing-prices">
+              <div class="price-option monthly active">
+                <div>
+                  <div class="price-label">Monthly</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">699</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$8,388 /yr</div>
+              </div>
+              <div class="price-option annual">
+                <div>
+                  <div class="price-label">Annual</div>
+                  <div class="price-option-left">
+                    <span class="price-currency">A$</span>
+                    <span class="price-amount">664.05</span>
+                    <span class="price-period">/month (ex. GST)</span>
+                  </div>
+                </div>
+                <div class="price-yearly">A$7,968.60 /yr</div>
+              </div>
+            </div> 
+            <p class="pricing-desc">Suitable for larger offices with bandwidth intensive use cases</p>
+            <ul class="pricing-features">
+              <li>Symmetric, dedicated bandwidth</li>
+              <li>4 hour SLA restoration target</li>
+              <li>Optional 5G or 4G backup</li>
+            </ul>
+            <button onclick="handleSubscribe('ent-1000')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+          </div>
+        </div>
+
+        <button type="button" class="carousel-arrow carousel-arrow-right" onclick="scrollPlans('enterprise-ethernet', 1)" aria-label="Next enterprise plans">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="silk-divider reveal"></div>
+
+  <!-- ═══ FOOTER CTA ═══ -->
+  <section class="footer-cta" id="cta">
+    <h2 class="section-title reveal reveal-d1">Experience faster broadband<br><strong>starting today</strong></h2>
+    <div class="footer-ctas reveal reveal-d3">
+      <a href="#pricing" class="btn-primary" onclick="switchPlanCategory('residential')">Choose Your Plan</a>
+    </div>
+
+    <div class="footer-bar reveal reveal-d4" style="margin-top: 80px;">
+      <div class="footer-brand">© Neo Broadband Pty Ltd. All rights reserved</div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Service Terms</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ NEO BROADBAND AI & FAQ CHATBOT WIDGET ═══ -->
+<div id="neoChatWidget" style="position:fixed; bottom:24px; right:24px; z-index:9999; font-family:'Montserrat',sans-serif;">
+  <button id="chatToggleBtn" onclick="toggleNeoChat()" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #2b6cf6, #1e3a8a); border:2px solid rgba(255,255,255,0.25); box-shadow:0 8px 30px rgba(43,108,246,0.45); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.3s ease;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </button>
+
+  <div id="chatWindow" style="display:none; position:absolute; bottom:70px; right:0; width:360px; height:480px; max-height:80vh; background:rgba(22,26,32,0.96); border:1px solid rgba(156,163,175,0.25); border-radius:24px; backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); box-shadow:0 20px 60px rgba(0,0,0,0.65); flex-direction:column; overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#1e3a8a,#0f172a); padding:16px; border-bottom:1px solid rgba(156,163,175,0.15); display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:10px; height:10px; border-radius:50%; background:#22c55e; box-shadow:0 0 8px #22c55e;"></div>
+        <div>
+          <strong style="color:#ffffff; font-size:13px; display:block;">Neo AI Assistant</strong>
+          <small style="color:#93c5fd; font-size:9px;">Instant Plans & Support Bot</small>
+        </div>
+      </div>
+      <button onclick="toggleNeoChat()" style="background:none; border:none; color:#cbd5e1; font-size:18px; cursor:pointer;">✕</button>
+    </div>
+
+    <div id="chatMessages" style="flex:1; padding:16px; overflow-y:auto; font-size:12px; display:flex; flex-direction:column; gap:12px;">
+      <div style="background:rgba(43,108,246,0.15); border:1px solid rgba(43,108,246,0.25); border-radius:14px; padding:12px; color:#e2e8f0; line-height:1.5;">
+        👋 G'day! I'm your Neo Broadband virtual guide. Ask me anything about our high-speed plans, fiber coverage, invoices, or evening speeds!
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        <button onclick="askChatFaq('What is the best residential plan?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">⚡ Best Residential Plan</button>
+        <button onclick="askChatFaq('How do I download my bill?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">📄 View & Download Bill</button>
+        <button onclick="askChatFaq('Do you offer static IPs?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">🌐 Static IP</button>
+      </div>
+    </div>
+
+    <form onsubmit="handleChatSubmit(event)" style="padding:12px; border-top:1px solid rgba(156,163,175,0.15); display:flex; gap:8px;">
+      <input type="text" id="chatInput" placeholder="Ask about speeds, plans, billing..." style="flex:1; background:rgba(15,17,21,0.8); border:1px solid rgba(156,163,175,0.25); border-radius:100px; padding:10px 14px; color:#fff; font-size:11px; outline:none;" autocomplete="off">
+      <button type="submit" style="background:#2b6cf6; color:#fff; border:none; border-radius:100px; padding:10px 16px; font-weight:700; font-size:11px; cursor:pointer;">Send</button>
+    </form>
+  </div>
+</div>
+
+<script src="templatemo-621-luminary-script.js"></script>
+<script>
+  (function () {
+    const sliders = document.querySelectorAll('.mode-slider');
+    function applyState(isLight) {
+      document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+      sliders.forEach(function (btn) {
+        btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
+        btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+      });
+      try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
+    }
+
+    applyState(document.documentElement.getAttribute('data-theme') === 'light');
+
+    sliders.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        applyState(!isLight);
+      });
+    });
+  })();
+</script>
+<script>
+;(function(){
+
+  function scrollPlans(categoryId, direction) {
+    const cat = document.getElementById(categoryId);
+    if (!cat) return;
+    const track = cat.querySelector('.plans-slider-track');
+    if (!track) return;
+    const scrollStep = 364;
+    track.scrollBy({ left: direction * scrollStep, behavior: 'smooth' });
+  }
+
+  function updateCarouselArrows(categoryId) {
+    const cat = document.getElementById(categoryId);
+    if (!cat) return;
+    const track = cat.querySelector('.plans-slider-track');
+    const leftBtn = cat.querySelector('.carousel-arrow-left');
+    const rightBtn = cat.querySelector('.carousel-arrow-right');
+    if (!track || !leftBtn || !rightBtn) return;
+
+    const atStart = track.scrollLeft <= 5;
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+
+    leftBtn.classList.toggle('disabled', atStart);
+    rightBtn.classList.toggle('disabled', atEnd);
+  }
+
+  function initCarouselInteractions() {
+    ['residential-plans', 'business-plans', 'enterprise-ethernet'].forEach(id => {
+      const cat = document.getElementById(id);
+      if (!cat) return;
+      const track = cat.querySelector('.plans-slider-track');
+      if (!track) return;
+
+      track.addEventListener('scroll', () => updateCarouselArrows(id), { passive: true });
+      updateCarouselArrows(id);
+    });
+  }
+
+  function switchPlanCategory(category) {
+    const resSec = document.getElementById('residential-plans');
+    const bizSec = document.getElementById('business-plans');
+    const entSec = document.getElementById('enterprise-ethernet');
+    
+    if (!resSec || !bizSec || !entSec) return;
+
+    resSec.classList.remove('active-category');
+    bizSec.classList.remove('active-category');
+    entSec.classList.remove('active-category');
+
+    let activeId = 'residential-plans';
+    if (category === 'business') {
+      bizSec.classList.add('active-category');
+      activeId = 'business-plans';
+    } else if (category === 'enterprise') {
+      entSec.classList.add('active-category');
+      activeId = 'enterprise-ethernet';
+    } else {
+      resSec.classList.add('active-category');
+    }
+
+    setTimeout(() => {
+      updateCarouselArrows(activeId);
+    }, 50);
+
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function handleSubscribe(planId) {
+    sessionStorage.setItem('pending_plan', planId);
+    const previousUser = localStorage.getItem('neo_known_user') || sessionStorage.getItem('neo_active_user');
+    if (previousUser) {
+      window.location.href = `customer-portal.html?auth=login&plan=${planId}`;
+    } else {
+      window.location.href = `customer-portal.html?auth=register&plan=${planId}`;
+    }
+  }
+
+  const SEARCH_HISTORY_KEY = 'neo_broadband_searches';
+
+  function getSearchHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function saveSearchQuery(query) {
+    let history = getSearchHistory();
+    history = history.filter(item => item.toLowerCase() !== query.toLowerCase());
+    history.unshift(query);
+    if (history.length > 4) history = history.slice(0, 4);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+  }
+
+  function clearSearchHistory() {
+    localStorage.removeItem(SEARCH_HISTORY_KEY);
+    renderSearchHistory();
+    document.getElementById('searchHistoryDropdown').classList.remove('active');
+  }
+
+  function renderSearchHistory() {
+    const list = document.getElementById('historyItemsList');
+    const dropdown = document.getElementById('searchHistoryDropdown');
+    const headerLabel = document.getElementById('dropdownHeaderLabel');
+    const clearBtn = document.getElementById('clearHistoryBtn');
+    const history = getSearchHistory();
+
+    headerLabel.textContent = 'Recent Searches (Last 4)';
+    clearBtn.style.display = 'inline';
+    list.innerHTML = '';
+
+    if (history.length === 0) {
+      dropdown.classList.remove('active');
+      return;
+    }
+
+    history.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'history-item';
+      li.innerHTML = `<span class="loc-text">🕒 ${item}</span> <span style="font-size:10px; color:#2b6cf6; flex-shrink:0;">Check &rarr;</span>`;
+      li.onmousedown = (e) => {
+        e.preventDefault();
+        document.getElementById('regionInput').value = item;
+        executeRegionCheck(item);
+        dropdown.classList.remove('active');
+      };
+      list.appendChild(li);
+    });
+    dropdown.classList.add('active');
+  }
+
+  const regionInput = document.getElementById('regionInput');
+  const searchResultsBox = document.getElementById('searchResultsBox');
+  const searchHistoryDropdown = document.getElementById('searchHistoryDropdown');
+  const historyItemsList = document.getElementById('historyItemsList');
+  const dropdownHeaderLabel = document.getElementById('dropdownHeaderLabel');
+  const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+  const AU_REGIONS = [
+    'nsw', 'vic', 'qld', 'wa', 'sa', 'tas', 'act', 'nt',
+    'new south wales', 'victoria', 'queensland', 'western australia', 'south australia', 'tasmania', 'australian capital territory', 'northern territory',
+    'sydney', 'melbourne', 'brisbane', 'perth', 'adelaide', 'gold coast', 'canberra', 'newcastle', 'wollongong', 'hobart', 'darwin', 'geelong', 'cairns',
+    'townsville', 'toowoomba', 'ballarat', 'bendigo', 'albury', 'launceston', 'mackay', 'rockhampton', 'bunbury', 'coffs harbour', 'bundaberg', 'wagga wagga',
+    'hervey bay', 'mildura', 'shepparton', 'port macquarie', 'orange', 'dubbo', 'tamworth', 'bathurst', 'gladstone', 'kalgoorlie', 'nowra', 'warrnambool',
+    'lismore', 'parramatta', 'blacktown', 'penrith', 'chatswood', 'bondi', 'manly', 'st kilda', 'richmond', 'fremantle', 'surfers paradise', 'southport',
+    'hornsby', 'liverpool', 'campbelltown', 'bankstown', 'gosford', 'byron bay', 'tweed heads', 'ipswich', 'logan', 'mandurah', 'joondalup', 'alice springs', 'australia'
+  ];
+
+  function isAustralianLocation(query) {
+    const qLower = query.toLowerCase().trim();
+    const nonAuWords = ['usa', 'us', 'uk', 'united kingdom', 'london', 'new york', 'california', 'texas', 'india', 'delhi', 'mumbai', 'tokyo', 'japan', 'france', 'paris', 'germany', 'berlin', 'canada', 'toronto', 'singapore', 'auckland', 'new zealand', 'china', 'dubai', 'uae'];
+    for (let word of nonAuWords) {
+      if (new RegExp('\\b' + word + '\\b', 'i').test(qLower)) {
+        return false;
+      }
+    }
+
+    const postcodeMatch = qLower.match(/\b(0[2-9]\d{2}|[1-9]\d{3})\b/);
+    if (postcodeMatch) {
+      const pc = parseInt(postcodeMatch[0], 10);
+      if ((pc >= 200 && pc <= 999) || (pc >= 2000 && pc <= 7999) || (pc >= 800 && pc <= 999)) {
+        return true;
+      }
+    }
+
+    for (let region of AU_REGIONS) {
+      if (new RegExp('\\b' + region + '\\b', 'i').test(qLower)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  let searchDebounceTimer;
+  const GEOAPIFY_API_KEY = 'c1fd8278eea44af5921cc68be13709f0';
+
+  regionInput.addEventListener('input', function() {
+    const val = this.value.trim();
+    searchResultsBox.classList.remove('active');
+    clearTimeout(searchDebounceTimer);
+
+    if (val.length < 2) {
+      if (val.length === 0 && getSearchHistory().length > 0) {
+        renderSearchHistory();
+      } else {
+        searchHistoryDropdown.classList.remove('active');
+      }
+      return;
+    }
+
+    searchDebounceTimer = setTimeout(() => {
+      fetchGeoapifySuggestions(val);
+    }, 220);
+  });
+
+  async function fetchGeoapifySuggestions(query) {
+    try {
+      const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&filter=countrycode:au&format=json&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) return;
+      const data = await response.json();
+
+      if (data && data.results && data.results.length > 0) {
+        dropdownHeaderLabel.textContent = 'Suggested Locations (Australia)';
+        clearHistoryBtn.style.display = 'none';
+        historyItemsList.innerHTML = '';
+
+        data.results.forEach(item => {
+          const addressLine1 = item.address_line1 || item.street || item.name || '';
+          const addressLine2 = item.address_line2 || `${item.city || item.suburb || ''} ${item.state_code || item.state || ''} ${item.postcode || ''}`.trim();
+          const fullAddress = item.formatted || `${addressLine1}, ${addressLine2}`.trim();
+
+          const li = document.createElement('li');
+          li.className = 'history-item';
+          li.innerHTML = `
+            <span class="loc-text">📍 <strong>${addressLine1}</strong>${addressLine2 ? ', ' + addressLine2 : ''}</span>
+            <span style="font-size:10px; color:#2b6cf6; flex-shrink:0;">Select &rarr;</span>
+          `;
+          
+          li.onmousedown = (e) => {
+            e.preventDefault();
+            regionInput.value = fullAddress;
+            searchHistoryDropdown.classList.remove('active');
+            saveSearchQuery(fullAddress);
+            executeRegionCheck(fullAddress);
+          };
+          historyItemsList.appendChild(li);
+        });
+
+        searchHistoryDropdown.classList.toggle('active', historyItemsList.children.length > 0);
+      } else {
+        searchHistoryDropdown.classList.remove('active');
+      }
+    } catch (err) {
+      console.warn('Map fetch error:', err);
+    }
+  }
+
+  regionInput.addEventListener('focus', function() {
+    searchResultsBox.classList.remove('active');
+    if (!regionInput.value.trim() && getSearchHistory().length > 0) {
+      renderSearchHistory();
+    }
+  });
+
+  searchResultsBox.addEventListener('mouseleave', function() {
+    searchResultsBox.classList.remove('active');
+  });
+
+  searchHistoryDropdown.addEventListener('mouseleave', function() {
+    searchHistoryDropdown.classList.remove('active');
+  });
+
+  function handleRegionSearch(e) {
+    if (e) e.preventDefault();
+    const query = regionInput.value.trim();
+    if (!query) return;
+
+    searchHistoryDropdown.classList.remove('active');
+    searchResultsBox.classList.remove('active'); 
+    
+    saveSearchQuery(query);
+    executeRegionCheck(query);
+  }
+
+  function executeRegionCheck(query) {
+    const locationLabel = document.getElementById('searchLocationLabel');
+    const techBadge = document.getElementById('searchTechBadge');
+    const speedDetails = document.getElementById('searchSpeedDetails');
+    const planLink = document.getElementById('searchPlanLink');
+
+    locationLabel.textContent = query.toUpperCase();
+    const isAU = isAustralianLocation(query);
+
+    if (!isAU) {
+      techBadge.textContent = 'Not Available Location';
+      techBadge.className = 'search-tech-badge unavailable';
+      speedDetails.innerHTML = 'Our ultra-fast fiber network currently covers <strong>Australian addresses only</strong>.';
+      planLink.style.display = 'none';
+    } else {
+      techBadge.className = 'search-tech-badge';
+      planLink.style.display = 'inline-block';
+      const qLower = query.toLowerCase();
+
+      if (qLower.includes('regional') || qLower.includes('remote') || qLower.includes('bush') || qLower.includes('nt') || qLower.includes('tas') || qLower.includes('0800') || qLower.includes('7000')) {
+        techBadge.textContent = 'Fixed Wireless / FTTN Superfast';
+        speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 250 Mbps</strong> &bull; Recommended Plan: <strong>Pro 250 / Regular 500</strong>';
+      } else if (qLower.includes('perth') || qLower.includes('wa') || qLower.includes('adelaide') || qLower.includes('sa') || qLower.includes('6000') || qLower.includes('5000')) {
+        techBadge.textContent = 'FTTP / HFC Gigabit Ready';
+        speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 1000 Mbps</strong> &bull; Recommended Plan: <strong>Ultra+ 1000 / Ultra 1000</strong>';
+      } else {
+        techBadge.textContent = 'FTTP Hyper-Speed 2Gbps Ready';
+        speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 2000 Mbps</strong> &bull; Recommended Plan: <strong>Thunderbolt 2000 / Regular 500</strong>';
+      }
+    }
+
+    setTimeout(() => {
+      searchResultsBox.classList.add('active');
+    }, 150);
+  }
+
+  (function() {
+    const pageGrid = document.getElementById('pageGrid');
+    if (!pageGrid) return;
+    let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2, currentX = targetX, currentY = targetY;
+    window.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; });
+    function renderGridLight() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      pageGrid.style.setProperty('--mx', `${currentX}px`);
+      pageGrid.style.setProperty('--my', `${currentY}px`);
+      requestAnimationFrame(renderGridLight);
+    }
+    renderGridLight();
+  })();
+
+  (function() {
+    const toggle = document.getElementById('pricingToggle');
+    const monthlyLabel = document.getElementById('monthlyLabel');
+    const annualLabel = document.getElementById('annualLabel');
+    if (!toggle || !monthlyLabel || !annualLabel) return;
+
+    const saveBadge = document.getElementById('saveBadge');
+    const monthlyPrices = document.querySelectorAll('.price-option.monthly');
+    const annualPrices = document.querySelectorAll('.price-option.annual');
+
+    let isAnnual = false;
+
+    function renderPricingState(annualState) {
+      isAnnual = annualState;
+      toggle.setAttribute('aria-checked', isAnnual ? 'true' : 'false');
+      toggle.classList.toggle('annual', isAnnual);
+      monthlyLabel.classList.toggle('active', !isAnnual);
+      annualLabel.classList.toggle('active', isAnnual);
+      
+      if (saveBadge) saveBadge.classList.toggle('show', isAnnual);
+
+      monthlyPrices.forEach(el => el.classList.toggle('active', !isAnnual));
+      annualPrices.forEach(el => el.classList.toggle('active', isAnnual));
+    }
+
+    toggle.addEventListener('click', () => renderPricingState(!isAnnual));
+    monthlyLabel.addEventListener('click', () => renderPricingState(false));
+    annualLabel.addEventListener('click', () => renderPricingState(true));
+  })();
+
+  window.switchPlanCategory = switchPlanCategory;
+  window.handleSubscribe = handleSubscribe;
+  window.clearSearchHistory = clearSearchHistory;
+  window.scrollPlans = scrollPlans;
+  window.handleRegionSearch = handleRegionSearch;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initCarouselInteractions();
+  });
+})();
+</script>
+
+<!-- ═══ CHATBOT SCRIPT ═══ -->
+<script>
+function toggleNeoChat() {
+  const win = document.getElementById('chatWindow');
+  win.style.display = win.style.display === 'none' || win.style.display === '' ? 'flex' : 'none';
+}
+
+function handleChatSubmit(e) {
+  if (e) e.preventDefault();
+  const inp = document.getElementById('chatInput');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  addUserMessage(txt);
+  inp.value = '';
+  setTimeout(() => generateAiAnswer(txt), 400);
+}
+
+function askChatFaq(question) {
+  addUserMessage(question);
+  setTimeout(() => generateAiAnswer(question), 400);
+}
+
+function addUserMessage(txt) {
+  const body = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.style.cssText = "align-self:flex-end; background:#2b6cf6; color:#fff; padding:8px 14px; border-radius:14px 14px 2px 14px; max-width:85%; line-height:1.4;";
+  el.textContent = txt;
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+
+function generateAiAnswer(prompt) {
+  const q = prompt.toLowerCase();
+  let reply = "I'm here to assist! For custom requests or fiber provisioning inquiries, you can test your suburb in our search bar or open a priority ticket in the portal.";
+
+  if (q.includes('best') || q.includes('recommended') || q.includes('plan')) {
+    reply = "Our most popular home plan is the **Regular Plan (500 Mbps Down / 50 Mbps Up)** for A$85/mo. For hyper-speed enthusiasts, the **Thunderbolt (2000 Mbps)** offers maximum fiber throughput!";
+  } else if (q.includes('bill') || q.includes('invoice') || q.includes('payment') || q.includes('pay')) {
+    reply = "Invoices are generated on the 1st of every cycle in Australian Dollars (AUD) with full GST itemization. You can view, download your PDF statement, or settle dues on invoice.html.";
+  } else if (q.includes('static') || q.includes('ip')) {
+    reply = "Yes! All Business and Enterprise plans come with a dedicated static IPv4 address included. Residential subscribers can also request static IP routing via the Support tab.";
+  } else if (q.includes('speed') || q.includes('evening')) {
+    reply = "Our network delivers typical evening speeds of 500/42 Mbps on Regular and up to 1700/425 Mbps on Thunderbolt with low-latency peering at Equinix SY4 & NextDC.";
+  } else if (q.includes('login') || q.includes('portal')) {
+    reply = "You can access your account using your Customer ID (e.g. NEO-98210) on customer-portal.html to check telemetry and pay invoices.";
+  }
+
+  const body = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.style.cssText = "align-self:flex-start; background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.15); color:#e5e7eb; padding:10px 14px; border-radius:14px 14px 14px 2px; max-width:88%; line-height:1.5;";
+  el.innerHTML = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var target = href.split('/').pop().split('#')[0];
+    if (target && target === path) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
