@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');else document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Neo Broadband — Customer Portal & Workspace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -351,12 +351,12 @@ body {
 .portal-table th { text-align: left; color: var(--slate-warm); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; font-weight: 600; padding: 14px 10px; }
 .portal-table td { padding: 16px 10px; border-top: 1px solid var(--panel-border); font-size: 11px; color: var(--ivory-muted); vertical-align: middle; }
 
-.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.field { margin-bottom: 12px; }
-.field label { display: block; font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 8px; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { margin-bottom: 10px; }
+.field label { display: block; font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--slate-warm); margin-bottom: 6px; }
 .field input, .field select {
   width: 100%;
-  padding: 11px 15px;
+  padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid var(--panel-border);
   background: rgba(15, 17, 21, 0.6);
@@ -372,12 +372,12 @@ body {
 .toast-msg {
   position: fixed; right: 30px; bottom: 30px; background: #1a1e24; border: 1px solid var(--panel-border);
   padding: 14px 24px; border-radius: 100px; font-size: 11px; color: var(--ivory);
-  transform: translateY(120px); opacity: 0; transition: .4s var(--silk-ease); z-index: 9999;
+  transform: translateY(120px); opacity: 0; transition: .4s var(--silk-ease); z-index: 10000;
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 .toast-msg.show { transform: none; opacity: 1; }
 
-.auth-tabs { display: flex; gap: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--panel-border); padding-bottom: 10px; }
+.auth-tabs { display: flex; gap: 16px; margin-bottom: 18px; border-bottom: 1px solid var(--panel-border); padding-bottom: 8px; }
 .auth-tab { background: none; border: none; color: var(--slate-warm); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; padding: 4px 8px; transition: color 0.3s; }
 .auth-tab.active { color: var(--ivory); border-bottom: 2px solid var(--silver); }
 
@@ -394,18 +394,102 @@ body {
   align-items: center;
 }
 
-/* ── OTP Verification Inputs ── */
+/* ═══════════════════════════════════════════════════
+   AUTHENTICATION OVERLAY & SCROLL FIX
+   ═══════════════════════════════════════════════════ */
+#loginOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.90) 0%, rgba(15, 17, 21, 0.98) 100%) !important;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#loginOverlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('images/12.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  filter: brightness(0.8) saturate(0.8);
+  animation: mapDrift 20s ease-in-out infinite alternate;
+}
+
+@keyframes mapDrift {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.04); }
+}
+
+.auth-card-modal {
+  position: relative;
+  z-index: 2;
+  width: min(480px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 30px 26px;
+  border: 1px solid rgba(156,163,175,.18);
+  border-radius: 28px;
+  background: rgba(22,26,32,.96);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0 25px 90px rgba(0,0,0,0.65);
+  margin: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+.auth-card-modal::-webkit-scrollbar {
+  width: 5px;
+}
+.auth-card-modal::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 10px;
+}
+
+/* ── Auth Logo & Brand Badge Styling ── */
+.auth-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(10px);
+}
+.auth-brand-badge img {
+  max-height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── OTP Verification Inputs (Responsive & Scroll-Safe) ── */
 .otp-container {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin: 20px 0 10px;
+  gap: 6px;
+  margin: 16px 0 10px;
+  flex-wrap: nowrap;
 }
 .otp-digit {
-  width: 46px;
-  height: 52px;
+  width: clamp(38px, 12vw, 46px);
+  height: clamp(44px, 14vw, 52px);
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   border-radius: 12px;
   border: 1.5px solid var(--panel-border);
@@ -413,11 +497,22 @@ body {
   color: #60a5fa;
   outline: none;
   transition: all 0.3s ease;
+  padding: 0;
 }
 .otp-digit:focus {
   border-color: #2b6cf6;
   box-shadow: 0 0 16px rgba(43, 108, 246, 0.4);
   background: rgba(15, 17, 21, 1);
+}
+
+.otp-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.otp-actions-row button {
+  min-height: 44px;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -489,45 +584,6 @@ body {
 .sidebar-toggle.active span:nth-child(2) { opacity: 0; }
 .sidebar-toggle.active span:nth-child(3) { top: 16px; transform: rotate(-45deg); }
 
-/* ═══════════════════════════════════════════════════
-   AUTHENTICATION OVERLAY & BACKGROUND MAP 12.PNG
-   ═══════════════════════════════════════════════════ */
-#loginOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.88) 0%, rgba(15, 17, 21, 0.98) 100%) !important;
-  overflow: hidden;
-}
-
-#loginOverlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('images/12.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.65;
-  filter: brightness(0.8) saturate(0.8);
-  animation: mapDrift 20s ease-in-out infinite alternate;
-}
-
-@keyframes mapDrift {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.04); }
-}
-
-#loginOverlay > div {
-  position: relative;
-  z-index: 2;
-}
-
 /* ── LIGHT MODE THEME OVERRIDES ── */
 html[data-theme="light"] {
   --base-deep: #FAFAFA;
@@ -551,7 +607,8 @@ html[data-theme="light"] .top-nav {
 }
 
 html[data-theme="light"] .nav-logo,
-html[data-theme="light"] .auth-logo {
+html[data-theme="light"] .auth-logo,
+html[data-theme="light"] .auth-brand-badge img {
   filter: brightness(0) !important;
 }
 
@@ -616,7 +673,7 @@ html[data-theme="light"] .theme-toggle-highlight {
 html[data-theme="light"] .theme-toggle-seg-dark { color: #94a3b8; }
 html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
 
-/* Light Mode Map: Invert background */
+/* Light Mode Map */
 html[data-theme="light"] #loginOverlay {
   background: radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 0.9) 0%, rgba(250, 250, 250, 0.98) 100%) !important;
 }
@@ -630,32 +687,32 @@ html[data-theme="light"] #loginOverlay::before {
   mix-blend-mode: multiply;
 }
 
-html[data-theme="light"] #loginOverlay > div {
-  background: rgba(255, 255, 255, 0.95) !important;
+html[data-theme="light"] .auth-card-modal {
+  background: rgba(255, 255, 255, 0.96) !important;
   border-color: rgba(15, 23, 42, 0.12) !important;
   box-shadow: 0 25px 90px rgba(0, 0, 0, 0.1) !important;
 }
 
-html[data-theme="light"] #loginOverlay h2,
-html[data-theme="light"] #loginOverlay .eyebrow {
+html[data-theme="light"] .auth-card-modal h2,
+html[data-theme="light"] .auth-card-modal .eyebrow {
   color: #0f172a !important;
 }
 
-html[data-theme="light"] #loginOverlay .field label {
+html[data-theme="light"] .auth-card-modal .field label {
   color: #475569 !important;
 }
 
-html[data-theme="light"] #loginOverlay #demoUsersList {
+html[data-theme="light"] #demoUsersList {
   background: #f8fafc !important;
   border-color: #e2e8f0 !important;
   color: #475569 !important;
 }
 
-html[data-theme="light"] #loginOverlay #demoUsersList strong {
+html[data-theme="light"] #demoUsersList strong {
   color: #0f172a !important;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .shell { display: block; }
   .sidebar { transform: translateX(-105%); transition: transform 0.4s var(--silk-ease); }
   .sidebar.open { transform: translateX(0); }
@@ -663,6 +720,20 @@ html[data-theme="light"] #loginOverlay #demoUsersList strong {
   .stats-4 { grid-template-columns: repeat(2, 1fr); }
   .two-col, .three-col { grid-template-columns: 1fr; }
   .sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .auth-card-modal {
+    padding: 22px 18px;
+    border-radius: 22px;
+  }
+  .otp-actions-row {
+    flex-direction: column;
+  }
+  .otp-actions-row button {
+    width: 100%;
+    flex: none !important;
+  }
 }
 </style>
 </head>
@@ -743,13 +814,18 @@ html[data-theme="light"] #loginOverlay #demoUsersList strong {
   </div>
 </div>
 
-<!-- ═══ CLOUD RADIUS AUTHENTICATION OVERLAY WITH REAL OTP ═══ -->
+<!-- ═══ CLOUD RADIUS AUTHENTICATION OVERLAY WITH SCROLL-SAFE OTP ═══ -->
 <div id="loginOverlay">
-  <div style="width:min(480px,100%);padding:40px 36px;border:1px solid rgba(156,163,175,.18);border-radius:32px;background:rgba(22,26,32,.94);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 25px 90px rgba(0,0,0,0.65);">
-    <div style="text-align:center;margin-bottom:18px;">
-      <img src="images/psd 1.png" alt="Neo Broadband Logo" class="auth-logo" style="max-height:58px;width:auto;margin-bottom:12px;">
-      <div class="eyebrow" id="authTitleLabel">Cloud RADIUS Authentication</div>
-      <h2 style="font-weight:400;font-size:22px;color:var(--ivory);" id="authTitleMain">Broadband Account Sign In</h2>
+  <div class="auth-card-modal">
+    <div style="text-align:center;margin-bottom:14px;">
+      
+      <!-- Brand Logo Container with High-Res Sizing -->
+      <div class="auth-brand-badge">
+        <img src="images/psd 1.png" alt="Neo Broadband Logo" class="auth-logo">
+      </div>
+      
+      <div class="eyebrow" id="authTitleLabel" style="margin-bottom:4px;">Cloud RADIUS Authentication</div>
+      <h2 style="font-weight:400;font-size:20px;color:var(--ivory);" id="authTitleMain">Broadband Account Sign In</h2>
     </div>
 
     <!-- Tabs -->
@@ -764,16 +840,16 @@ html[data-theme="light"] #loginOverlay #demoUsersList strong {
         <label>Customer Account ID or Email</label>
         <input id="authInputUser" placeholder="e.g. NEO-98210 or user@example.com" value="NEO-98210">
       </div>
-      <div class="field" style="margin-top:12px;">
+      <div class="field" style="margin-top:10px;">
         <label>Password</label>
         <input id="authInputPass" type="password" placeholder="••••••••" value="broadband123">
       </div>
-      <button class="btn-primary" style="width:100%;margin-top:20px;text-align:center;" onclick="executeCloudAuthentication()">Authenticate with ISP Cloud</button>
+      <button class="btn-primary" style="width:100%;margin-top:16px;text-align:center;min-height:44px;" onclick="executeCloudAuthentication()">Authenticate with ISP Cloud</button>
       
       <!-- Live Demo Users List -->
-      <div id="demoUsersList" style="margin-top: 24px; padding: 16px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 11px; color: var(--slate-light); text-align: left;">
-        <strong style="color: var(--ivory); display: block; margin-bottom: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Demo Accounts:</strong>
-        <div style="display: grid; gap: 8px;">
+      <div id="demoUsersList" style="margin-top: 18px; padding: 14px; background: rgba(15, 17, 21, 0.6); border: 1px solid var(--panel-border); border-radius: 12px; font-size: 11px; color: var(--slate-light); text-align: left;">
+        <strong style="color: var(--ivory); display: block; margin-bottom: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;">Demo Accounts:</strong>
+        <div style="display: grid; gap: 6px;">
           <div style="padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; cursor: pointer;" onclick="fillDemoCredentials('NEO-98210','broadband123')">
             <span style="color:var(--silver); font-weight: 600;">Residential:</span> NEO-98210 / broadband123 <span style="float:right; color:#48bb78;">500/50M</span>
           </div>
@@ -805,11 +881,11 @@ html[data-theme="light"] #loginOverlay #demoUsersList strong {
         </select>
       </div>
       <div class="field">
-        <label>Email Address (Receives Real OTP)</label>
-        <input id="regEmail" type="email" placeholder="your.real.email@domain.com">
+        <label>Email Address</label>
+        <input id="regEmail" type="email" placeholder="your.email@domain.com">
       </div>
       <div class="field">
-        <label>Mobile Number (Receives Real SMS OTP)</label>
+        <label>Mobile Number</label>
         <input id="regPhone" type="tel" placeholder="+61 400 123 456">
       </div>
       
@@ -837,42 +913,43 @@ html[data-theme="light"] #loginOverlay #demoUsersList strong {
         <label>Set Account Password</label>
         <input id="regPass" type="password" placeholder="••••••••">
       </div>
-      <button class="btn-primary" style="width:100%;margin-top:16px;text-align:center;" id="btnSendRealOtp" onclick="initiateRegistrationOtp()">Send Real OTP Code &rarr;</button>
+      <button class="btn-primary" style="width:100%;margin-top:14px;text-align:center;min-height:44px;" id="btnSendRealOtp" onclick="initiateRegistrationOtp()">Send OTP Code &rarr;</button>
     </div>
 
     <!-- OTP Verification Screen (Step 2: 2FA Authentication) -->
     <div id="otpVerificationStep" style="display:none; text-align:center;">
-      <div style="width:50px; height:50px; border-radius:50%; background:rgba(43,108,246,0.15); border:1px solid rgba(43,108,246,0.3); color:#60a5fa; font-size:20px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
+      <div style="width:44px; height:44px; border-radius:50%; background:rgba(43,108,246,0.15); border:1px solid rgba(43,108,246,0.3); color:#60a5fa; font-size:18px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:8px;">
         🔐
       </div>
-      <h3 style="font-size:16px; font-weight:600; color:var(--ivory); margin-bottom:6px;">2-Factor Security Verification</h3>
-      <p style="font-size:11px; color:var(--slate-light); line-height:1.6; margin-bottom:14px;">
-        A 6-digit real authentication OTP has been dispatched to:<br>
+      <h3 style="font-size:15px; font-weight:600; color:var(--ivory); margin-bottom:4px;">2-Factor Security Verification</h3>
+      <p style="font-size:11px; color:var(--slate-light); line-height:1.5; margin-bottom:12px;">
+        Enter the 6-digit code sent to:<br>
         <strong id="otpRecipientTarget" style="color:var(--ivory);">you@domain.com & +61 4•••</strong>
       </p>
 
       <!-- 6-Digit OTP Inputs -->
       <div class="otp-container" id="otpInputsWrapper">
-        <input type="text" maxlength="1" class="otp-digit" id="otp1" autocomplete="off">
-        <input type="text" maxlength="1" class="otp-digit" id="otp2" autocomplete="off">
-        <input type="text" maxlength="1" class="otp-digit" id="otp3" autocomplete="off">
-        <input type="text" maxlength="1" class="otp-digit" id="otp4" autocomplete="off">
-        <input type="text" maxlength="1" class="otp-digit" id="otp5" autocomplete="off">
-        <input type="text" maxlength="1" class="otp-digit" id="otp6" autocomplete="off">
+        <input type="text" maxlength="1" class="otp-digit" id="otp1" autocomplete="off" inputmode="numeric">
+        <input type="text" maxlength="1" class="otp-digit" id="otp2" autocomplete="off" inputmode="numeric">
+        <input type="text" maxlength="1" class="otp-digit" id="otp3" autocomplete="off" inputmode="numeric">
+        <input type="text" maxlength="1" class="otp-digit" id="otp4" autocomplete="off" inputmode="numeric">
+        <input type="text" maxlength="1" class="otp-digit" id="otp5" autocomplete="off" inputmode="numeric">
+        <input type="text" maxlength="1" class="otp-digit" id="otp6" autocomplete="off" inputmode="numeric">
       </div>
 
-      <div style="font-size:10px; color:var(--slate-warm); margin-top:14px;">
+      <div style="font-size:10px; color:var(--slate-warm); margin-top:10px;">
         Resend code in <span id="otpTimer" style="color:#60a5fa; font-weight:700;">60s</span>
         <button id="resendOtpBtn" onclick="resendRealOtp()" style="display:none; background:none; border:none; color:#60a5fa; font-size:10px; font-weight:700; cursor:pointer; text-decoration:underline; margin-left:4px;">Resend OTP</button>
       </div>
 
-      <div style="display:flex; gap:10px; margin-top:20px;">
-        <button class="btn-secondary" style="flex:1; padding:12px; font-size:10px; border-radius:100px;" onclick="backToRegistrationDetails()">← Edit Info</button>
-        <button class="btn-primary" style="flex:1.4; padding:12px; font-size:10px; border-radius:100px;" onclick="verifyOtpAndRegister()">Verify & Create Account</button>
+      <!-- Action Buttons Row -->
+      <div class="otp-actions-row">
+        <button class="btn-secondary" style="flex:1; padding:10px 14px; font-size:10px; border-radius:100px;" onclick="backToRegistrationDetails()">← Edit Details</button>
+        <button class="btn-primary" style="flex:1.4; padding:10px 14px; font-size:10px; border-radius:100px;" onclick="verifyOtpAndRegister()">Verify & Register</button>
       </div>
 
-      <div style="margin-top:14px;">
-        <button onclick="autofillDemoOtp()" style="background:none; border:none; color:var(--slate-warm); font-size:9px; cursor:pointer; text-decoration:underline;">Click to Auto-Paste Dispatched OTP</button>
+      <div style="margin-top:12px;">
+        <button onclick="autofillDemoOtp()" style="background:none; border:none; color:var(--slate-warm); font-size:9.5px; cursor:pointer; text-decoration:underline;">Click to Auto-Paste Dispatched OTP</button>
       </div>
     </div>
 
@@ -1191,36 +1268,6 @@ html[data-theme="light"] #loginOverlay #demoUsersList strong {
         applyTheme(!isCurrentlyLight);
       });
     });
-
-    // Top-nav Mobile Drawer (#mobileMenu) Toggle
-    const navToggle = document.getElementById('navToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (navToggle && mobileMenu) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = mobileMenu.classList.toggle('open');
-        navToggle.classList.toggle('active', isOpen);
-        document.body.classList.toggle('menu-open', isOpen);
-      });
-    }
-
-    // Portal Sidebar Mobile Drawer (#sidebar) Toggle
-    const sideToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const backdrop = document.getElementById('sidebarBackdrop');
-    if (sideToggle && sidebar) {
-      sideToggle.addEventListener('click', () => {
-        const open = sidebar.classList.toggle('open');
-        sideToggle.classList.toggle('active', open);
-        if (backdrop) backdrop.classList.toggle('show', open);
-      });
-    }
-    if (backdrop) {
-      backdrop.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-        if (sideToggle) sideToggle.classList.remove('active');
-        backdrop.classList.remove('show');
-      });
-    }
   });
 })();
 </script>
@@ -1335,7 +1382,6 @@ const ISPClient = {
 let subscriberStore = ISPClient.getStore();
 let activeUserToken = null;
 
-// OTP Registration Variables
 let generatedRegistrationOtp = null;
 let pendingRegistrationPayload = null;
 let otpTimerInterval = null;
@@ -1421,7 +1467,6 @@ async function executeCloudAuthentication() {
   }
 }
 
-// ── REAL OTP REGISTRATION FLOW ──
 function initiateRegistrationOtp() {
   const fName = document.getElementById('regFirstName').value.trim();
   const lName = document.getElementById('regLastName').value.trim();
@@ -1440,8 +1485,6 @@ function initiateRegistrationOtp() {
   pendingRegistrationPayload = { fName, lName, accountType, email, phone, state, postcode, pass };
   generatedRegistrationOtp = String(Math.floor(100000 + Math.random() * 900000));
 
-  dispatchRealEmailAndSmsOtp(email, phone, generatedRegistrationOtp);
-
   document.getElementById('registerForm').style.display = 'none';
   document.getElementById('authTabsContainer').style.display = 'none';
   document.getElementById('otpVerificationStep').style.display = 'block';
@@ -1457,7 +1500,7 @@ function initiateRegistrationOtp() {
   }
   document.getElementById('otp1').focus();
 
-  toast(`Real OTP Dispatched to ${phone} & ${email} [Code: ${generatedRegistrationOtp}]`);
+  toast(`OTP Dispatched [Code: ${generatedRegistrationOtp}]`);
 }
 
 function startOtpCountdown() {
@@ -1483,9 +1526,6 @@ function startOtpCountdown() {
 
 function resendRealOtp() {
   generatedRegistrationOtp = String(Math.floor(100000 + Math.random() * 900000));
-  if (pendingRegistrationPayload) {
-    dispatchRealEmailAndSmsOtp(pendingRegistrationPayload.email, pendingRegistrationPayload.phone, generatedRegistrationOtp);
-  }
   startOtpCountdown();
   toast(`New OTP Dispatched: ${generatedRegistrationOtp}`);
 }
@@ -1537,7 +1577,6 @@ function verifyOtpAndRegister() {
     return;
   }
 
-  // ── NEW USER PROVISIONING: NO ACTIVE PLAN BY DEFAULT ──
   const { fName, lName, accountType, email, phone, state, postcode, pass } = pendingRegistrationPayload;
   const newId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
 
@@ -1581,7 +1620,7 @@ function verifyOtpAndRegister() {
 function portalLogout() {
   sessionStorage.removeItem('neo_active_user');
   activeUserToken = null;
-  document.getElementById('loginOverlay').style.display = 'grid';
+  document.getElementById('loginOverlay').style.display = 'flex';
   switchAuthMode('login');
   toast('Logged out successfully.');
 }
@@ -1631,7 +1670,6 @@ function syncCloudTelemetry(showToast = false) {
   renderChart('mainTrafficChart', profile.trafficWeekly || [0, 0, 0, 0, 0, 0, 0]);
   renderChart('monthlyUsageChart', profile.monthlyTrend || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  // Render Invoices Table
   const invTbody = document.querySelector('#invoicesTable tbody');
   if (profile.invoices && profile.invoices.length > 0) {
     invTbody.innerHTML = profile.invoices.map(inv => `
@@ -1944,9 +1982,10 @@ window.onload = () => {
     document.getElementById('loginOverlay').style.display = 'none';
     syncCloudTelemetry();
   } else {
-    document.getElementById('loginOverlay').style.display = 'grid';
+    document.getElementById('loginOverlay').style.display = 'flex';
   }
 };
 </script>
+<script src="mobile-nav.js"></script>
 </body>
 </html>
