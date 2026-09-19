@@ -2181,6 +2181,61 @@ window.onload = () => {
     });
   });
 </script>
+<!-- Add this to your login section in customer-portal.html -->
+<div id="recaptcha-container"></div>
+<input type="tel" id="phoneNumber" placeholder="+1234567890">
+<button id="sendOtpBtn">Send OTP</button>
+
+<input type="text" id="otpCode" placeholder="Enter 6-digit OTP">
+<button id="verifyOtpBtn">Verify & Login</button>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    // REPLACE THIS WITH YOUR ACTUAL FIREBASE CONFIG
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Initialize invisible ReCaptcha (Required by Firebase for Phone Auth)
+  window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+    'size': 'invisible'
+  });
+
+  let confirmationResult;
+
+  // Step 1: Send the OTP
+  document.getElementById('sendOtpBtn').addEventListener('click', () => {
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const appVerifier = window.recaptchaVerifier;
+
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        .then((result) => {
+          confirmationResult = result;
+          alert("OTP Sent!");
+        }).catch((error) => {
+          console.error("Error sending SMS", error);
+        });
+  });
+
+  // Step 2: Verify the OTP
+  document.getElementById('verifyOtpBtn').addEventListener('click', () => {
+    const code = document.getElementById('otpCode').value;
+    confirmationResult.confirm(code).then((result) => {
+      const user = result.user;
+      alert("Successfully logged in!");
+      // Insert your redirect logic here (e.g., window.location.href = '/dashboard')
+    }).catch((error) => {
+      console.error("Invalid verification code", error);
+    });
+  });
+</script>
 <script src="mobile-nav.js"></script>
 </body>
 </html>
