@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Tax Invoice Statement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<link rel="icon" type="image/png" href="images/psd 1.png">
+<style>
+  :root {
+    --base-deep: #0F1115;
+    --panel-bg: rgba(22, 26, 32, 0.94);
+    --panel-border: rgba(156, 163, 175, 0.16);
+    --ivory: #E5E7EB;
+    --slate-warm: #9CA3AF;
+    --neo-blue: #2b6cf6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--base-deep);
+    color: var(--ivory);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 16px 60px;
+  }
+  .invoice-card {
+    width: 100%;
+    max-width: 820px;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+    position: relative;
+    z-index: 10;
+  }
+  /* Email style top notification bar */
+  .bill-email-meta {
+    background: #11141a;
+    padding: 14px 28px;
+    font-size: 11px;
+    color: var(--slate-warm);
+    border-bottom: 1px solid var(--panel-border);
+    line-height: 1.8;
+  }
+  .bill-email-meta strong { color: var(--ivory); }
+  
+  /* Brand Banner */
+  .bill-banner {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 60%, #172554 100%);
+    padding: 30px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(43, 108, 246, 0.35);
+  }
+  .bill-banner-text h2 {
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .bill-banner-text p {
+    color: #93c5fd;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .bill-logo {
+    max-height: 54px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  /* Bill Details */
+  .bill-body { padding: 34px 36px; }
+  .bill-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 28px;
+    margin-bottom: 30px;
+  }
+  .greeting-block h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ivory);
+    margin-bottom: 12px;
+  }
+  .greeting-block p {
+    font-size: 13px;
+    color: var(--slate-warm);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .greeting-block a { color: var(--neo-blue); text-decoration: none; font-weight: 600; }
+
+  .account-box {
+    background: rgba(15, 17, 21, 0.65);
+    border: 1px solid var(--panel-border);
+    border-radius: 18px;
+    padding: 20px;
+  }
+  .acc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(156, 163, 175, 0.14);
+  }
+  .acc-row:last-child { border: none; }
+  .acc-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--slate-warm);
+    font-weight: 600;
+  }
+  .acc-val {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ivory);
+  }
+
+  .total-due-card {
+    margin-top: 14px;
+    padding: 14px;
+    background: rgba(43, 108, 246, 0.1);
+    border: 1px solid rgba(43, 108, 246, 0.3);
+    border-radius: 14px;
+    text-align: center;
+  }
+  .total-due-val {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #60a5fa;
+    margin: 4px 0;
+  }
+  .status-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 12px;
+    border-radius: 100px;
+  }
+  .status-badge.paid { background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+  .status-badge.unpaid { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+  .bill-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .btn-download, .btn-pay {
+    flex: 1;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 10px;
+    border-radius: 100px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
+    border: none;
+  }
+  .btn-download { background: #7c3aed; color: #ffffff; }
+  .btn-download:hover { background: #6d28d9; }
+  .btn-pay { background: var(--neo-blue); color: #ffffff; }
+  .btn-pay:hover { background: #1c52c7; }
+
+  /* Table */
+  .statement-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+  .statement-table th {
+    text-align: left;
+    padding: 12px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--slate-warm);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .statement-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(156, 163, 175, 0.08);
+    color: var(--ivory);
+  }
+  .statement-table td.amt { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .bill-footer {
+    background: #11141a;
+    padding: 22px 36px;
+    border-top: 1px solid var(--panel-border);
+    font-size: 11px;
+    color: var(--slate-warm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .bill-footer a { color: #60a5fa; text-decoration: none; }
+
+  @media (max-width: 720px) {
+    .bill-grid { grid-template-columns: 1fr; }
+    .bill-body { padding: 22px 20px; }
+    .bill-banner { padding: 20px; }
+  }
+
+  @media print {
+    body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+    .invoice-card { box-shadow: none !important; border: 1px solid #ccc !important; background: #fff !important; }
+    .bill-actions, .bill-email-meta { display: none !important; }
+    .greeting-block h3, .acc-val, .statement-table td { color: #000000 !important; }
+    .total-due-val { color: #000000 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="invoice-card">
+  <!-- Email Header Meta -->
+  <div class="bill-email-meta">
+    <div><strong>From:</strong> Neo Broadband &lt;billing@accounts.neobroadband.com.au&gt;</div>
+    <div><strong>To:</strong> <span id="billEmailTo">subscriber@example.com.au</span></div>
+    <div><strong>Date:</strong> <span id="billDateMeta">--</span></div>
+    <div><strong>Subject:</strong> Your Neo Broadband Tax Invoice Statement (<span id="billSubjectInv">INV-0000</span>)</div>
+  </div>
+
+  <!-- Banner -->
+  <div class="bill-banner">
+    <div class="bill-banner-text">
+      <h2>Your bill for this month</h2>
+      <p>High-Speed nbn® Broadband & Enterprise Fiber Solutions</p>
+    </div>
+    <img src="images/psd 1.png" alt="Neo Broadband" class="bill-logo">
+  </div>
+
+  <!-- Body Content -->
+  <div class="bill-body">
+    <div class="bill-grid">
+      <div class="greeting-block">
+        <h3>Hi <span id="custFullName">SUBSCRIBER</span>,</h3>
+        <p>Your official tax invoice for Neo Broadband account <strong id="custAccNoText" style="color:var(--ivory);">NEO-00000</strong> is ready.</p>
+        <p>Service Address: <strong id="custAddressText" style="color:var(--ivory);">Sydney NSW 2000</strong></p>
+        <p>Manage your router telemetry, speed tests, or upgrades in your <a href="customer-portal.html">Customer Portal</a>.</p>
+        <p style="margin-top: 14px; font-weight: 600; color: var(--ivory);">Thank you for connecting with Neo Broadband.</p>
+      </div>
+
+      <div class="account-box">
+        <div class="acc-row">
+          <span class="acc-label">Account Number</span>
+          <span class="acc-val" id="dispAccNo">NEO-98210</span>
+        </div>
+        <div class="acc-row">
+          <span class="acc-label">Invoice Reference</span>
+          <span class="acc-val" id="dispInvNo">INV-NEO-2026-08</span>
+        </div>
+        <div class="acc-row">
+          <span class="acc-label">Billing Period</span>
+          <span class="acc-val" id="dispPeriod">Current Billing Cycle</span>
+        </div>
+        <div class="acc-row">
+          <span class="acc-label">Issue / Due Date</span>
+          <span class="acc-val" id="dispDueDate">--</span>
+        </div>
+
+        <div class="total-due-card">
+          <div class="acc-label" style="color:#bfdbfe;">Total Amount (AUD)</div>
+          <div class="total-due-val" id="dispTotalDue">A$85.00</div>
+          <div class="status-badge unpaid" id="dispStatusBadge">Payment Due</div>
+        </div>
+
+        <div class="bill-actions">
+          <button class="btn-download" onclick="window.print()">Download Bill (PDF)</button>
+          <a href="payment.html" class="btn-pay" id="btnPayNowLink">Pay Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statement Table -->
+    <table class="statement-table">
+      <thead>
+        <tr>
+          <th>Description & Fiber Provisioning</th>
+          <th>Cycle</th>
+          <th style="text-align:right;">Ex. GST (AUD)</th>
+          <th style="text-align:right;">Total (AUD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong id="planNameDisplay">Regular Fiber Plan</strong><br>
+            <span style="color:var(--slate-warm);font-size:11px;" id="planTechDesc">Unlimited Symmetrical / High-Speed Transit · Static IPv4</span>
+          </td>
+          <td id="billingCycleType">Monthly Billing</td>
+          <td class="amt" id="subTotalExGst">A$77.27</td>
+          <td class="amt" id="totalIncGst">A$85.00</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" style="text-align:right; color:var(--slate-warm); padding-top:14px;">Includes 10% Australian GST:</td>
+          <td class="amt" style="padding-top:14px;" id="taxGstAmt">A$7.73</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="bill-footer">
+    <div>Neo Broadband Pty Ltd · ABN 76 096 304 620</div>
+    <div><a href="customer-portal.html">Customer Portal</a> &bull; <a href="contact.html">Support</a></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedInv = urlParams.get('inv');
+  let requestedCust = urlParams.get('cust');
+
+  // Load subscribers database
+  let store = {};
+  try {
+    store = JSON.parse(localStorage.getItem('neo_subscriber_db')) || {};
+  } catch(e) {}
+
+  // Fallback default store if empty
+  if (Object.keys(store).length === 0) {
+    store = {
+      "NEO-98210": {
+        name: "Johnathan Smith",
+        email: "john.smith@sydneytech.com.au",
+        address: "Level 14, 201 Sussex St, Sydney NSW 2000",
+        planName: "Regular Plan",
+        balance: "A$85.00",
+        invoices: [
+          { id: "INV-NEO-2026-08", cycle: "August 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Unpaid" },
+          { id: "INV-NEO-2026-07", cycle: "July 2026", plan: "Regular (500/50)", amount: "A$85.00", status: "Paid" }
+        ]
+      }
+    };
+  }
+
+  // 1. Locate customer and invoice
+  let matchedUser = null;
+  let matchedInvoice = null;
+  let matchedUserId = null;
+
+  if (requestedCust && store[requestedCust]) {
+    matchedUserId = requestedCust;
+    matchedUser = store[requestedCust];
+    if (matchedUser.invoices) {
+      matchedInvoice = matchedUser.invoices.find(i => i.id === requestedInv) || matchedUser.invoices[0];
+    }
+  } else if (requestedInv) {
+    // Search across all users
+    for (let uId in store) {
+      const u = store[uId];
+      if (u.invoices) {
+        const inv = u.invoices.find(i => i.id === requestedInv);
+        if (inv) {
+          matchedUser = u;
+          matchedInvoice = inv;
+          matchedUserId = uId;
+          break;
+        }
+      }
+    }
+  }
+
+  // Fallback to active session if not found
+  if (!matchedUser) {
+    matchedUserId = sessionStorage.getItem('neo_active_user') || localStorage.getItem('neo_known_user') || Object.keys(store)[0] || 'NEO-98210';
+    matchedUser = store[matchedUserId] || {
+      name: "Valued Subscriber",
+      email: "subscriber@neobroadband.com.au",
+      address: "Sydney NSW 2000",
+      planName: "Regular Plan",
+      balance: "A$85.00",
+      invoices: []
+    };
+    if (matchedUser.invoices && matchedUser.invoices.length > 0) {
+      matchedInvoice = matchedUser.invoices[0];
+    }
+  }
+
+  const invoiceId = matchedInvoice ? matchedInvoice.id : (requestedInv || `INV-${matchedUserId}-1001`);
+  const invoiceCycle = matchedInvoice ? matchedInvoice.cycle : "Monthly Billing Cycle";
+  const invoicePlan = matchedInvoice ? matchedInvoice.plan : (matchedUser.planName || "Regular Fiber Plan");
+  const amountStr = matchedInvoice ? matchedInvoice.amount : (matchedUser.balance || "A$85.00");
+  const isPaid = matchedInvoice ? (matchedInvoice.status === 'Paid') : (amountStr === "A$0.00" || amountStr === "$0.00");
+
+  const numAmount = parseFloat(amountStr.replace(/[^0-9.]/g, '')) || 0;
+  const exGst = (numAmount / 1.1).toFixed(2);
+  const gst = (numAmount - (numAmount / 1.1)).toFixed(2);
+
+  // Populate HTML elements
+  document.getElementById('billEmailTo').textContent = matchedUser.email || 'subscriber@neobroadband.com.au';
+  document.getElementById('custFullName').textContent = (matchedUser.name || 'Subscriber').toUpperCase();
+  document.getElementById('custAccNoText').textContent = matchedUserId;
+  document.getElementById('custAddressText').textContent = matchedUser.address || 'Australian Fiber Network';
+  document.getElementById('dispAccNo').textContent = matchedUserId;
+  document.getElementById('dispInvNo').textContent = invoiceId;
+  document.getElementById('billSubjectInv').textContent = invoiceId;
+  document.getElementById('dispPeriod').textContent = invoiceCycle;
+  
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+  document.getElementById('billDateMeta').textContent = `${dateStr} 11:19:08 PM`;
+  document.getElementById('dispDueDate').textContent = dateStr;
+
+  document.getElementById('dispTotalDue').textContent = amountStr;
+  document.getElementById('planNameDisplay').textContent = invoicePlan;
+  document.getElementById('billingCycleType').textContent = invoiceCycle;
+  document.getElementById('subTotalExGst').textContent = `A$${exGst}`;
+  document.getElementById('totalIncGst').textContent = amountStr;
+  document.getElementById('taxGstAmt').textContent = `A$${gst}`;
+
+  const statusBadge = document.getElementById('dispStatusBadge');
+  const payBtn = document.getElementById('btnPayNowLink');
+
+  if (isPaid) {
+    statusBadge.className = 'status-badge paid';
+    statusBadge.textContent = 'Paid in Full';
+    payBtn.style.display = 'none';
+  } else {
+    statusBadge.className = 'status-badge unpaid';
+    statusBadge.textContent = 'Payment Due';
+    payBtn.style.display = 'inline-block';
+    payBtn.href = `payment.html?inv=${encodeURIComponent(invoiceId)}&cust=${encodeURIComponent(matchedUserId)}&plan=${encodeURIComponent(invoicePlan)}&amount=${numAmount}`;
+  }
+});
+</script>
+</body>
+</html>

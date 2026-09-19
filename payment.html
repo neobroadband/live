@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Broadband — Secure Checkout & Auto-Invoicing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="templatemo-621-luminary-style.css">
+<link rel="icon" type="image/png" href="images/psd 1.png">
+<style>
+  body { background: #0F1115; color: #E5E7EB; font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+  .payment-section { padding: 80px 16px 80px; position: relative; z-index: 10; }
+  .checkout-panel {
+    max-width: 620px;
+    margin: 0 auto;
+    background: rgba(22, 26, 32, 0.92);
+    border: 1px solid rgba(156, 163, 175, 0.15);
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+  }
+  .selected-plan-box {
+    background: rgba(43, 108, 246, 0.1);
+    border: 1px dashed rgba(43, 108, 246, 0.35);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 6px; }
+  .form-control {
+    width: 100%;
+    background: rgba(15, 17, 21, 0.7);
+    border: 1px solid rgba(156, 163, 175, 0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #ffffff;
+    font-size: 13px;
+    outline: none;
+  }
+  .form-control:focus { border-color: #2b6cf6; }
+</style>
+</head>
+<body>
+
+<main class="payment-section">
+  <div class="checkout-panel">
+    <div style="text-align:center; margin-bottom: 20px;">
+      <a href="index.html"><img src="images/psd 1.png" alt="Neo Broadband" style="max-height: 48px; margin-bottom: 10px;"></a>
+      <h2 style="font-weight: 400; font-size: 1.6rem;">Secure Statement <strong>Payment</strong></h2>
+      <p style="font-size: 12px; color: #9CA3AF;">Official Payment Gateway for Neo Broadband Pty Ltd</p>
+    </div>
+
+    <div class="selected-plan-box">
+      <div style="font-size:10px; font-weight:700; color:#60a5fa; text-transform:uppercase; letter-spacing:0.15em;">Invoice Statement</div>
+      <div style="font-size:1.4rem; font-weight:700; color:#ffffff; margin: 4px 0;" id="displayPlanName">Regular Plan</div>
+      <div style="font-size:1.3rem; font-weight:800; color:#4ade80;" id="displayAmount">A$85.00 AUD</div>
+    </div>
+
+    <form id="paymentForm" onsubmit="event.preventDefault(); processPayment();">
+      <input type="hidden" id="checkoutInvId">
+      <div class="form-group">
+        <label class="form-label">Full Name on Card</label>
+        <input type="text" id="checkoutName" class="form-control" placeholder="John Doe" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email for Tax Invoice</label>
+          <input type="email" id="checkoutEmail" class="form-control" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Account / Customer ID</label>
+          <input type="text" id="checkoutAccId" class="form-control" placeholder="NEO-98210" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Credit Card Number</label>
+        <input type="text" class="form-control" placeholder="4532 •••• •••• 8891" maxlength="19" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Expiry (MM/YY)</label>
+          <input type="text" class="form-control" placeholder="08/28" maxlength="5" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CVV</label>
+          <input type="password" class="form-control" placeholder="•••" maxlength="4" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" style="width: 100%; border: none; border-radius: 100px; padding: 15px; margin-top: 10px; font-weight: 700; cursor: pointer;" id="paySubmitBtn">Authorize Payment & View Bill</button>
+    </form>
+  </div>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const custParam = urlParams.get('cust');
+  const invParam = urlParams.get('inv');
+  const activeUserToken = custParam || sessionStorage.getItem('neo_active_user') || localStorage.getItem('neo_known_user') || 'NEO-98210';
+  
+  let store = {};
+  try { store = JSON.parse(localStorage.getItem('neo_subscriber_db')) || {}; } catch(e){}
+
+  const profile = store[activeUserToken] || {
+    name: "Johnathan Smith",
+    email: "john.smith@sydneytech.com.au",
+    planName: "Regular Plan",
+    balance: "A$85.00"
+  };
+
+  const plan = urlParams.get('plan') || profile.planName || "Regular Plan";
+  const amount = urlParams.get('amount') || profile.balance || "A$85.00";
+
+  document.getElementById('checkoutInvId').value = invParam || `INV-${activeUserToken}-CYCLE`;
+  document.getElementById('displayPlanName').innerText = plan;
+  document.getElementById('displayAmount').innerText = String(amount).startsWith('A$') ? amount : `A$${amount}`;
+  document.getElementById('checkoutName').value = profile.name;
+  document.getElementById('checkoutEmail').value = profile.email;
+  document.getElementById('checkoutAccId').value = activeUserToken;
+});
+
+function processPayment() {
+  const btn = document.getElementById('paySubmitBtn');
+  btn.disabled = true;
+  btn.innerText = "Authorizing & Updating Invoices...";
+
+  const activeUserToken = document.getElementById('checkoutAccId').value.trim();
+  const targetInvId = document.getElementById('checkoutInvId').value.trim() || `INV-${activeUserToken}-2026`;
+  const amountPaid = document.getElementById('displayAmount').innerText;
+
+  let store = {};
+  try { store = JSON.parse(localStorage.getItem('neo_subscriber_db')) || {}; } catch(e){}
+
+  if (store[activeUserToken]) {
+    store[activeUserToken].balance = "A$0.00";
+    if (!store[activeUserToken].invoices) store[activeUserToken].invoices = [];
+    
+    // Find matching invoice or update existing
+    let found = store[activeUserToken].invoices.find(i => i.id === targetInvId);
+    if (found) {
+      found.status = "Paid";
+    } else {
+      store[activeUserToken].invoices.unshift({
+        id: targetInvId,
+        cycle: new Date().toLocaleDateString('en-AU', { month: 'long', year: 'numeric' }),
+        plan: store[activeUserToken].planName,
+        amount: amountPaid,
+        status: "Paid"
+      });
+    }
+    localStorage.setItem('neo_subscriber_db', JSON.stringify(store));
+  }
+
+  setTimeout(() => {
+    alert("Payment Approved! Opening your official tax invoice statement...");
+    window.location.href = `invoice.html?inv=${encodeURIComponent(targetInvId)}&cust=${encodeURIComponent(activeUserToken)}`;
+  }, 800);
+}
+</script>
+</body>
+</html>
