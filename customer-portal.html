@@ -1988,6 +1988,133 @@ window.onload = () => {
   }
 };
 </script>
+<!-- Include Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<div class="auth-box">
+  <!-- OTP Section -->
+  <h3>Login with OTP</h3>
+  <input type="email" id="userEmail" placeholder="Enter your email" />
+  <button onclick="sendOTP()">Send OTP</button>
+
+  <div id="otpVerifySection" style="display: none; margin-top: 10px;">
+    <input type="text" id="otpCode" placeholder="Enter 6-digit OTP" />
+    <button onclick="verifyOTP()">Verify & Sign In</button>
+  </div>
+  
+  <p id="authStatus"></p>
+
+  <hr />
+
+  <!-- Bill Upload Section -->
+  <div id="uploadSection" style="display: none;">
+    <h3>Upload Bills / Invoices</h3>
+    <input type="file" id="billFileInput" />
+    <button onclick="uploadBill()">Upload Bill</button>
+    <p id="uploadStatus"></p>
+    <ul id="uploadedFilesList"></ul>
+  </div>
+</div>
+
+<script>
+  // 1. Initialize Supabase Client
+  const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // 2. Request Email OTP
+  async function sendOTP() {
+    const email = document.getElementById("userEmail").value.trim();
+    const status = document.getElementById("authStatus");
+
+    if (!email) {
+      status.innerText = "Please enter a valid email address.";
+      return;
+    }
+
+    status.innerText = "Sending OTP...";
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: email,
+      options: {
+        shouldCreateUser: true
+      }
+    });
+
+    if (error) {
+      status.innerText = "Error: " + error.message;
+    } else {
+      status.innerText = "OTP sent! Check your inbox.";
+      document.getElementById("otpVerifySection").style.display = "block";
+    }
+  }
+
+  // 3. Verify OTP
+  async function verifyOTP() {
+    const email = document.getElementById("userEmail").value.trim();
+    const token = document.getElementById("otpCode").value.trim();
+    const status = document.getElementById("authStatus");
+
+    const { data, error } = await supabase.auth.verifyOtp({
+      email: email,
+      token: token,
+      type: 'email'
+    });
+
+    if (error) {
+      status.innerText = "Invalid OTP: " + error.message;
+    } else {
+      status.innerText = "Authenticated successfully!";
+      document.getElementById("uploadSection").style.display = "block";
+      loadUserBills();
+    }
+  }
+
+  // 4. Upload Bills / Files to Cloud Storage
+  async function uploadBill() {
+    const fileInput = document.getElementById("billFileInput");
+    const status = document.getElementById("uploadStatus");
+
+    if (!fileInput.files.length) {
+      status.innerText = "Select a file first.";
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const filePath = `bills/${Date.now()}_${file.name}`;
+
+    status.innerText = "Uploading...";
+    const { data, error } = await supabase.storage
+      .from('bills')
+      .upload(filePath, file);
+
+    if (error) {
+      status.innerText = "Upload failed: " + error.message;
+    } else {
+      status.innerText = "Uploaded successfully: " + file.name;
+      loadUserBills();
+    }
+  }
+
+  // 5. Retrieve Download URLs
+  async function loadUserBills() {
+    const list = document.getElementById("uploadedFilesList");
+    list.innerHTML = "";
+
+    const { data, error } = await supabase.storage.from('bills').list('bills', {
+      limit: 10,
+      sortBy: { column: 'created_at', order: 'desc' }
+    });
+
+    if (data) {
+      data.forEach(file => {
+        const { data: urlData } = supabase.storage.from('bills').getPublicUrl(`bills/${file.name}`);
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${urlData.publicUrl}" target="_blank">${file.name}</a>`;
+        list.appendChild(li);
+      });
+    }
+  }
+</script>  
 <script src="mobile-nav.js"></script>
 </body>
 </html>
