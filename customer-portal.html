@@ -2115,6 +2115,72 @@ window.onload = () => {
     }
   }
 </script>  
+<!-- ADD THIS WHERE YOU WANT THE LOGIN FORM TO APPEAR -->
+<div id="phone-auth-container" style="border: 1px solid #ccc; padding: 20px; max-width: 300px;">
+  <h3>Login with Phone</h3>
+  <input type="text" id="phoneNumber" placeholder="+1234567890" style="width: 100%; margin-bottom: 10px;" />
+  <button id="sendCodeBtn">Send SMS Code</button>
+  
+  <!-- Firebase requires an invisible container for security checks -->
+  <div id="recaptcha-container"></div>
+  
+  <div id="verifyCodeSection" style="display: none; margin-top: 15px;">
+    <input type="text" id="smsCode" placeholder="Enter 6-digit code" style="width: 100%; margin-bottom: 10px;" />
+    <button id="verifyCodeBtn">Verify Code</button>
+  </div>
+</div>
+
+<!-- ADD THIS RIGHT BEFORE YOUR CLOSING </body> TAG -->
+<script type="module">
+  // 1. Import Firebase SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  // 2. Insert your specific Firebase Project details here
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+  };
+
+  // 3. Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // 4. Setup the Invisible reCAPTCHA (Required for SMS)
+  window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+    'size': 'invisible'
+  });
+
+  // 5. Send SMS Code
+  document.getElementById('sendCodeBtn').addEventListener('click', () => {
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    
+    signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+      .then((confirmationResult) => {
+        window.confirmationResult = confirmationResult;
+        document.getElementById('verifyCodeSection').style.display = 'block';
+        alert("SMS sent!");
+      }).catch((error) => {
+        console.error("SMS failed to send", error);
+        alert("Error sending SMS. Check the console.");
+      });
+  });
+
+  // 6. Verify the SMS Code
+  document.getElementById('verifyCodeBtn').addEventListener('click', () => {
+    const code = document.getElementById('smsCode').value;
+    
+    window.confirmationResult.confirm(code).then((result) => {
+      const user = result.user;
+      alert("Phone verified successfully! User ID: " + user.uid);
+      // Add your code here to redirect the user or show the portal contents
+    }).catch((error) => {
+      console.error("Bad verification code", error);
+      alert("Invalid code. Please try again.");
+    });
+  });
+</script>
 <script src="mobile-nav.js"></script>
 </body>
 </html>
