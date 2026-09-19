@@ -519,6 +519,9 @@ body {
   border-radius: 28px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;
 }
 
+/* ═══════════════════════════════════════════════════
+   ADMIN LOGIN OVERLAY & AUSTRALIA 12.PNG BACKGROUND
+   ═══════════════════════════════════════════════════ */
 #adminLoginOverlay {
   position: fixed;
   inset: 0;
@@ -526,8 +529,32 @@ body {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.88) 0%, rgba(15, 17, 21, 0.98) 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.88) 0%, rgba(15, 17, 21, 0.98) 100%) !important;
   overflow: hidden;
+}
+
+#adminLoginOverlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('images/12.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  animation: mapDrift 20s ease-in-out infinite alternate;
+}
+
+#adminLoginOverlay > div {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes mapDrift {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.04); }
 }
 
 /* ═══ MODE SLIDER (DESKTOP) ═══ */
@@ -585,13 +612,45 @@ html[data-theme="light"] {
   --panel-border: rgba(15, 23, 42, 0.1);
 }
 
+html[data-theme="light"] #adminLoginOverlay {
+  background: radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 0.9) 0%, rgba(250, 250, 250, 0.98) 100%) !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay::before {
+  background-image:
+    linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
+    url('images/12.png') !important;
+  filter: grayscale(100%) invert(1) contrast(1.2) brightness(0.75) !important;
+  opacity: 0.7 !important;
+  mix-blend-mode: multiply;
+}
+
+html[data-theme="light"] #adminLoginOverlay > div {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(212, 175, 55, 0.45) !important;
+  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay h2,
+html[data-theme="light"] #adminLoginOverlay p,
+html[data-theme="light"] #adminLoginOverlay .field label {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] #adminLoginOverlay .field input {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
 html[data-theme="light"] .top-nav {
   background: #ffffff !important;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
 }
 
-html[data-theme="light"] .nav-logo {
+html[data-theme="light"] .nav-logo,
+html[data-theme="light"] .auth-logo {
   filter: brightness(0) !important;
 }
 
@@ -601,9 +660,20 @@ html[data-theme="light"] .top-nav .nav-utility a {
   text-shadow: none !important;
 }
 
+html[data-theme="light"] .top-nav .nav-links > li > a:hover,
+html[data-theme="light"] .top-nav .nav-utility a:hover,
+html[data-theme="light"] .top-nav .nav-links > li > a.active {
+  color: #2b6cf6 !important;
+}
+
 html[data-theme="light"] .sidebar {
   background: rgba(255, 255, 255, 0.95);
   border-right-color: rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .portal-hero {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(241, 242, 244, 0.7));
+  border-color: rgba(15, 23, 42, 0.12);
 }
 
 html[data-theme="light"] .card {
@@ -1161,7 +1231,7 @@ html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
       </div>
     </section>
 
-    <!-- ── 6. NOC PRIORITY SUPPORT TICKETS & PIE CHART (RESTORED) ── -->
+    <!-- ── 6. NOC PRIORITY SUPPORT TICKETS & PIE CHART ── -->
     <section class="page" id="adminTickets">
       <div class="portal-hero">
         <div class="eyebrow">Priority Engineering Desk</div>
@@ -1286,7 +1356,77 @@ html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
 
 <div class="toast-msg" id="toast"></div>
 
-<!-- ═══ SCRIPTS & EXCEL EXPORTER ═══ -->
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+// ── Theme Switcher ──
+(function () {
+  function applyTheme(isLight) {
+    document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+    try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
+    
+    document.querySelectorAll('.mode-slider').forEach(btn => {
+      btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
+      btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    });
+
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+    });
+  }
+
+  const initialTheme = document.documentElement.getAttribute('data-theme') === 'light';
+  applyTheme(initialTheme);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Desktop switch
+    document.querySelectorAll('.mode-slider').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
+        applyTheme(!isCurrentlyLight);
+      });
+    });
+
+    // Mobile theme toggle
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
+        applyTheme(!isCurrentlyLight);
+      });
+    });
+
+    // Top-nav Mobile Drawer (#mobileMenu) Toggle
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (navToggle && mobileMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        navToggle.classList.toggle('active', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+      });
+    }
+
+    // Portal Sidebar Mobile Drawer (#sidebar) Toggle
+    const sideToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    if (sideToggle && sidebar) {
+      sideToggle.addEventListener('click', () => {
+        const open = sidebar.classList.toggle('open');
+        sideToggle.classList.toggle('active', open);
+        if (backdrop) backdrop.classList.toggle('show', open);
+      });
+    }
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        if (sideToggle) sideToggle.classList.remove('active');
+        backdrop.classList.remove('show');
+      });
+    }
+  });
+})();
+</script>
+
 <script>
 const defaultStore = {
   "NEO-98210": {
@@ -1420,77 +1560,6 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ── Theme Controller: Desktop Slider + Mobile Theme Toggle ──
-(function () {
-  function applyTheme(isLight) {
-    document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
-    try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
-    
-    // Sync desktop sliders
-    document.querySelectorAll('.mode-slider').forEach(btn => {
-      btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
-      btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
-    });
-
-    // Sync mobile toggles
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-      btn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
-    });
-  }
-
-  // Load saved theme on boot
-  const initialTheme = document.documentElement.getAttribute('data-theme') === 'light';
-  applyTheme(initialTheme);
-
-  document.addEventListener('DOMContentLoaded', function () {
-    // Desktop switch
-    document.querySelectorAll('.mode-slider').forEach(btn => {
-      btn.addEventListener('click', function () {
-        const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
-        applyTheme(!isCurrentlyLight);
-      });
-    });
-
-    // Mobile theme toggle
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-      btn.addEventListener('click', function () {
-        const isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
-        applyTheme(!isCurrentlyLight);
-      });
-    });
-
-    // Top-nav Mobile Drawer (#mobileMenu) Toggle
-    const navToggle = document.getElementById('navToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (navToggle && mobileMenu) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = mobileMenu.classList.toggle('open');
-        navToggle.classList.toggle('active', isOpen);
-        document.body.classList.toggle('menu-open', isOpen);
-      });
-    }
-
-    // Portal Sidebar Mobile Drawer (#sidebar) Toggle
-    const sideToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const backdrop = document.getElementById('sidebarBackdrop');
-    if (sideToggle && sidebar) {
-      sideToggle.addEventListener('click', () => {
-        const open = sidebar.classList.toggle('open');
-        sideToggle.classList.toggle('active', open);
-        if (backdrop) backdrop.classList.toggle('show', open);
-      });
-    }
-    if (backdrop) {
-      backdrop.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-        if (sideToggle) sideToggle.classList.remove('active');
-        backdrop.classList.remove('show');
-      });
-    }
-  });
-})();
-
 function authenticateAdmin() {
   const u = document.getElementById('adminUserInput').value.trim();
   const p = document.getElementById('adminPassInput').value.trim();
@@ -1507,7 +1576,10 @@ function authenticateAdmin() {
 
 function adminLogout() {
   sessionStorage.removeItem('neo_admin_session');
-  window.location.reload();
+  document.getElementById('adminLoginOverlay').style.display = 'grid';
+  document.getElementById('adminUserInput').value = 'admin';
+  document.getElementById('adminPassInput').value = '';
+  toast('Admin logged out successfully.');
 }
 
 const pageTitles = {
@@ -1849,9 +1921,7 @@ function renderInvoicesTable(allInvoices) {
         <td>${inv.plan}</td>
         <td><strong>${inv.amount}</strong></td>
         <td>
-          <span class="status-pill" style="margin:0;color:${isPaid ? '#48bb78' : 'var(--accent-gold)'};">
-            ${inv.status}
-          </span>
+          <span class="status-pill" style="margin:0;color:${isPaid ? '#48bb78' : 'var(--accent-gold)'};">${inv.status}</span>
         </td>
         <td>
           <div style="display:flex;gap:6px;flex-wrap:nowrap;">
@@ -2292,6 +2362,8 @@ window.onload = () => {
   if (isAuthed === 'authenticated') {
     document.getElementById('adminLoginOverlay').style.display = 'none';
     syncAdminData();
+  } else {
+    document.getElementById('adminLoginOverlay').style.display = 'grid';
   }
 };
 </script>
