@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Broadband — High-Speed Broadband Plans</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
 <style>
@@ -19,7 +16,7 @@
     color: #2b6cf6 !important;
   }
 
-  /* ═══ Top Navigation Link & Portal Styling (BOLDER) ═══ */
+  /* ═══ Top Navigation Link & Portal Styling ═══ */
   .nav-links > li > a {
     font-weight: 700 !important;
     color: var(--nav-link-color, #ffffff) !important;
@@ -38,40 +35,33 @@
   }
 
   /* ═══ LIGHT MODE NAVIGATION FIXES ═══ */
-  
-  /* 1. Transparent navigation in light mode (at the top) */
   html[data-theme="light"] .top-nav {
     background: transparent !important;
     border-bottom: none !important;
     box-shadow: none !important;
   }
 
-  /* Make text DARK immediately in light mode for visibility over the light hero */
   html[data-theme="light"] .top-nav .nav-links > li > a,
   html[data-theme="light"] .top-nav .nav-utility a {
     color: #0f172a !important;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.9) !important; 
   }
 
-  /* LOGO: Always BLACK in light mode so it is visible immediately */
   html[data-theme="light"] .nav-logo {
     filter: brightness(0) !important;
   }
 
-  /* 2. Scrolled navigation in light mode (solid white) */
   html[data-theme="light"] .top-nav.scrolled {
     background: #ffffff !important;
     border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
   }
 
-  /* Remove text-shadow when scrolled in light mode */
   html[data-theme="light"] .top-nav.scrolled .nav-links > li > a,
   html[data-theme="light"] .top-nav.scrolled .nav-utility a {
     text-shadow: none !important;
   }
 
-  /* Menu Hovers in light mode */
   html[data-theme="light"] .top-nav .nav-links > li > a:hover,
   html[data-theme="light"] .top-nav .nav-utility a:hover,
   html[data-theme="light"] .top-nav .nav-links > li > a.active {
@@ -123,7 +113,6 @@
     margin-bottom: 28px;
   }
 
-  /* Light Mode Subtitle - Made white with strong dark drop shadow for high visibility */
   html[data-theme="light"] .hero-sub {
     color: #ffffff !important;
     font-weight: 700 !important;
@@ -168,7 +157,6 @@
     animation: floatingBackground 20s ease-in-out infinite alternate;
   }
 
-  /* Light Mode Map: Invert the map image to turn light dots into crisp black dots */
   html[data-theme="light"] .hero::before {
     background-image: 
       linear-gradient(to bottom, rgba(250, 250, 250, 0.3) 0%, rgba(250, 250, 250, 0.7) 100%),
@@ -178,7 +166,7 @@
     mix-blend-mode: multiply;
   }
 
-  /* ═══ Page Background Grid (Restored to Intersecting Grid Lines) ═══ */
+  /* ═══ Page Background Grid ═══ */
   .page-grid-overlay {
     position: fixed;
     inset: 0;
@@ -188,7 +176,6 @@
     pointer-events: none;
     --mx: 50vw;
     --my: 50vh;
-    /* Dark Mode Grid Lines */
     background-image:
       linear-gradient(to right, rgba(156, 163, 175, 0.18) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(156, 163, 175, 0.18) 1px, transparent 1px);
@@ -204,14 +191,13 @@
     mask-composite: add;
   }
 
-  /* Light Mode Override: Dark Grid Lines */
   html[data-theme="light"] .page-grid-overlay {
     background-image:
       linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px) !important;
   }
 
-  /* ═══ Australian Region Broadband Speed & Plan Search Bar ═══ */
+  /* ═══ Australian Region Broadband Search Bar ═══ */
   .hero-search-wrapper {
     width: 100%;
     max-width: 680px;
@@ -317,7 +303,7 @@
     box-shadow: 0 6px 20px rgba(43, 108, 246, 0.45);
   }
 
-  /* Search & Autocomplete Suggestions Dropdown */
+  /* Suggestions Dropdown */
   .search-history-dropdown {
     position: absolute;
     top: calc(100% + 8px);
@@ -343,9 +329,7 @@
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
   }
 
-  .search-history-dropdown.active {
-    display: block;
-  }
+  .search-history-dropdown.active { display: block; }
 
   .history-title {
     font-size: 10px;
@@ -380,32 +364,10 @@
     transition: background 0.2s ease, color 0.2s ease;
   }
 
-  html[data-theme="light"] .history-item {
-    color: #1e293b;
-  }
+  html[data-theme="light"] .history-item { color: #1e293b; }
+  .history-item:hover { background: rgba(43, 108, 246, 0.2); color: #ffffff; }
+  html[data-theme="light"] .history-item:hover { background: rgba(43, 108, 246, 0.1); color: #2b6cf6; }
 
-  .history-item:hover {
-    background: rgba(43, 108, 246, 0.2);
-    color: #ffffff;
-  }
-
-  html[data-theme="light"] .history-item:hover {
-    background: rgba(43, 108, 246, 0.1);
-    color: #2b6cf6;
-  }
-
-  .history-item .loc-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-right: 12px;
-  }
-
-  .history-item .loc-text strong {
-    color: #60a5fa;
-  }
-
-  /* Search Result Card */
   .hero-search-results {
     position: absolute;
     top: calc(100% + 10px);
@@ -428,9 +390,7 @@
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
   }
 
-  .hero-search-results.active {
-    display: block;
-  }
+  .hero-search-results.active { display: block; }
 
   .search-result-header {
     display: flex;
@@ -441,19 +401,8 @@
     margin-bottom: 12px;
   }
 
-  html[data-theme="light"] .search-result-header {
-    border-bottom-color: #e2e8f0;
-  }
-
-  .search-result-location {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #ffffff;
-  }
-
-  html[data-theme="light"] .search-result-location {
-    color: #0f172a;
-  }
+  .search-result-location { font-size: 0.95rem; font-weight: 700; color: #ffffff; }
+  html[data-theme="light"] .search-result-location { color: #0f172a; }
 
   .search-tech-badge {
     font-size: 9px;
@@ -479,23 +428,8 @@
     gap: 16px;
   }
 
-  .search-speed-text {
-    font-size: 0.86rem;
-    color: var(--slate-light, #9ca3af);
-    line-height: 1.5;
-  }
-
-  html[data-theme="light"] .search-speed-text {
-    color: #475569;
-  }
-
-  .search-speed-text strong {
-    color: #ffffff;
-  }
-
-  html[data-theme="light"] .search-speed-text strong {
-    color: #0f172a;
-  }
+  .search-speed-text { font-size: 0.86rem; color: var(--slate-light, #9ca3af); line-height: 1.5; }
+  html[data-theme="light"] .search-speed-text { color: #475569; }
 
   .search-action-link {
     font-size: 10px;
@@ -511,63 +445,24 @@
     white-space: nowrap;
   }
 
-  .search-action-link:hover {
-    background: #1c52c7;
-    transform: scale(1.03);
-  }
-
   /* Navigation Logo */
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-  .nav-logo {
-    max-height: 100px;
-    width: auto;
-    object-fit: contain;
-  }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo { max-height: 100px; width: auto; object-fit: contain; }
 
-  /* ═══ Plan Category & Professional Side-Arrow Carousel ═══ */
-  .plan-category {
-    display: none;
-    position: relative;
-  }
-  .plan-category.active-category {
-    display: block;
-    animation: fadeInCat 0.5s ease;
-  }
+  /* Plan Category Carousel */
+  .plan-category { display: none; position: relative; }
+  .plan-category.active-category { display: block; animation: fadeInCat 0.5s ease; }
 
   @keyframes fadeInCat {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .category-header-wrap {
-    text-align: center;
-    margin-bottom: 24px;
-  }
+  .category-header-wrap { text-align: center; margin-bottom: 24px; }
+  .category-title { font-size: 2rem; font-weight: 300; letter-spacing: -0.02em; color: var(--ivory, #ffffff); margin-bottom: 8px; }
+  .category-desc { font-size: 1rem; font-weight: 300; color: var(--slate-light, #9a9fa8); margin-bottom: 0; }
 
-  .category-title {
-    font-size: 2rem;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: var(--ivory, #ffffff);
-    margin-bottom: 8px;
-  }
-  .category-desc {
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--slate-light, #9a9fa8);
-    margin-bottom: 0;
-  }
-
-  /* Carousel Wrapper with Centered Side Arrows */
-  .plans-carousel-wrapper {
-    position: relative;
-    width: 100%;
-    margin-top: 10px;
-  }
+  .plans-carousel-wrapper { position: relative; width: 100%; margin-top: 10px; }
 
   .carousel-arrow {
     position: absolute;
@@ -585,19 +480,13 @@
     justify-content: center;
     cursor: pointer;
     backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
     user-select: none;
   }
 
-  .carousel-arrow-left {
-    left: -24px;
-  }
-
-  .carousel-arrow-right {
-    right: -24px;
-  }
+  .carousel-arrow-left { left: -24px; }
+  .carousel-arrow-right { right: -24px; }
 
   .carousel-arrow svg {
     width: 20px;
@@ -615,18 +504,9 @@
     border-color: #2b6cf6;
     color: #ffffff;
     transform: translateY(-50%) scale(1.08);
-    box-shadow: 0 12px 35px rgba(43, 108, 246, 0.45);
   }
 
-  .carousel-arrow:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  .carousel-arrow.disabled {
-    opacity: 0.18;
-    pointer-events: none;
-    cursor: default;
-  }
+  .carousel-arrow.disabled { opacity: 0.18; pointer-events: none; cursor: default; }
 
   html[data-theme="light"] .carousel-arrow {
     background: rgba(255, 255, 255, 0.95);
@@ -635,14 +515,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   }
 
-  html[data-theme="light"] .carousel-arrow:hover {
-    background: #2b6cf6;
-    border-color: #2b6cf6;
-    color: #ffffff;
-    box-shadow: 0 12px 35px rgba(43, 108, 246, 0.35);
-  }
-
-  /* Horizontal Slider Track */
+  /* Slider Track */
   .pricing-grid-7, .pricing-grid-6, .pricing-grid-4, .plans-slider-track {
     display: flex;
     gap: 24px;
@@ -650,249 +523,28 @@
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     padding: 24px 8px 36px;
-    margin-top: 0;
     scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    cursor: grab;
-  }
-
-  .pricing-grid-7:active, .pricing-grid-6:active, .pricing-grid-4:active, .plans-slider-track:active {
-    cursor: grabbing;
   }
 
   .pricing-grid-7::-webkit-scrollbar,
   .pricing-grid-6::-webkit-scrollbar,
   .pricing-grid-4::-webkit-scrollbar,
-  .plans-slider-track::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-  }
+  .plans-slider-track::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
-  /* Card Highlighting */
-  .pricing-grid-7 > .pricing-card,
-  .pricing-grid-6 > .pricing-card,
-  .pricing-grid-4 > .pricing-card,
   .plans-slider-track > .pricing-card {
     flex: 0 0 340px;
     max-width: 340px;
     scroll-snap-align: start;
     text-align: left;
-    user-select: none;
     position: relative;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.4s ease,
-                box-shadow 0.4s ease,
-                background 0.4s ease,
-                opacity 0.35s ease;
-  }
-
-  .plans-slider-track > .pricing-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(180deg, rgba(43, 108, 246, 0.16) 0%, rgba(43, 108, 246, 0.04) 55%, transparent 100%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    z-index: 1;
-  }
-
-  .plans-slider-track > .pricing-card > * {
-    position: relative;
-    z-index: 2;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
   }
 
   .plans-slider-track > .pricing-card:hover {
     transform: translateY(-8px) scale(1.025);
     border-color: #2b6cf6 !important;
-    box-shadow: 0 22px 55px rgba(43, 108, 246, 0.32), 0 0 25px rgba(43, 108, 246, 0.22) !important;
+    box-shadow: 0 22px 55px rgba(43, 108, 246, 0.32) !important;
     z-index: 10;
-  }
-
-  .plans-slider-track > .pricing-card:hover::after {
-    opacity: 1;
-  }
-
-  .plans-slider-track > .pricing-card:hover .pricing-tier {
-    color: #60a5fa;
-    text-shadow: 0 0 12px rgba(96, 165, 250, 0.45);
-  }
-
-  .plans-slider-track > .pricing-card:hover .btn-secondary {
-    border-color: #2b6cf6;
-    background: rgba(43, 108, 246, 0.15);
-    color: #ffffff;
-    box-shadow: 0 4px 20px rgba(43, 108, 246, 0.3);
-  }
-
-  .plans-slider-track > .pricing-card:hover .btn-primary {
-    box-shadow: 0 8px 30px rgba(43, 108, 246, 0.55);
-    transform: scale(1.02);
-  }
-
-  .plans-slider-track:hover > .pricing-card:not(:hover) {
-    opacity: 0.65;
-    transform: scale(0.985);
-  }
-
-  /* Light mode pricing adjustments */
-  html[data-theme="light"] #pricing .section-title {
-    color: #0f172a !important;
-    font-weight: 400;
-  }
-
-  html[data-theme="light"] #pricing .section-title strong {
-    color: #0f172a !important;
-    font-weight: 700;
-  }
-
-  html[data-theme="light"] #pricing .section-body {
-    color: #334155 !important;
-    font-size: 1.05rem;
-    font-weight: 450;
-  }
-
-  html[data-theme="light"] .category-title {
-    color: #0f172a !important;
-    font-weight: 600;
-  }
-
-  html[data-theme="light"] .category-desc {
-    color: #334155 !important;
-    font-size: 1.05rem;
-    font-weight: 450;
-  }
-
-  html[data-theme="light"] .pricing-toggle-label {
-    color: #475569 !important;
-    font-size: 13px !important;
-    font-weight: 600;
-  }
-
-  html[data-theme="light"] .pricing-toggle-label.active {
-    color: #0f172a !important;
-    font-weight: 700;
-  }
-
-  html[data-theme="light"] .pricing-card {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-  }
-
-  html[data-theme="light"] .pricing-tier {
-    color: #0f172a !important;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-  }
-
-  html[data-theme="light"] .price-option {
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  html[data-theme="light"] .price-label {
-    color: #475569 !important;
-    font-size: 10px;
-    font-weight: 700;
-  }
-
-  html[data-theme="light"] .price-currency {
-    color: #1e293b !important;
-    font-size: 1.05rem;
-    font-weight: 600;
-  }
-
-  html[data-theme="light"] .price-amount {
-    color: #0f172a !important;
-    font-weight: 700;
-  }
-
-  html[data-theme="light"] .price-period {
-    color: #475569 !important;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  html[data-theme="light"] .price-yearly {
-    color: #475569 !important;
-    font-size: 0.82rem;
-    font-weight: 600;
-  }
-
-  html[data-theme="light"] .price-option:not(.active) {
-    opacity: 0.45;
-  }
-
-  html[data-theme="light"] .pricing-desc {
-    color: #1e293b !important;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.6;
-  }
-
-  html[data-theme="light"] .pricing-features li {
-    color: #334155 !important;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-bottom: 1px solid #f1f5f9;
-    padding: 10px 0;
-  }
-
-  html[data-theme="light"] .pricing-features li::before {
-    background: #2b6cf6;
-    opacity: 0.9;
-    width: 5px;
-    height: 5px;
-  }
-
-  html[data-theme="light"] .pricing-features li strong {
-    color: #0f172a !important;
-    font-weight: 700;
-  }
-
-  html[data-theme="light"] .pricing-card .btn-secondary {
-    border: 1.5px solid #cbd5e1;
-    color: #0f172a;
-    background: #f8fafc;
-    font-weight: 600;
-  }
-
-  html[data-theme="light"] .pricing-card .btn-secondary:hover {
-    background: #2b6cf6;
-    border-color: #2b6cf6;
-    color: #ffffff;
-  }
-
-  html[data-theme="light"] .pricing-card .btn-primary {
-    background: linear-gradient(135deg, #2b6cf6, #1c52c7);
-    color: #ffffff;
-    font-weight: 600;
-  }
-
-  html[data-theme="light"] .pricing-badge {
-    background: rgba(43, 108, 246, 0.1);
-    border: 1px solid rgba(43, 108, 246, 0.25);
-    color: #2b6cf6;
-    font-weight: 700;
-  }
-
-  html[data-theme="light"] .plans-slider-track > .pricing-card:hover {
-    background: #ffffff !important;
-    border-color: #2b6cf6 !important;
-    box-shadow: 0 22px 55px rgba(43, 108, 246, 0.24), 0 0 20px rgba(43, 108, 246, 0.16) !important;
-  }
-
-  html[data-theme="light"] .plans-slider-track > .pricing-card::after {
-    background: linear-gradient(180deg, rgba(43, 108, 246, 0.12) 0%, rgba(43, 108, 246, 0.03) 65%, transparent 100%);
-  }
-
-  html[data-theme="light"] .plans-slider-track > .pricing-card:hover .pricing-tier {
-    color: #2b6cf6 !important;
-    text-shadow: none;
   }
 
   /* Pricing Toggle */
@@ -904,13 +556,8 @@
     margin: 36px auto 36px;
     user-select: none;
   }
-  .pricing-toggle-label {
-    cursor: pointer;
-  }
-  .toggle-switch.annual {
-    background-color: #2b6cf6 !important;
-    border-color: #2b6cf6 !important;
-  }
+  .pricing-toggle-label { cursor: pointer; }
+  .toggle-switch.annual { background-color: #2b6cf6 !important; border-color: #2b6cf6 !important; }
 
   .price-option {
     display: flex;
@@ -922,173 +569,10 @@
     transform: scale(0.98);
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  .price-option:last-child {
-    border-bottom: none;
-  }
-  .price-option.active {
-    opacity: 1;
-    transform: scale(1);
-  }
+  .price-option:last-child { border-bottom: none; }
+  .price-option.active { opacity: 1; transform: scale(1); }
 
-  @media (max-width: 1024px) {
-    .carousel-arrow-left {
-      left: -12px;
-    }
-    .carousel-arrow-right {
-      right: -12px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .carousel-arrow {
-      width: 40px;
-      height: 40px;
-    }
-    .carousel-arrow-left {
-      left: -8px;
-    }
-    .carousel-arrow-right {
-      right: -8px;
-    }
-    .pricing-grid-7 > .pricing-card,
-    .pricing-grid-6 > .pricing-card,
-    .pricing-grid-4 > .pricing-card,
-    .plans-slider-track > .pricing-card {
-      flex: 0 0 290px;
-      max-width: 290px;
-    }
-    .hero-search-box {
-      flex-direction: column;
-      border-radius: 20px;
-      padding: 14px;
-      gap: 10px;
-    }
-    .hero-search-input {
-      width: 100%;
-      text-align: center;
-    }
-    .hero-search-btn {
-      width: 100%;
-    }
-    .hero-search-icon {
-      display: none;
-    }
-    .search-result-details {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .search-action-link {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  /* ═══ MODE SLIDER: modern sliding toggle with moon/sun + Dark/Light Mode label ═══ */
-  .mode-slider {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 68px;
-    height: 32px;
-    padding: 0 8px;
-    border: none;
-    border-radius: 999px;
-    background: #10121a;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    cursor: pointer;
-    transition: background 0.35s ease;
-  }
-
-  html[data-theme="light"] .mode-slider {
-    background: #e2e7ee;
-    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
-  }
-
-  .mode-slider-icon {
-    position: relative;
-    z-index: 2;
-    width: 14px;
-    height: 14px;
-    stroke: #64748b;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: stroke 0.35s ease, opacity 0.35s ease;
-  }
-
-  .mode-slider-icon.icon-moon { fill: #64748b; stroke: none; opacity: 1; }
-  .mode-slider-icon.icon-sun { opacity: 0.55; }
-
-  html[data-theme="light"] .mode-slider-icon.icon-moon { opacity: 0.45; fill: #94a3b8; }
-  html[data-theme="light"] .mode-slider-icon.icon-sun { stroke: #2b6cf6; opacity: 1; }
-
-  .mode-slider-fill {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 34px;
-    height: 26px;
-    border-radius: 999px;
-    background: #2b6cf6;
-    box-shadow: 0 2px 8px rgba(43, 108, 246, 0.5);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1;
-  }
-
-  html[data-theme="light"] .mode-slider-fill {
-    transform: translateX(31px);
-  }
-
-  .mode-slider-knob {
-    position: absolute;
-    top: 50%;
-    left: 3px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ffffff;
-    transform: translate(0, -50%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 3;
-  }
-
-  html[data-theme="light"] .mode-slider-knob {
-    transform: translate(31px, -50%);
-    background: #2b6cf6;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
-
-  .mode-slider:focus-visible {
-    outline: 2px solid #2b6cf6;
-    outline-offset: 3px;
-  }
-
-  .mode-slider-label {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: #ffffff;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap;
-    min-width: 76px;
-  }
-
-  html[data-theme="light"] .mode-slider-label {
-    color: #0f172a;
-    text-shadow: none;
-  }
-
-  @media (max-width: 640px) {
-    .mode-slider-label { display: none; }
-  }
-
-  /* ═══ DESKTOP THEME TOGGLE — segmented "Dark / Light" pill, sits with the main nav ═══ */
-  /* Two classes = higher specificity than the base .mode-slider rules above,   */
-  /* so this reliably overrides them. Scoped to .theme-toggle-btn only, which   */
-  /* is NOT applied to the mobile toggle (.mode-slider-mobile) — mobile is      */
-  /* completely untouched by this block.                                       */
+  /* Mode Slider Switch */
   .mode-slider.theme-toggle-btn {
     position: relative;
     display: inline-flex;
@@ -1100,11 +584,8 @@
     background: #171a26;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 4px 14px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-  }
-
-  .mode-slider.theme-toggle-btn:focus-visible {
-    outline: 2px solid #2b6cf6;
-    outline-offset: 3px;
+    cursor: pointer;
+    border: none;
   }
 
   html[data-theme="light"] .mode-slider.theme-toggle-btn {
@@ -1121,14 +602,13 @@
     height: calc(100% - 8px);
     border-radius: 999px;
     background: #05060b;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   html[data-theme="light"] .theme-toggle-highlight {
     transform: translateX(62px);
     background: #ffffff;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
   }
 
   .theme-toggle-seg {
@@ -1140,416 +620,21 @@
     font-weight: 700;
     letter-spacing: 0.02em;
     color: #7a8194;
-    white-space: nowrap;
-    transition: color 0.35s ease;
   }
 
   .theme-toggle-seg-dark { color: #ffffff; }
-  .theme-toggle-seg-light { color: #7a8194; }
-
   html[data-theme="light"] .theme-toggle-seg-dark { color: #94a3b8; }
   html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
 
-</style>
-<style id="neo-responsive-overrides">
-
-/* =========================================================
-   Neo Broadband — Responsive & Cross-Browser Overrides
-   Applied across all pages.
-   ========================================================= */
-
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  max-width: 100%;
-  overflow-x: hidden;
-  overflow-wrap: break-word;
-}
-
-img, svg, video, canvas {
-  max-width: 100%;
-  height: auto;
-}
-
-button, input, select, textarea {
-  font: inherit;
-}
-
-input, select, textarea {
-  max-width: 100%;
-}
-
-/* Keep interactive controls comfortable on touch devices */
-@media (pointer: coarse) {
-  a, button, input, select, textarea {
-    -webkit-tap-highlight-color: transparent;
+  @media (max-width: 768px) {
+    .pricing-grid-7 > .pricing-card,
+    .pricing-grid-6 > .pricing-card,
+    .pricing-grid-4 > .pricing-card,
+    .plans-slider-track > .pricing-card {
+      flex: 0 0 290px;
+      max-width: 290px;
+    }
   }
-}
-
-/* Tablet / mobile navigation */
-@media (max-width: 1100px) {
-  .top-nav,
-  .top-nav.scrolled {
-    padding: 16px 24px !important;
-    min-height: 68px;
-  }
-
-  .top-nav .nav-right,
-  .top-nav .nav-links,
-  .top-nav .nav-utility,
-  .top-nav .nav-cta {
-    display: none !important;
-  }
-
-  .top-nav .nav-toggle {
-    display: block !important;
-    flex: 0 0 auto;
-    z-index: 701;
-  }
-
-  .top-nav .nav-brand {
-    max-width: calc(100% - 52px);
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .top-nav .nav-logo {
-    max-width: 150px;
-    max-height: 46px;
-    object-fit: contain;
-  }
-
-  .mobile-menu {
-    z-index: 650 !important;
-  }
-
-  .mobile-menu-inner {
-    padding:
-      max(86px, env(safe-area-inset-top) + 76px)
-      max(22px, env(safe-area-inset-right))
-      max(32px, env(safe-area-inset-bottom) + 24px)
-      max(22px, env(safe-area-inset-left));
-  }
-
-  .mobile-menu-links {
-    width: 100%;
-  }
-
-  .mobile-menu-link {
-    min-height: 50px;
-    line-height: 1.25;
-  }
-
-  body.menu-open {
-    position: fixed;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* Portal navigation should remain usable while the drawer is open */
-  .portal-nav .nav-toggle,
-  .portal-nav .nav-brand {
-    z-index: 701;
-  }
-}
-
-/* Phones */
-@media (max-width: 768px) {
-  .main,
-  .container,
-  .content,
-  .workspace {
-    max-width: 100%;
-  }
-
-  .main {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .section {
-    padding-top: 64px;
-    padding-bottom: 64px;
-  }
-
-  .hero {
-    min-height: 100svh;
-    min-height: 100dvh;
-    padding-top: 92px;
-    padding-bottom: 48px;
-  }
-
-  .hero h1 {
-    max-width: 100%;
-    font-size: clamp(2rem, 10vw, 3.4rem);
-    line-height: 1.08;
-    overflow-wrap: anywhere;
-  }
-
-  .hero p,
-  .section-description {
-    max-width: 100%;
-  }
-
-  .hero-ctas,
-  .footer-ctas {
-    width: 100%;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    min-height: 46px;
-  }
-
-  .pricing-grid,
-  .testimonials-grid,
-  .integrations-grid,
-  .grid,
-  .grid.two-col,
-  .grid.three-col,
-  .grid.stats-4,
-  .field-grid {
-    min-width: 0;
-  }
-
-  .feature,
-  .two-col,
-  .three-col,
-  .stats-4,
-  .field-grid {
-    min-width: 0;
-  }
-
-  /* Prevent cards / flex rows from causing horizontal overflow */
-  .card,
-  .pricing-card,
-  .testimonial-card,
-  .integration-item,
-  .portal-hero,
-  .chart-box,
-  .chart-wrap,
-  .ticket-chart-container,
-  .modal-content,
-  .checkout-modal-content {
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .card-head,
-  .top-actions,
-  .footer-bar,
-  .mobile-menu-footer {
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  /* Tables scroll inside their own container rather than stretching the page */
-  .table-wrap,
-  .portal-table,
-  .table-responsive {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-  }
-
-  .table-wrap table,
-  .portal-table table {
-    min-width: 680px;
-  }
-
-  /* Forms: avoid iOS Safari auto-zoom and keep fields usable */
-  input,
-  select,
-  textarea {
-    font-size: 16px !important;
-  }
-
-  .field,
-  .field.full {
-    min-width: 0;
-    width: 100%;
-  }
-
-  /* Modals */
-  .admin-modal,
-  .checkout-modal {
-    padding: 12px !important;
-    align-items: flex-start !important;
-    overflow-y: auto;
-  }
-
-  .modal-content,
-  .checkout-modal-content {
-    width: min(100%, 620px) !important;
-    max-height: calc(100dvh - 24px);
-    overflow-y: auto;
-    margin: 12px auto !important;
-  }
-
-  /* Portal shells */
-  .workspace {
-    width: 100%;
-    padding: 18px 14px !important;
-  }
-
-  .portal-hero {
-    padding: 24px 18px;
-  }
-
-  .topbar {
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .top-actions {
-    width: 100%;
-  }
-
-  .top-actions > * {
-    max-width: 100%;
-  }
-
-  /* Sidebar remains a drawer on tablets/phones */
-  .sidebar {
-    max-width: min(88vw, 340px);
-    width: min(88vw, 340px);
-    z-index: 640;
-  }
-
-  /* Charts should shrink rather than force the viewport wider */
-  .chart-svg,
-  .chart-box svg,
-  .chart-wrap svg {
-    max-width: 100%;
-  }
-
-  .mobile-menu-link {
-    font-size: clamp(1.25rem, 7vw, 2rem);
-    padding: 12px 0;
-  }
-
-  .mobile-menu-link::before {
-    min-width: 22px;
-  }
-}
-
-/* Small phones */
-@media (max-width: 480px) {
-  .top-nav,
-  .top-nav.scrolled {
-    padding: 13px 16px !important;
-    min-height: 62px;
-  }
-
-  .top-nav .nav-logo {
-    max-width: 128px;
-    max-height: 40px;
-  }
-
-  .nav-toggle {
-    width: 30px !important;
-    height: 24px !important;
-  }
-
-  .mobile-menu-inner {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .mobile-menu-link {
-    font-size: 1.25rem;
-    gap: 10px;
-    padding: 10px 0;
-  }
-
-  .section {
-    padding-top: 52px;
-    padding-bottom: 52px;
-  }
-
-  .pricing-card {
-    padding: 24px 18px !important;
-  }
-
-  .portal-hero {
-    padding: 20px 14px;
-  }
-
-  .stats-4 {
-    grid-template-columns: 1fr !important;
-  }
-
-  .card {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .modal-content,
-  .checkout-modal-content {
-    border-radius: 16px !important;
-  }
-}
-
-/* Very narrow phones */
-@media (max-width: 360px) {
-  .main {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-
-  .mobile-menu-link {
-    font-size: 1.12rem;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-}
-
-/* Landscape phones */
-@media (max-height: 540px) and (orientation: landscape) {
-  .mobile-menu-inner {
-    justify-content: flex-start;
-    padding-top: 74px;
-  }
-
-  .mobile-menu-link {
-    padding: 7px 0;
-    font-size: 1.15rem;
-  }
-
-  .hero {
-    min-height: auto;
-    padding-top: 82px;
-  }
-}
-
-/* Reduced motion accessibility */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
-/* Avoid accidental horizontal scroll from decorative fixed elements */
-.grain,
-.atmosphere,
-.page-grid-overlay {
-  max-width: 100vw;
-}
-
 </style>
 </head>
 <body>
@@ -1559,17 +644,14 @@ input, select, textarea {
   <rect width="100%" height="100%" filter="url(#n)"/>
 </svg>
 <div class="atmosphere"></div>
-
-<!-- Background Grid with Cursor Following -->
 <div class="page-grid-overlay" id="pageGrid"></div>
 
-<!-- Nav -->
+<!-- ═══ TOP NAV ═══ -->
 <nav class="top-nav" id="topNav">
   <a href="index.html" class="nav-brand">
     <img src="images/psd 1.png" alt="Neo Broadband Logo" class="nav-logo">
   </a>
   <div class="nav-right">
-    <!-- Main Links -->
     <ul class="nav-links">
       <li class="dropdown">
         <a href="index.html#pricing" aria-haspopup="true">Broadband Plans &#9662;</a>
@@ -1579,17 +661,14 @@ input, select, textarea {
           <li><a href="index.html#enterprise-ethernet" onclick="switchPlanCategory('enterprise')">Enterprise Ethernet</a></li>
         </ul>
       </li>
-
-      <!-- Services -->
       <li><a href="services.html">Services</a></li>
-
       <li><a href="developers.html">Developers</a></li>
       <li><a href="building-upgrades.html">Upgrades</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="customer-portal.html">Customer Login</a></li>
     </ul>
-    <!-- Utility Links: Admin Portal 1st, Customer Login 2nd -->
+
     <ul class="nav-utility">
       <li>
         <button class="mode-slider theme-toggle-btn" id="modeSlider" type="button" role="switch" aria-checked="false" aria-label="Switch to light mode">
@@ -1601,6 +680,7 @@ input, select, textarea {
       <li><a href="admin-portal.html">Neo Login</a></li>
     </ul>
   </div>
+
   <div class="nav-mobile-actions">
     <button class="theme-toggle nav-theme-toggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false">
       <span class="theme-toggle-knob">
@@ -1706,7 +786,7 @@ input, select, textarea {
       <span class="save-badge" id="saveBadge">Save 5%</span>
     </div>
 
-    <!-- ── RESIDENTIAL PLANS (SHOWN BY DEFAULT) ── -->
+    <!-- ── RESIDENTIAL PLANS ── -->
     <div class="plan-category active-category reveal" id="residential-plans">
       <div class="category-header-wrap">
         <h3 class="category-title">Residential Plans</h3>
@@ -1986,7 +1066,7 @@ input, select, textarea {
       </div>
     </div>
 
-    <!-- ── BUSINESS PLANS (SHOWN WHEN CLICKED IN NAVIGATION) ── -->
+    <!-- ── BUSINESS PLANS ── -->
     <div class="plan-category" id="business-plans">
       <div class="category-header-wrap">
         <h3 class="category-title">Business nbn® Internet Plans</h3>
@@ -2235,7 +1315,7 @@ input, select, textarea {
       </div>
     </div>
 
-    <!-- ── ENTERPRISE SOLUTIONS (SHOWN WHEN CLICKED IN NAVIGATION) ── -->
+    <!-- ── ENTERPRISE SOLUTIONS ── -->
     <div class="plan-category" id="enterprise-ethernet">
       <div class="category-header-wrap">
         <h3 class="category-title">nbn® Enterprise Ethernet</h3>
@@ -2311,7 +1391,7 @@ input, select, textarea {
                 <div class="price-yearly">A$4,548.60 /yr</div>
               </div>
             </div> 
-            <p class="pricing-desc">Suitable for smaller offices with requirements for cloud file sharing and video conferencing</p>
+            <p class="pricing-desc">Suitable for smaller offices with cloud file sharing and video conferencing</p>
             <ul class="pricing-features">
               <li>Symmetric, dedicated bandwidth</li>
               <li>12 hour SLA restoration target</li>
@@ -2347,7 +1427,7 @@ input, select, textarea {
                 <div class="price-yearly">A$5,346.60 /yr</div>
               </div>
             </div> 
-            <p class="pricing-desc">Suitable for medium offices with requirements for cloud file sharing and video conferencing</p>
+            <p class="pricing-desc">Suitable for medium offices with cloud file sharing and video conferencing</p>
             <ul class="pricing-features">
               <li>Symmetric, dedicated bandwidth</li>
               <li>4 hour SLA restoration target</li>
@@ -2383,13 +1463,13 @@ input, select, textarea {
                 <div class="price-yearly">A$7,968.60 /yr</div>
               </div>
             </div> 
-            <p class="pricing-desc">Suitable for larger offices with bandwidth intensive use cases such as very large file uploads</p>
+            <p class="pricing-desc">Suitable for larger offices with bandwidth intensive use cases</p>
             <ul class="pricing-features">
               <li>Symmetric, dedicated bandwidth</li>
               <li>4 hour SLA restoration target</li>
               <li>Optional 5G or 4G backup</li>
             </ul>
-            <button onclick="handleSubscribe('ent-100')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('ent-1000')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
         </div>
 
@@ -2421,25 +1501,55 @@ input, select, textarea {
 
 </main>
 
+<!-- ═══ NEO BROADBAND AI & FAQ CHATBOT WIDGET ═══ -->
+<div id="neoChatWidget" style="position:fixed; bottom:24px; right:24px; z-index:9999; font-family:'Montserrat',sans-serif;">
+  <button id="chatToggleBtn" onclick="toggleNeoChat()" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #2b6cf6, #1e3a8a); border:2px solid rgba(255,255,255,0.25); box-shadow:0 8px 30px rgba(43,108,246,0.45); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.3s ease;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </button>
+
+  <div id="chatWindow" style="display:none; position:absolute; bottom:70px; right:0; width:360px; height:480px; max-height:80vh; background:rgba(22,26,32,0.96); border:1px solid rgba(156,163,175,0.25); border-radius:24px; backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); box-shadow:0 20px 60px rgba(0,0,0,0.65); flex-direction:column; overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#1e3a8a,#0f172a); padding:16px; border-bottom:1px solid rgba(156,163,175,0.15); display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:10px; height:10px; border-radius:50%; background:#22c55e; box-shadow:0 0 8px #22c55e;"></div>
+        <div>
+          <strong style="color:#ffffff; font-size:13px; display:block;">Neo AI Assistant</strong>
+          <small style="color:#93c5fd; font-size:9px;">Instant Plans & Support Bot</small>
+        </div>
+      </div>
+      <button onclick="toggleNeoChat()" style="background:none; border:none; color:#cbd5e1; font-size:18px; cursor:pointer;">✕</button>
+    </div>
+
+    <div id="chatMessages" style="flex:1; padding:16px; overflow-y:auto; font-size:12px; display:flex; flex-direction:column; gap:12px;">
+      <div style="background:rgba(43,108,246,0.15); border:1px solid rgba(43,108,246,0.25); border-radius:14px; padding:12px; color:#e2e8f0; line-height:1.5;">
+        👋 G'day! I'm your Neo Broadband virtual guide. Ask me anything about our high-speed plans, fiber coverage, invoices, or evening speeds!
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        <button onclick="askChatFaq('What is the best residential plan?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">⚡ Best Residential Plan</button>
+        <button onclick="askChatFaq('How do I download my bill?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">📄 View & Download Bill</button>
+        <button onclick="askChatFaq('Do you offer static IPs?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">🌐 Static IP</button>
+      </div>
+    </div>
+
+    <form onsubmit="handleChatSubmit(event)" style="padding:12px; border-top:1px solid rgba(156,163,175,0.15); display:flex; gap:8px;">
+      <input type="text" id="chatInput" placeholder="Ask about speeds, plans, billing..." style="flex:1; background:rgba(15,17,21,0.8); border:1px solid rgba(156,163,175,0.25); border-radius:100px; padding:10px 14px; color:#fff; font-size:11px; outline:none;" autocomplete="off">
+      <button type="submit" style="background:#2b6cf6; color:#fff; border:none; border-radius:100px; padding:10px 16px; font-weight:700; font-size:11px; cursor:pointer;">Send</button>
+    </form>
+  </div>
+</div>
+
 <script src="templatemo-621-luminary-script.js"></script>
 <script>
-  // Modern mode slider (desktop nav): switches data-theme, persists the
-  // choice, and keeps aria-checked/aria-label in sync. Matches about.html.
   (function () {
     const sliders = document.querySelectorAll('.mode-slider');
-    const label = document.getElementById('modeSliderLabel');
-
     function applyState(isLight) {
       document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
       sliders.forEach(function (btn) {
         btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
         btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
       });
-      if (label) label.textContent = isLight ? 'Light Mode' : 'Dark Mode';
       try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
     }
 
-    // Reflect whatever theme was already applied (by the head script) on load.
     applyState(document.documentElement.getAttribute('data-theme') === 'light');
 
     sliders.forEach(function (btn) {
@@ -2453,7 +1563,6 @@ input, select, textarea {
 <script>
 ;(function(){
 
-  // ─── Professional Horizontal Plan Slider Scroll Controller ───
   function scrollPlans(categoryId, direction) {
     const cat = document.getElementById(categoryId);
     if (!cat) return;
@@ -2487,45 +1596,6 @@ input, select, textarea {
 
       track.addEventListener('scroll', () => updateCarouselArrows(id), { passive: true });
       updateCarouselArrows(id);
-
-      track.addEventListener('wheel', (e) => {
-        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-
-        const maxScroll = track.scrollWidth - track.clientWidth;
-        const atStart = track.scrollLeft <= 0 && e.deltaY < 0;
-        const atEnd = track.scrollLeft >= maxScroll - 2 && e.deltaY > 0;
-
-        if (!atStart && !atEnd) {
-          e.preventDefault();
-          track.scrollBy({ left: e.deltaY * 1.5, behavior: 'smooth' });
-        }
-      }, { passive: false });
-
-      let isDown = false;
-      let startX = 0;
-      let scrollStart = 0;
-
-      track.addEventListener('mousedown', (e) => {
-        if (e.button !== 0 || e.target.closest('button') || e.target.closest('a')) return;
-        isDown = true;
-        track.style.scrollBehavior = 'auto';
-        startX = e.pageX - track.offsetLeft;
-        scrollStart = track.scrollLeft;
-      });
-
-      window.addEventListener('mouseup', () => {
-        if (!isDown) return;
-        isDown = false;
-        track.style.scrollBehavior = 'smooth';
-      });
-
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 1.4;
-        track.scrollLeft = scrollStart - walk;
-      });
     });
   }
 
@@ -2696,11 +1766,7 @@ input, select, textarea {
       const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&filter=countrycode:au&format=json&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
       const response = await fetch(url);
       
-      if (!response.ok) {
-          console.warn('Geoapify API returned an error.');
-          return;
-      }
-      
+      if (!response.ok) return;
       const data = await response.json();
 
       if (data && data.results && data.results.length > 0) {
@@ -2711,7 +1777,6 @@ input, select, textarea {
         data.results.forEach(item => {
           const addressLine1 = item.address_line1 || item.street || item.name || '';
           const addressLine2 = item.address_line2 || `${item.city || item.suburb || ''} ${item.state_code || item.state || ''} ${item.postcode || ''}`.trim();
-
           const fullAddress = item.formatted || `${addressLine1}, ${addressLine2}`.trim();
 
           const li = document.createElement('li');
@@ -2731,16 +1796,12 @@ input, select, textarea {
           historyItemsList.appendChild(li);
         });
 
-        if (historyItemsList.children.length > 0) {
-            searchHistoryDropdown.classList.add('active');
-        } else {
-            searchHistoryDropdown.classList.remove('active');
-        }
+        searchHistoryDropdown.classList.toggle('active', historyItemsList.children.length > 0);
       } else {
         searchHistoryDropdown.classList.remove('active');
       }
     } catch (err) {
-      console.warn('Geoapify Map fetch error:', err);
+      console.warn('Map fetch error:', err);
     }
   }
 
@@ -2783,7 +1844,7 @@ input, select, textarea {
     if (!isAU) {
       techBadge.textContent = 'Not Available Location';
       techBadge.className = 'search-tech-badge unavailable';
-      speedDetails.innerHTML = 'Our ultra-fast fiber network currently covers <strong>Australian addresses only</strong>. This location is outside our coverage area';
+      speedDetails.innerHTML = 'Our ultra-fast fiber network currently covers <strong>Australian addresses only</strong>.';
       planLink.style.display = 'none';
     } else {
       techBadge.className = 'search-tech-badge';
@@ -2793,15 +1854,12 @@ input, select, textarea {
       if (qLower.includes('regional') || qLower.includes('remote') || qLower.includes('bush') || qLower.includes('nt') || qLower.includes('tas') || qLower.includes('0800') || qLower.includes('7000')) {
         techBadge.textContent = 'Fixed Wireless / FTTN Superfast';
         speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 250 Mbps</strong> &bull; Recommended Plan: <strong>Pro 250 / Regular 500</strong>';
-        planLink.onclick = () => { switchPlanCategory('residential'); highlightPlan('plan-pro'); };
       } else if (qLower.includes('perth') || qLower.includes('wa') || qLower.includes('adelaide') || qLower.includes('sa') || qLower.includes('6000') || qLower.includes('5000')) {
         techBadge.textContent = 'FTTP / HFC Gigabit Ready';
         speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 1000 Mbps</strong> &bull; Recommended Plan: <strong>Ultra+ 1000 / Ultra 1000</strong>';
-        planLink.onclick = () => { switchPlanCategory('residential'); highlightPlan('plan-ultra'); };
       } else {
         techBadge.textContent = 'FTTP Hyper-Speed 2Gbps Ready';
         speedDetails.innerHTML = 'Max Available Speed: <strong>Up to 2000 Mbps</strong> &bull; Recommended Plan: <strong>Thunderbolt 2000 / Regular 500</strong>';
-        planLink.onclick = () => { switchPlanCategory('residential'); highlightPlan('plan-thunderbolt'); };
       }
     }
 
@@ -2810,34 +1868,11 @@ input, select, textarea {
     }, 150);
   }
 
-  function highlightPlan(cardId) {
-    setTimeout(() => {
-      const card = document.getElementById(cardId);
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        card.style.outline = '2px solid #2b6cf6';
-        card.style.boxShadow = '0 0 40px rgba(43,108,246,0.4)';
-        setTimeout(() => {
-          card.style.outline = 'none';
-          card.style.boxShadow = '';
-        }, 3000);
-      }
-    }, 300);
-  }
-
   (function() {
     const pageGrid = document.getElementById('pageGrid');
     if (!pageGrid) return;
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let currentX = targetX;
-    let currentY = targetY;
-
-    window.addEventListener('mousemove', (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-    });
-
+    let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2, currentX = targetX, currentY = targetY;
+    window.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; });
     function renderGridLight() {
       currentX += (targetX - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
@@ -2849,18 +1884,10 @@ input, select, textarea {
   })();
 
   (function() {
-    const origToggle = document.getElementById('pricingToggle');
-    const origMonthly = document.getElementById('monthlyLabel');
-    const origAnnual = document.getElementById('annualLabel');
-    if (!origToggle || !origMonthly || !origAnnual) return;
-
-    const toggle = origToggle.cloneNode(true);
-    const monthlyLabel = origMonthly.cloneNode(true);
-    const annualLabel = origAnnual.cloneNode(true);
-
-    origToggle.parentNode.replaceChild(toggle, origToggle);
-    origMonthly.parentNode.replaceChild(monthlyLabel, origMonthly);
-    origAnnual.parentNode.replaceChild(annualLabel, origAnnual);
+    const toggle = document.getElementById('pricingToggle');
+    const monthlyLabel = document.getElementById('monthlyLabel');
+    const annualLabel = document.getElementById('annualLabel');
+    if (!toggle || !monthlyLabel || !annualLabel) return;
 
     const saveBadge = document.getElementById('saveBadge');
     const monthlyPrices = document.querySelectorAll('.price-option.monthly');
@@ -2890,89 +1917,15 @@ input, select, textarea {
   window.handleSubscribe = handleSubscribe;
   window.clearSearchHistory = clearSearchHistory;
   window.scrollPlans = scrollPlans;
-  window.updateCarouselArrows = updateCarouselArrows;
+  window.handleRegionSearch = handleRegionSearch;
 
-  function initPlanCategoryFromHash() {
-    var hash = window.location.hash.replace('#', '');
-    if (hash === 'business-plans') {
-      switchPlanCategory('business');
-    } else if (hash === 'enterprise-ethernet') {
-      switchPlanCategory('enterprise');
-    } else if (hash === 'residential-plans') {
-      switchPlanCategory('residential');
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initCarouselInteractions();
-      initPlanCategoryFromHash();
-    });
-  } else {
+  document.addEventListener('DOMContentLoaded', () => {
     initCarouselInteractions();
-    initPlanCategoryFromHash();
-  }
-  window.addEventListener('hashchange', initPlanCategoryFromHash);
-
+  });
 })();
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
-    var href = link.getAttribute('href');
-    if (!href) return;
-    var target = href.split('/').pop().split('#')[0];
-    if (target && target === path) {
-      link.classList.add('active');
-      link.setAttribute('aria-current', 'page');
-    } else {
-      link.classList.remove('active');
-    }
-  });
-});
-</script>
-<!-- ═══ NEO BROADBAND AI & FAQ CHATBOT WIDGET ═══ -->
-<div id="neoChatWidget" style="position:fixed; bottom:24px; right:24px; z-index:9999; font-family:'Montserrat',sans-serif;">
-  <!-- Toggle Bubble -->
-  <button id="chatToggleBtn" onclick="toggleNeoChat()" style="width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg, #2b6cf6, #1e3a8a); border:2px solid rgba(255,255,255,0.2); box-shadow:0 8px 30px rgba(43,108,246,0.45); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.3s ease;">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-  </button>
 
-  <!-- Chat Box Window -->
-  <div id="chatWindow" style="display:none; position:absolute; bottom:70px; right:0; width:360px; height:500px; max-height:80vh; background:rgba(22,26,32,0.96); border:1px solid rgba(156,163,175,0.2); border-radius:24px; backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); box-shadow:0 20px 60px rgba(0,0,0,0.6); flex-direction:column; overflow:hidden;">
-    <!-- Chat Header -->
-    <div style="background:linear-gradient(135deg,#1e3a8a,#0f172a); padding:16px; border-bottom:1px solid rgba(156,163,175,0.15); display:flex; justify-content:space-between; align-items:center;">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <div style="width:10px; height:10px; border-radius:50%; background:#22c55e; box-shadow:0 0 8px #22c55e;"></div>
-        <div>
-          <strong style="color:#ffffff; font-size:13px; display:block;">Neo AI Assistant</strong>
-          <small style="color:#93c5fd; font-size:9px;">Instant Plans & Support Bot</small>
-        </div>
-      </div>
-      <button onclick="toggleNeoChat()" style="background:none; border:none; color:#cbd5e1; font-size:18px; cursor:pointer;">✕</button>
-    </div>
-
-    <!-- Messages Body -->
-    <div id="chatMessages" style="flex:1; padding:16px; overflow-y:auto; font-size:12px; display:flex; flex-direction:column; gap:12px;">
-      <div style="background:rgba(43,108,246,0.15); border:1px solid rgba(43,108,246,0.25); border-radius:14px; padding:12px; color:#e2e8f0; line-height:1.5;">
-        👋 G'day! I'm your Neo Broadband virtual guide. Ask me anything about our high-speed plans, fiber coverage, invoices, or evening speeds!
-      </div>
-      <div style="display:flex; flex-wrap:wrap; gap:6px;">
-        <button onclick="askChatFaq('What is the best residential plan?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">⚡ Best Residential Plan</button>
-        <button onclick="askChatFaq('How do I download my bill?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">📄 View & Download Bill</button>
-        <button onclick="askChatFaq('Do you offer static IPs?')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(156,163,175,0.2); border-radius:100px; color:#93c5fd; font-size:10px; padding:6px 12px; cursor:pointer;">🌐 Static IP</button>
-      </div>
-    </div>
-
-    <!-- Input Box -->
-    <form onsubmit="handleChatSubmit(event)" style="padding:12px; border-top:1px solid rgba(156,163,175,0.15); display:flex; gap:8px;">
-      <input type="text" id="chatInput" placeholder="Ask about speeds, plans, billing..." style="flex:1; background:rgba(15,17,21,0.8); border:1px solid rgba(156,163,175,0.25); border-radius:100px; padding:10px 14px; color:#fff; font-size:11px; outline:none;" autocomplete="off">
-      <button type="submit" style="background:#2b6cf6; color:#fff; border:none; border-radius:100px; padding:10px 16px; font-weight:700; font-size:11px; cursor:pointer;">Send</button>
-    </form>
-  </div>
-</div>
-
+<!-- ═══ CHATBOT SCRIPT ═══ -->
 <script>
 function toggleNeoChat() {
   const win = document.getElementById('chatWindow');
@@ -3005,12 +1958,12 @@ function addUserMessage(txt) {
 
 function generateAiAnswer(prompt) {
   const q = prompt.toLowerCase();
-  let reply = "I'm here to assist! For custom requests or fiber provisioning inquiries, you can also test your suburb in our search bar or open a priority ticket in the portal.";
+  let reply = "I'm here to assist! For custom requests or fiber provisioning inquiries, you can test your suburb in our search bar or open a priority ticket in the portal.";
 
   if (q.includes('best') || q.includes('recommended') || q.includes('plan')) {
     reply = "Our most popular home plan is the **Regular Plan (500 Mbps Down / 50 Mbps Up)** for A$85/mo. For hyper-speed enthusiasts, the **Thunderbolt (2000 Mbps)** offers maximum fiber throughput!";
   } else if (q.includes('bill') || q.includes('invoice') || q.includes('payment') || q.includes('pay')) {
-    reply = "Invoices are generated on the 1st of every cycle in Australian Dollars (AUD) with full GST itemization. You can download your PDF statement or settle dues anytime on invoice.html.";
+    reply = "Invoices are generated on the 1st of every cycle in Australian Dollars (AUD) with full GST itemization. You can view, download your PDF statement, or settle dues on invoice.html.";
   } else if (q.includes('static') || q.includes('ip')) {
     reply = "Yes! All Business and Enterprise plans come with a dedicated static IPv4 address included. Residential subscribers can also request static IP routing via the Support tab.";
   } else if (q.includes('speed') || q.includes('evening')) {
@@ -3027,6 +1980,22 @@ function generateAiAnswer(prompt) {
   body.scrollTop = body.scrollHeight;
 }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu-link').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var target = href.split('/').pop().split('#')[0];
+    if (target && target === path) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+});
+</script>
 </body>
 </html>
-
