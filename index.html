@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <script>(function(){try{if(localStorage.getItem('nb-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Neo Broadband — High-Speed Broadband Plans</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="templatemo-621-luminary-style.css">
 <link rel="icon" type="image/png" href="images/psd 1.png">
+
+<!-- Client-Side PDF Invoice Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
   /* Current-page highlight */
   .nav-links > li > a.active,
@@ -62,9 +66,9 @@
     text-shadow: none !important;
   }
 
-  html[data-theme="light"] .top-nav .nav-links > li > a:hover,
-  html[data-theme="light"] .top-nav .nav-utility a:hover,
-  html[data-theme="light"] .top-nav .nav-links > li > a.active {
+  html[data-theme="light"] .top-nav.scrolled .nav-links > li > a:hover,
+  html[data-theme="light"] .top-nav.scrolled .nav-utility a:hover,
+  html[data-theme="light"] .top-nav.scrolled .nav-links > li > a.active {
     color: #2b6cf6 !important;
   }
 
@@ -626,7 +630,219 @@
   html[data-theme="light"] .theme-toggle-seg-dark { color: #94a3b8; }
   html[data-theme="light"] .theme-toggle-seg-light { color: #0f172a; }
 
-  @media (max-width: 768px) {
+  /* ═══ CUSTOMER EMAIL OTP SUBSCRIPTION MODAL ═══ */
+  .neo-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 6, 11, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .neo-modal-box {
+    background: rgba(22, 26, 32, 0.98);
+    border: 1px solid rgba(43, 108, 246, 0.35);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(43, 108, 246, 0.2);
+    border-radius: 28px;
+    width: 100%;
+    max-width: 480px;
+    padding: 34px 30px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  html[data-theme="light"] .neo-modal-box {
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  .neo-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #94a3b8;
+    cursor: pointer;
+  }
+
+  .neo-modal-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    background: rgba(15, 17, 21, 0.85);
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13.5px;
+    margin: 8px 0 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .neo-modal-input:focus {
+    border-color: #2b6cf6;
+    box-shadow: 0 0 0 3px rgba(43, 108, 246, 0.2);
+  }
+
+  html[data-theme="light"] .neo-modal-input {
+    background: #f8fafc;
+    color: #0f172a;
+    border-color: #cbd5e1;
+  }
+
+  .neo-modal-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #2b6cf6, #1c52c7);
+    color: #ffffff;
+    border: none;
+    border-radius: 100px;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .neo-modal-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(43, 108, 246, 0.4);
+  }
+  .neo-modal-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .plan-preview-pill {
+    background: rgba(43, 108, 246, 0.12);
+    border: 1px solid rgba(43, 108, 246, 0.25);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ═══ MOBILE NAVIGATION OVERRIDES ═══ */
+  @media (max-width: 1100px) {
+    .top-nav {
+      padding: 16px 20px !important;
+      z-index: 700 !important;
+    }
+    .top-nav .nav-right {
+      display: none !important;
+    }
+    .nav-mobile-actions {
+      display: flex !important;
+      align-items: center;
+      gap: 12px;
+      z-index: 705 !important;
+    }
+    .nav-toggle {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      width: 44px !important;
+      height: 44px !important;
+      background: transparent !important;
+      border: none !important;
+      cursor: pointer !important;
+      z-index: 710 !important;
+    }
+    .nav-toggle .toggle-bar {
+      width: 26px !important;
+      height: 2px !important;
+      background: #ffffff !important;
+      transition: all 0.3s ease;
+    }
+    html[data-theme="light"] .nav-toggle .toggle-bar {
+      background: #0f172a !important;
+    }
+    .nav-toggle.active .toggle-bar:nth-child(1) {
+      transform: translateY(5px) rotate(45deg) !important;
+    }
+    .nav-toggle.active .toggle-bar:nth-child(2) {
+      transform: translateY(-5px) rotate(-45deg) !important;
+    }
+    .mobile-menu {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      z-index: 650 !important;
+      background: rgba(15, 17, 21, 0.98) !important;
+      backdrop-filter: blur(20px) !important;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    html[data-theme="light"] .mobile-menu {
+      background: rgba(255, 255, 255, 0.98) !important;
+    }
+    .mobile-menu.open {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    .mobile-menu-inner {
+      position: relative !important;
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      padding: calc(90px + env(safe-area-inset-top)) 24px calc(36px + env(safe-area-inset-bottom)) 24px !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    .mobile-menu-links {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      justify-content: flex-start !important;
+      gap: 2px !important;
+      margin-bottom: 24px !important;
+    }
+    .mobile-menu-link {
+      min-height: 46px !important;
+      display: flex !important;
+      align-items: center !important;
+      font-size: clamp(1.2rem, 5vw, 1.65rem) !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid rgba(156, 163, 175, 0.12) !important;
+      padding: 8px 0 !important;
+    }
+    html[data-theme="light"] .mobile-menu-link {
+      color: #0f172a !important;
+      border-bottom-color: rgba(15, 23, 42, 0.08) !important;
+    }
+    .mobile-menu-link.active,
+    .mobile-menu-link:hover {
+      color: #2b6cf6 !important;
+    }
+    body.menu-open {
+      overflow: hidden !important;
+    }
     .pricing-grid-7 > .pricing-card,
     .pricing-grid-6 > .pricing-card,
     .pricing-grid-4 > .pricing-card,
@@ -729,7 +945,7 @@
       Experience lightning-fast speeds and reliable connectivity across Australia for your home and business
     </p>
 
-    <!-- Transparent Australian Region Broadband Search Bar -->
+    <!-- Australian Region Broadband Search Bar -->
     <div class="hero-search-wrapper" id="heroSearchWrapper">
       <form class="hero-search-box" id="regionSearchForm" onsubmit="handleRegionSearch(event)">
         <svg class="hero-search-icon" viewBox="0 0 24 24">
@@ -786,7 +1002,7 @@
       <span class="save-badge" id="saveBadge">Save 5%</span>
     </div>
 
-    <!-- ── RESIDENTIAL PLANS ── -->
+    <!-- ── 1. RESIDENTIAL PLANS ── -->
     <div class="plan-category active-category reveal" id="residential-plans">
       <div class="category-header-wrap">
         <h3 class="category-title">Residential Plans</h3>
@@ -833,7 +1049,7 @@
               <li>Light internet use (Light HD streaming)</li>
               <li>Unlimited Data</li>
             </ul>
-            <button onclick="handleSubscribe('basic')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Basic 25/10 Mbps', 60, 'Residential')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Plan 2: Regular -->
@@ -871,7 +1087,7 @@
               <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
               <li>Unlimited Data</li>
             </ul>
-            <button onclick="handleSubscribe('regular')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Regular 500/50 Mbps', 85, 'Residential')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Plan 3: Ultra -->
@@ -908,7 +1124,7 @@
               <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
               <li>Unlimited Data</li>
             </ul>
-            <button onclick="handleSubscribe('ultra')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Ultra 1000/100 Mbps', 99, 'Residential')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Plan 4: Pro -->
@@ -945,7 +1161,7 @@
               <li>Great for 4+ devices at the same time</li>
               <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
             </ul>
-            <button onclick="handleSubscribe('pro')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Pro 250/100 Mbps', 95, 'Residential')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Plan 5: Pro + -->
@@ -982,7 +1198,7 @@
               <li>Great for 6+ devices at the same time</li>
               <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
             </ul>
-            <button onclick="handleSubscribe('pro-plus')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Pro+ 500/200 Mbps', 115, 'Residential')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Plan 6: Ultra + -->
@@ -1019,7 +1235,7 @@
               <li>Great for 6+ devices at the same time</li>
               <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
             </ul>
-            <button onclick="handleSubscribe('ultra-plus')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Ultra+ 1000/400 Mbps', 135, 'Residential')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Plan 7: Thunderbolt -->
@@ -1056,7 +1272,7 @@
               <li>Great for 6+ devices at the same time</li>
               <li>Heavy internet use (Streaming HD/4K, WFH, Online gaming)</li>
             </ul>
-            <button onclick="handleSubscribe('thunderbolt')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Thunderbolt 2000/500 Mbps', 210, 'Residential')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
         </div>
 
@@ -1066,7 +1282,7 @@
       </div>
     </div>
 
-    <!-- ── BUSINESS PLANS ── -->
+    <!-- ── 2. BUSINESS PLANS ── -->
     <div class="plan-category" id="business-plans">
       <div class="category-header-wrap">
         <h3 class="category-title">Business nbn® Internet Plans</h3>
@@ -1114,7 +1330,7 @@
               <li>No lock-in contract</li>
               <li>24/7 support</li>
             </ul>
-            <button onclick="handleSubscribe('biz-50')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Business 50/20 Mbps', 89, 'Business')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Business Plan 2 -->
@@ -1152,7 +1368,7 @@
               <li>No lock-in contract</li>
               <li>24/7 support</li>
             </ul>
-            <button onclick="handleSubscribe('biz-100')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Business 100/40 Mbps', 95, 'Business')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Business Plan 3 -->
@@ -1190,7 +1406,7 @@
               <li>No lock-in contract</li>
               <li>24/7 support</li>
             </ul>
-            <button onclick="handleSubscribe('biz-250')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Business 250/100 Mbps', 95, 'Business')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Business Plan 4 -->
@@ -1229,7 +1445,7 @@
               <li>No lock-in contract</li>
               <li>24/7 support</li>
             </ul>
-            <button onclick="handleSubscribe('biz-500-50')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Business 500/50 Mbps', 90, 'Business')" class="btn-primary" style="width:100%; border:none; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Business Plan 5 -->
@@ -1267,7 +1483,7 @@
               <li>No lock-in contract</li>
               <li>24/7 support</li>
             </ul>
-            <button onclick="handleSubscribe('biz-500-200')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Business 500/200 Mbps', 115, 'Business')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Business Plan 6 -->
@@ -1305,7 +1521,7 @@
               <li>No lock-in contract</li>
               <li>24/7 support</li>
             </ul>
-            <button onclick="handleSubscribe('biz-1000')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Business 1000/400 Mbps', 145, 'Business')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
         </div>
 
@@ -1315,7 +1531,7 @@
       </div>
     </div>
 
-    <!-- ── ENTERPRISE SOLUTIONS ── -->
+    <!-- ── 3. ENTERPRISE SOLUTIONS ── -->
     <div class="plan-category" id="enterprise-ethernet">
       <div class="category-header-wrap">
         <h3 class="category-title">nbn® Enterprise Ethernet</h3>
@@ -1361,7 +1577,7 @@
               <li>12 hour SLA restoration target</li>
               <li>Optional 5G or 4G backup</li>
             </ul>
-            <button onclick="handleSubscribe('ent-100')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Enterprise 100/100 Mbps', 399, 'Enterprise')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Enterprise Plan 2 -->
@@ -1397,7 +1613,7 @@
               <li>12 hour SLA restoration target</li>
               <li>Optional 5G or 4G backup</li>
             </ul>
-            <button onclick="handleSubscribe('ent-250')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Enterprise 250/250 Mbps', 399, 'Enterprise')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Enterprise Plan 3 -->
@@ -1433,7 +1649,7 @@
               <li>4 hour SLA restoration target</li>
               <li>Optional 5G or 4G backup</li>
             </ul>
-            <button onclick="handleSubscribe('ent-500')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Enterprise 500/500 Mbps', 469, 'Enterprise')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
 
           <!-- Enterprise Plan 4 -->
@@ -1469,7 +1685,7 @@
               <li>4 hour SLA restoration target</li>
               <li>Optional 5G or 4G backup</li>
             </ul>
-            <button onclick="handleSubscribe('ent-1000')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
+            <button onclick="handleSubscribe('Enterprise 1000/1000 Mbps', 699, 'Enterprise')" class="btn-secondary" style="width:100%; border-radius:100px; cursor:pointer;">Subscribe Now</button>
           </div>
         </div>
 
@@ -1500,6 +1716,82 @@
   </section>
 
 </main>
+
+<!-- ═══ CUSTOMER EMAIL OTP SUBSCRIPTION MODAL ═══ -->
+<div class="neo-modal-overlay" id="neoAuthModal">
+  <div class="neo-modal-box">
+    <button class="neo-modal-close" onclick="closeNeoModal()">✕</button>
+
+    <!-- STEP 1: Enter Customer Details & Request Email OTP -->
+    <div id="modalStep1">
+      <h3 style="margin-top:0; font-size:1.35rem; color:#2b6cf6; font-weight:600;">Subscribe to High-Speed Fiber</h3>
+      <p style="font-size:12px; color:#9ca3af; margin-bottom:14px;">Instant verification via secure Email OTP authorization.</p>
+      
+      <div class="plan-preview-pill">
+        <div>
+          <span style="font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#93c5fd; display:block;">Selected Tier</span>
+          <strong id="modalPlanName" style="color:#ffffff; font-size:13.5px;">Regular 500/50 Mbps</strong>
+        </div>
+        <div style="text-align:right;">
+          <strong id="modalPlanPrice" style="color:#22c55e; font-size:16px;">A$85.00</strong>
+          <span style="font-size:10px; color:#9ca3af; display:block;">/month (AUD)</span>
+        </div>
+      </div>
+
+      <label style="font-size:10px; text-transform:uppercase; letter-spacing:0.12em; font-weight:700; color:#9ca3af;">Full Name</label>
+      <input type="text" id="neoCustomerName" class="neo-modal-input" placeholder="e.g. John Smith" required>
+
+      <label style="font-size:10px; text-transform:uppercase; letter-spacing:0.12em; font-weight:700; color:#9ca3af;">Customer Email Address</label>
+      <input type="email" id="neoCustomerEmail" class="neo-modal-input" placeholder="name@example.com.au" required>
+
+      <label style="font-size:10px; text-transform:uppercase; letter-spacing:0.12em; font-weight:700; color:#9ca3af;">Contact Number (Mobile)</label>
+      <input type="tel" id="neoCustomerPhone" class="neo-modal-input" placeholder="+61 400 000 000">
+
+      <button class="neo-modal-btn" id="sendOtpBtn" onclick="initiateCustomerEmailOtp()">Send Email Verification Code &rarr;</button>
+      <p style="font-size:10.5px; color:#6b7280; margin-top:12px; text-align:center;">A 6-digit security code will be sent to your email.</p>
+    </div>
+
+    <!-- STEP 2: Input & Verify Email OTP -->
+    <div id="modalStep2" style="display:none; text-align:center;">
+      <div style="width:48px; height:48px; border-radius:50%; background:rgba(43,108,246,0.15); border:1px solid rgba(43,108,246,0.3); color:#60a5fa; font-size:20px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px;">
+        ✉️
+      </div>
+      <h3 style="margin-top:0; font-size:1.25rem; color:#ffffff; font-weight:600;">Check Your Email</h3>
+      <p style="font-size:12px; color:#9ca3af; margin-bottom:16px;">
+        We have sent a 6-digit verification code to:<br>
+        <strong id="displaySentEmail" style="color:#60a5fa;">subscriber@example.com</strong>
+      </p>
+
+      <label style="font-size:10px; text-transform:uppercase; letter-spacing:0.15em; font-weight:700; color:#9ca3af; display:block; text-align:left;">Enter 6-Digit Email OTP</label>
+      <input type="text" id="neoOtpCode" class="neo-modal-input" placeholder="••••••" maxlength="6" inputmode="numeric" style="text-align:center; font-size:20px; font-weight:700; letter-spacing:0.25em;">
+
+      <div style="font-size:11px; color:#6b7280; margin-bottom:14px;">
+        Resend code in <span id="emailOtpCountdown" style="color:#60a5fa; font-weight:700;">60s</span>
+        <button id="resendEmailOtpBtn" type="button" onclick="initiateCustomerEmailOtp()" style="display:none; background:none; border:none; color:#60a5fa; font-size:11px; font-weight:700; cursor:pointer; text-decoration:underline;">Resend Code</button>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="btn-secondary" style="flex:1; border-radius:100px; padding:12px; font-size:11px;" onclick="backToStep1()">← Change Details</button>
+        <button type="button" class="neo-modal-btn" style="flex:1.5; margin-top:0;" id="verifyOtpBtn" onclick="verifyEmailOtpAndProvision()">Verify &amp; Subscribe</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Subscription Confirmed, Database Provisioned & PDF Invoice Ready -->
+    <div id="modalStep3" style="display:none; text-align:center;">
+      <div style="font-size:44px; margin-bottom:10px;">🎉</div>
+      <h3 style="margin-top:0; font-size:1.35rem; color:#22c55e; font-weight:700;">Subscription Confirmed!</h3>
+      <p style="font-size:12.5px; color:#cbd5e1; line-height:1.6; margin-bottom:14px;">
+        Your high-speed fiber plan is provisioned and saved into the database.<br>
+        Customer Account ID: <strong id="provisionedCustomerId" style="color:#60a5fa;">NEO-00000</strong><br>
+        Invoice Ref: <strong id="invoiceRefNumber" style="color:#d4af37;">INV-0000</strong>
+      </p>
+
+      <button class="neo-modal-btn" id="downloadPdfBtn" style="background:linear-gradient(135deg,#22c55e,#15803d); margin-top:10px;" onclick="downloadTaxInvoicePDF()">📥 Download Official Tax Invoice (PDF)</button>
+      <a href="customer-portal.html" class="btn-secondary" style="display:block; text-align:center; border-radius:100px; padding:12px; font-size:11px; margin-top:10px; text-decoration:none;">Go to Customer Portal &rarr;</a>
+    </div>
+
+  </div>
+</div>
 
 <!-- ═══ NEO BROADBAND AI & FAQ CHATBOT WIDGET ═══ -->
 <div id="neoChatWidget" style="position:fixed; bottom:24px; right:24px; z-index:9999; font-family:'Montserrat',sans-serif;">
@@ -1538,31 +1830,399 @@
 </div>
 
 <script src="templatemo-621-luminary-script.js"></script>
+
+<!-- ═══ SUBSCRIPTION ENGINE (CUSTOMER EMAIL OTP + SERVER + PDF) ═══ -->
 <script>
-  (function () {
-    const sliders = document.querySelectorAll('.mode-slider');
-    function applyState(isLight) {
-      document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
-      sliders.forEach(function (btn) {
-        btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
-        btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
-      });
-      try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
+// Automatically targets local server on port 3000 (or uses window.NEO_API_URL when deployed)
+const BACKEND_API_BASE = window.NEO_API_URL || 'http://localhost:3000/api';
+
+let selectedSubscriptionPlan = {
+  name: 'Regular 500/50 Mbps',
+  price: 85,
+  category: 'Residential'
+};
+
+let currentSubscriptionData = null;
+let emailOtpTimerInterval = null;
+let currentFallbackOtp = null;
+
+// Opens Modal for ANY product on the page
+window.handleSubscribe = function(planName, planPrice, category = 'Residential') {
+  selectedSubscriptionPlan = {
+    name: planName,
+    price: planPrice,
+    category: category
+  };
+
+  document.getElementById('modalPlanName').innerText = planName;
+  document.getElementById('modalPlanPrice').innerText = `A$${planPrice}.00`;
+
+  document.getElementById('modalStep1').style.display = 'block';
+  document.getElementById('modalStep2').style.display = 'none';
+  document.getElementById('modalStep3').style.display = 'none';
+  document.getElementById('neoAuthModal').style.display = 'flex';
+};
+
+window.closeNeoModal = function() {
+  document.getElementById('neoAuthModal').style.display = 'none';
+};
+
+window.backToStep1 = function() {
+  document.getElementById('modalStep2').style.display = 'none';
+  document.getElementById('modalStep1').style.display = 'block';
+};
+
+// 1. Send Email OTP through your Server
+window.initiateCustomerEmailOtp = async function() {
+  const name = document.getElementById('neoCustomerName').value.trim();
+  const email = document.getElementById('neoCustomerEmail').value.trim();
+  const phone = document.getElementById('neoCustomerPhone').value.trim();
+
+  if (!name || !email) {
+    alert('Please enter your full name and email address.');
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  const btn = document.getElementById('sendOtpBtn');
+  btn.disabled = true;
+  btn.innerText = 'Connecting to server & sending OTP...';
+
+  try {
+    const res = await fetch(`${BACKEND_API_BASE}/send-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      if (data.devCode) currentFallbackOtp = data.devCode;
+
+      document.getElementById('displaySentEmail').innerText = email;
+      document.getElementById('modalStep1').style.display = 'none';
+      document.getElementById('modalStep2').style.display = 'block';
+      document.getElementById('neoOtpCode').value = '';
+
+      startEmailCountdown();
+      setTimeout(() => document.getElementById('neoOtpCode').focus(), 120);
+    } else {
+      alert(`Server Response: ${data.message || 'Unable to send OTP.'}`);
+    }
+  } catch (err) {
+    console.warn('Backend server not responding at', BACKEND_API_BASE, err);
+    alert('Could not connect to your backend server. Please make sure "node server.js" is running at http://localhost:3000');
+  } finally {
+    btn.disabled = false;
+    btn.innerText = 'Send Email Verification Code →';
+  }
+};
+
+function startEmailCountdown() {
+  let seconds = 60;
+  const timer = document.getElementById('emailOtpCountdown');
+  const resendBtn = document.getElementById('resendEmailOtpBtn');
+  timer.style.display = 'inline';
+  resendBtn.style.display = 'none';
+  timer.innerText = `${seconds}s`;
+
+  if (emailOtpTimerInterval) clearInterval(emailOtpTimerInterval);
+  emailOtpTimerInterval = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) {
+      clearInterval(emailOtpTimerInterval);
+      timer.style.display = 'none';
+      resendBtn.style.display = 'inline';
+    } else {
+      timer.innerText = `${seconds}s`;
+    }
+  }, 1000);
+}
+
+// 2. Verify Email OTP with Server & Auto-Provision Database
+window.verifyEmailOtpAndProvision = async function() {
+  const enteredCode = document.getElementById('neoOtpCode').value.trim();
+  const name = document.getElementById('neoCustomerName').value.trim();
+  const email = document.getElementById('neoCustomerEmail').value.trim();
+  const phone = document.getElementById('neoCustomerPhone').value.trim();
+
+  if (enteredCode.length < 6) {
+    alert('Please enter the full 6-digit code received in your email.');
+    return;
+  }
+
+  const verifyBtn = document.getElementById('verifyOtpBtn');
+  verifyBtn.disabled = true;
+  verifyBtn.innerText = 'Verifying with server...';
+
+  let isVerified = false;
+
+  try {
+    const res = await fetch(`${BACKEND_API_BASE}/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, code: enteredCode })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      isVerified = true;
+    } else {
+      alert(data.message || 'Invalid or expired OTP code.');
+    }
+  } catch (err) {
+    if (currentFallbackOtp && enteredCode === currentFallbackOtp) {
+      isVerified = true;
+    } else {
+      alert('Network error communicating with verification server.');
+    }
+  }
+
+  if (!isVerified) {
+    verifyBtn.disabled = false;
+    verifyBtn.innerText = 'Verify & Subscribe';
+    return;
+  }
+
+  // Generate Customer Account & Invoice
+  const newCustId = "NEO-" + Math.floor(10000 + Math.random() * 90000);
+  const invRef = "INV-" + newCustId + "-01";
+  const dateFormatted = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+
+  currentSubscriptionData = {
+    customerId: newCustId,
+    name: name,
+    email: email,
+    phone: phone || "+61 400 000 000",
+    plan: selectedSubscriptionPlan.name,
+    category: selectedSubscriptionPlan.category,
+    price: selectedSubscriptionPlan.price,
+    invoiceId: invRef,
+    date: dateFormatted
+  };
+
+  const newSubscriberProfile = {
+    id: newCustId,
+    name: name,
+    email: email,
+    phone: phone || "+61 400 000 000",
+    pass: "broadband123",
+    category: selectedSubscriptionPlan.category,
+    address: "Sydney NSW 2000, Australia",
+    registeredAt: dateFormatted,
+    lastUpdated: dateFormatted,
+    planName: selectedSubscriptionPlan.name,
+    planSpeed: selectedSubscriptionPlan.name.split(' ')[1] || '500 Mbps',
+    downSpeed: selectedSubscriptionPlan.name.split(' ')[1] || '500 Mbps',
+    upSpeed: '50 Mbps',
+    balance: `A$${selectedSubscriptionPlan.price}.00`,
+    dueDate: "Active",
+    ipAddress: "103.24.18." + Math.floor(10 + Math.random() * 200),
+    ntdId: "NTD-AU-" + Math.floor(100000 + Math.random() * 900000) + "-X",
+    currentUsageGB: 0,
+    invoices: [
+      {
+        id: invRef,
+        cycle: "Initial Subscription Cycle",
+        plan: selectedSubscriptionPlan.name,
+        amount: `A$${selectedSubscriptionPlan.price}.00`,
+        status: "Paid"
+      }
+    ],
+    tickets: []
+  };
+
+  // 3. Save subscriber to server's customers.json
+  try {
+    await fetch(`${BACKEND_API_BASE}/customers`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customerId: newCustId,
+        email: email,
+        password: 'broadband123',
+        profileData: newSubscriberProfile
+      })
+    });
+  } catch (err) {
+    console.warn("Could not save to server file, saving locally:", err);
+  }
+
+  // 4. Also cache in browser storage so customer-portal.html logs in immediately
+  try {
+    let db = JSON.parse(localStorage.getItem('neo_subscriber_db')) || {};
+    db[newCustId] = newSubscriberProfile;
+    localStorage.setItem('neo_subscriber_db', JSON.stringify(db));
+    sessionStorage.setItem('neo_active_user', newCustId);
+    localStorage.setItem('neo_active_user', newCustId);
+    localStorage.setItem('neo_saved_username', email);
+  } catch(e) {}
+
+  // Show Success Screen
+  document.getElementById('provisionedCustomerId').innerText = newCustId;
+  document.getElementById('invoiceRefNumber').innerText = invRef;
+  document.getElementById('modalStep2').style.display = 'none';
+  document.getElementById('modalStep3').style.display = 'block';
+
+  verifyBtn.disabled = false;
+  verifyBtn.innerText = 'Verify & Subscribe';
+};
+
+// 3. Official Tax Invoice PDF Generation
+window.downloadTaxInvoicePDF = function() {
+  if (!currentSubscriptionData) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const c = currentSubscriptionData;
+  const exGst = (c.price / 1.1).toFixed(2);
+  const gst = (c.price - (c.price / 1.1)).toFixed(2);
+
+  // Top Banner
+  doc.setFillColor(43, 108, 246);
+  doc.rect(0, 0, 210, 38, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(20);
+  doc.text("NEO BROADBAND PTY LTD", 20, 22);
+  doc.setFontSize(9);
+  doc.text("TAX INVOICE STATEMENT — CONFIRMED EMAIL SUBSCRIPTION", 20, 30);
+
+  // Customer & Invoice Details
+  doc.setTextColor(15, 23, 42);
+  doc.setFontSize(10);
+  doc.text(`Customer ID: ${c.customerId}`, 20, 52);
+  doc.text(`Customer Name: ${c.name.toUpperCase()}`, 20, 60);
+  doc.text(`Customer Email: ${c.email}`, 20, 68);
+  doc.text(`Contact Phone: ${c.phone}`, 20, 76);
+
+  doc.text(`Invoice Reference: ${c.invoiceId}`, 130, 52);
+  doc.text(`Date of Issue: ${c.date}`, 130, 60);
+  doc.text(`Status: PAID IN FULL (Direct)`, 130, 68);
+
+  // Line Items
+  doc.setDrawColor(203, 213, 225);
+  doc.line(20, 84, 190, 84);
+  doc.setFontSize(11);
+  doc.setTextColor(30, 41, 59);
+  doc.text("Provisioned Fiber Service Tier", 20, 92);
+  doc.text("Total (AUD)", 160, 92);
+  doc.line(20, 96, 190, 96);
+
+  doc.setFontSize(10);
+  doc.text(`${c.plan} (${c.category} Fiber)`, 20, 106);
+  doc.text(`A$ ${c.price}.00`, 160, 106);
+
+  doc.line(20, 114, 190, 114);
+  doc.text("Subtotal Ex. GST:", 120, 122);
+  doc.text(`A$ ${exGst}`, 160, 122);
+  doc.text("Australian GST (10%):", 120, 130);
+  doc.text(`A$ ${gst}`, 160, 130);
+  
+  doc.setFontSize(12);
+  doc.setTextColor(43, 108, 246);
+  doc.text("Total Amount Paid:", 120, 140);
+  doc.text(`A$ ${c.price}.00`, 160, 140);
+
+  // Footer notes
+  doc.setFontSize(8.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text("Thank you for connecting with Neo Broadband Pty Ltd.", 20, 168);
+  doc.text("ABN: 76 096 304 620 • Sydney Core Transit POP • support@neobroadband.com.au", 20, 174);
+
+  doc.save(`Neo_Broadband_Invoice_${c.invoiceId}.pdf`);
+};
+</script>
+
+<!-- ═══ MOBILE MENU NAVIGATION ENGINE ═══ -->
+<script>
+(function() {
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const body = document.body;
+
+  if (navToggle && mobileMenu) {
+    function toggleMobileMenu() {
+      const isOpen = mobileMenu.classList.contains('open');
+      if (isOpen) {
+        mobileMenu.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+        body.classList.remove('menu-open');
+      } else {
+        mobileMenu.classList.add('open');
+        navToggle.classList.add('active');
+        navToggle.setAttribute('aria-expanded', 'true');
+        body.classList.add('menu-open');
+      }
     }
 
-    applyState(document.documentElement.getAttribute('data-theme') === 'light');
+    navToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
 
-    sliders.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        applyState(!isLight);
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        mobileMenu.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+        body.classList.remove('menu-open');
+
+        // Smooth scroll if anchor link
+        if (href && href.startsWith('#') && href.length > 1) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 200);
+          }
+        }
       });
     });
-  })();
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1100 && mobileMenu.classList.contains('open')) {
+        mobileMenu.classList.remove('open');
+        navToggle.classList.remove('active');
+        body.classList.remove('menu-open');
+      }
+    });
+  }
+})();
 </script>
+
+<!-- ═══ MODE SLIDER (THEME) ═══ -->
+<script>
+(function () {
+  const sliders = document.querySelectorAll('.mode-slider');
+  function applyState(isLight) {
+    document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+    sliders.forEach(function (btn) {
+      btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
+      btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    });
+    try { localStorage.setItem('nb-theme', isLight ? 'light' : 'dark'); } catch (e) {}
+  }
+
+  applyState(document.documentElement.getAttribute('data-theme') === 'light');
+
+  sliders.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      applyState(!isLight);
+    });
+  });
+})();
+</script>
+
+<!-- ═══ PLAN CAROUSEL & SEARCH INTERACTIONS ═══ -->
 <script>
 ;(function(){
-
   function scrollPlans(categoryId, direction) {
     const cat = document.getElementById(categoryId);
     if (!cat) return;
@@ -1628,16 +2288,6 @@
     const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  function handleSubscribe(planId) {
-    sessionStorage.setItem('pending_plan', planId);
-    const previousUser = localStorage.getItem('neo_known_user') || sessionStorage.getItem('neo_active_user');
-    if (previousUser) {
-      window.location.href = `customer-portal.html?auth=login&plan=${planId}`;
-    } else {
-      window.location.href = `customer-portal.html?auth=register&plan=${planId}`;
     }
   }
 
@@ -1914,7 +2564,6 @@
   })();
 
   window.switchPlanCategory = switchPlanCategory;
-  window.handleSubscribe = handleSubscribe;
   window.clearSearchHistory = clearSearchHistory;
   window.scrollPlans = scrollPlans;
   window.handleRegionSearch = handleRegionSearch;
